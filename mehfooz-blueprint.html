@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mehfooz Internet: Clarity in the Digital Crossroads</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    /* FULL RESET + ACCESSIBLE and FLUID DESIGN */
+    html,body {margin:0;padding:0;box-sizing:border-box;width:100vw;min-height:100vh;scroll-behavior:smooth;overscroll-behavior-y:none;background:#141823;color:#f5f6fa;font-family:'Inter',sans-serif;}
+    *,*:before,*:after{box-sizing:inherit;}
+    a{text-decoration:none;color:inherit;}
+    /* Grid Layout System for Premium Structure */
+    .container{max-width:1320px;margin:0 auto;padding:0 2vw;}
+    section{padding:3vw 0;position:relative;overflow:hidden;}
+    .flex{display:flex;flex-wrap:wrap;align-items:center;}
+    .fade-in-up{animation:fadeInUp 1s cubic-bezier(.39,.575,.565,1) both;}
+    @keyframes fadeInUp{0%{opacity:0;transform:translate3d(0,60px,0);}100%{opacity:1;transform:none;}}
+    .fade-in{animation:fadeIn 1.2s cubic-bezier(.39,.575,.565,1) both;}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+    /* Cinematic HERO section */
+    #hero {min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;background:black;z-index:1;}
+    #hero-bgvideo{position:absolute;top:0;left:0;width:100vw;height:100vh;object-fit:cover;object-position:center;z-index:0;opacity:0.75;filter:blur(3px) brightness(0.95);}
+    .bg-overlay{position:absolute;inset:0;width:100vw;height:100vh;pointer-events:none;background:linear-gradient(120deg,rgba(20,24,35,0.94) 10%,rgba(45,66,136,0.75) 70%,rgba(13,228,247,0.27) 100%);z-index:1;}
+    .hero__headline{z-index:2;font-family:'Space Grotesk',sans-serif;font-size:clamp(2.8rem,7vw,5rem);font-weight:900;background:linear-gradient(96deg,#27d5e5 15%,#324eb5 88%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-2px;line-height:1.1;display:inline-block;opacity:0;animation:textIn .7s .2s cubic-bezier(.39,.575,.565,1) forwards;}
+    @keyframes textIn{to{opacity:1;}}
+    .hero__sub{color:#f5f6fa;background:rgba(25,29,41,0.62);padding:1.7rem 3rem 1.3rem 2.5rem;border-radius:2rem;box-shadow:0 10px 48px 0 rgba(14,125,213,0.16);font-size:1.45rem;margin-top:2.8rem;z-index:2;}
+    .pulse-arrow{animation:arrowDown 1.36s infinite alternate cubic-bezier(0.62,0.02,0.54,0.83);margin-top:80px;font-size:2.2rem;color:#12bff9;z-index:2;}
+    @keyframes arrowDown{from{transform:translateY(0);}to{transform:translateY(15px);}}
+    .animated-network{position:absolute;z-index:1;inset:0;width:100vw;height:100vh;pointer-events:none;overflow:hidden;mix-blend-mode:screen;}
+    /* Section HEADERS */
+    .section-title{font-family:'Space Grotesk',sans-serif;font-size:2.5rem;font-weight:800;color:#24e6ff;margin-bottom:1.4rem;line-height:1.2;text-align:center;}
+    .section-description{max-width:690px;margin:1.2rem auto 3.5rem;text-align:center;font-size:1.15rem;color:#b2d5ed;}
+    /* Scrollytelling styles: text with sticky/animated background */
+    .stickybg-section{background:linear-gradient(90deg,#1b3245 60%,rgba(30,36,65,.12) 100%);min-height:450px;}
+    .sticky-bgmap {position:fixed;top:80px;left:0;width:100vw;max-height:450px;pointer-events:none;z-index:0;opacity:0.25;}
+    /* Stepped/Animated narrative per scroll */
+    .narrative-step {margin: 90px 0 45px;width:90%;max-width:880px;background:rgba(23,25,44,0.91);border-radius:18px;padding:2.4rem 2.2rem 2.4rem 3.2rem;box-shadow:0 4px 32px 0 rgba(81,148,255,0.09);position:relative;z-index:2;}
+    /* Microinteractions for BUTTONS, ICONS, etc. */
+    .btn, .cta, button{display:inline-block;padding:15px 38px;font-size:1.18rem;border-radius:12px;background:linear-gradient(90deg,#324eb5 15%,#27d5e5 80% 100%);color:white;font-family:'Manrope',sans-serif;font-weight:700;border:none;cursor:pointer;box-shadow:0 2px 18px 0 rgba(22,107,174,0.11);transition:box-shadow .18s,transform .18s,background .32s;outline:none;}
+    .btn:hover{box-shadow:0 5px 30px 0 rgba(40,179,219,0.18);transform:translateY(-2px) scale(1.025);background:linear-gradient(91deg,#13e6fa 13%,#08136e 82% 100%);}
+    .ai-demo-btn{font-size:1.18rem;padding-left:2rem;padding-right:2rem;border-radius:20px;background:#ffffff0d;color:#19fff9;border:2px solid #27cce6;box-shadow:0 2px 8px 0 rgba(13,175,213,0.12);}
