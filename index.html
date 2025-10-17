@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehfooz Internet - Architecting Digital Trust</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles for a high-end tech feel */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #02040a;
+            color: #cbd5e1; /* slate-300 */
+            overflow-x: hidden;
+        }
+
+        /* Animated background canvas */
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.3;
+        }
+        
+        /* Main container with subtle gradient lighting */
+        .main-container {
+            background: radial-gradient(ellipse 100% 60% at 50% -10%, rgba(14, 116, 144, 0.2), transparent);
+        }
+
+        /* Accent Gradient for key text elements */
+        .gradient-text {
+            background: linear-gradient(90deg, #00ddff, #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+
+        /* Buttons with a subtle glow effect */
+        .primary-button {
+            background: linear-gradient(90deg, #0ea5e9, #0284c7);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.5);
+        }
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(2, 132, 199, 0.3);
+        }
+
+        /* Glassmorphism Card Effect, refined for subtlety */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(0, 221, 255, 0.5);
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        /* Animations: a more deliberate, staggered reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.215, 0.610, 0.355, 1), transform 0.8s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Navigation active state styling */
+        .nav-link.active {
+            color: #00ddff;
+        }
+        
+        /* Page content transition */
+        .page-content {
+            animation: fadeIn 0.7s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mock UI styling */
+        .mock-ui {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            transform: perspective(1500px) rotateX(15deg);
+            transition: transform 0.5s ease;
+        }
+        .mock-ui:hover {
+            transform: perspective(1500px) rotateX(0deg);
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+<div class="main-container relative">
+
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-lg border-b border-slate-800/60">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" data-page="home" class="nav-link-logo">
+                <img src="https://framerusercontent.com/images/f3z8Ab6c3y32T32j2yIZ4AWHtU.svg" alt="Mehfooz Internet Logo" class="h-8 w-auto">
+            </a>
+            <nav class="hidden md:flex items-center space-x-8" id="desktop-nav">
+                <a href="#" data-page="home" class="nav-link text-sm font-medium text-slate-300 hover:text-cyan-300 transition-colors active">Home</a>
+                <a href="#" data-page="solution" class="nav-link text-sm font-medium text-slate-300 hover:text-cyan-300 transition-colors">The Platform</a>
+                <a href="#" data-page="mission" class="nav-link text-sm font-medium text-slate-300 hover:text-cyan-300 transition-colors">Our Mission</a>
+                <a href="#" data-page="contact" class="primary-button text-white font-semibold text-sm py-2 px-5 rounded-lg">Get Involved</a>
+            </nav>
+            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-black/95 backdrop-blur-xl z-40">
+        <div class="flex justify-end p-6"><button id="close-menu-btn" class="text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button></div>
+        <nav id="mobile-nav" class="flex flex-col items-center justify-center h-full -mt-16 space-y-6">
+            <a href="#" data-page="home" class="mobile-nav-link text-xl font-semibold text-slate-300">Home</a>
+            <a href="#" data-page="solution" class="mobile-nav-link text-xl font-semibold text-slate-300">The Platform</a>
+            <a href="#" data-page="mission" class="mobile-nav-link text-xl font-semibold text-slate-300">Our Mission</a>
+            <a href="#" data-page="contact" class="mobile-nav-link mt-6 primary-button text-white font-semibold py-3 px-8 rounded-lg">Get Involved</a>
+        </nav>
+    </div>
+
+    <main class="container mx-auto px-6 pt-28 md:pt-36 relative z-10">
+
+        <!-- PAGE: HOME -->
+        <section id="page-home" class="page-content">
+            <canvas id="hero-canvas"></canvas>
+            <div class="text-center relative">
+                <div class="reveal">
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter leading-tight max-w-5xl mx-auto">
+                        The digital world wasn't built for everyone. <span class="gradient-text">We're rebuilding it.</span>
+                    </h1>
+                    <p class="max-w-3xl mx-auto mt-6 text-lg md:text-xl text-slate-400">
+                        Mehfooz Internet is a culturally-architected platform providing the critical skills needed to combat misinformation and thrive in the digital age, starting with Gilgit Baltistan.
+                    </p>
+                    <div class="mt-10 flex justify-center gap-4">
+                        <a href="#" data-page="solution" class="nav-link-cta primary-button text-white font-bold py-3 px-7 rounded-lg text-lg">Explore the Platform</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="py-24 lg:py-40">
+                <div class="reveal">
+                    <div class="mock-ui bg-slate-900/50 overflow-hidden">
+                        <div class="p-2 bg-slate-800/50 flex items-center"><div class="h-2.5 w-2.5 rounded-full bg-red-500 mr-1.5"></div><div class="h-2.5 w-2.5 rounded-full bg-yellow-500 mr-1.5"></div><div class="h-2.5 w-2.5 rounded-full bg-green-500"></div></div>
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2940&auto=format&fit=crop" alt="Mock UI showing a dashboard" class="opacity-70" onerror="this.onerror=null;this.src='https://placehold.co/1200x600/02040a/ffffff?text=Platform+Interface';">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: THE PLATFORM -->
+        <section id="page-solution" class="page-content hidden">
+             <div class="text-center">
+                <div class="reveal">
+                    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter">The <span class="gradient-text">Mehfooz Platform</span></h1>
+                    <p class="max-w-3xl mx-auto mt-6 text-lg text-slate-400">
+                        A three-pronged approach to building resilient digital communities from the ground up.
+                    </p>
+                </div>
+            </div>
+
+            <div class="py-24 lg:py-32 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                <div class="reveal lg:col-span-1" style="transition-delay: 100ms;">
+                    <div class="glass-card p-8 sticky top-28">
+                        <h3 class="text-2xl font-bold text-white">Our Unfair Advantage</h3>
+                        <p class="mt-4 text-slate-400">We don't just provide content; we build ecosystems. Our deep integration with community leaders (Ulema) and a continuous feedback loop with local students creates unparalleled trust and relevance—something generic platforms cannot replicate.</p>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 grid grid-cols-1 gap-8">
+                     <div class="reveal glass-card p-8" style="transition-delay: 200ms;">
+                        <div class="flex items-start gap-6">
+                            <div class="p-3 bg-slate-800 rounded-xl mt-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg></div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white">MehfoozBot AI</h3>
+                                <p class="mt-2 text-slate-400">An intelligent, AI-driven chatbot providing personalized learning and immediate, 24/7 assistance on digital literacy in multiple indigenous languages. It's a personal tutor in your pocket.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reveal glass-card p-8" style="transition-delay: 300ms;">
+                         <div class="flex items-start gap-6">
+                            <div class="p-3 bg-slate-800 rounded-xl mt-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 14l9-5-9-5-9 5 9 5z" /><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 14v6m-4-3h8" /></svg></div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Localized Learning Modules</h3>
+                                <p class="mt-2 text-slate-400">Hyper-relevant, bite-sized mini-courses designed to address the specific misinformation narratives and digital challenges faced by the communities we serve.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reveal glass-card p-8" style="transition-delay: 400ms;">
+                         <div class="flex items-start gap-6">
+                            <div class="p-3 bg-slate-800 rounded-xl mt-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm-9 3a2 2 0 11-4 0 2 2 0 014 0z" /></svg></div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Community Engagement Hub</h3>
+                                <p class="mt-2 text-slate-400">A program that transforms our platform into a movement, activating local leaders and students to become digital literacy ambassadors and creating a self-sustaining ecosystem of learning.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: OUR MISSION -->
+        <section id="page-mission" class="page-content hidden">
+            <div class="text-center">
+                <div class="reveal">
+                    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter">Our Mission: <span class="gradient-text">Architecting Digital Trust</span></h1>
+                    <p class="max-w-3xl mx-auto mt-6 text-lg text-slate-400">
+                        We empower communities with trustworthy, lifelong learning opportunities that promote online safety, enabling them to confidently navigate and thrive in a connected world.
+                    </p>
+                </div>
+            </div>
+
+            <div class="py-24 lg:py-32 grid grid-cols-1 md:grid-cols-2 gap-8">
+                 <div class="reveal glass-card p-8" style="transition-delay: 100ms;">
+                    <h3 class="text-2xl font-bold text-white">The Problem</h3>
+                    <p class="mt-4 text-slate-400">Rapid, unguided technological adoption is creating a critical knowledge gap, leaving communities vulnerable to tech-enabled misinformation, cyber threats, and digital exclusion. This isn't a digital divide; it's a vulnerability crisis.</p>
+                </div>
+                <div class="reveal glass-card p-8" style="transition-delay: 200ms;">
+                    <h3 class="text-2xl font-bold text-white">The Vision</h3>
+                    <p class="mt-4 text-slate-400">We envision a future where our platform is the core of a thriving ecosystem focused on transparency. We aim to scale our model to empower linguistically diverse, underserved communities worldwide.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: CONTACT -->
+        <section id="page-contact" class="page-content hidden">
+            <div class="text-center py-24 lg:py-32">
+                <div class="reveal glass-card max-w-4xl mx-auto p-10 md:p-16">
+                    <h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter">Join the <span class="gradient-text">Mission</span></h1>
+                    <p class="max-w-2xl mx-auto mt-6 text-lg text-slate-300">
+                       We are building a coalition of partners, investors, and community leaders. If you are committed to solving the digital vulnerability crisis, let's connect and build the future.
+                    </p>
+                    <div class="mt-10">
+                        <a href="mailto:contact@mehfoozinternet.org" class="inline-block primary-button text-white font-bold py-4 px-8 rounded-lg text-lg">
+                            contact@mehfoozinternet.org
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-slate-800/60 mt-20 relative z-10">
+        <div class="container mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <p class="text-sm text-slate-500">&copy; 2025 Mehfooz Internet. Architecting a safer digital world.</p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                <a href="#" class="text-slate-500 hover:text-cyan-300 transition-colors">Facebook</a>
+                <a href="#" class="text-slate-500 hover:text-cyan-300 transition-colors">YouTube</a>
+                <a href="#" class="text-slate-500 hover:text-cyan-300 transition-colors">WhatsApp</a>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const allNavLinks = document.querySelectorAll('.nav-link, .mobile-nav-link, .nav-link-logo, .nav-link-cta');
+        const desktopNavLinks = document.querySelectorAll('#desktop-nav .nav-link');
+        const pages = document.querySelectorAll('.page-content');
+        
+        const showPage = (pageId) => {
+            pages.forEach(page => page.classList.add('hidden'));
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                const revealElementsOnPage = targetPage.querySelectorAll('.reveal');
+                revealElementsOnPage.forEach((el) => {
+                    el.classList.remove('visible'); // Reset for re-animation
+                    revealObserver.observe(el);
+                });
+            }
+            updateActiveNav(`page-${pageId.split('-')[1]}`);
+        };
+
+        const updateActiveNav = (pageId) => {
+            desktopNavLinks.forEach(link => {
+                link.classList.toggle('active', `page-${link.dataset.page}` === pageId);
+            });
+        };
+
+        allNavLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = `page-${link.dataset.page}`;
+                showPage(pageId);
+                if(!mobileMenu.classList.contains('hidden')) closeMenu();
+            });
+        });
+
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const openMenu = () => mobileMenu.classList.remove('hidden');
+        const closeMenu = () => mobileMenu.classList.add('hidden');
+        mobileMenuBtn.addEventListener('click', openMenu);
+        closeMenuBtn.addEventListener('click', closeMenu);
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    // Use setTimeout to respect CSS transition-delay
+                    const delay = parseInt(el.style.transitionDelay) || 0;
+                    setTimeout(() => {
+                        el.classList.add('visible');
+                    }, delay);
+                    observer.unobserve(el);
+                }
+            });
+        }, { root: null, rootMargin: '0px', threshold: 0.1 });
+
+        // Hero background canvas animation
+        const canvas = document.getElementById('hero-canvas');
+        if(canvas) {
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            const particles = [];
+            
+            const resize = () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            };
+            
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.radius = Math.random() * 1.5;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > width) this.vx *= -1;
+                    if (this.y < 0 || this.y > height) this.vy *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(0, 221, 255, 0.5)';
+                    ctx.fill();
+                }
+            }
+
+            const createParticles = () => {
+                const particleCount = Math.floor(width * height / 15000);
+                particles.length = 0;
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new Particle());
+                }
+            };
+
+            const animate = () => {
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+
+                // Draw lines between nearby particles
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(0, 221, 255, ${1 - dist / 120})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            };
+
+            window.addEventListener('resize', () => {
+                resize();
+                createParticles();
+            });
+
+            resize();
+            createParticles();
+            animate();
+        }
+
+        // Initial page load
+        showPage('page-home');
+    });
+</script>
+</body>
+</html>
+
