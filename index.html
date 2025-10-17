@@ -1,719 +1,473 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Mehfooz Internet - Empowering Gilgit Baltistan with digital literacy and online safety">
-    <title>Mehfooz Internet - Clarity in the Digital Crossroads</title>
+    <title>Mehfooz - A Digital Sanctuary</title>
     
-    <!-- Premium Typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --teal: #00A896;
+            --dark-bg: #0F172A; /* A slightly softer navy */
+            --light-text: #E2E8F0;
+            --medium-text: #94A3B8;
+            --gold: #F4B860;
+            --success: #22c55e;
+            --danger: #ef4444;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Caveat:wght@700&display=swap');
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        .font-script {
+            font-family: 'Caveat', cursive;
+        }
+        
+        /* Gentle Light Cursor */
+        #cursor-light {
+            position: fixed;
+            left: 0; top: 0;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(244, 184, 96, 0.06) 0%, transparent 60%);
+            z-index: 9998;
+            transition: transform 0.2s ease-out;
+        }
+        #cursor-dot {
+            position: fixed;
+            width: 6px; height: 6px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            left: 0; top: 0;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        .page {
+            display: none; /* Pages are hidden by default */
+            min-height: 100vh;
+        }
+        .page.active {
+            display: block;
+        }
+
+        /* Page transition */
+        .page-enter { animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .page-exit { animation: fadeOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        /* MehfoozBot Demo Styles */
+        .chat-bubble {
+            max-width: 75%;
+            padding: 10px 15px;
+            border-radius: 20px;
+        }
+        .user-bubble {
+            background-color: var(--teal);
+            color: white;
+            border-bottom-right-radius: 5px;
+            align-self: flex-end;
+        }
+        .bot-bubble {
+            background-color: #334155;
+            color: var(--light-text);
+            border-bottom-left-radius: 5px;
+            align-self: flex-start;
+        }
+        .question-pill {
+            cursor: pointer;
+            border: 1px solid var(--medium-text);
+            color: var(--medium-text);
+            padding: 8px 15px;
+            border-radius: 9999px;
+            transition: all 0.2s;
+        }
+        .question-pill:hover {
+            background-color: var(--teal);
+            border-color: var(--teal);
+            color: white;
+        }
+
+        /* Game Styles */
+        .game-card {
+            background-color: #1E293B;
+            border: 1px solid #334155;
+        }
+        .game-choice-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .game-choice-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .feedback-correct {
+            color: var(--success);
+        }
+        .feedback-incorrect {
+            color: var(--danger);
+        }
+    </style>
 </head>
+<body class="antialiased">
 
-<body>
+    <div id="cursor-light"></div>
+    <div id="cursor-dot"></div>
 
-<!-- Loading Screen -->
-<div class="loading-screen" id="loading-screen">
-    <div class="loading-content">
-        <div class="loading-logo">
-            <span class="loading-text">Mehfooz Internet</span>
+    <!-- PRE-SITE GAME -->
+    <section id="game-screen" class="fixed inset-0 bg-dark-bg z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
+        <div class="game-card w-full max-w-2xl rounded-2xl p-8 md:p-12 text-center shadow-2xl">
+            <h2 class="font-script text-gold text-4xl md:text-5xl mb-4">Test Your Digital Instincts</h2>
+            <p id="game-progress" class="text-medium-text mb-8">Question 1 of 3</p>
+            
+            <div id="game-content">
+                <p id="game-question-text" class="text-xl md:text-2xl min-h-[6rem] mb-8"></p>
+                <div id="game-choices" class="flex flex-col md:flex-row gap-4 justify-center">
+                    <button data-choice="credible" class="game-choice-btn w-full bg-teal text-white font-semibold py-3 px-6 rounded-lg">Looks Credible</button>
+                    <button data-choice="not-credible" class="game-choice-btn w-full bg-slate-600 hover:bg-slate-500 text-white font-semibold py-3 px-6 rounded-lg">Not Credible</button>
+                </div>
+                <p id="game-feedback" class="mt-6 min-h-[3rem] text-lg opacity-0"></p>
+            </div>
+
+            <div id="game-end-screen" class="hidden">
+                <h3 class="font-script text-teal text-4xl mb-4">Well Done!</h3>
+                <p class="text-xl text-medium-text mb-8">You're ready to explore. Every day, we face new challenges online. Being mindful is the first step.</p>
+                <button id="enter-site-btn" class="game-choice-btn bg-gold text-dark-bg font-bold py-4 px-8 rounded-lg text-xl">Enter Site</button>
+            </div>
         </div>
-        <div class="loading-progress">
-            <div class="loading-bar" id="loading-bar"></div>
-        </div>
-        <p class="loading-message">Preparing your journey...</p>
+    </section>
+
+    <div id="loader" class="fixed inset-0 bg-dark-bg z-[100] flex items-center justify-center hidden">
+        <p class="font-script text-gold text-5xl">Mehfooz</p>
     </div>
-</div>
 
-<!-- Custom Cursor -->
-<div class="custom-cursor" id="custom-cursor">
-    <div class="cursor-dot"></div>
-    <div class="cursor-glow"></div>
-</div>
-
-<!-- Cosmic Canvas Background -->
-<canvas id="cosmic-canvas"></canvas>
-
-<!-- Page Transition Overlay -->
-<div class="page-transition" id="page-transition"></div>
-
-<!-- Floating Navigation -->
-<header class="main-header" id="main-header">
-    <div class="container navbar">
-        <a href="#home" class="logo">
-            <span class="logo-icon">✦</span>
-            <span class="logo-text">Mehfooz Internet</span>
-        </a>
-        
-        <nav class="main-nav">
-            <ul class="nav-links">
-                <li><a href="#challenge" data-text="Challenge">The Challenge</a></li>
-                <li><a href="#solution" data-text="Solution">Our Solution</a></li>
-                <li><a href="#difference" data-text="Difference">The Difference</a></li>
-                <li><a href="#principles" data-text="Principles">Principles</a></li>
-                <li><a href="#contact" data-text="Contact">Contact</a></li>
-            </ul>
+    <header class="fixed top-0 left-0 w-full z-50 opacity-0" id="site-header">
+        <nav class="container mx-auto flex justify-between items-center p-6 md:p-8 bg-dark-bg/50 backdrop-blur-sm rounded-b-xl">
+            <a href="#" data-page="home" class="font-script text-3xl text-gold magnetic-link">Mehfooz</a>
+            <div class="hidden md:flex gap-8 text-lg">
+                <a href="#" data-page="approach" class="magnetic-link hover:text-teal transition-colors">Our Approach</a>
+                <a href="#" data-page="mehfoozbot" class="magnetic-link hover:text-teal transition-colors">MehfoozBot</a>
+                <a href="#" data-page="contact" class="magnetic-link hover:text-teal transition-colors">Contact</a>
+            </div>
+             <div class="md:hidden">
+                <!-- Mobile menu button can be added here -->
+            </div>
         </nav>
+    </header>
 
-        <!-- Theme Toggle -->
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-            <i class="fas fa-moon"></i>
-        </button>
+    <main id="main-content" class="opacity-0">
 
-        <!-- Mobile Menu Toggle -->
-        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </div>
-
-    <!-- Progress Bar -->
-    <div class="reading-progress" id="reading-progress"></div>
-</header>
-
-<!-- Mobile Navigation Menu -->
-<div class="mobile-menu" id="mobile-menu">
-    <div class="mobile-menu-content">
-        <nav>
-            <ul class="mobile-nav-links">
-                <li><a href="#home" class="mobile-nav-link">Home</a></li>
-                <li><a href="#challenge" class="mobile-nav-link">The Challenge</a></li>
-                <li><a href="#solution" class="mobile-nav-link">Our Solution</a></li>
-                <li><a href="#difference" class="mobile-nav-link">The Difference</a></li>
-                <li><a href="#principles" class="mobile-nav-link">Principles</a></li>
-                <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
-</div>
-
-<main>
-
-<!-- Hero Section -->
-<section class="hero" id="home">
-    <div class="hero-background">
-        <div class="hero-orb orb-1"></div>
-        <div class="hero-orb orb-2"></div>
-        <div class="hero-orb orb-3"></div>
-    </div>
-    
-    <div class="hero-content">
-        <div class="hero-badge" data-aos="fade-down">
-            <i class="fas fa-shield-halved"></i>
-            <span>Digital Safety & Literacy Platform</span>
-        </div>
-        
-        <h1 class="hero-title" data-aos="fade-up" data-aos-delay="200">
-            Clarity in the<br>
-            <span class="gradient-text">Digital Crossroads.</span>
-        </h1>
-        
-        <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="400">
-            Mehfooz Internet is empowering the communities of Gilgit Baltistan 
-            with the tools to navigate the digital world safely and confidently, 
-            transforming the cosmic expanse of information into a journey of 
-            discovery and growth.
-        </p>
-
-        <div class="hero-cta" data-aos="fade-up" data-aos-delay="600">
-            <a href="#solution" class="btn btn-primary btn-glow">
-                <span>Begin the Journey</span>
-                <i class="fas fa-arrow-right"></i>
-            </a>
-            <a href="#contact" class="btn btn-outline">
-                <span>Get Involved</span>
-            </a>
-        </div>
-
-        <div class="hero-stats" data-aos="fade-up" data-aos-delay="800">
-            <div class="stat-item">
-                <div class="stat-number" data-count="1000">0</div>
-                <div class="stat-label">Community Members</div>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-                <div class="stat-number" data-count="50">0</div>
-                <div class="stat-label">Partner Organizations</div>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-                <div class="stat-number" data-count="5">0</div>
-                <div class="stat-label">Indigenous Languages</div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="scroll-prompt" data-aos="fade-in" data-aos-delay="1000">
-        <span class="scroll-text">Scroll to Discover</span>
-        <div class="scroll-icon">
-            <div class="scroll-wheel"></div>
-        </div>
-    </div>
-</section>
-
-<!-- Challenge Section -->
-<section class="challenge-section section-padding" id="challenge">
-    <div class="container">
-        <div class="section-header" data-aos="fade-up">
-            <span class="section-label">The Challenge</span>
-            <h2 class="section-title">Understanding the Digital Divide</h2>
-        </div>
-
-        <div class="challenge-grid">
-            <div class="challenge-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="card-icon">
-                    <i class="fas fa-triangle-exclamation"></i>
+        <!-- HOME PAGE -->
+        <section id="page-home" class="page active">
+            <div class="h-screen w-full relative flex items-center justify-center text-center overflow-hidden">
+                <div class="absolute inset-0 bg-black">
+                     <img src="https://images.unsplash.com/photo-1623581203333-53531b1bbf8e?q=80&w=1887&auto=format&fit=crop" 
+                        alt="A thoughtful portrait of a person from Gilgit Baltistan" 
+                        class="w-full h-full object-cover opacity-30 object-center">
                 </div>
-                <h3>Where Progress Meets Peril.</h3>
-                <p>
-                    In Gilgit Baltistan, the rapid arrival of new technology, including 
-                    powerful AI, is outpacing digital literacy. This creates a critical 
-                    vulnerability, exposing communities to tech-enabled misinformation, 
-                    cyber threats, and digital exclusion.
-                </p>
-                <div class="card-glow"></div>
-            </div>
-
-            <div class="challenge-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="card-icon">
-                    <i class="fas fa-bullseye"></i>
+                <div class="absolute inset-0 bg-gradient-to-t from-dark-bg via-dark-bg/80 to-transparent z-10"></div>
+                <div class="z-20 px-4 pt-20">
+                    <h1 class="font-script text-gold text-5xl md:text-7xl mb-4">A safe space to find clarity.</h1>
+                    <p class="text-xl md:text-2xl text-light-text leading-relaxed max-w-4xl">
+                        In a connected world, we provide the tools and wisdom for the communities of Gilgit Baltistan to navigate the digital landscape with confidence.
+                    </p>
                 </div>
-                <h3>Our Mission</h3>
-                <p>
-                    To empower the people of Gilgit Baltistan with trustworthy, lifelong 
-                    learning opportunities that promote online safety and digital literacy, 
-                    enabling them to navigate and thrive in an increasingly connected world.
-                </p>
-                <div class="card-glow"></div>
             </div>
+        </section>
 
-            <div class="challenge-card" data-aos="fade-up" data-aos-delay="300">
-                <div class="card-icon">
-                    <i class="fas fa-eye"></i>
+        <!-- OUR APPROACH PAGE -->
+        <section id="page-approach" class="page py-32 md:py-40">
+            <div class="container mx-auto px-6 space-y-24">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Approach is Rooted in Community</h2>
+                    <p class="text-xl text-medium-text">We believe in solutions that come from within, blending timeless wisdom with modern knowledge.</p>
                 </div>
-                <h3>Our Vision</h3>
-                <p>
-                    To cultivate a digitally literate society in Gilgit Baltistan where 
-                    individuals of all backgrounds can confidently and responsibly navigate 
-                    the digital landscape through a platform that supports self-directed 
-                    learning and community empowerment.
-                </p>
-                <div class="card-glow"></div>
+
+                <div class="grid md:grid-cols-2 items-center gap-12">
+                    <div class="order-2 md:order-1">
+                        <h3 class="font-script text-teal text-4xl mb-3">01. Listen First</h3>
+                        <p class="text-lg text-medium-text leading-relaxed">We don't arrive with answers. We begin by listening, partnering with local elders and trusted leaders. Their wisdom is the foundation upon which we build, ensuring our work is not just accepted, but embraced.</p>
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <img src="https://images.unsplash.com/photo-1541535650829-addc658b4d8c?q=80&w=1887&auto=format&fit=crop" class="rounded-2xl shadow-2xl shadow-black/30" alt="An elder from Gilgit Baltistan sharing a story."/>
+                    </div>
+                </div>
+                 <div class="grid md:grid-cols-2 items-center gap-12">
+                    <div class="md:text-right">
+                        <h3 class="font-script text-teal text-4xl mb-3">02. Guide Gently</h3>
+                        <p class="text-lg text-medium-text leading-relaxed">Technology should feel like a friend, not a barrier. Our MehfoozBot offers personal, patient help in local languages, providing a friendly guide for anyone beginning their digital journey.</p>
+                    </div>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=1904&auto=format&fit=crop" class="rounded-2xl shadow-2xl shadow-black/30" alt="A person interacting with technology in a thoughtful way."/>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-<!-- Solution Section -->
-<section class="solution-section section-padding" id="solution">
-    <div class="container">
-        <div class="section-header" data-aos="fade-up">
-            <span class="section-label">Our Approach</span>
-            <h2 class="section-title">An Ecosystem of Empowerment</h2>
-            <p class="section-description">
-                Our three-pronged approach creates a comprehensive digital literacy 
-                platform that bridges traditional wisdom with cutting-edge technology.
-            </p>
-        </div>
+        <!-- MEHFOOZBOT PAGE -->
+        <section id="page-mehfoozbot" class="page py-32 md:py-40 flex items-center">
+            <div class="container mx-auto px-6 text-center">
+                 <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Chat with MehfoozBot</h2>
+                 <p class="text-xl text-medium-text max-w-2xl mx-auto mb-12">Ask a question or select a topic below to see how our AI guide can help.</p>
 
-        <div class="solutions-timeline">
-            <!-- Solution 1 -->
-            <div class="timeline-item" data-aos="fade-right">
-                <div class="timeline-marker">
-                    <div class="marker-dot"></div>
-                    <div class="marker-pulse"></div>
-                </div>
-                <div class="timeline-content">
-                    <div class="solution-card">
-                        <div class="solution-header">
-                            <div class="solution-icon">
-                                <i class="fas fa-handshake"></i>
-                            </div>
-                            <div class="solution-number">01</div>
+                <div class="max-w-2xl mx-auto bg-slate-900/50 rounded-2xl shadow-2xl p-4 md:p-6 flex flex-col h-[60vh]">
+                    <div id="chat-log" class="flex-1 flex flex-col gap-4 p-4 overflow-y-auto">
+                        <!-- Chat messages will appear here -->
+                    </div>
+                    <div class="flex-shrink-0 pt-4 border-t border-slate-700">
+                        <div id="question-pills-container" class="flex flex-wrap justify-center gap-3 mb-4">
+                             <div class="question-pill" data-question="How can I spot fake news?">How can I spot fake news?</div>
+                             <div class="question-pill" data-question="Is my WhatsApp safe?">Is my WhatsApp safe?</div>
+                             <div class="question-pill" data-question="What is misinformation?">What is misinformation?</div>
                         </div>
-                        <h3>Wisdom, Amplified.</h3>
-                        <p>
-                            We don't just provide information; we build on existing foundations 
-                            of trust. Through a groundbreaking partnership model, we collaborate 
-                            with local religious leaders (Ulema) who serve as trusted digital 
-                            literacy ambassadors, bridging traditional knowledge with modern skills.
-                        </p>
-                        <ul class="feature-list">
-                            <li><i class="fas fa-check"></i> Community-trusted partnerships</li>
-                            <li><i class="fas fa-check"></i> Cultural integration</li>
-                            <li><i class="fas fa-check"></i> Local leadership empowerment</li>
-                        </ul>
+                        <form id="chat-form" class="flex gap-3">
+                            <input type="text" id="chat-input" placeholder="Type your question..." class="flex-1 bg-slate-800 border border-slate-700 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-teal">
+                            <button type="submit" class="bg-teal text-white rounded-full px-5 py-3 font-semibold hover:bg-opacity-80 transition-colors">Send</button>
+                        </form>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Solution 2 -->
-            <div class="timeline-item" data-aos="fade-left">
-                <div class="timeline-marker">
-                    <div class="marker-dot"></div>
-                    <div class="marker-pulse"></div>
-                </div>
-                <div class="timeline-content">
-                    <div class="solution-card">
-                        <div class="solution-header">
-                            <div class="solution-icon">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <div class="solution-number">02</div>
-                        </div>
-                        <h3>Personalized Guidance. Instantly.</h3>
-                        <p>
-                            Harnessing AI, MehfoozBot provides personalized, real-time assistance 
-                            on digital literacy. It adapts to each user's language and learning 
-                            style, offering immediate answers through familiar messaging interfaces.
-                        </p>
-                        <ul class="feature-list">
-                            <li><i class="fas fa-check"></i> AI-powered personalization</li>
-                            <li><i class="fas fa-check"></i> Multi-language support</li>
-                            <li><i class="fas fa-check"></i> 24/7 availability</li>
-                        </ul>
-                        <button class="btn btn-secondary btn-demo" id="open-bot-modal">
-                            <i class="fas fa-play"></i>
-                            <span>See MehfoozBot in Action</span>
-                        </button>
+        <!-- CONTACT PAGE -->
+        <section id="page-contact" class="page py-32 md:py-40 flex items-center">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Let's Start a Conversation</h2>
+                <p class="text-xl text-medium-text max-w-2xl mx-auto mb-12">Whether you're a community member, a potential partner, or just curious, we'd love to hear from you.</p>
+
+                <form id="contact-form" class="max-w-xl mx-auto space-y-6 text-left">
+                     <div>
+                        <label for="name" class="block mb-2 font-medium">Your Name</label>
+                        <input type="text" id="name" name="name" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal">
                     </div>
-                </div>
-            </div>
-
-            <!-- Solution 3 -->
-            <div class="timeline-item" data-aos="fade-right">
-                <div class="timeline-marker">
-                    <div class="marker-dot"></div>
-                    <div class="marker-pulse"></div>
-                </div>
-                <div class="timeline-content">
-                    <div class="solution-card">
-                        <div class="solution-header">
-                            <div class="solution-icon">
-                                <i class="fas fa-book-open"></i>
-                            </div>
-                            <div class="solution-number">03</div>
-                        </div>
-                        <h3>Knowledge, Co-Created.</h3>
-                        <p>
-                            Our platform offers localized mini-courses in multiple indigenous 
-                            languages. This content is kept relevant and effective through our 
-                            unique Community Feedback Ecosystem, where local students provide 
-                            continuous input.
-                        </p>
-                        <ul class="feature-list">
-                            <li><i class="fas fa-check"></i> Indigenous language content</li>
-                            <li><i class="fas fa-check"></i> Community-driven updates</li>
-                            <li><i class="fas fa-check"></i> Interactive learning modules</li>
-                        </ul>
+                     <div>
+                        <label for="email" class="block mb-2 font-medium">Your Email</label>
+                        <input type="email" id="email" name="email" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal">
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Difference Section -->
-<section class="difference-section section-padding" id="difference">
-    <div class="container">
-        <div class="section-header" data-aos="fade-up">
-            <span class="section-label">What Sets Us Apart</span>
-            <h2 class="section-title">The Mehfooz Difference</h2>
-            <p class="section-description">
-                Our unique blend of technology, cultural integration, and community 
-                engagement sets us apart in the digital literacy landscape.
-            </p>
-        </div>
-
-        <!-- Feature Grid -->
-        <div class="features-grid">
-            <div class="feature-card" data-aos="zoom-in" data-aos-delay="100">
-                <div class="feature-icon">
-                    <i class="fas fa-language"></i>
-                </div>
-                <h4>Hyper-Localized Content</h4>
-                <p>Culturally tailored materials in multiple indigenous languages.</p>
-            </div>
-
-            <div class="feature-card" data-aos="zoom-in" data-aos-delay="150">
-                <div class="feature-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h4>Community-Centric</h4>
-                <p>Deep integration with trusted local leaders (Ulema) fosters acceptance.</p>
-            </div>
-
-            <div class="feature-card" data-aos="zoom-in" data-aos-delay="200">
-                <div class="feature-icon">
-                    <i class="fas fa-microchip"></i>
-                </div>
-                <h4>Innovative Technology</h4>
-                <p>AI-driven chatbots provide personalized, interactive experiences.</p>
-            </div>
-
-            <div class="feature-card" data-aos="zoom-in" data-aos-delay="250">
-                <div class="feature-icon">
-                    <i class="fas fa-crosshairs"></i>
-                </div>
-                <h4>Singular Focus</h4>
-                <p>Specifically targeting misinformation with critical thinking skills.</p>
-            </div>
-
-            <div class="feature-card" data-aos="zoom-in" data-aos-delay="300">
-                <div class="feature-icon">
-                    <i class="fas fa-mobile-screen"></i>
-                </div>
-                <h4>Multi-Platform</h4>
-                <p>Meeting users on platforms like WhatsApp and Facebook.</p>
-            </div>
-
-            <div class="feature-card" data-aos="zoom-in" data-aos-delay="350">
-                <div class="feature-icon">
-                    <i class="fas fa-comments"></i>
-                </div>
-                <h4>Feedback-Driven</h4>
-                <p>Continuous feedback loop ensures relevance and effectiveness.</p>
-            </div>
-        </div>
-
-        <!-- Comparison Table -->
-        <div class="comparison-wrapper" data-aos="fade-up" data-aos-delay="400">
-            <h3 class="comparison-title">Competitive Comparison</h3>
-            <div class="table-scroll">
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Feature / Approach</th>
-                            <th class="highlight-col">Mehfooz Internet</th>
-                            <th>Digital Rights Foundation</th>
-                            <th>Soch Fact Check</th>
-                            <th>Media Matters</th>
-                            <th>Maati TV</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>AI-Powered Personalization</td>
-                            <td class="highlight-col"><i class="fas fa-check-circle tick"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Ulema Partnership Model</td>
-                            <td class="highlight-col"><i class="fas fa-check-circle tick"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Student Feedback Ecosystem</td>
-                            <td class="highlight-col"><i class="fas fa-check-circle tick"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Indigenous Languages</td>
-                            <td class="highlight-col"><i class="fas fa-check-circle tick"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-check-circle tick"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Focus on Misinformation</td>
-                            <td class="highlight-col"><i class="fas fa-check-circle tick"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-check-circle tick"></i></td>
-                            <td><i class="fas fa-check-circle tick"></i></td>
-                            <td><i class="fas fa-check-circle tick"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Multi-Platform Social Delivery</td>
-                            <td class="highlight-col"><i class="fas fa-check-circle tick"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-times-circle cross"></i></td>
-                            <td><i class="fas fa-check-circle tick"></i></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Principles Section -->
-<section class="principles-section section-padding" id="principles">
-    <div class="container">
-        <div class="section-header" data-aos="fade-up">
-            <span class="section-label">Our Foundation</span>
-            <h2 class="section-title">Guiding Principles</h2>
-        </div>
-
-        <div class="principles-scroll">
-            <div class="principle-card" data-scroll-trigger="collaboration">
-                <div class="principle-icon">
-                    <i class="fas fa-people-group"></i>
-                </div>
-                <h3>Collaboration</h3>
-                <p>
-                    We build partnerships with local leaders, researchers, and community 
-                    members to create a holistic approach to digital empowerment.
-                </p>
-            </div>
-
-            <div class="principle-card" data-scroll-trigger="integrity">
-                <div class="principle-icon">
-                    <i class="fas fa-shield-check"></i>
-                </div>
-                <h3>Integrity</h3>
-                <p>
-                    We uphold the highest standards of accuracy and reliability, ensuring 
-                    users receive trustworthy information in their digital journey.
-                </p>
-            </div>
-
-            <div class="principle-card" data-scroll-trigger="inclusivity">
-                <div class="principle-icon">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <h3>Inclusivity</h3>
-                <p>
-                    We embrace diversity by providing resources in multiple languages and 
-                    formats, ensuring everyone has access to digital literacy education.
-                </p>
-            </div>
-
-            <div class="principle-card" data-scroll-trigger="innovation">
-                <div class="principle-icon">
-                    <i class="fas fa-lightbulb"></i>
-                </div>
-                <h3>Innovation</h3>
-                <p>
-                    We leverage cutting-edge technologies like AI to continuously enhance 
-                    our educational offerings and create experiences that inspire and educate.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Contact Section -->
-<section class="contact-section section-padding" id="contact">
-    <div class="container">
-        <div class="section-header" data-aos="fade-up">
-            <span class="section-label">Get Involved</span>
-            <h2 class="section-title">Become a Part of the Solution.</h2>
-            <p class="section-description">
-                Whether you are a community leader, a potential partner, a researcher, 
-                or a student, there is a role for you in building a digitally resilient future.
-            </p>
-        </div>
-
-        <div class="contact-content">
-            <!-- Pathway Cards -->
-            <div class="pathway-grid" data-aos="fade-up" data-aos-delay="200">
-                <div class="pathway-card" data-pathway="partner">
-                    <div class="pathway-icon">
-                        <i class="fas fa-briefcase"></i>
+                     <div>
+                        <label for="message" class="block mb-2 font-medium">Your Message</label>
+                        <textarea id="message" name="message" rows="5" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal"></textarea>
                     </div>
-                    <h4>For Partners & Investors</h4>
-                    <p>Join us in scaling digital literacy across Gilgit Baltistan</p>
-                    <div class="pathway-arrow">→</div>
-                </div>
-
-                <div class="pathway-card" data-pathway="researcher">
-                    <div class="pathway-icon">
-                        <i class="fas fa-flask"></i>
-                    </div>
-                    <h4>For Researchers</h4>
-                    <p>Collaborate on groundbreaking digital literacy research</p>
-                    <div class="pathway-arrow">→</div>
-                </div>
-
-                <div class="pathway-card" data-pathway="community">
-                    <div class="pathway-icon">
-                        <i class="fas fa-hands-holding-circle"></i>
-                    </div>
-                    <h4>For Community Members</h4>
-                    <p>Become a digital literacy champion in your community</p>
-                    <div class="pathway-arrow">→</div>
-                </div>
-            </div>
-
-            <!-- Contact Form -->
-            <div class="contact-form-wrapper" data-aos="fade-up" data-aos-delay="400">
-                <form class="contact-form" id="contact-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="interest">I am a...</label>
-                            <select id="interest" name="interest" required>
-                                <option value="">Select your interest</option>
-                                <option value="partner">Potential Partner / Investor</option>
-                                <option value="researcher">Researcher / Institution</option>
-                                <option value="community">Community Member</option>
-                                <option value="other">Other</option>
-                            </select>
-                            <i class="fas fa-chevron-down select-icon"></i>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="fullName">Full Name</label>
-                            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="message">Your Message</label>
-                        <textarea id="message" name="message" rows="5" placeholder="Tell us how you'd like to get involved..." required></textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-submit">
-                        <span class="btn-text">Send Message</span>
-                        <span class="btn-loading"><i class="fas fa-spinner fa-spin"></i></span>
-                        <span class="btn-success"><i class="fas fa-check"></i> Sent!</span>
-                    </button>
+                    <button type="submit" class="w-full bg-teal text-white font-semibold py-4 px-6 rounded-lg hover:bg-opacity-80 transition-colors">Send Message</button>
                 </form>
-            </div>
-        </div>
-    </div>
-</section>
-
-</main>
-
-<!-- Footer -->
-<footer class="main-footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-brand">
-                <div class="footer-logo">
-                    <span class="logo-icon">✦</span>
-                    <span class="logo-text">Mehfooz Internet</span>
-                </div>
-                <p class="footer-tagline">
-                    Empowering communities through digital literacy and online safety.
-                </p>
-                <div class="footer-social">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <div id="form-success" class="hidden max-w-xl mx-auto text-center border border-teal rounded-lg p-8">
+                    <p class="font-script text-teal text-3xl mb-2">Thank You!</p>
+                    <p class="text-medium-text">Your message has been sent. We'll be in touch soon.</p>
                 </div>
             </div>
+        </section>
+    </main>
 
-            <div class="footer-links-group">
-                <div class="footer-column">
-                    <h5>Platform</h5>
-                    <ul>
-                        <li><a href="#solution">Features</a></li>
-                        <li><a href="#difference">Advantages</a></li>
-                        <li><a href="#principles">Principles</a></li>
-                    </ul>
-                </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const gameScreen = document.getElementById('game-screen');
+        const loader = document.getElementById('loader');
+        const siteHeader = document.getElementById('site-header');
+        const mainContent = document.getElementById('main-content');
+        const navLinks = document.querySelectorAll('nav a');
 
-                <div class="footer-column">
-                    <h5>Resources</h5>
-                    <ul>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Research</a></li>
-                        <li><a href="#">Blog</a></li>
-                    </ul>
-                </div>
+        // --- GAME LOGIC ---
+        const gameData = [
+            { question: "A message from an unknown number says you've won a prize and asks for your bank details. It has many spelling errors.", answer: 'not-credible', explanation: "Correct! Unsolicited messages asking for personal info are usually scams. Poor grammar is a big red flag." },
+            { question: "A news article about a local event is published on the website of a well-known national newspaper.", answer: 'credible', explanation: "Correct! Established news organizations have editorial standards, making their reports generally reliable." },
+            { question: "A post on social media claims a simple home remedy cures a serious disease, without citing any scientific studies.", answer: 'not-credible', explanation: "Excellent! Health claims should always be backed by scientific evidence from reputable sources, not just personal stories." }
+        ];
+        let currentQuestionIndex = 0;
 
-                <div class="footer-column">
-                    <h5>Legal</h5>
-                    <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        const questionText = document.getElementById('game-question-text');
+        const gameChoices = document.getElementById('game-choices');
+        const gameFeedback = document.getElementById('game-feedback');
+        const gameProgress = document.getElementById('game-progress');
+        const gameContent = document.getElementById('game-content');
+        const gameEndScreen = document.getElementById('game-end-screen');
+        const enterSiteBtn = document.getElementById('enter-site-btn');
 
-        <div class="footer-bottom">
-            <p>&copy; 2025 Mehfooz Internet. All rights reserved.</p>
-            <p>Made with <i class="fas fa-heart"></i> for Gilgit Baltistan</p>
-        </div>
-    </div>
-</footer>
+        function loadQuestion() {
+            const question = gameData[currentQuestionIndex];
+            questionText.textContent = question.question;
+            gameProgress.textContent = `Question ${currentQuestionIndex + 1} of ${gameData.length}`;
+            gameFeedback.textContent = '';
+            gameFeedback.style.opacity = 0;
+            gameChoices.style.pointerEvents = 'auto';
+            gameChoices.style.opacity = 1;
+        }
 
-<!-- Back to Top Button -->
-<button class="back-to-top" id="back-to-top" aria-label="Back to top">
-    <i class="fas fa-arrow-up"></i>
-</button>
+        gameChoices.addEventListener('click', (e) => {
+            if (e.target.tagName !== 'BUTTON') return;
+            const choice = e.target.dataset.choice;
+            const question = gameData[currentQuestionIndex];
+            
+            gameChoices.style.pointerEvents = 'none';
+            gameChoices.style.opacity = 0.5;
 
-<!-- MehfoozBot Modal -->
-<div class="modal" id="bot-modal">
-    <div class="modal-backdrop" id="modal-backdrop"></div>
-    <div class="modal-container">
-        <div class="modal-header">
-            <h3>
-                <i class="fas fa-robot"></i>
-                MehfoozBot Demo
-            </h3>
-            <button class="modal-close" id="close-bot-modal" aria-label="Close">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="chat-container">
-                <div class="chat-messages" id="chat-messages">
-                    <div class="chat-message bot">
-                        <div class="message-avatar">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="message-content">
-                            <p>Hello! I'm MehfoozBot. How can I help you learn about digital safety today?</p>
-                        </div>
-                    </div>
-                </div>
+            if (choice === question.answer) {
+                gameFeedback.textContent = question.explanation;
+                gameFeedback.className = 'mt-6 min-h-[3rem] text-lg opacity-0 feedback-correct';
+            } else {
+                gameFeedback.textContent = "Not quite. " + question.explanation;
+                gameFeedback.className = 'mt-6 min-h-[3rem] text-lg opacity-0 feedback-incorrect';
+            }
+            gsap.to(gameFeedback, { opacity: 1, duration: 0.5 });
 
-                <div class="quick-questions">
-                    <p class="questions-label">Quick Questions:</p>
-                    <button class="quick-question" data-question="How can I spot fake news?">
-                        <i class="fas fa-newspaper"></i>
-                        How can I spot fake news?
-                    </button>
-                    <button class="quick-question" data-question="Is my WhatsApp safe?">
-                        <i class="fab fa-whatsapp"></i>
-                        Is my WhatsApp safe?
-                    </button>
-                    <button class="quick-question" data-question="How do I create a strong password?">
-                        <i class="fas fa-lock"></i>
-                        How do I create a strong password?
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < gameData.length) {
+                    loadQuestion();
+                } else {
+                    endGame();
+                }
+            }, 4000);
+        });
 
-<!-- JavaScript Files -->
-<script src="particles.js"></script>
-<script src="animations.js"></script>
-<script src="script.js"></script>
+        function endGame() {
+            gsap.to(gameContent, { opacity: 0, duration: 0.5, onComplete: () => {
+                gameContent.classList.add('hidden');
+                gameEndScreen.classList.remove('hidden');
+                gsap.from(gameEndScreen, { opacity: 0, y: 20, duration: 0.5 });
+            }});
+        }
 
+        enterSiteBtn.addEventListener('click', () => {
+            gsap.to(gameScreen, { opacity: 0, duration: 1, onComplete: () => {
+                gameScreen.style.display = 'none';
+                initMainSite();
+            }});
+        });
+        
+        loadQuestion();
+
+        // --- MAIN SITE INITIALIZATION ---
+        function initMainSite() {
+            loader.classList.remove('hidden');
+            
+            // --- Intimate Cursor ---
+            const cursorLight = document.getElementById('cursor-light');
+            const cursorDot = document.getElementById('cursor-dot');
+            window.addEventListener('mousemove', e => {
+                gsap.to(cursorLight, { duration: 0.5, x: e.clientX, y: e.clientY, ease: 'power2.out' });
+                gsap.to(cursorDot, { duration: 0.2, x: e.clientX, y: e.clientY });
+            });
+            
+            // --- Page Navigation ---
+            function switchPage(targetPageId) {
+                const currentPage = document.querySelector('.page.active');
+                const targetPage = document.getElementById(`page-${targetPageId}`);
+
+                if (currentPage && targetPage && currentPage !== targetPage) {
+                    currentPage.classList.add('page-exit');
+                    currentPage.addEventListener('animationend', () => {
+                        currentPage.classList.remove('active', 'page-exit');
+                        targetPage.classList.add('active', 'page-enter');
+                        window.scrollTo(0, 0);
+                    }, { once: true });
+                }
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    const pageId = link.dataset.page;
+                    switchPage(pageId);
+                });
+            });
+
+            // --- Site Loader ---
+            gsap.to(loader, {
+                delay: 1,
+                opacity: 0,
+                duration: 1,
+                onComplete: () => {
+                    loader.style.display = 'none';
+                    gsap.to(siteHeader, { opacity: 1, duration: 1.5 });
+                    gsap.to(mainContent, { opacity: 1, duration: 1.5 });
+                }
+            });
+
+            // --- MehfoozBot Logic ---
+            const chatLog = document.getElementById('chat-log');
+            const chatForm = document.getElementById('chat-form');
+            const chatInput = document.getElementById('chat-input');
+            const questionPills = document.querySelectorAll('.question-pill');
+
+            const botResponses = {
+                "default": "That's a great question. While I'm just a demo, in the full version of MehfoozBot, I can provide detailed, personalized guidance on digital safety and literacy.",
+                "How can I spot fake news?": "To spot fake news, check the source, look for evidence, and watch for unusual formatting. Real news sites usually have high standards. Also, consider if the story is designed to make you feel strong emotions.",
+                "Is my WhatsApp safe?": "WhatsApp has end-to-end encryption, which is very secure. To make it even safer, enable two-step verification in your settings and be cautious about sharing personal information with unknown contacts.",
+                "What is misinformation?": "Misinformation is false or inaccurate information that is spread, regardless of intent to deceive. It's different from disinformation, which is deliberately misleading."
+            };
+
+            function addMessage(message, sender) {
+                const bubble = document.createElement('div');
+                bubble.className = `chat-bubble ${sender}-bubble`;
+                bubble.textContent = message;
+                chatLog.appendChild(bubble);
+                chatLog.scrollTop = chatLog.scrollHeight;
+            }
+
+            function handleUserMessage(message) {
+                if (!message.trim()) return;
+                addMessage(message, 'user');
+                chatInput.value = '';
+                
+                // Simulate bot thinking
+                setTimeout(() => {
+                    const response = botResponses[message] || botResponses['default'];
+                    addMessage(response, 'bot');
+                }, 1200);
+            }
+
+            chatForm.addEventListener('submit', e => {
+                e.preventDefault();
+                handleUserMessage(chatInput.value);
+            });
+
+            questionPills.forEach(pill => {
+                pill.addEventListener('click', () => {
+                    const question = pill.dataset.question;
+                    handleUserMessage(question);
+                });
+            });
+
+            addMessage("Hello! I'm a demo of MehfoozBot. How can I help you today?", 'bot');
+
+            // --- Contact Form Logic ---
+            const contactForm = document.getElementById('contact-form');
+            const formSuccess = document.getElementById('form-success');
+            contactForm.addEventListener('submit', e => {
+                e.preventDefault();
+                gsap.to(contactForm, { 
+                    opacity: 0, 
+                    duration: 0.5,
+                    onComplete: () => {
+                        contactForm.style.display = 'none';
+                        formSuccess.style.display = 'block';
+                        gsap.fromTo(formSuccess, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
+                    }
+                });
+            });
+        }
+    });
+    </script>
 </body>
 </html>
+
