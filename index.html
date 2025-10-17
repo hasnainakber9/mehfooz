@@ -111,11 +111,16 @@
             position: fixed;
             z-index: 9999;
             pointer-events: none;
-            transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s, opacity 0.3s;
+            transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s, opacity 0.3s, width 0.3s, height 0.3s;
         }
         .cursor-active {
             transform: scale(1.5);
             background-color: rgba(255, 255, 255, 0.1);
+        }
+        .cursor-text {
+            width: 80px;
+            height: 80px;
+            border-radius: 40px;
         }
         .dot-active {
              transform: scale(0.5);
@@ -163,23 +168,15 @@
 
 
         /* --- Animated Starfield Background --- */
-        #starfield-canvas {
+        #starfield-canvas, #nebula-canvas {
             width: 100%;
             height: 100%;
             position: fixed;
             top: 0;
             left: 0;
-            z-index: -1;
         }
-        #nebula-canvas {
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -2;
-            opacity: 0.3;
-        }
+        #starfield-canvas { z-index: -1; }
+        #nebula-canvas { z-index: -2; opacity: 0.3; }
 
         /* --- Text & Element Animations --- */
         .reveal-container {
@@ -373,6 +370,19 @@
         @keyframes blink {
             50% { opacity: 0; }
         }
+        
+        /* --- Contact Form --- */
+        .form-input {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color-1);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+        }
+
 
         /* --- Scroll Progress Bar --- */
         #progress-bar {
