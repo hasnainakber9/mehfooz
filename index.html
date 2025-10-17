@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehfooz - The Signal in the Noise</title>
+    <title>Mehfooz - The Direction in the Noise</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -210,28 +210,17 @@
             animation: float 6s ease-in-out infinite;
         }
 
-        /* --- Marquee --- */
-        .marquee {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
-            position: relative;
+        /* --- NEW: Why Now Section Pulse --- */
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 0 0 40px rgba(236, 72, 153, 0.2), 0 0 60px rgba(236, 72, 153, 0.1);
+            }
+            50% {
+                box-shadow: 0 0 60px rgba(236, 72, 153, 0.4), 0 0 80px rgba(236, 72, 153, 0.2);
+            }
         }
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 40s linear infinite;
-        }
-        .marquee-content span {
-            font-size: 5rem;
-            padding: 0 2rem;
-            color: rgba(255, 255, 255, 0.07);
-            animation: float 8s ease-in-out infinite alternate;
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
-            text-stroke: 1px rgba(255, 255, 255, 0.1);
-        }
-        @keyframes marquee {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
+        .pulse-glow-border {
+            animation: pulse-glow 4s ease-in-out infinite;
         }
         
         /* --- Holographic Card --- */
@@ -306,6 +295,7 @@
         }
         .timeline-item:last-child {
             border-left: 2px solid transparent;
+            padding-bottom: 0;
         }
         .timeline-marker {
             position: absolute;
@@ -376,16 +366,11 @@
         }
         .terminal-line {
             white-space: pre-wrap;
+            word-break: break-all;
         }
         .terminal-line.command::before {
-            content: '> ';
-        }
-        .terminal-line .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 1.2em;
-            background: #0f0;
-            animation: blink 1s step-end infinite;
+            content: '$ ';
+            color: var(--accent-color-1);
         }
         @keyframes blink {
             50% { opacity: 0; }
@@ -414,7 +399,7 @@
         .form-submit-button .button-glare {
             position: absolute;
             top: -50%;
-            left: -50%;
+            left: -150%;
             width: 20px;
             height: 200%;
             background: rgba(255, 255, 255, 0.3);
@@ -473,9 +458,9 @@
             <a href="#hero" class="font-display text-2xl tracking-wider">MEHFOOZ</a>
             <nav class="hidden md:flex space-x-8 text-slate-400">
                 <a href="#problem">The Problem</a>
+                <a href="#solution">Our Solution</a>
                 <a href="#ecosystem">Our Ecosystem</a>
                 <a href="#roadmap">Roadmap</a>
-                <a href="#impact">Impact</a>
                 <a href="#insights">Insights</a>
                 <a href="#faq">FAQ</a>
             </nav>
@@ -496,19 +481,58 @@
                     <div class="reveal-container"><span class="reveal-text" style="transition-delay: 0.2s;">WE PROVIDE THE SIGNAL.</span></div>
                 </h1>
             </div>
-            <div class="reveal-container mt-8 float-anim" style="animation-delay: -2s;">
-                <p class="text-lg md:text-xl max-w-3xl text-slate-400 reveal-text" style="transition-delay: 0.5s;">
-                    Mehfooz is a culturally-architected platform providing the critical skills needed to combat misinformation and thrive in the digital age.
+            <div class="fade-in mt-8 max-w-4xl" style="transition-delay: 0.5s;">
+                <p class="text-lg md:text-xl text-slate-400">
+                    Mehfooz is a culturally-architected platform to empower the people of Gilgit Baltistan with trustworthy, lifelong learning opportunities that promote online safety and digital literacy, enabling them to navigate and thrive in an increasingly connected world.
                 </p>
             </div>
         </section>
 
-        <!-- SECTION 2: MARQUEE -->
-        <section class="py-20">
-            <div class="marquee font-display">
-                <div class="marquee-content">
-                    <span>COLLABORATION</span><span>INTEGRITY</span><span>INCLUSIVITY</span><span>INNOVATION</span><span>EMPOWERMENT</span><span>RESILIENCE</span>
-                    <span>COLLABORATION</span><span>INTEGRITY</span><span>INCLUSIVITY</span><span>INNOVATION</span><span>EMPOWERMENT</span><span>RESILIENCE</span>
+        <!-- SECTION 2: OUR CORE VALUES -->
+        <section id="values" class="py-32 bg-slate-900/30">
+            <div class="container mx-auto px-6">
+                <div class="text-center">
+                     <h2 class="font-display text-6xl md:text-8xl tracking-tight float-anim">
+                        <span class="reveal-container"><span class="reveal-text">OUR CORE VALUES</span></span>
+                    </h2>
+                </div>
+                <div class="mt-20 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Value Card 1: Collaboration -->
+                    <div class="fade-in holographic-card p-8 rounded-2xl text-center">
+                        <div class="glare"></div>
+                        <div class="inline-block p-4 bg-sky-500/10 rounded-full mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M15 21v-1a6 6 0 00-5.173-5.975M15 21a6 6 0 00-9-5.197" /></svg>
+                        </div>
+                        <h3 class="font-display text-3xl">Collaboration</h3>
+                        <p class="text-slate-400 mt-2 text-sm">We build partnerships with local leaders, researchers, and students to create a holistic approach to combating misinformation.</p>
+                    </div>
+                    <!-- Value Card 2: Integrity -->
+                    <div class="fade-in holographic-card p-8 rounded-2xl text-center" style="transition-delay: 0.2s;">
+                        <div class="glare"></div>
+                        <div class="inline-block p-4 bg-indigo-500/10 rounded-full mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 13.036h.008v.008h-.008v-.008z" /></svg>
+                        </div>
+                        <h3 class="font-display text-3xl">Integrity</h3>
+                        <p class="text-slate-400 mt-2 text-sm">We uphold the highest standards of accuracy, ensuring users receive trustworthy information to build a foundation of truth.</p>
+                    </div>
+                    <!-- Value Card 3: Inclusivity -->
+                    <div class="fade-in holographic-card p-8 rounded-2xl text-center" style="transition-delay: 0.4s;">
+                        <div class="glare"></div>
+                        <div class="inline-block p-4 bg-emerald-500/10 rounded-full mb-4">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502" /></svg>
+                        </div>
+                        <h3 class="font-display text-3xl">Inclusivity</h3>
+                        <p class="text-slate-400 mt-2 text-sm">We embrace diversity by providing resources in multiple indigenous languages, ensuring everyone has access to digital education.</p>
+                    </div>
+                     <!-- Value Card 4: Innovation -->
+                    <div class="fade-in holographic-card p-8 rounded-2xl text-center" style="transition-delay: 0.6s;">
+                        <div class="glare"></div>
+                        <div class="inline-block p-4 bg-rose-500/10 rounded-full mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.82m5.84-2.56a6 6 0 016 6H21a6 6 0 00-6-6v-1.07a6 6 0 01-5.84 7.38v-4.82m5.84-2.56l-3.29-3.29m0 0a3 3 0 00-4.24 0l-3.29 3.29a3 3 0 000 4.24l3.29 3.29a3 3 0 004.24 0l3.29-3.29a3 3 0 000-4.24z" /></svg>
+                        </div>
+                        <h3 class="font-display text-3xl">Innovation</h3>
+                        <p class="text-slate-400 mt-2 text-sm">We leverage cutting-edge technologies, including AI, to continuously enhance our educational offerings and user experience.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -523,17 +547,17 @@
                     </h2>
                     <div class="reveal-container">
                         <p class="mt-6 text-xl text-slate-400 reveal-text" style="transition-delay: 0.3s;">
-                            Rapid, unguided technological adoption creates a critical knowledge gap, leaving communities exposed to tech-enabled misinformation and digital exclusion.
+                           In Gilgit Baltistan, rapid technological adoption, including advanced tools like AI, is outpacing digital literacy. This creates a critical gap in knowledge, leaving communities vulnerable to tech-enabled misinformation, inadequate online safety practices, and digital exclusion.
                         </p>
                     </div>
                 </div>
             </div>
 
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div id="solution" class="grid lg:grid-cols-2 gap-16 items-center">
                 <div class="fade-in float-anim" style="animation-delay: -3s;">
                     <h3 class="font-display text-6xl md:text-7xl tracking-tight leading-none">MEET MEHFOOZBOT</h3>
                     <p class="mt-6 text-xl text-slate-300">
-                        Our AI-driven chatbot provides personalized learning and immediate assistance in local languages. It’s a personal tutor, a fact-checker, and a guide to a safer digital life, accessible 24/7.
+                        Our AI-driven chatbot provides personalized learning and immediate assistance in local languages. It’s a personal tutor, a fact-checker, and a guide to a safer digital life, accessible 24/7 on platforms you already use.
                     </p>
                      <div class="mt-8 flex flex-wrap gap-4 text-sm">
                         <span class="bg-sky-400/10 text-sky-400 py-1 px-3 rounded-full">AI-Powered</span>
@@ -563,6 +587,9 @@
                  <h2 class="font-display text-6xl md:text-8xl tracking-tight float-anim">
                     <span class="reveal-container"><span class="reveal-text">A COMPLETE ECOSYSTEM</span></span>
                 </h2>
+                <p class="mt-6 text-xl max-w-3xl mx-auto text-slate-400 fade-in">
+                    We deliver high-quality educational content through a multi-faceted approach that combines technology with deep community integration.
+                </p>
             </div>
             <div class="mt-20 grid md:grid-cols-3 gap-8 relative">
                 <div class="fade-in holographic-card p-8 rounded-2xl float-anim" style="animation-delay: -1s;">
@@ -576,9 +603,9 @@
                 <div class="fade-in holographic-card p-8 rounded-2xl float-anim" style="animation-delay: -2.5s;">
                     <div class="glare"></div>
                      <div class="buzzing-icon w-12 h-12 mb-4 text-sky-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m4 0v2M3 17h12M9 15v2M4 11h16M10 11v2m0-6H7a1 1 0 00-1 1v2m5-3h4a1 1 0 011 1v2M4 21h16a1 1 0 001-1v-2a1 1 0 00-1-1H4a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
                      </div>
-                    <h3 class="font-display text-3xl">Hyper-Localized Content</h3>
+                    <h3 class="font-display text-3xl">Hyper-Localized Mini-Courses</h3>
                     <p class="text-slate-400 mt-2">Bite-sized courses in multiple indigenous languages that address specific regional misinformation threats.</p>
                 </div>
                 <div class="fade-in holographic-card p-8 rounded-2xl float-anim" style="animation-delay: -4s;">
@@ -589,6 +616,20 @@
                     <h3 class="font-display text-3xl">Youth Feedback Loop</h3>
                     <p class="text-slate-400 mt-2">Local students provide continuous feedback, ensuring content is always relevant, effective, and evolving.</p>
                 </div>
+            </div>
+        </section>
+
+        <!-- NEW SECTION: WHY NOW? -->
+        <section id="why-now" class="py-32">
+            <div class="container mx-auto px-6 max-w-4xl">
+                 <div class="text-center p-12 border border-rose-500/30 rounded-2xl pulse-glow-border relative overflow-hidden bg-rose-500/5">
+                     <div class="fade-in">
+                        <h2 class="font-display text-6xl md:text-8xl tracking-tight text-rose-300">WHY NOW?</h2>
+                        <p class="mt-6 text-xl text-slate-300 max-w-2xl mx-auto">
+                            The need to address misinformation has never been more pressing. In conflict-prone regions like Gilgit Baltistan, where reliable local news is limited, residents turn to social media. This reliance can lead to the rapid spread of false narratives, exacerbating existing tensions.
+                        </p>
+                     </div>
+                 </div>
             </div>
         </section>
 
@@ -632,7 +673,7 @@
             </div>
         </section>
         
-        <!-- NEW SECTION: OUR IMPACT -->
+        <!-- IMPACT SECTION -->
         <section id="impact" class="py-32 bg-slate-900/30">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="font-display text-6xl md:text-8xl tracking-tight float-anim">
@@ -647,8 +688,8 @@
                         <p class="mt-2 text-xl text-slate-300">Languages & Dialects Supported</p>
                     </div>
                     <div class="fade-in" style="transition-delay: 0.2s;">
-                        <span class="impact-number text-7xl text-sky-400" data-target="50000">0</span><span class="impact-number text-7xl text-sky-400">+</span>
-                        <p class="mt-2 text-xl text-slate-300">Individuals Empowered</p>
+                        <span class="impact-number text-7xl text-sky-400" data-target="100000">0</span><span class="impact-number text-7xl text-sky-400">+</span>
+                        <p class="mt-2 text-xl text-slate-300">Users Empowered (Year 2 Goal)</p>
                     </div>
                     <div class="fade-in" style="transition-delay: 0.4s;">
                         <span class="impact-number text-7xl text-sky-400" data-target="95">0</span><span class="impact-number text-7xl text-sky-400">%</span>
@@ -745,7 +786,7 @@
                                 <span class="faq-icon text-2xl">+</span>
                             </summary>
                             <div class="p-6 pt-0 text-slate-400">
-                                <p>Mehfooz is designed for everyone in communities vulnerable to misinformation, including students, community members, local leaders, and educational institutions in regions like Gilgit Baltistan. Our goal is to make digital literacy accessible to all, regardless of technical skill level.</p>
+                                <p>Mehfooz is designed for everyone in communities vulnerable to misinformation, including students, community members, local leaders (Ulema), educational institutions, researchers and policymakers in regions like Gilgit Baltistan. Our goal is to make digital literacy accessible to all.</p>
                             </div>
                         </details>
                     </div>
@@ -767,7 +808,7 @@
                                 <span class="faq-icon text-2xl">+</span>
                             </summary>
                             <div class="p-6 pt-0 text-slate-400">
-                                <p>While fact-checking is a component, our primary focus is on proactive education and empowerment. We differentiate ourselves through hyper-localized content in indigenous languages, deep community integration with local leaders, and innovative technology like the MehfoozBot to provide personalized, preventative learning experiences.</p>
+                                <p>Our primary focus is on proactive education, not just fact-checking. We differentiate ourselves through hyper-localized content in indigenous languages, deep community integration with local leaders (Ulema), and innovative technology like the MehfoozBot to provide personalized, preventative learning experiences.</p>
                             </div>
                         </details>
                     </div>
@@ -853,7 +894,7 @@
  * custom cursor effects, animations on scroll, interactive 3D elements, and form handling.
  * It is designed to be self-contained and executed after the DOM is fully loaded.
  * @author Gemini
- * @version 2.0.0
+ * @version 3.0.0
  */
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -962,7 +1003,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let width, height;
         let stars = [];
-        const starCount = 700;  
+        const starCount = 800;  
         let shootingStars = [];
         let frame = 0;
 
@@ -1190,6 +1231,8 @@ document.addEventListener('DOMContentLoaded', () => {
             el.innerText = currentNum.toLocaleString();
             if (progress < 1) {
                 window.requestAnimationFrame(step);
+            } else {
+                el.innerText = target.toLocaleString();
             }
         };
         window.requestAnimationFrame(step);
@@ -1203,52 +1246,63 @@ document.addEventListener('DOMContentLoaded', () => {
         terminalElement.dataset.animated = 'true'; // Prevent re-animation
 
         const lines = [
-            { text: "booting mehfoozOS v2.1...", delay: 50 },
-            { text: "initializing cognitive cores...", delay: 50 },
-            { text: "establishing secure uplink...", status: "OK", delay: 100 },
-            { text: "loading linguistic models [ur, en, shn, btl]...", status: "DONE", delay: 100 },
-            { text: "compiling community feedback data...", delay: 50},
-            { text: "syncing with global threat database...", status: "OK", delay: 100},
-            { text: "SYSTEM READY.", delay: 50 },
-            { text: "", delay: 500 },
-            { text: "monitoring data streams for misinformation patterns...", delay: 50, command: true },
-            { text: "[08:21:27] Pattern detected: Type-3 Viral Disinformation. Source: Social Media Group.", delay: 20 },
-            { text: "[08:21:28] Cross-referencing with known narratives... Match found.", delay: 20 },
-            { text: "[08:21:29] Deploying educational counter-module to 5,000 nodes.", delay: 20 },
-            { text: "[08:21:30] Threat neutralized. Confidence: 99.8%", delay: 20, color: "#22c55e" },
-            { text: "[08:21:45] Pattern detected: Phishing Scam. Vector: SMS.", delay: 20 },
-            { text: "[08:21:46] Analyzing payload... Standard credential theft attempt.", delay: 20 },
-            { text: "[08:21:47] Issuing community alert via MehfoozBot & social channels.", delay: 20 },
-            { text: "[08:21:48] Alert deployed. Threat contained.", delay: 20, color: "#22c55e" },
+            { text: "booting mehfoozOS v3.0...", delay: 20 },
+            { text: "initializing cognitive cores...", delay: 20 },
+            { text: "establishing secure uplink to community nodes...", status: "OK", delay: 50 },
+            { text: "loading linguistic models [ur, en, shn, btl, khw, wkh]...", status: "DONE", delay: 50 },
+            { text: "compiling community feedback data stream...", delay: 20},
+            { text: "syncing with global misinformation threat database...", status: "OK", delay: 50},
+            { text: "SYSTEM READY. Awaiting input.", delay: 20 },
+            { text: "", delay: 300 },
+            { text: "run monitor --social --realtime", delay: 40, command: true },
+            { text: "Monitoring active data streams for misinformation patterns...", delay: 20 },
+            { text: "[INFO] Pattern detected: Type-3 Viral Disinformation.", delay: 15 },
+            { text: "[INFO] Source: Encrypted Social Media Group.", delay: 15 },
+            { text: "[INFO] Cross-referencing with known narratives... Match found: 'false_health_remedy_v2'.", delay: 15 },
+            { text: "[ACTION] Deploying educational counter-module to 12,450 nodes.", delay: 15 },
+            { text: "[SUCCESS] Threat neutralized. Confidence: 99.8%", delay: 15, color: "#22c55e" },
+            { text: "", delay: 300 },
+            { text: "[INFO] Pattern detected: Phishing Scam.", delay: 15 },
+            { text: "[INFO] Vector: SMS. Target: Financial Institutions.", delay: 15 },
+            { text: "[ACTION] Analyzing payload... Standard credential theft attempt.", delay: 15 },
+            { text: "[ACTION] Issuing community-wide alert via MehfoozBot & social channels.", delay: 15 },
+            { text: "[SUCCESS] Alert deployed. Threat contained.", delay: 15, color: "#22c55e" },
         ];
         
-        let totalDelay = 0;
-        lines.forEach(line => {
-            totalDelay += line.delay * (line.text.length || 1) + 200;
-            setTimeout(() => {
-                const p = document.createElement('p');
-                p.className = 'terminal-line';
-                if (line.command) p.classList.add('command');
-                if (line.color) p.style.color = line.color;
-                
-                let charIndex = 0;
-                const typeChar = () => {
-                    if (charIndex < line.text.length) {
-                        p.textContent += line.text[charIndex];
-                        charIndex++;
-                        terminalElement.scrollTop = terminalElement.scrollHeight;
-                        setTimeout(typeChar, line.delay);
-                    } else if (line.status) {
+        let lineIndex = 0;
+        const typeLine = () => {
+            if (lineIndex >= lines.length) return;
+            
+            const line = lines[lineIndex];
+            const p = document.createElement('p');
+            p.className = 'terminal-line';
+            if (line.command) p.classList.add('command');
+            if (line.color) p.style.color = line.color;
+
+            let charIndex = 0;
+            const typeChar = () => {
+                if(charIndex < line.text.length) {
+                    p.textContent += line.text[charIndex];
+                    charIndex++;
+                    terminalElement.scrollTop = terminalElement.scrollHeight;
+                    setTimeout(typeChar, line.delay);
+                } else {
+                    if (line.status) {
                         const statusSpan = document.createElement('span');
                         statusSpan.textContent = ` [${line.status}]`;
                         statusSpan.style.color = '#22c55e'; // green-500
                         p.appendChild(statusSpan);
                     }
-                };
-                terminalElement.appendChild(p);
-                typeChar();
-            }, totalDelay);
-        });
+                    lineIndex++;
+                    typeLine();
+                }
+            };
+            terminalElement.appendChild(p);
+            typeChar();
+        };
+        
+        terminalElement.innerHTML = '';
+        typeLine();
     };
 
     // --- Module: Scroll Animations Observer ---
@@ -1259,13 +1313,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                     
-                    if (entry.target.id === 'impact') {
+                    if (entry.target.id === 'impact' && !entry.target.dataset.animated) {
                         document.querySelectorAll('.impact-number').forEach(counter => { animateCounter(counter); });
-                        observerInstance.unobserve(entry.target); // Animate counters only once
+                        entry.target.dataset.animated = 'true';
                     }
-                    if (entry.target.id === 'terminal-section') {
+                    if (entry.target.id === 'terminal-section' && !entry.target.dataset.animated) {
                         animateTerminal();
-                        observerInstance.unobserve(entry.target); // Animate terminal only once
+                        entry.target.dataset.animated = 'true';
                     }
                 }
             });
@@ -1319,7 +1373,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // Simulate network delay
             setTimeout(() => {
                 // In a real application, you would send the form data to a server here.
-                // For this mock-up, we'll just show a success message.
                 formStatus.textContent = 'Thank you! Your message has been sent successfully.';
                 formStatus.className = 'text-green-400';
                 form.reset();
@@ -1335,3 +1388,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
