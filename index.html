@@ -27,18 +27,14 @@
 
         .font-display { font-family: 'Bebas Neue', sans-serif; }
 
-        /* --- Animated Gradient Background --- */
-        #gradient-canvas {
+        /* --- Animated Starfield Background --- */
+        #starfield-canvas {
             width: 100%;
             height: 100%;
             position: fixed;
             top: 0;
             left: 0;
             z-index: -1;
-            --gradient-color-1: #0c1b42;
-            --gradient-color-2: #2a0e49;
-            --gradient-color-3: #230c33;
-            --gradient-color-4: #091f36;
         }
 
         /* --- Text & Element Animations --- */
@@ -64,6 +60,16 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Zero-gravity float animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-anim {
+            animation: float 6s ease-in-out infinite;
+        }
         
         /* --- Marquee --- */
         .marquee {
@@ -74,24 +80,46 @@
         }
         .marquee-content {
             display: inline-block;
-            animation: marquee 30s linear infinite;
+            animation: marquee 40s linear infinite;
         }
         .marquee-content span {
             font-size: 5rem;
             padding: 0 2rem;
-            color: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.07);
+            animation: float 8s ease-in-out infinite alternate;
         }
+        .marquee-content span:nth-child(2n) { animation-delay: -2s; }
+        .marquee-content span:nth-child(3n) { animation-delay: -4s; }
         @keyframes marquee {
             from { transform: translateX(0); }
             to { transform: translateX(-50%); }
         }
         
-        /* --- Chat Demo --- */
-        .chat-ui {
-            background: rgba(0, 0, 0, 0.3);
+        /* --- Holographic Chat Demo --- */
+        .holographic-card {
+            background: rgba(10, 25, 47, 0.3);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .holographic-card .glare {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .chat-ui {
             transform: scale(0.9) rotateX(10deg);
             opacity: 0;
             transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1);
@@ -125,18 +153,20 @@
 </head>
 <body class="antialiased">
     <div id="progress-bar"></div>
-    <canvas id="gradient-canvas"></canvas>
+    <canvas id="starfield-canvas"></canvas>
 
     <main>
         <!-- SECTION 1: HERO -->
-        <section class="h-screen flex flex-col justify-center items-center text-center p-6">
-            <h1 class="font-display text-7xl md:text-9xl lg:text-[10rem] tracking-tighter">
-                <div class="reveal-container"><span class="reveal-text">THE DIGITAL WORLD IS NOISY.</span></div>
-            </h1>
-            <h1 class="font-display text-7xl md:text-9xl lg:text-[10rem] tracking-tighter mt-[-1rem] md:mt-[-2rem]">
-                <div class="reveal-container"><span class="reveal-text" style="transition-delay: 0.2s;">WE PROVIDE THE SIGNAL.</span></div>
-            </h1>
-            <div class="reveal-container mt-8">
+        <section class="h-screen flex flex-col justify-center items-center text-center p-6 relative">
+            <div class="float-anim" style="animation-delay: -1s;">
+                <h1 class="font-display text-7xl md:text-9xl lg:text-[10rem] tracking-tighter">
+                    <div class="reveal-container"><span class="reveal-text">THE DIGITAL WORLD IS NOISY.</span></div>
+                </h1>
+                <h1 class="font-display text-7xl md:text-9xl lg:text-[10rem] tracking-tighter mt-[-1rem] md:mt-[-2rem]">
+                    <div class="reveal-container"><span class="reveal-text" style="transition-delay: 0.2s;">WE PROVIDE THE SIGNAL.</span></div>
+                </h1>
+            </div>
+            <div class="reveal-container mt-8 float-anim" style="animation-delay: -2s;">
                 <p class="text-lg md:text-xl max-w-3xl text-slate-400 reveal-text" style="transition-delay: 0.5s;">
                     Mehfooz is a culturally-architected platform providing the critical skills needed to combat misinformation and thrive in the digital age.
                 </p>
@@ -156,26 +186,29 @@
         <!-- SECTION 3: THE PROBLEM & SOLUTION -->
         <section class="container mx-auto px-6 py-32 space-y-32">
             <div class="max-w-4xl mx-auto text-center">
-                <h2 class="font-display text-6xl md:text-8xl tracking-tight">
-                    <span class="reveal-container"><span class="reveal-text">INFORMATION OVERLOAD</span></span>
-                    <span class="reveal-container"><span class="reveal-text" style="transition-delay: 0.1s;">IS A VULNERABILITY.</span></span>
-                </h2>
-                <div class="reveal-container">
-                    <p class="mt-6 text-xl text-slate-400 reveal-text" style="transition-delay: 0.3s;">
-                        Rapid, unguided technological adoption creates a critical knowledge gap, leaving communities exposed to tech-enabled misinformation and digital exclusion.
-                    </p>
+                <div class="float-anim">
+                    <h2 class="font-display text-6xl md:text-8xl tracking-tight">
+                        <span class="reveal-container"><span class="reveal-text">INFORMATION OVERLOAD</span></span>
+                        <span class="reveal-container"><span class="reveal-text" style="transition-delay: 0.1s;">IS A VULNERABILITY.</span></span>
+                    </h2>
+                    <div class="reveal-container">
+                        <p class="mt-6 text-xl text-slate-400 reveal-text" style="transition-delay: 0.3s;">
+                            Rapid, unguided technological adoption creates a critical knowledge gap, leaving communities exposed to tech-enabled misinformation and digital exclusion.
+                        </p>
+                    </div>
                 </div>
             </div>
 
             <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div class="fade-in">
+                <div class="fade-in float-anim" style="animation-delay: -3s;">
                     <h3 class="font-display text-6xl md:text-7xl tracking-tight leading-none">MEET MEHFOOZBOT</h3>
                     <p class="mt-6 text-xl text-slate-300">
                         Our AI-driven chatbot provides personalized learning and immediate assistance in local languages. It’s a personal tutor, a fact-checker, and a guide to a safer digital life, accessible 24/7.
                     </p>
                 </div>
                 <div class="fade-in" style="transition-delay: 0.2s;">
-                    <div class="chat-ui rounded-2xl p-6 shadow-2xl">
+                    <div class="chat-ui holographic-card rounded-2xl p-6 shadow-2xl">
+                         <div class="glare"></div>
                         <div class="space-y-4 h-96 flex flex-col justify-end">
                             <div class="chat-bubble self-start bg-slate-700 rounded-lg p-3 max-w-xs">How do I know if a news story is fake?</div>
                             <div class="chat-bubble self-end bg-blue-600 rounded-lg p-3 max-w-xs" style="transition-delay: 0.5s;">That's a great question. Check the source. Is it a well-known, reputable news organization?</div>
@@ -190,20 +223,20 @@
         <!-- SECTION 4: ECOSYSTEM -->
         <section class="container mx-auto px-6 py-32">
             <div class="text-center">
-                 <h2 class="font-display text-6xl md:text-8xl tracking-tight">
+                 <h2 class="font-display text-6xl md:text-8xl tracking-tight float-anim">
                     <span class="reveal-container"><span class="reveal-text">A COMPLETE ECOSYSTEM</span></span>
                 </h2>
             </div>
             <div class="mt-20 space-y-10">
-                <div class="fade-in p-8 border-t border-slate-800 flex justify-between items-center">
+                <div class="fade-in p-8 border-t border-slate-800 flex justify-between items-center float-anim" style="animation-delay: -1s;">
                     <h3 class="font-display text-4xl md:text-6xl">HYPER-LOCALIZED CONTENT</h3>
                     <p class="text-lg text-slate-400 max-w-sm hidden md:block">Bite-sized courses in multiple indigenous languages that address specific regional misinformation threats.</p>
                 </div>
-                <div class="fade-in p-8 border-t border-slate-800 flex justify-between items-center">
+                <div class="fade-in p-8 border-t border-slate-800 flex justify-between items-center float-anim" style="animation-delay: -2.5s;">
                     <h3 class="font-display text-4xl md:text-6xl">COMMUNITY TRUST</h3>
                     <p class="text-lg text-slate-400 max-w-sm hidden md:block">Engaging local leaders (Ulema) as trusted digital literacy ambassadors, bridging technology with tradition.</p>
                 </div>
-                <div class="fade-in p-8 border-t border-b border-slate-800 flex justify-between items-center">
+                <div class="fade-in p-8 border-t border-b border-slate-800 flex justify-between items-center float-anim" style="animation-delay: -4s;">
                     <h3 class="font-display text-4xl md:text-6xl">YOUTH FEEDBACK LOOP</h3>
                     <p class="text-lg text-slate-400 max-w-sm hidden md:block">Local students provide continuous feedback, ensuring content is always relevant, effective, and evolving.</p>
                 </div>
@@ -212,7 +245,7 @@
 
         <!-- SECTION 5: CTA -->
         <section class="py-32 text-center">
-             <div class="fade-in">
+             <div class="fade-in float-anim">
                 <h2 class="font-display text-6xl md:text-8xl tracking-tight">JOIN OUR MISSION</h2>
                 <p class="mt-6 text-xl max-w-3xl mx-auto text-slate-400">
                     We are building a coalition of partners, investors, and community leaders. If you are committed to solving the digital vulnerability crisis, let's connect and build the future.
@@ -224,25 +257,83 @@
         </section>
     </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/granim/2.0.0/granim.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Fluid Gradient Background ---
-    var granimInstance = new Granim({
-        element: '#gradient-canvas',
-        direction: 'diagonal',
-        isPausedWhenNotInView: true,
-        states : {
-            "default-state": {
-                gradients: [
-                    ['#0c1b42', '#2a0e49'],
-                    ['#230c33', '#091f36'],
-                    ['#2a0e49', '#091f36']
-                ],
-                transitionSpeed: 7000
+    // --- Dynamic Starfield Background ---
+    const canvas = document.getElementById('starfield-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    let stars = [];
+    const starCount = 200;
+
+    function init() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        stars = [];
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                z: Math.random() * width,
+                size: Math.random() * 2 + 1,
+            });
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+        
+        for (let star of stars) {
+            star.z -= 1.5;
+            if (star.z <= 0) {
+                star.x = Math.random() * width;
+                star.y = Math.random() * height;
+                star.z = width;
+            }
+
+            const k = 128 / star.z;
+            const px = star.x * k + width / 2;
+            const py = star.y * k + height / 2;
+
+            if (px >= 0 && px <= width && py >= 0 && py <= height) {
+                const size = star.size * k;
+                ctx.beginPath();
+                ctx.arc(px, py, size / 2, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
+        requestAnimationFrame(animate);
+    }
+
+    init();
+    animate();
+    window.addEventListener('resize', init);
+
+    // --- Holographic Card Tilt Effect ---
+    const cards = document.querySelectorAll('.holographic-card');
+    cards.forEach(card => {
+        const glare = card.querySelector('.glare');
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const { width, height } = rect;
+            const rotateX = (y / height - 0.5) * -20;
+            const rotateY = (x / width - 0.5) * 20;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            glare.style.opacity = '1';
+            glare.style.transform = `translate(${x - width/2}px, ${y - height/2}px)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+            glare.style.opacity = '0';
+        });
     });
 
     // --- Scroll Animations ---
