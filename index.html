@@ -12,8 +12,8 @@
         :root {
             --bg-color: #010409;
             --text-color: #E2E8F0;
-            --accent-color-1: #38bdf8;
-            --accent-color-2: #818cf8;
+            --accent-color-1: #38bdf8; /* sky-500 */
+            --accent-color-2: #818cf8; /* indigo-400 */
             --slate-800-alpha: rgba(30, 41, 59, 0.5);
             --cursor-color: #ffffff;
         }
@@ -91,10 +91,11 @@
             transition: width 2s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-
         /* --- Custom Cursor --- */
         #cursor-dot, #cursor-outline {
             position: fixed;
+            top: 0;
+            left: 0;
             z-index: 9999;
             pointer-events: none;
             border-radius: 50%;
@@ -121,7 +122,7 @@
             height: 80px;
         }
         .dot-active {
-             transform: scale(0.5);
+            transform: scale(0.5);
         }
         
         /* --- Navigation Header --- */
@@ -164,7 +165,6 @@
             transform: scaleX(1);
         }
 
-
         /* --- Animated Starfield Background --- */
         #starfield-canvas, #nebula-canvas {
             width: 100%;
@@ -180,6 +180,7 @@
         .reveal-container {
             display: inline-block;
             overflow: hidden;
+            vertical-align: bottom; /* Fix alignment issues */
         }
         .reveal-text {
             display: block;
@@ -192,17 +193,17 @@
 
         .fade-in {
             opacity: 0;
-            transform: translateY(3rem);
+            transform: translateY(3rem) scale(0.95);
             transition: opacity 1.2s ease, transform 1.2s ease;
         }
         .visible .fade-in {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
         @keyframes float {
             0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(0.5deg); }
+            50% { transform: translateY(-15px) rotate(0.5deg); }
             100% { transform: translateY(0px) rotate(0deg); }
         }
         .float-anim {
@@ -225,6 +226,8 @@
             padding: 0 2rem;
             color: rgba(255, 255, 255, 0.07);
             animation: float 8s ease-in-out infinite alternate;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+            text-stroke: 1px rgba(255, 255, 255, 0.1);
         }
         @keyframes marquee {
             from { transform: translateX(0); }
@@ -255,6 +258,7 @@
             pointer-events: none;
         }
 
+        /* --- Chat UI --- */
         .chat-ui {
             transform: scale(0.9) rotateX(10deg);
             opacity: 0;
@@ -274,6 +278,25 @@
             transform: translateX(0);
         }
 
+        /* --- Animated Grid Background --- */
+        #animated-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(129, 140, 248, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(129, 140, 248, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: move-grid 20s linear infinite;
+        }
+        @keyframes move-grid {
+            from { background-position: 0 0; }
+            to { background-position: 50px 50px; }
+        }
+
         /* --- Roadmap Timeline --- */
         .timeline-item {
             position: relative;
@@ -286,7 +309,7 @@
         }
         .timeline-marker {
             position: absolute;
-            left: -0.75rem;
+            left: -0.8rem; /* Adjusted for 2px border */
             top: 0;
             width: 1.5rem;
             height: 1.5rem;
@@ -382,22 +405,26 @@
         .form-submit-button {
             position: relative;
             overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
         }
         .form-submit-button .button-glare {
             position: absolute;
             top: -50%;
             left: -50%;
-            width: 200%;
+            width: 20px;
             height: 200%;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.3);
             transform: rotate(30deg);
-            transition: transform 0.5s;
+            transition: left 0.8s ease;
             pointer-events: none;
         }
         .form-submit-button:hover .button-glare {
-            transform: translate(20%, -20%) rotate(30deg);
+            left: 150%;
         }
-
 
         /* --- Scroll Progress Bar --- */
         #progress-bar {
@@ -410,20 +437,37 @@
             z-index: 10001;
             transition: width 0.1s linear;
         }
+        
+        /* --- Buzzing Icons --- */
+        @keyframes buzz {
+            0%, 100% { transform: translate(0, 0) rotate(0); }
+            20% { transform: translate(-1px, 1px) rotate(-1deg); }
+            40% { transform: translate(-1px, -1px) rotate(-1deg); }
+            60% { transform: translate(1px, 1px) rotate(1deg); }
+            80% { transform: translate(1px, -1px) rotate(1deg); }
+        }
+        .buzzing-icon:hover {
+            animation: buzz 0.5s linear infinite;
+        }
     </style>
 </head>
 <body class="antialiased loading">
+    <!-- PRE-LOADER -->
     <div id="preloader">
         <div class="loader-text"></div>
         <div id="loader-bar-container"><div id="loader-bar"></div></div>
     </div>
 
+    <!-- CUSTOM CURSOR -->
     <div id="cursor-dot"></div>
     <div id="cursor-outline"></div>
+
+    <!-- PAGE ELEMENTS -->
     <div id="progress-bar"></div>
     <canvas id="nebula-canvas"></canvas>
     <canvas id="starfield-canvas"></canvas>
 
+    <!-- HEADER -->
     <header id="main-header" class="p-6">
         <div class="container mx-auto flex justify-between items-center">
             <a href="#hero" class="font-display text-2xl tracking-wider">MEHFOOZ</a>
@@ -463,8 +507,8 @@
         <section class="py-20">
             <div class="marquee font-display">
                 <div class="marquee-content">
-                    <span>COLLABORATION</span><span>INTEGRITY</span><span>INCLUSIVITY</span><span>INNOVATION</span>
-                    <span>COLLABORATION</span><span>INTEGRITY</span><span>INCLUSIVITY</span><span>INNOVATION</span>
+                    <span>COLLABORATION</span><span>INTEGRITY</span><span>INCLUSIVITY</span><span>INNOVATION</span><span>EMPOWERMENT</span><span>RESILIENCE</span>
+                    <span>COLLABORATION</span><span>INTEGRITY</span><span>INCLUSIVITY</span><span>INNOVATION</span><span>EMPOWERMENT</span><span>RESILIENCE</span>
                 </div>
             </div>
         </section>
@@ -491,10 +535,16 @@
                     <p class="mt-6 text-xl text-slate-300">
                         Our AI-driven chatbot provides personalized learning and immediate assistance in local languages. It’s a personal tutor, a fact-checker, and a guide to a safer digital life, accessible 24/7.
                     </p>
+                     <div class="mt-8 flex flex-wrap gap-4 text-sm">
+                        <span class="bg-sky-400/10 text-sky-400 py-1 px-3 rounded-full">AI-Powered</span>
+                        <span class="bg-indigo-400/10 text-indigo-400 py-1 px-3 rounded-full">Multilingual</span>
+                        <span class="bg-emerald-400/10 text-emerald-400 py-1 px-3 rounded-full">24/7 Access</span>
+                        <span class="bg-rose-400/10 text-rose-400 py-1 px-3 rounded-full">Fact-Checking</span>
+                    </div>
                 </div>
                 <div class="fade-in" style="transition-delay: 0.2s;">
                     <div class="chat-ui holographic-card rounded-2xl p-6 shadow-2xl">
-                         <div class="glare"></div>
+                       <div class="glare"></div>
                         <div class="space-y-4 h-96 flex flex-col justify-end">
                             <div class="chat-bubble self-start bg-slate-700 rounded-lg p-3 max-w-xs">How do I know if a news story is fake?</div>
                             <div class="chat-bubble self-end bg-blue-600 rounded-lg p-3 max-w-xs" style="transition-delay: 0.5s;">Great question. Check the source. Is it a well-known, reputable news organization?</div>
@@ -507,28 +557,35 @@
         </section>
 
         <!-- SECTION 4: ECOSYSTEM -->
-        <section id="ecosystem" class="container mx-auto px-6 py-32">
-            <div class="text-center">
+        <section id="ecosystem" class="container mx-auto px-6 py-32 relative">
+             <div id="animated-grid"></div>
+            <div class="text-center relative">
                  <h2 class="font-display text-6xl md:text-8xl tracking-tight float-anim">
                     <span class="reveal-container"><span class="reveal-text">A COMPLETE ECOSYSTEM</span></span>
                 </h2>
             </div>
-            <div class="mt-20 grid md:grid-cols-3 gap-8">
+            <div class="mt-20 grid md:grid-cols-3 gap-8 relative">
                 <div class="fade-in holographic-card p-8 rounded-2xl float-anim" style="animation-delay: -1s;">
                     <div class="glare"></div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <div class="buzzing-icon w-12 h-12 mb-4 text-sky-400">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    </div>
                     <h3 class="font-display text-3xl">Community Trust</h3>
                     <p class="text-slate-400 mt-2">Engaging local leaders (Ulema) as trusted digital literacy ambassadors, bridging technology with tradition.</p>
                 </div>
                 <div class="fade-in holographic-card p-8 rounded-2xl float-anim" style="animation-delay: -2.5s;">
                     <div class="glare"></div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m4 0v2M3 17h12M9 15v2M4 11h16M10 11v2m0-6H7a1 1 0 00-1 1v2m5-3h4a1 1 0 011 1v2M4 21h16a1 1 0 001-1v-2a1 1 0 00-1-1H4a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+                     <div class="buzzing-icon w-12 h-12 mb-4 text-sky-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m4 0v2M3 17h12M9 15v2M4 11h16M10 11v2m0-6H7a1 1 0 00-1 1v2m5-3h4a1 1 0 011 1v2M4 21h16a1 1 0 001-1v-2a1 1 0 00-1-1H4a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+                     </div>
                     <h3 class="font-display text-3xl">Hyper-Localized Content</h3>
                     <p class="text-slate-400 mt-2">Bite-sized courses in multiple indigenous languages that address specific regional misinformation threats.</p>
                 </div>
                 <div class="fade-in holographic-card p-8 rounded-2xl float-anim" style="animation-delay: -4s;">
                     <div class="glare"></div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V4a2 2 0 012-2h8a2 2 0 012 2v2z" /></svg>
+                     <div class="buzzing-icon w-12 h-12 mb-4 text-sky-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V4a2 2 0 012-2h8a2 2 0 012 2v2z" /></svg>
+                     </div>
                     <h3 class="font-display text-3xl">Youth Feedback Loop</h3>
                     <p class="text-slate-400 mt-2">Local students provide continuous feedback, ensuring content is always relevant, effective, and evolving.</p>
                 </div>
@@ -550,21 +607,25 @@
             <div class="mt-24 max-w-3xl mx-auto">
                 <div class="fade-in timeline-item">
                     <div class="timeline-marker"></div>
+                    <p class="text-sky-400 font-bold">YEAR 1-2</p>
                     <h3 class="font-display text-4xl mb-2">Phase 1: Foundation & Growth</h3>
                     <p class="text-slate-400">Reach a minimum of 100,000 users in Gilgit Baltistan, leveraging established educational networks and community structures for organic growth.</p>
                 </div>
                 <div class="fade-in timeline-item">
                     <div class="timeline-marker"></div>
+                     <p class="text-sky-400 font-bold">YEAR 2-3</p>
                     <h3 class="font-display text-4xl mb-2">Phase 2: Platform Evolution</h3>
                     <p class="text-slate-400">Evolve to include AI-driven personalized learning paths, enhanced offline capabilities for remote areas, and expanded language support for new regions.</p>
                 </div>
                 <div class="fade-in timeline-item">
                     <div class="timeline-marker"></div>
+                     <p class="text-sky-400 font-bold">YEAR 3-4</p>
                     <h3 class="font-display text-4xl mb-2">Phase 3: National Integration</h3>
                     <p class="text-slate-400">Deepen partnerships with national educational institutions, religious leaders, and community figures to ensure sustainable adoption and impact across Pakistan.</p>
                 </div>
                 <div class="fade-in timeline-item">
                     <div class="timeline-marker"></div>
+                     <p class="text-sky-400 font-bold">YEAR 5</p>
                     <h3 class="font-display text-4xl mb-2">Phase 4: Global Replication</h3>
                     <p class="text-slate-400">Adapt and deploy our model in other underserved communities worldwide, continuing with a freemium structure and institutional licenses.</p>
                 </div>
@@ -613,7 +674,12 @@
             
             <div id="terminal-section" class="mt-32 max-w-4xl mx-auto">
                 <div class="fade-in">
-                    <div id="terminal" class="rounded-lg p-4"></div>
+                    <div class="flex items-center space-x-2 p-3 bg-slate-800 rounded-t-lg">
+                        <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                    </div>
+                    <div id="terminal" class="rounded-b-lg p-4"></div>
                 </div>
             </div>
         </section>
@@ -697,7 +763,7 @@
                     <div class="fade-in faq-item border border-slate-800 rounded-lg" style="transition-delay: 0.4s;">
                         <details>
                             <summary class="p-6 flex justify-between items-center font-display text-2xl">
-                                What makes Mehfooz different from other fact-checking websites?
+                                What makes Mehfooz different?
                                 <span class="faq-icon text-2xl">+</span>
                             </summary>
                             <div class="p-6 pt-0 text-slate-400">
@@ -720,24 +786,50 @@
             </div>
         </section>
 
+        <!-- SECTION 7: CONTACT FORM -->
+        <section id="contact" class="py-32 relative overflow-hidden">
+            <div class="container mx-auto px-6 max-w-4xl text-center">
+                <div class="fade-in float-anim relative">
+                    <h2 class="font-display text-6xl md:text-8xl tracking-tight">JOIN OUR MISSION</h2>
+                    <p class="mt-6 text-xl max-w-3xl mx-auto text-slate-400">
+                        We are building a coalition of partners, investors, and community leaders. If you are committed to solving the digital vulnerability crisis, let's connect.
+                    </p>
+                </div>
 
-        <!-- SECTION 7: CTA / JOIN -->
-        <section id="contact" class="py-32 text-center relative overflow-hidden">
-             <svg viewBox="0 0 100 10" class="absolute top-0 left-0 w-full h-auto text-slate-800" preserveAspectRatio="none">
-                <path d="M0 10 C 20 0, 40 0, 50 5 S 80 10, 100 0 V 10 Z" fill="currentColor"></path>
-            </svg>
-             <div class="fade-in float-anim relative">
-                <h2 class="font-display text-6xl md:text-8xl tracking-tight">JOIN OUR MISSION</h2>
-                <p class="mt-6 text-xl max-w-3xl mx-auto text-slate-400">
-                    We are building a coalition of partners, investors, and community leaders. If you are committed to solving the digital vulnerability crisis, let's connect and build the future.
-                </p>
-                <a href="mailto:contact@mehfooz.org" class="inline-block mt-10 bg-white text-black font-bold text-xl py-4 px-12 rounded-full transition-transform duration-300 hover:scale-105">
-                    Get In Touch
-                </a>
+                <form id="contact-form" class="mt-16 text-left max-w-2xl mx-auto space-y-6 fade-in" style="transition-delay: 0.3s;">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-slate-400 mb-2">Full Name</label>
+                            <input type="text" id="name" name="name" required class="form-input w-full px-4 py-3 rounded-lg text-white placeholder-slate-500">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-slate-400 mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" required class="form-input w-full px-4 py-3 rounded-lg text-white placeholder-slate-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="interest" class="block text-sm font-medium text-slate-400 mb-2">I am interested in...</label>
+                        <select id="interest" name="interest" class="form-select w-full px-4 py-3 rounded-lg text-white">
+                            <option>Partnership Opportunities</option>
+                            <option>Investing</option>
+                            <option>Volunteering</option>
+                            <option>General Inquiry</option>
+                            <option>Press</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-slate-400 mb-2">Message</label>
+                        <textarea id="message" name="message" rows="5" required class="form-textarea w-full px-4 py-3 rounded-lg text-white placeholder-slate-500"></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="form-submit-button w-full bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-bold text-lg py-4 px-12 rounded-full">
+                            <span class="button-glare"></span>
+                            Send Message
+                        </button>
+                    </div>
+                    <div id="form-status" class="mt-4 text-center"></div>
+                </form>
             </div>
-            <svg viewBox="0 0 100 10" class="absolute bottom-0 left-0 w-full h-auto text-slate-800" preserveAspectRatio="none">
-                <path d="M0 0 C 20 10, 40 10, 50 5 S 80 0, 100 10 V 0 Z" fill="currentColor"></path>
-            </svg>
         </section>
         
         <!-- FOOTER -->
@@ -755,229 +847,267 @@
     </main>
 
 <script>
+/**
+ * @file Main execution script for the Mehfooz interactive website.
+ * @description This script handles all client-side functionality including pre-loading,
+ * custom cursor effects, animations on scroll, interactive 3D elements, and form handling.
+ * It is designed to be self-contained and executed after the DOM is fully loaded.
+ * @author Gemini
+ * @version 2.0.0
+ */
 document.addEventListener('DOMContentLoaded', () => {
 
+    /**
+     * Linearly interpolates between two numbers.
+     * @param {number} t - The interpolation factor, typically between 0 and 1.
+     * @param {number} a - The starting value.
+     * @param {number} b - The ending value.
+     * @returns {number} The interpolated value.
+     */
     const lerp = (t, a, b) => a + t * (b - a);
 
-    // --- Pre-loader Logic ---
-    const preloader = document.getElementById('preloader');
-    const loaderText = document.querySelector('.loader-text');
-    const loaderBar = document.getElementById('loader-bar');
-    const text = "MEHFOOZ";
-    text.split('').forEach((char, i) => {
-        const span = document.createElement('span');
-        span.className = 'loader-char';
-        span.textContent = char;
-        span.style.animationDelay = `${i * 0.1}s`;
-        loaderText.appendChild(span);
-    });
-
-    setTimeout(() => {
-        loaderBar.style.width = '100%';
-    }, 100);
-
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            preloader.classList.add('loaded');
-            document.body.classList.remove('loading');
-        }, 2500);
-    });
-
-
-    // --- Custom Cursor ---
-    const cursorDot = document.getElementById('cursor-dot');
-    const cursorOutline = document.getElementById('cursor-outline');
-    window.addEventListener('mousemove', (e) => {
-        const posX = e.clientX;
-        const posY = e.clientY;
-        cursorDot.style.left = `${posX}px`;
-        cursorDot.style.top = `${posY}px`;
+    // --- Module: Pre-loader Logic ---
+    // Manages the initial loading animation to ensure a smooth entry experience.
+    (() => {
+        const preloader = document.getElementById('preloader');
+        if (!preloader) return;
         
-        cursorOutline.animate({
-            left: `${posX - 20}px`,
-            top: `${posY - 20}px`
-        }, { duration: 500, fill: "forwards"});
-    });
-    
-    document.querySelectorAll('a, button, .holographic-card, summary').forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursorOutline.classList.add('cursor-active');
-            cursorDot.classList.add('dot-active');
+        const loaderText = preloader.querySelector('.loader-text');
+        const loaderBar = document.getElementById('loader-bar');
+        const text = "MEHFOOZ";
+
+        // Split text into characters for the reveal animation
+        text.split('').forEach((char, i) => {
+            const span = document.createElement('span');
+            span.className = 'loader-char';
+            span.textContent = char;
+            span.style.animationDelay = `${i * 0.1}s`;
+            if (loaderText) loaderText.appendChild(span);
         });
-        el.addEventListener('mouseleave', () => {
-            cursorOutline.classList.remove('cursor-active');
-            cursorDot.classList.remove('dot-active');
+
+        // Animate the loader bar after a short delay
+        setTimeout(() => {
+            if (loaderBar) loaderBar.style.width = '100%';
+        }, 100);
+
+        // Hide preloader after window loads and animations complete
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                preloader.classList.add('loaded');
+                document.body.classList.remove('loading');
+            }, 2500); // This delay should be longer than the loading animations
         });
-    });
+    })();
+
+
+    // --- Module: Custom Cursor ---
+    // Creates an interactive cursor that follows the mouse and reacts to hoverable elements.
+    (() => {
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorOutline = document.getElementById('cursor-outline');
+        if (!cursorDot || !cursorOutline) return;
+        
+        // Update cursor position on mouse move
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            
+            // Dot follows instantly
+            cursorDot.style.transform = `translate(${posX}px, ${posY}px)`;
+
+            // Outline has a slight delay for a smoother effect
+            cursorOutline.animate({
+                transform: `translate(${posX - 20}px, ${posY - 20}px)`
+            }, { duration: 500, fill: "forwards"});
+        });
+        
+        // Add hover effects to interactive elements
+        const interactiveElements = 'a, button, .holographic-card, summary, .form-input, .form-textarea, .form-select';
+        document.querySelectorAll(interactiveElements).forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorOutline.classList.add('cursor-active');
+                cursorDot.classList.add('dot-active');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorOutline.classList.remove('cursor-active');
+                cursorDot.classList.remove('dot-active');
+            });
+        });
+    })();
     
-    // --- Header Visibility ---
-    const header = document.getElementById('main-header');
-    let lastScrollY = window.scrollY;
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 200) {
-            header.classList.add('header-visible');
-        } else {
-            header.classList.remove('header-visible');
-        }
-        lastScrollY = window.scrollY;
-    });
+    // --- Module: Header Visibility Controller ---
+    // Shows or hides the main navigation header based on scroll position.
+    (() => {
+        const header = document.getElementById('main-header');
+        if (!header) return;
 
-    // --- Dynamic Starfield Background ---
-    const starfieldCanvas = document.getElementById('starfield-canvas');
-    const starfieldCtx = starfieldCanvas.getContext('2d');
-    const nebulaCanvas = document.getElementById('nebula-canvas');
-    const nebulaCtx = nebulaCanvas.getContext('2d');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                header.classList.add('header-visible');
+            } else {
+                header.classList.remove('header-visible');
+            }
+        });
+    })();
 
-    let width, height;
-    let stars = [];
-    const starCount = 700; 
-    let shootingStars = [];
+    // --- Module: Dynamic Background Canvases ---
+    // Renders and animates a dynamic starfield and a Perlin noise nebula.
+    (() => {
+        const starfieldCanvas = document.getElementById('starfield-canvas');
+        const nebulaCanvas = document.getElementById('nebula-canvas');
+        if (!starfieldCanvas || !nebulaCanvas) return;
 
-    // Perlin noise for nebula
-    const noise = (() => {
-        const p = new Uint8Array(512);
-        for(let i=0; i < 256; i++) p[i] = p[i+256] = Math.floor(Math.random()*256);
-        const fade = t => t*t*t*(t*(t*6-15)+10);
-        //const lerp = (t,a,b) => a+t*(b-a); // lerp is now global
-        const grad = (hash,x,y,z) => {
-            const h = hash & 15;
-            const u = h<8 ? x:y;
-            const v = h<4 ? y : h===12||h===14 ? x:z;
-            return ((h&1)===0?u:-u) + ((h&2)===0?v:-v);
-        }
-        return {
-            noise: (x,y,z) => {
-                const X = Math.floor(x)&255, Y = Math.floor(y)&255, Z = Math.floor(z)&255;
-                x-=Math.floor(x); y-=Math.floor(y); z-=Math.floor(z);
-                const u = fade(x), v = fade(y), w = fade(z);
-                const A=p[X]+Y, AA=p[A]+Z, AB=p[A+1]+Z,
-                      B=p[X+1]+Y, BA=p[B]+Z, BB=p[B+1]+Z;
-                return lerp(w, lerp(v, lerp(u, grad(p[AA],x,y,z), grad(p[BA],x-1,y,z)),
-                                      lerp(u, grad(p[AB],x,y-1,z), grad(p[BB],x-1,y-1,z))),
+        const starfieldCtx = starfieldCanvas.getContext('2d');
+        const nebulaCtx = nebulaCanvas.getContext('2d');
+
+        let width, height;
+        let stars = [];
+        const starCount = 700;  
+        let shootingStars = [];
+        let frame = 0;
+
+        // Perlin noise generator for the nebula effect
+        const noise = (() => {
+            const p = new Uint8Array(512);
+            for(let i=0; i < 256; i++) p[i] = p[i+256] = Math.floor(Math.random()*256);
+            const fade = t => t*t*t*(t*(t*6-15)+10);
+            const grad = (hash,x,y,z) => {
+                const h = hash & 15;
+                const u = h<8 ? x:y;
+                const v = h<4 ? y : h===12||h===14 ? x:z;
+                return ((h&1)===0?u:-u) + ((h&2)===0?v:-v);
+            }
+            return {
+                noise: (x,y,z) => {
+                    const X = Math.floor(x)&255, Y = Math.floor(y)&255, Z = Math.floor(z)&255;
+                    x-=Math.floor(x); y-=Math.floor(y); z-=Math.floor(z);
+                    const u = fade(x), v = fade(y), w = fade(z);
+                    const A=p[X]+Y, AA=p[A]+Z, AB=p[A+1]+Z, B=p[X+1]+Y, BA=p[B]+Z, BB=p[B+1]+Z;
+                    return lerp(w, lerp(v, lerp(u, grad(p[AA],x,y,z), grad(p[BA],x-1,y,z)),
+                                     lerp(u, grad(p[AB],x,y-1,z), grad(p[BB],x-1,y-1,z))),
                                lerp(v, lerp(u, grad(p[AA+1],x,y,z-1), grad(p[BA+1],x-1,y,z-1)),
-                                      lerp(u, grad(p[AB+1],x,y-1,z-1), grad(p[BB+1],x-1,y-1,z-1))));
+                                     lerp(u, grad(p[AB+1],x,y-1,z-1), grad(p[BB+1],x-1,y-1,z-1))));
+                }
+            }
+        })();
+        let noiseZ = Math.random() * 100;
+
+        function initBackgrounds() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            starfieldCanvas.width = width;
+            starfieldCanvas.height = height;
+            nebulaCanvas.width = width;
+            nebulaCanvas.height = height;
+            stars = [];
+            for (let i = 0; i < starCount; i++) {
+                stars.push({
+                    x: (Math.random() - 0.5) * width * 2,
+                    y: (Math.random() - 0.5) * height * 2,
+                    z: Math.random() * width * 1.5,
+                    size: Math.random() * 2 + 1,
+                    opacity: Math.random() * 0.5 + 0.5,
+                });
             }
         }
-    })();
-    let noiseZ = 0;
+        
+        function animateBackgrounds() {
+            if (!width || !height) {
+                requestAnimationFrame(animateBackgrounds);
+                return;
+            }
 
+            // Animate Nebula (optimized to render less frequently)
+            if (frame % 3 === 0) { 
+                const imageData = nebulaCtx.createImageData(width, height);
+                const data = imageData.data;
+                noiseZ += 0.005;
+                for(let x=0; x < width; x+=4) {
+                    for(let y=0; y < height; y+=4) {
+                        const value = Math.abs(noise.noise(x/300, y/300, noiseZ));
+                        const c = value * 255;
+                        const r = lerp(value, 56, 129);
+                        const g = lerp(value, 189, 140);
+                        const b = lerp(value, 248, 248);
 
-    function initBackgrounds() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        starfieldCanvas.width = width;
-        starfieldCanvas.height = height;
-        nebulaCanvas.width = width;
-        nebulaCanvas.height = height;
-        stars = [];
-        for (let i = 0; i < starCount; i++) {
-            stars.push({
-                x: (Math.random() - 0.5) * width * 2,
-                y: (Math.random() - 0.5) * height * 2,
-                z: Math.random() * width * 1.5,
-                size: Math.random() * 2 + 1,
-                opacity: Math.random() * 0.5 + 0.5,
-            });
-        }
-    }
-    
-    let frame = 0;
-    function animateBackgrounds() {
-        if (!width || !height) {
-            requestAnimationFrame(animateBackgrounds);
-            return;
-        }
-
-        // --- Animate Nebula ---
-        if (frame % 2 === 0) { // Update nebula less frequently for performance
-            const imageData = nebulaCtx.createImageData(width, height);
-            const data = imageData.data;
-            noiseZ += 0.005;
-            for(let x=0; x < width; x+=4) {
-                for(let y=0; y < height; y+=4) {
-                    const value = Math.abs(noise.noise(x/300, y/300, noiseZ));
-                    const c = value * 255;
-                    const color1 = {r: 56, g: 189, b: 248}; // sky
-                    const color2 = {r: 129, g: 140, b: 248}; // indigo
-                    const r = lerp(value, color1.r, color2.r);
-                    const g = lerp(value, color1.g, color2.g);
-                    const b = lerp(value, color1.b, color2.b);
-
-                    for(let dx=0; dx<4; dx++) {
-                        for(let dy=0; dy<4; dy++) {
-                           if (x+dx < width && y+dy < height) {
-                                let i = ((y+dy)*width + (x+dx)) * 4;
-                                data[i] = r;
-                                data[i+1] = g;
-                                data[i+2] = b;
-                                data[i+3] = c * 0.7;
-                           }
+                        for(let dx=0; dx<4; dx++) {
+                            for(let dy=0; dy<4; dy++) {
+                                if (x+dx < width && y+dy < height) {
+                                    let i = ((y+dy)*width + (x+dx)) * 4;
+                                    data[i] = r; data[i+1] = g; data[i+2] = b; data[i+3] = c * 0.7;
+                                }
+                            }
                         }
                     }
                 }
+                nebulaCtx.putImageData(imageData, 0, 0);
             }
-            nebulaCtx.putImageData(imageData, 0, 0);
-        }
 
-
-        // --- Animate Stars ---
-        starfieldCtx.clearRect(0, 0, width, height);
-        for (let star of stars) {
-            star.z -= 0.75;
-            if (star.z <= 0) {
-                star.x = (Math.random() - 0.5) * width * 2;
-                star.y = (Math.random() - 0.5) * height * 2;
-                star.z = width;
-            }
-            const k = 128 / star.z;
-            const px = star.x * k + width / 2;
-            const py = star.y * k + height / 2;
-            if (px >= 0 && px <= width && py >= 0 && py <= height) {
-                const size = star.size * k;
-                starfieldCtx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
-                starfieldCtx.beginPath();
-                starfieldCtx.arc(px, py, size / 2, 0, Math.PI * 2);
-                starfieldCtx.fill();
-            }
-        }
-        
-        if (Math.random() > 0.995 && shootingStars.length < 3) {
-            shootingStars.push({
-                x: Math.random() * width, y: 0,
-                len: Math.random() * 80 + 10, speed: Math.random() * 10 + 5,
-                opacity: 1
+            // Animate Stars
+            starfieldCtx.clearRect(0, 0, width, height);
+            stars.forEach(star => {
+                star.z -= 0.75;
+                if (star.z <= 0) {
+                    star.x = (Math.random() - 0.5) * width * 2;
+                    star.y = (Math.random() - 0.5) * height * 2;
+                    star.z = width;
+                }
+                const k = 128 / star.z;
+                const px = star.x * k + width / 2;
+                const py = star.y * k + height / 2;
+                if (px >= 0 && px <= width && py >= 0 && py <= height) {
+                    const size = star.size * k;
+                    starfieldCtx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+                    starfieldCtx.beginPath();
+                    starfieldCtx.arc(px, py, size / 2, 0, Math.PI * 2);
+                    starfieldCtx.fill();
+                }
             });
-        }
-        for (let i = shootingStars.length - 1; i >= 0; i--) {
-            const s = shootingStars[i];
-            s.x += s.speed; s.y += s.speed; s.opacity -= 0.02;
-            if (s.opacity <= 0) {
-                shootingStars.splice(i, 1);
-            } else {
-                starfieldCtx.beginPath();
-                starfieldCtx.moveTo(s.x, s.y);
-                starfieldCtx.lineTo(s.x + s.len, s.y + s.len);
-                starfieldCtx.strokeStyle = `rgba(255, 255, 255, ${s.opacity})`;
-                starfieldCtx.stroke();
+            
+            // Generate and animate shooting stars
+            if (Math.random() > 0.995 && shootingStars.length < 3) {
+                shootingStars.push({
+                    x: Math.random() * width, y: 0,
+                    len: Math.random() * 80 + 10, speed: Math.random() * 10 + 5,
+                    opacity: 1
+                });
             }
+
+            for (let i = shootingStars.length - 1; i >= 0; i--) {
+                const s = shootingStars[i];
+                s.x += s.speed; s.y += s.speed; s.opacity -= 0.02;
+                if (s.opacity <= 0) {
+                    shootingStars.splice(i, 1);
+                } else {
+                    starfieldCtx.beginPath();
+                    starfieldCtx.moveTo(s.x, s.y);
+                    starfieldCtx.lineTo(s.x + s.len, s.y + s.len);
+                    starfieldCtx.strokeStyle = `rgba(255, 255, 255, ${s.opacity})`;
+                    starfieldCtx.stroke();
+                }
+            }
+            frame++;
+            requestAnimationFrame(animateBackgrounds);
         }
-        frame++;
-        requestAnimationFrame(animateBackgrounds);
-    }
 
-    initBackgrounds();
-    animateBackgrounds();
-    window.addEventListener('resize', initBackgrounds);
+        initBackgrounds();
+        animateBackgrounds();
+        window.addEventListener('resize', initBackgrounds);
+    })();
 
-    // --- Interactive Data Globe ---
-    const globeCanvas = document.getElementById('data-globe-canvas');
-    if (globeCanvas) {
+    // --- Module: Interactive Data Globe ---
+    // Renders a rotating 3D globe with data points.
+    (() => {
+        const globeCanvas = document.getElementById('data-globe-canvas');
+        if (!globeCanvas) return;
+
         const globeCtx = globeCanvas.getContext('2d');
         let globeSize = globeCanvas.clientWidth;
         
         function resizeGlobe() {
             globeSize = globeCanvas.clientWidth;
-            globeCanvas.width = globeSize * 2; globeCanvas.height = globeSize * 2;
+            globeCanvas.width = globeSize * 2; // Use higher resolution for crispness
+            globeCanvas.height = globeSize * 2;
             globeCtx.scale(2, 2);
         }
         resizeGlobe();
@@ -1005,7 +1135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const projectedX = x * projectedScale + globeSize/2;
                 const projectedY = y * projectedScale + globeSize/2;
                 const alpha = (z + radius) / (2 * radius);
-                if(z > -radius * 0.7) {
+                if(z > -radius * 0.7) { // Only draw dots on the front side
                     globeCtx.beginPath();
                     globeCtx.arc(projectedX, projectedY, dot.size * projectedScale / 2, 0, 2 * Math.PI);
                     globeCtx.fillStyle = `rgba(56, 189, 248, ${alpha})`;
@@ -1017,54 +1147,63 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(animateGlobe);
         }
         animateGlobe();
-    }
+    })();
 
-
-    // --- Holographic Card Tilt Effect ---
-    const cards = document.querySelectorAll('.holographic-card');
-    cards.forEach(card => {
-        const glare = card.querySelector('.glare');
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left; const y = e.clientY - rect.top;
-            const { width, height } = rect;
-            const rotateX = (y / height - 0.5) * -20;
-            const rotateY = (x / width - 0.5) * 20;
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            glare.style.opacity = '1';
-            glare.style.transform = `translate(${x - width/2}px, ${y - height/2}px)`;
+    // --- Module: Holographic Card Tilt Effect ---
+    // Adds a 3D tilt effect to cards on mouse movement.
+    (() => {
+        const cards = document.querySelectorAll('.holographic-card');
+        cards.forEach(card => {
+            const glare = card.querySelector('.glare');
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; 
+                const y = e.clientY - rect.top;
+                const { width, height } = rect;
+                const rotateX = (y / height - 0.5) * -20; // Invert for natural feel
+                const rotateY = (x / width - 0.5) * 20;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                if(glare) {
+                  glare.style.opacity = '1';
+                  glare.style.transform = `translate(${x - width/2}px, ${y - height/2}px)`;
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+                if(glare) glare.style.opacity = '0';
+            });
         });
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
-            glare.style.opacity = '0';
-        });
-    });
+    })();
 
-    // --- Animated Counters ---
+    // --- Module: Animated Counters ---
+    // Animates numbers from 0 to a target value when they become visible.
     const animateCounter = (el) => {
         const target = +el.getAttribute('data-target');
         const duration = 2500;
-        const frameRate = 1000 / 60;
-        const totalFrames = Math.round(duration / frameRate);
-        let currentFrame = 0;
-        const easeOutQuint = t => 1 - Math.pow(1 - t, 5);
-        const counter = setInterval(() => {
-            currentFrame++;
-            const progress = easeOutQuint(currentFrame / totalFrames);
-            const currentNum = Math.round(target * progress);
+        let start = 0;
+        const step = timestamp => {
+            if (!start) start = timestamp;
+            const progress = Math.min((timestamp - start) / duration, 1);
+            // Ease-out quint function for a smooth deceleration
+            const easedProgress = 1 - Math.pow(1 - progress, 5);
+            const currentNum = Math.floor(easedProgress * target);
             el.innerText = currentNum.toLocaleString();
-            if (currentFrame === totalFrames) {
-                clearInterval(counter);
-                el.innerText = target.toLocaleString();
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
             }
-        }, frameRate);
+        };
+        window.requestAnimationFrame(step);
     };
 
-    // --- Terminal Animation ---
-    const terminalElement = document.getElementById('terminal');
+    // --- Module: Interactive Terminal Animation ---
+    // Simulates a terminal boot sequence and activity log.
     const animateTerminal = () => {
+        const terminalElement = document.getElementById('terminal');
+        if (!terminalElement || terminalElement.dataset.animated) return;
+        terminalElement.dataset.animated = 'true'; // Prevent re-animation
+
         const lines = [
-            { text: "booting mehfoozOS v1.0...", delay: 50 },
+            { text: "booting mehfoozOS v2.1...", delay: 50 },
             { text: "initializing cognitive cores...", delay: 50 },
             { text: "establishing secure uplink...", status: "OK", delay: 100 },
             { text: "loading linguistic models [ur, en, shn, btl]...", status: "DONE", delay: 100 },
@@ -1076,97 +1215,123 @@ document.addEventListener('DOMContentLoaded', () => {
             { text: "[08:21:27] Pattern detected: Type-3 Viral Disinformation. Source: Social Media Group.", delay: 20 },
             { text: "[08:21:28] Cross-referencing with known narratives... Match found.", delay: 20 },
             { text: "[08:21:29] Deploying educational counter-module to 5,000 nodes.", delay: 20 },
-            { text: "[08:21:30] Threat neutralized. Confidence: 99.8%", delay: 20, color: "#0f0" },
+            { text: "[08:21:30] Threat neutralized. Confidence: 99.8%", delay: 20, color: "#22c55e" },
             { text: "[08:21:45] Pattern detected: Phishing Scam. Vector: SMS.", delay: 20 },
             { text: "[08:21:46] Analyzing payload... Standard credential theft attempt.", delay: 20 },
             { text: "[08:21:47] Issuing community alert via MehfoozBot & social channels.", delay: 20 },
-            { text: "[08:21:48] Alert deployed. Threat contained.", delay: 20, color: "#0f0" },
+            { text: "[08:21:48] Alert deployed. Threat contained.", delay: 20, color: "#22c55e" },
         ];
-        let lineIndex = 0;
-        let charIndex = 0;
-
-        const typeLine = () => {
-            if (lineIndex >= lines.length) {
-                const cursor = terminalElement.querySelector('.cursor');
-                if (cursor) cursor.remove();
-                return;
-            }
-            
-            const line = lines[lineIndex];
-            if (charIndex === 0) {
+        
+        let totalDelay = 0;
+        lines.forEach(line => {
+            totalDelay += line.delay * (line.text.length || 1) + 200;
+            setTimeout(() => {
                 const p = document.createElement('p');
                 p.className = 'terminal-line';
                 if (line.command) p.classList.add('command');
-                if(line.color) p.style.color = line.color;
+                if (line.color) p.style.color = line.color;
+                
+                let charIndex = 0;
+                const typeChar = () => {
+                    if (charIndex < line.text.length) {
+                        p.textContent += line.text[charIndex];
+                        charIndex++;
+                        terminalElement.scrollTop = terminalElement.scrollHeight;
+                        setTimeout(typeChar, line.delay);
+                    } else if (line.status) {
+                        const statusSpan = document.createElement('span');
+                        statusSpan.textContent = ` [${line.status}]`;
+                        statusSpan.style.color = '#22c55e'; // green-500
+                        p.appendChild(statusSpan);
+                    }
+                };
                 terminalElement.appendChild(p);
-            }
-
-            const currentElement = terminalElement.lastChild;
-            currentElement.textContent += line.text.charAt(charIndex);
-            charIndex++;
-
-            if (charIndex >= line.text.length) {
-                if(line.status) {
-                    const statusSpan = document.createElement('span');
-                    statusSpan.textContent = ` [${line.status}]`;
-                    statusSpan.style.color = '#0f0';
-                    currentElement.appendChild(statusSpan);
-                }
-                charIndex = 0;
-                lineIndex++;
-            }
-            
-            terminalElement.scrollTop = terminalElement.scrollHeight;
-            setTimeout(typeLine, line.delay || 50);
-        };
-        
-        terminalElement.innerHTML = '<p class="terminal-line"><span class="cursor"></span></p>';
-        setTimeout(() => {
-            const cursor = terminalElement.querySelector('.cursor');
-            if(cursor) cursor.parentElement.remove();
-            typeLine();
-        }, 1000);
+                typeChar();
+            }, totalDelay);
+        });
     };
 
-    // --- Scroll Animations Observer ---
-    const observer = new IntersectionObserver((entries, observerInstance) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                
-                if (entry.target.id === 'impact') {
-                    document.querySelectorAll('.impact-number').forEach(counter => { animateCounter(counter); });
-                    observerInstance.unobserve(entry.target);
+    // --- Module: Scroll Animations Observer ---
+    // Uses IntersectionObserver to trigger animations when elements enter the viewport.
+    (() => {
+        const observer = new IntersectionObserver((entries, observerInstance) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    if (entry.target.id === 'impact') {
+                        document.querySelectorAll('.impact-number').forEach(counter => { animateCounter(counter); });
+                        observerInstance.unobserve(entry.target); // Animate counters only once
+                    }
+                    if (entry.target.id === 'terminal-section') {
+                        animateTerminal();
+                        observerInstance.unobserve(entry.target); // Animate terminal only once
+                    }
                 }
-                if (entry.target.id === 'terminal-section') {
-                    animateTerminal();
-                    observerInstance.unobserve(entry.target);
-                }
-            }
+            });
+        }, { threshold: 0.25 }); // Trigger when 25% of the element is visible
+
+        const elementsToObserve = '.reveal-container, .fade-in, .chat-ui, .chat-bubble, .timeline-item, #impact, .faq-item, #terminal-section, #contact-form';
+        document.querySelectorAll(elementsToObserve).forEach(el => {
+            observer.observe(el);
         });
-    }, { threshold: 0.25 });
+    })();
 
-    document.querySelectorAll('.reveal-container, .fade-in, .chat-ui, .chat-bubble, .timeline-item, #impact, .faq-item, #terminal-section').forEach(el => {
-        observer.observe(el);
-    });
-
-    // --- Scroll Progress Bar ---
-    const progressBar = document.getElementById('progress-bar');
-    window.addEventListener('scroll', () => {
-        const totalHeight = document.body.scrollHeight - window.innerHeight;
-        const progress = (window.pageYOffset / totalHeight) * 100;
-        progressBar.style.width = `${progress}%`;
-    });
+    // --- Module: Scroll Progress Bar ---
+    // Updates a progress bar at the top of the page based on scroll depth.
+    (() => {
+        const progressBar = document.getElementById('progress-bar');
+        if (!progressBar) return;
+        
+        window.addEventListener('scroll', () => {
+            const totalHeight = document.body.scrollHeight - window.innerHeight;
+            const progress = (window.pageYOffset / totalHeight) * 100;
+            progressBar.style.width = `${progress}%`;
+        });
+    })();
     
-    // --- Smooth Scrolling for Nav Links ---
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+    // --- Module: Smooth Scrolling for Navigation ---
+    // Implements smooth scrolling for all anchor links pointing to page sections.
+    (() => {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if(targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
         });
-    });
+    })();
+
+    // --- Module: Contact Form Handler ---
+    // Manages the contact form submission and provides user feedback.
+    (() => {
+        const form = document.getElementById('contact-form');
+        const formStatus = document.getElementById('form-status');
+        if (!form || !formStatus) return;
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            formStatus.textContent = 'Sending...';
+            formStatus.className = 'text-blue-400';
+
+            // Simulate network delay
+            setTimeout(() => {
+                // In a real application, you would send the form data to a server here.
+                // For this mock-up, we'll just show a success message.
+                formStatus.textContent = 'Thank you! Your message has been sent successfully.';
+                formStatus.className = 'text-green-400';
+                form.reset();
+
+                // Clear the message after a few seconds
+                setTimeout(() => {
+                    formStatus.textContent = '';
+                }, 5000);
+            }, 1500);
+        });
+    })();
 });
 </script>
 </body>
 </html>
-
