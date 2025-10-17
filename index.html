@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehfooz Internet - Architecting Digital Trust</title>
+    <title>Mehfooz Internet - A New Standard for Digital Literacy</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Inter -->
@@ -11,246 +11,255 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* Base styles for a high-end tech feel */
+        /* Base styles for a world-class tech site */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #02040a;
-            color: #cbd5e1; /* slate-300 */
+            background-color: #050a14;
+            color: #d1d5db; /* gray-300 */
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Animated background canvas */
-        #hero-canvas {
+        /* Hero background with subtle animated gradient */
+        .hero-background {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            right: 0;
+            height: 100vh;
+            background: radial-gradient(ellipse 50% 80% at 50% -20%, rgba(37, 99, 235, 0.2), transparent);
+            animation: pulse-glow 10s infinite alternate;
             z-index: 0;
-            opacity: 0.3;
         }
-        
-        /* Main container with subtle gradient lighting */
-        .main-container {
-            background: radial-gradient(ellipse 100% 60% at 50% -10%, rgba(14, 116, 144, 0.2), transparent);
+        @keyframes pulse-glow {
+            from { opacity: 0.8; transform: scale(1); }
+            to { opacity: 1; transform: scale(1.05); }
         }
 
-        /* Accent Gradient for key text elements */
+        /* Text gradients */
         .gradient-text {
-            background: linear-gradient(90deg, #00ddff, #00aaff);
+            background: linear-gradient(90deg, #38bdf8, #6366f1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
         }
 
-        /* Buttons with a subtle glow effect */
+        /* Buttons */
         .primary-button {
-            background: linear-gradient(90deg, #0ea5e9, #0284c7);
+            background: #fff;
+            color: #050a14;
+            font-weight: 600;
+            border-radius: 999px;
             transition: all 0.3s ease;
-            box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06), 0 0 0 1px #374151;
         }
         .primary-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(2, 132, 199, 0.3);
+            background: #f0f0f0;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05), 0 0 0 1px #4b5563;
         }
 
-        /* Glassmorphism Card Effect, refined for subtlety */
+        /* Glassmorphism Card Effect, heavily refined */
         .glass-card {
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1.25rem;
-            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.3);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem; /* 24px */
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         .glass-card:hover {
-            border-color: rgba(0, 221, 255, 0.5);
-            background: rgba(15, 23, 42, 0.6);
+            border-color: rgba(56, 189, 248, 0.7);
+            background: rgba(15, 23, 42, 0.5);
+        }
+        
+        /* Bento Grid Item */
+        .bento-item {
+            background: #0f172a; /* slate-900 */
+            border: 1px solid #1e293b; /* slate-800 */
+            border-radius: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            position: relative;
+        }
+        .bento-item:hover {
+            transform: scale(1.02);
+            border-color: #38bdf8;
+            box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.15);
         }
 
-        /* Animations: a more deliberate, staggered reveal */
+        /* Animation System */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.215, 0.610, 0.355, 1), transform 0.8s cubic-bezier(0.215, 0.610, 0.355, 1);
+            transform: translateY(2rem);
+            transition: opacity 1s cubic-bezier(0.215, 0.610, 0.355, 1), transform 1s cubic-bezier(0.215, 0.610, 0.355, 1);
         }
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
         
-        /* Navigation active state styling */
+        /* Navigation */
         .nav-link.active {
-            color: #00ddff;
+            color: #fff;
         }
-        
-        /* Page content transition */
-        .page-content {
-            animation: fadeIn 0.7s cubic-bezier(0.215, 0.610, 0.355, 1);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Mock UI styling */
-        .mock-ui {
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-            transform: perspective(1500px) rotateX(15deg);
-            transition: transform 0.5s ease;
-        }
-        .mock-ui:hover {
-            transform: perspective(1500px) rotateX(0deg);
-        }
-
     </style>
 </head>
 <body class="antialiased">
 
-<div class="main-container relative">
+<div class="main-container relative z-10">
 
-    <header class="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-lg border-b border-slate-800/60">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" data-page="home" class="nav-link-logo">
-                <img src="https://framerusercontent.com/images/f3z8Ab6c3y32T32j2yIZ4AWHtU.svg" alt="Mehfooz Internet Logo" class="h-8 w-auto">
-            </a>
-            <nav class="hidden md:flex items-center space-x-8" id="desktop-nav">
-                <a href="#" data-page="home" class="nav-link text-sm font-medium text-slate-300 hover:text-cyan-300 transition-colors active">Home</a>
-                <a href="#" data-page="solution" class="nav-link text-sm font-medium text-slate-300 hover:text-cyan-300 transition-colors">The Platform</a>
-                <a href="#" data-page="mission" class="nav-link text-sm font-medium text-slate-300 hover:text-cyan-300 transition-colors">Our Mission</a>
-                <a href="#" data-page="contact" class="primary-button text-white font-semibold text-sm py-2 px-5 rounded-lg">Get Involved</a>
-            </nav>
-            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button>
+    <header class="fixed top-0 left-0 right-0 z-50 bg-transparent">
+        <div id="navbar" class="container mx-auto px-6 py-4 mt-4 bg-black/30 backdrop-blur-lg border border-slate-800/60 rounded-full transition-all duration-300">
+            <div class="flex justify-between items-center">
+                <a href="#" data-page="home" class="nav-link-logo">
+                    <img src="https://framerusercontent.com/images/f3z8Ab6c3y32T32j2yIZ4AWHtU.svg" alt="Mehfooz Internet Logo" class="h-8 w-auto">
+                </a>
+                <nav class="hidden md:flex items-center space-x-8" id="desktop-nav">
+                    <a href="#" data-page="solution" class="nav-link text-sm font-medium text-gray-400 hover:text-white transition-colors">Solution</a>
+                    <a href="#" data-page="why-now" class="nav-link text-sm font-medium text-gray-400 hover:text-white transition-colors">Why Now</a>
+                    <a href="#" data-page="differentiators" class="nav-link text-sm font-medium text-gray-400 hover:text-white transition-colors">Differentiators</a>
+                </nav>
+                <a href="#" data-page="contact" class="hidden md:block primary-button text-sm py-2 px-5">Get Involved</a>
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button>
+            </div>
         </div>
     </header>
-
+    
+    <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-black/95 backdrop-blur-xl z-40">
         <div class="flex justify-end p-6"><button id="close-menu-btn" class="text-white"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button></div>
-        <nav id="mobile-nav" class="flex flex-col items-center justify-center h-full -mt-16 space-y-6">
-            <a href="#" data-page="home" class="mobile-nav-link text-xl font-semibold text-slate-300">Home</a>
-            <a href="#" data-page="solution" class="mobile-nav-link text-xl font-semibold text-slate-300">The Platform</a>
-            <a href="#" data-page="mission" class="mobile-nav-link text-xl font-semibold text-slate-300">Our Mission</a>
-            <a href="#" data-page="contact" class="mobile-nav-link mt-6 primary-button text-white font-semibold py-3 px-8 rounded-lg">Get Involved</a>
+        <nav id="mobile-nav" class="flex flex-col items-center justify-center h-full -mt-16 space-y-8">
+            <a href="#" data-page="solution" class="mobile-nav-link text-2xl font-semibold text-gray-300">Solution</a>
+            <a href="#" data-page="why-now" class="mobile-nav-link text-2xl font-semibold text-gray-300">Why Now</a>
+            <a href="#" data-page="differentiators" class="mobile-nav-link text-2xl font-semibold text-gray-300">Differentiators</a>
+            <a href="#" data-page="contact" class="mobile-nav-link mt-8 primary-button text-lg py-3 px-8">Get Involved</a>
         </nav>
     </div>
 
-    <main class="container mx-auto px-6 pt-28 md:pt-36 relative z-10">
+    <main class="relative z-10">
 
-        <!-- PAGE: HOME -->
-        <section id="page-home" class="page-content">
-            <canvas id="hero-canvas"></canvas>
-            <div class="text-center relative">
+        <!-- PAGE: HOME (HERO) -->
+        <section id="page-home" class="page-content min-h-screen flex items-center justify-center text-center pt-20">
+             <div class="hero-background"></div>
+            <div class="container mx-auto px-6 relative z-10">
                 <div class="reveal">
-                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter leading-tight max-w-5xl mx-auto">
-                        The digital world wasn't built for everyone. <span class="gradient-text">We're rebuilding it.</span>
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter leading-tight max-w-5xl mx-auto">
+                        A New Standard for <span class="gradient-text">Digital Literacy</span>
                     </h1>
-                    <p class="max-w-3xl mx-auto mt-6 text-lg md:text-xl text-slate-400">
+                    <p class="max-w-3xl mx-auto mt-8 text-lg md:text-xl text-gray-400">
                         Mehfooz Internet is a culturally-architected platform providing the critical skills needed to combat misinformation and thrive in the digital age, starting with Gilgit Baltistan.
                     </p>
-                    <div class="mt-10 flex justify-center gap-4">
-                        <a href="#" data-page="solution" class="nav-link-cta primary-button text-white font-bold py-3 px-7 rounded-lg text-lg">Explore the Platform</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="py-24 lg:py-40">
-                <div class="reveal">
-                    <div class="mock-ui bg-slate-900/50 overflow-hidden">
-                        <div class="p-2 bg-slate-800/50 flex items-center"><div class="h-2.5 w-2.5 rounded-full bg-red-500 mr-1.5"></div><div class="h-2.5 w-2.5 rounded-full bg-yellow-500 mr-1.5"></div><div class="h-2.5 w-2.5 rounded-full bg-green-500"></div></div>
-                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2940&auto=format&fit=crop" alt="Mock UI showing a dashboard" class="opacity-70" onerror="this.onerror=null;this.src='https://placehold.co/1200x600/02040a/ffffff?text=Platform+Interface';">
+                    <div class="mt-12 flex justify-center">
+                        <a href="#" data-page="solution" class="nav-link-cta primary-button text-lg py-4 px-8">Explore Our Solution</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- PAGE: THE PLATFORM -->
-        <section id="page-solution" class="page-content hidden">
-             <div class="text-center">
-                <div class="reveal">
-                    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter">The <span class="gradient-text">Mehfooz Platform</span></h1>
-                    <p class="max-w-3xl mx-auto mt-6 text-lg text-slate-400">
-                        A three-pronged approach to building resilient digital communities from the ground up.
-                    </p>
-                </div>
-            </div>
-
-            <div class="py-24 lg:py-32 grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-                <div class="reveal lg:col-span-1" style="transition-delay: 100ms;">
-                    <div class="glass-card p-8 sticky top-28">
-                        <h3 class="text-2xl font-bold text-white">Our Unfair Advantage</h3>
-                        <p class="mt-4 text-slate-400">We don't just provide content; we build ecosystems. Our deep integration with community leaders (Ulema) and a continuous feedback loop with local students creates unparalleled trust and relevance—something generic platforms cannot replicate.</p>
+        <!-- PAGE: THE SOLUTION -->
+        <section id="page-solution" class="page-content py-24 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <div class="reveal">
+                        <h2 class="text-4xl md:text-6xl font-extrabold tracking-tighter">Our Integrated Solution</h2>
+                        <p class="mt-6 text-lg text-gray-400">We deliver culturally-responsive education through an integrated approach that leverages popular social media platforms alongside our robust core platform.</p>
                     </div>
                 </div>
-                <div class="lg:col-span-2 grid grid-cols-1 gap-8">
-                     <div class="reveal glass-card p-8" style="transition-delay: 200ms;">
-                        <div class="flex items-start gap-6">
-                            <div class="p-3 bg-slate-800 rounded-xl mt-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg></div>
-                            <div>
-                                <h3 class="text-xl font-bold text-white">MehfoozBot AI</h3>
-                                <p class="mt-2 text-slate-400">An intelligent, AI-driven chatbot providing personalized learning and immediate, 24/7 assistance on digital literacy in multiple indigenous languages. It's a personal tutor in your pocket.</p>
-                            </div>
-                        </div>
+                <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="reveal glass-card p-8 text-center" style="transition-delay: 100ms;">
+                        <div class="mb-6 inline-block p-4 bg-slate-800 rounded-2xl"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+                        <h3 class="text-xl font-bold text-white">Community Engagement</h3>
+                        <p class="mt-2 text-gray-400">Building trust by partnering with local leaders (Ulema) to act as digital literacy ambassadors.</p>
                     </div>
-                    <div class="reveal glass-card p-8" style="transition-delay: 300ms;">
-                         <div class="flex items-start gap-6">
-                            <div class="p-3 bg-slate-800 rounded-xl mt-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 14l9-5-9-5-9 5 9 5z" /><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-5.998 12.078 12.078 0 01.665-6.479L12 14z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 14v6m-4-3h8" /></svg></div>
-                            <div>
-                                <h3 class="text-xl font-bold text-white">Localized Learning Modules</h3>
-                                <p class="mt-2 text-slate-400">Hyper-relevant, bite-sized mini-courses designed to address the specific misinformation narratives and digital challenges faced by the communities we serve.</p>
-                            </div>
-                        </div>
+                    <div class="reveal glass-card p-8 text-center" style="transition-delay: 200ms;">
+                        <div class="mb-6 inline-block p-4 bg-slate-800 rounded-2xl"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></div>
+                        <h3 class="text-xl font-bold text-white">MehfoozBot AI</h3>
+                        <p class="mt-2 text-gray-400">An AI-driven chatbot providing personalized learning and immediate assistance in local languages.</p>
                     </div>
-                    <div class="reveal glass-card p-8" style="transition-delay: 400ms;">
-                         <div class="flex items-start gap-6">
-                            <div class="p-3 bg-slate-800 rounded-xl mt-1"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm-9 3a2 2 0 11-4 0 2 2 0 014 0z" /></svg></div>
-                            <div>
-                                <h3 class="text-xl font-bold text-white">Community Engagement Hub</h3>
-                                <p class="mt-2 text-slate-400">A program that transforms our platform into a movement, activating local leaders and students to become digital literacy ambassadors and creating a self-sustaining ecosystem of learning.</p>
-                            </div>
-                        </div>
+                    <div class="reveal glass-card p-8 text-center" style="transition-delay: 300ms;">
+                         <div class="mb-6 inline-block p-4 bg-slate-800 rounded-2xl"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div>
+                        <h3 class="text-xl font-bold text-white">Mini-Courses</h3>
+                        <p class="mt-2 text-gray-400">Short, localized courses that enhance digital skills and combat regional misinformation.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- PAGE: OUR MISSION -->
-        <section id="page-mission" class="page-content hidden">
-            <div class="text-center">
-                <div class="reveal">
-                    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter">Our Mission: <span class="gradient-text">Architecting Digital Trust</span></h1>
-                    <p class="max-w-3xl mx-auto mt-6 text-lg text-slate-400">
-                        We empower communities with trustworthy, lifelong learning opportunities that promote online safety, enabling them to confidently navigate and thrive in a connected world.
-                    </p>
-                </div>
-            </div>
-
-            <div class="py-24 lg:py-32 grid grid-cols-1 md:grid-cols-2 gap-8">
-                 <div class="reveal glass-card p-8" style="transition-delay: 100ms;">
-                    <h3 class="text-2xl font-bold text-white">The Problem</h3>
-                    <p class="mt-4 text-slate-400">Rapid, unguided technological adoption is creating a critical knowledge gap, leaving communities vulnerable to tech-enabled misinformation, cyber threats, and digital exclusion. This isn't a digital divide; it's a vulnerability crisis.</p>
-                </div>
-                <div class="reveal glass-card p-8" style="transition-delay: 200ms;">
-                    <h3 class="text-2xl font-bold text-white">The Vision</h3>
-                    <p class="mt-4 text-slate-400">We envision a future where our platform is the core of a thriving ecosystem focused on transparency. We aim to scale our model to empower linguistically diverse, underserved communities worldwide.</p>
+        <!-- PAGE: WHY NOW? -->
+        <section id="page-why-now" class="page-content py-24 md:py-32">
+             <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div class="reveal">
+                        <h2 class="text-4xl md:text-6xl font-extrabold tracking-tighter">Why Now?</h2>
+                        <p class="mt-6 text-lg text-gray-400">In conflict-prone regions with limited access to reliable news, social media becomes the de facto source of information. This reliance accelerates the spread of false narratives, exacerbating existing tensions. The need for a trust-based intervention has never been more critical.</p>
+                         <div class="mt-8 border-l-4 border-sky-500 pl-6">
+                            <p class="text-2xl font-semibold text-white">"We are addressing the root causes of digital vulnerability to create resilient communities capable of navigating a complex information landscape with confidence."</p>
+                        </div>
+                    </div>
+                    <div class="reveal" style="transition-delay: 200ms;">
+                        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=2938&auto=format&fit=crop" class="rounded-2xl shadow-2xl shadow-blue-900/20" alt="People collaborating around a table">
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- PAGE: CONTACT -->
-        <section id="page-contact" class="page-content hidden">
-            <div class="text-center py-24 lg:py-32">
-                <div class="reveal glass-card max-w-4xl mx-auto p-10 md:p-16">
-                    <h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter">Join the <span class="gradient-text">Mission</span></h1>
-                    <p class="max-w-2xl mx-auto mt-6 text-lg text-slate-300">
+        <!-- PAGE: DIFFERENTIATORS (BENTO GRID) -->
+        <section id="page-differentiators" class="page-content py-24 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <div class="reveal">
+                        <h2 class="text-4xl md:text-6xl font-extrabold tracking-tighter">Our <span class="gradient-text">Differentiators</span></h2>
+                        <p class="mt-6 text-lg text-gray-400">Our approach is a unique blend of technology, community engagement, and cultural relevance that sets us apart.</p>
+                    </div>
+                </div>
+                <div class="mt-20 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="reveal bento-item lg:col-span-2 p-8" style="transition-delay: 100ms;">
+                        <h3 class="text-2xl font-bold text-white">Localized Educational Content</h3>
+                        <p class="mt-2 text-gray-400">We tailor resources for Pakistani communities in multiple indigenous languages.</p>
+                    </div>
+                    <div class="reveal bento-item p-8" style="transition-delay: 200ms;">
+                        <h3 class="text-xl font-bold text-white">Community-Centric Engagement</h3>
+                        <p class="mt-2 text-gray-400">We actively involve local leaders (Ulema).</p>
+                    </div>
+                    <div class="reveal bento-item p-8" style="transition-delay: 300ms;">
+                        <h3 class="text-xl font-bold text-white">Innovative Technology</h3>
+                        <p class="mt-2 text-gray-400">Our AI chatbot provides personalized learning.</p>
+                    </div>
+                     <div class="reveal bento-item lg:col-span-2 p-8" style="transition-delay: 400ms;">
+                        <h3 class="text-2xl font-bold text-white">Multi-Platform Accessibility</h3>
+                        <p class="mt-2 text-gray-400">Content is on YouTube, WhatsApp, and Facebook, making it easily accessible to all.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- PARTNERS SECTION -->
+        <section class="py-24">
+             <div class="container mx-auto px-6">
+                <div class="reveal">
+                    <h4 class="text-center text-gray-500 font-semibold tracking-widest uppercase">Trusted By Partners</h4>
+                    <div class="mt-10 flex justify-center items-center gap-x-12 gap-y-8 flex-wrap opacity-60">
+                         <img src="https://framerusercontent.com/images/kY2VoNfQANTT4s5Sjw6tma2Ew.png" alt="Partner logo" class="h-8">
+                         <img src="https://framerusercontent.com/images/i30q5W6VuGoaB19Vp4Uvj2yoI.png" alt="Partner logo" class="h-8">
+                         <img src="https://framerusercontent.com/images/3a59dYdyS8DkzJYG3v8iCqfE.png" alt="Partner logo" class="h-10">
+                         <img src="https://framerusercontent.com/images/U5nTO3aEHvV0j3e2pGvS67gQ.png" alt="Partner logo" class="h-10">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: CONTACT (FINAL CTA) -->
+        <section id="page-contact" class="page-content py-24 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="reveal text-center">
+                    <h2 class="text-4xl md:text-6xl font-extrabold tracking-tighter">Join Our <span class="gradient-text">Mission</span></h2>
+                    <p class="max-w-3xl mx-auto mt-6 text-lg text-gray-400">
                        We are building a coalition of partners, investors, and community leaders. If you are committed to solving the digital vulnerability crisis, let's connect and build the future.
                     </p>
-                    <div class="mt-10">
-                        <a href="mailto:contact@mehfoozinternet.org" class="inline-block primary-button text-white font-bold py-4 px-8 rounded-lg text-lg">
-                            contact@mehfoozinternet.org
+                    <div class="mt-12">
+                        <a href="mailto:contact@mehfoozinternet.org" class="inline-block primary-button text-lg py-4 px-8">
+                            Get In Touch
                         </a>
                     </div>
                 </div>
@@ -261,12 +270,7 @@
 
     <footer class="border-t border-slate-800/60 mt-20 relative z-10">
         <div class="container mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-            <p class="text-sm text-slate-500">&copy; 2025 Mehfooz Internet. Architecting a safer digital world.</p>
-            <div class="flex space-x-6 mt-4 md:mt-0">
-                <a href="#" class="text-slate-500 hover:text-cyan-300 transition-colors">Facebook</a>
-                <a href="#" class="text-slate-500 hover:text-cyan-300 transition-colors">YouTube</a>
-                <a href="#" class="text-slate-500 hover:text-cyan-300 transition-colors">WhatsApp</a>
-            </div>
+            <p class="text-sm text-gray-500">&copy; 2025 Mehfooz Internet. A New Standard for Digital Literacy.</p>
         </div>
     </footer>
 </div>
@@ -274,39 +278,32 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const allNavLinks = document.querySelectorAll('.nav-link, .mobile-nav-link, .nav-link-logo, .nav-link-cta');
-        const desktopNavLinks = document.querySelectorAll('#desktop-nav .nav-link');
         const pages = document.querySelectorAll('.page-content');
-        
-        const showPage = (pageId) => {
-            pages.forEach(page => page.classList.add('hidden'));
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                const revealElementsOnPage = targetPage.querySelectorAll('.reveal');
-                revealElementsOnPage.forEach((el) => {
-                    el.classList.remove('visible'); // Reset for re-animation
-                    revealObserver.observe(el);
-                });
-            }
-            updateActiveNav(`page-${pageId.split('-')[1]}`);
-        };
+        const navbar = document.getElementById('navbar');
 
-        const updateActiveNav = (pageId) => {
-            desktopNavLinks.forEach(link => {
-                link.classList.toggle('active', `page-${link.dataset.page}` === pageId);
-            });
+        // --- Page Navigation Logic ---
+        const showPage = (pageId) => {
+            if (pageId === 'page-home') {
+                 // For home, just scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
         };
 
         allNavLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const pageId = `page-${link.dataset.page}`;
+                const pageId = link.dataset.page === 'home' ? 'page-home' : `page-${link.dataset.page}`;
                 showPage(pageId);
                 if(!mobileMenu.classList.contains('hidden')) closeMenu();
             });
         });
 
+        // --- Mobile menu toggle ---
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const closeMenuBtn = document.getElementById('close-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -315,100 +312,30 @@
         mobileMenuBtn.addEventListener('click', openMenu);
         closeMenuBtn.addEventListener('click', closeMenu);
 
-        const revealObserver = new IntersectionObserver((entries, observer) => {
+        // --- Scroll-based Animations & Header Styling ---
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const el = entry.target;
-                    // Use setTimeout to respect CSS transition-delay
                     const delay = parseInt(el.style.transitionDelay) || 0;
                     setTimeout(() => {
                         el.classList.add('visible');
                     }, delay);
-                    observer.unobserve(el);
                 }
             });
         }, { root: null, rootMargin: '0px', threshold: 0.1 });
-
-        // Hero background canvas animation
-        const canvas = document.getElementById('hero-canvas');
-        if(canvas) {
-            const ctx = canvas.getContext('2d');
-            let width, height;
-            const particles = [];
-            
-            const resize = () => {
-                width = canvas.width = window.innerWidth;
-                height = canvas.height = window.innerHeight;
-            };
-            
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * 0.5;
-                    this.vy = (Math.random() - 0.5) * 0.5;
-                    this.radius = Math.random() * 1.5;
-                }
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    if (this.x < 0 || this.x > width) this.vx *= -1;
-                    if (this.y < 0 || this.y > height) this.vy *= -1;
-                }
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(0, 221, 255, 0.5)';
-                    ctx.fill();
-                }
+        
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('bg-black/80');
+                navbar.classList.remove('bg-black/30');
+            } else {
+                navbar.classList.remove('bg-black/80');
+                navbar.classList.add('bg-black/30');
             }
-
-            const createParticles = () => {
-                const particleCount = Math.floor(width * height / 15000);
-                particles.length = 0;
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push(new Particle());
-                }
-            };
-
-            const animate = () => {
-                ctx.clearRect(0, 0, width, height);
-                particles.forEach(p => {
-                    p.update();
-                    p.draw();
-                });
-
-                // Draw lines between nearby particles
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 120) {
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(0, 221, 255, ${1 - dist / 120})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
-                        }
-                    }
-                }
-                requestAnimationFrame(animate);
-            };
-
-            window.addEventListener('resize', () => {
-                resize();
-                createParticles();
-            });
-
-            resize();
-            createParticles();
-            animate();
-        }
-
-        // Initial page load
-        showPage('page-home');
+        });
     });
 </script>
 </body>
