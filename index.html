@@ -14,6 +14,19 @@
             --text-color: #E2E8F0;
             --accent-color-1: #38bdf8;
             --accent-color-2: #818cf8;
+            --slate-800-alpha: rgba(30, 41, 59, 0.5);
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--accent-color-1), var(--accent-color-2));
+            border-radius: 4px;
         }
 
         body {
@@ -53,8 +66,8 @@
 
         .fade-in {
             opacity: 0;
-            transform: translateY(2rem);
-            transition: opacity 1s ease, transform 1s ease;
+            transform: translateY(3rem);
+            transition: opacity 1.2s ease, transform 1.2s ease;
         }
         .visible .fade-in {
             opacity: 1;
@@ -63,14 +76,19 @@
 
         /* Zero-gravity float animation */
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes float-more {
+            0% { transform: translateY(0px) rotate(-1deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(-1deg); }
         }
         .float-anim {
             animation: float 6s ease-in-out infinite;
         }
-        
+
         /* --- Marquee --- */
         .marquee {
             width: 100%;
@@ -95,7 +113,7 @@
             to { transform: translateX(-50%); }
         }
         
-        /* --- Holographic Chat Demo --- */
+        /* --- Holographic Card --- */
         .holographic-card {
             background: rgba(10, 25, 47, 0.3);
             backdrop-filter: blur(16px);
@@ -136,6 +154,51 @@
         .visible .chat-bubble {
             opacity: 1;
             transform: translateX(0);
+        }
+
+        /* --- Section Dividers & SVGs --- */
+        .section-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            transition: stroke-dashoffset 2s ease-in-out;
+        }
+        .visible .section-line {
+            stroke-dashoffset: 0;
+        }
+        .pulsing-glow {
+            filter: drop-shadow(0 0 5px var(--accent-color-1));
+            animation: pulse 4s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0% { filter: drop-shadow(0 0 5px var(--accent-color-1)); }
+            50% { filter: drop-shadow(0 0 15px var(--accent-color-2)); }
+            100% { filter: drop-shadow(0 0 5px var(--accent-color-1)); }
+        }
+
+        /* --- Roadmap Timeline --- */
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            padding-bottom: 3rem;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+        }
+        .timeline-marker {
+            position: absolute;
+            left: -0.75rem;
+            top: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            background-color: var(--bg-color);
+            border: 2px solid var(--accent-color-2);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .visible .timeline-marker {
+            transform: scale(1);
         }
 
         /* --- Scroll Progress Bar --- */
@@ -227,25 +290,86 @@
                     <span class="reveal-container"><span class="reveal-text">A COMPLETE ECOSYSTEM</span></span>
                 </h2>
             </div>
-            <div class="mt-20 space-y-10">
-                <div class="fade-in p-8 border-t border-slate-800 flex justify-between items-center float-anim" style="animation-delay: -1s;">
-                    <h3 class="font-display text-4xl md:text-6xl">HYPER-LOCALIZED CONTENT</h3>
-                    <p class="text-lg text-slate-400 max-w-sm hidden md:block">Bite-sized courses in multiple indigenous languages that address specific regional misinformation threats.</p>
+            <div class="mt-20 grid md:grid-cols-3 gap-8">
+                <div class="fade-in holographic-card p-8 rounded-2xl float-anim" style="animation-delay: -1s;">
+                    <div class="glare"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <h3 class="font-display text-3xl">Community Trust</h3>
+                    <p class="text-slate-400 mt-2">Engaging local leaders (Ulema) as trusted digital literacy ambassadors, bridging technology with tradition.</p>
                 </div>
-                <div class="fade-in p-8 border-t border-slate-800 flex justify-between items-center float-anim" style="animation-delay: -2.5s;">
-                    <h3 class="font-display text-4xl md:text-6xl">COMMUNITY TRUST</h3>
-                    <p class="text-lg text-slate-400 max-w-sm hidden md:block">Engaging local leaders (Ulema) as trusted digital literacy ambassadors, bridging technology with tradition.</p>
+                <div class="fade-in holographic-card p-8 rounded-2xl float-anim" style="animation-delay: -2.5s;">
+                    <div class="glare"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m4 0v2M3 17h12M9 15v2M4 11h16M10 11v2m0-6H7a1 1 0 00-1 1v2m5-3h4a1 1 0 011 1v2M4 21h16a1 1 0 001-1v-2a1 1 0 00-1-1H4a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
+                    <h3 class="font-display text-3xl">Hyper-Localized Content</h3>
+                    <p class="text-slate-400 mt-2">Bite-sized courses in multiple indigenous languages that address specific regional misinformation threats.</p>
                 </div>
-                <div class="fade-in p-8 border-t border-b border-slate-800 flex justify-between items-center float-anim" style="animation-delay: -4s;">
-                    <h3 class="font-display text-4xl md:text-6xl">YOUTH FEEDBACK LOOP</h3>
-                    <p class="text-lg text-slate-400 max-w-sm hidden md:block">Local students provide continuous feedback, ensuring content is always relevant, effective, and evolving.</p>
+                <div class="fade-in holographic-card p-8 rounded-2xl float-anim" style="animation-delay: -4s;">
+                    <div class="glare"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V4a2 2 0 012-2h8a2 2 0 012 2v2z" /></svg>
+                    <h3 class="font-display text-3xl">Youth Feedback Loop</h3>
+                    <p class="text-slate-400 mt-2">Local students provide continuous feedback, ensuring content is always relevant, effective, and evolving.</p>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 5: CTA -->
-        <section class="py-32 text-center">
-             <div class="fade-in float-anim">
+        <!-- SECTION 5: THE VISION / ROADMAP -->
+        <section class="container mx-auto px-6 py-32">
+            <div class="text-center max-w-4xl mx-auto">
+                <h2 class="font-display text-6xl md:text-8xl tracking-tight float-anim">
+                    <span class="reveal-container"><span class="reveal-text">THE NEXT FIVE YEARS</span></span>
+                </h2>
+                <div class="reveal-container">
+                    <p class="mt-6 text-xl text-slate-400 reveal-text" style="transition-delay: 0.3s;">
+                        Our vision is to scale Mehfooz into a pivotal force for digital literacy across Pakistan and beyond, establishing a replicable model for global empowerment.
+                    </p>
+                </div>
+            </div>
+            <div class="mt-24 max-w-3xl mx-auto">
+                <div class="fade-in timeline-item">
+                    <div class="timeline-marker"></div>
+                    <h3 class="font-display text-4xl mb-2">User Base Expansion</h3>
+                    <p class="text-slate-400">Reach a minimum of 100,000 users, leveraging established educational networks and community structures for organic growth.</p>
+                </div>
+                <div class="fade-in timeline-item">
+                    <div class="timeline-marker"></div>
+                    <h3 class="font-display text-4xl mb-2">Advanced Platform Development</h3>
+                    <p class="text-slate-400">Evolve to include AI-driven personalized learning paths, enhanced offline capabilities for remote areas, and expanded language support.</p>
+                </div>
+                <div class="fade-in timeline-item">
+                    <div class="timeline-marker"></div>
+                    <h3 class="font-display text-4xl mb-2">Deep Community Integration</h3>
+                    <p class="text-slate-400">Deepen partnerships with educational institutions, religious leaders, and community figures to ensure sustainable adoption and impact.</p>
+                </div>
+                <div class="fade-in timeline-item">
+                    <div class="timeline-marker"></div>
+                    <h3 class="font-display text-4xl mb-2">Sustainable Revenue Model</h3>
+                    <p class="text-slate-400">Continue with a freemium structure, with premium features tailored to local income levels and institutional licenses as a significant revenue driver.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: TECHNOLOGY & DATA VISUALIZATION -->
+        <section class="container mx-auto px-6 py-32">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="fade-in float-anim">
+                    <h2 class="font-display text-6xl md:text-7xl tracking-tight leading-none">THE ENGINE OF CLARITY</h2>
+                    <p class="mt-6 text-xl text-slate-300">
+                        We leverage a robust stack of technologies, including advanced AI and machine learning, to power our educational offerings. Our focus is on creating scalable, secure, and highly accessible solutions.
+                    </p>
+                </div>
+                <div class="fade-in">
+                    <canvas id="data-globe-canvas" class="w-full h-auto aspect-square"></canvas>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 7: CTA / JOIN -->
+        <section class="py-32 text-center relative overflow-hidden">
+             <svg viewBox="0 0 100 10" class="absolute top-0 left-0 w-full h-auto text-slate-800" preserveAspectRatio="none">
+                <path d="M0 10 C 20 0, 40 0, 50 5 S 80 10, 100 0 V 10 Z" fill="currentColor"></path>
+            </svg>
+             <div class="fade-in float-anim relative">
                 <h2 class="font-display text-6xl md:text-8xl tracking-tight">JOIN OUR MISSION</h2>
                 <p class="mt-6 text-xl max-w-3xl mx-auto text-slate-400">
                     We are building a coalition of partners, investors, and community leaders. If you are committed to solving the digital vulnerability crisis, let's connect and build the future.
@@ -254,65 +378,160 @@
                     Get In Touch
                 </a>
             </div>
+            <svg viewBox="0 0 100 10" class="absolute bottom-0 left-0 w-full h-auto text-slate-800" preserveAspectRatio="none">
+                <path d="M0 0 C 20 10, 40 10, 50 5 S 80 0, 100 10 V 0 Z" fill="currentColor"></path>
+            </svg>
         </section>
+        
+        <!-- FOOTER -->
+        <footer class="bg-slate-900/50 py-12 px-6">
+            <div class="container mx-auto text-center text-slate-400">
+                <p>&copy; 2025 Mehfooz. All rights reserved.</p>
+                <p class="mt-2 text-sm">A new paradigm for digital literacy and community empowerment.</p>
+            </div>
+        </footer>
     </main>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Dynamic Starfield Background ---
-    const canvas = document.getElementById('starfield-canvas');
-    const ctx = canvas.getContext('2d');
-
+    const starfieldCanvas = document.getElementById('starfield-canvas');
+    const starfieldCtx = starfieldCanvas.getContext('2d');
     let width, height;
     let stars = [];
-    const starCount = 200;
+    const starCount = 400; // More stars for a richer field
+    let shootingStars = [];
 
-    function init() {
+    function initStarfield() {
         width = window.innerWidth;
         height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
+        starfieldCanvas.width = width;
+        starfieldCanvas.height = height;
         stars = [];
         for (let i = 0; i < starCount; i++) {
             stars.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
+                x: (Math.random() - 0.5) * width * 2,
+                y: (Math.random() - 0.5) * height * 2,
                 z: Math.random() * width,
                 size: Math.random() * 2 + 1,
             });
         }
     }
 
-    function animate() {
-        ctx.clearRect(0, 0, width, height);
-        ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+    function animateStarfield() {
+        starfieldCtx.clearRect(0, 0, width, height);
         
+        // Stars
+        starfieldCtx.fillStyle = "rgba(255, 255, 255, 0.7)";
         for (let star of stars) {
-            star.z -= 1.5;
+            star.z -= 0.5; // Slower speed for a more majestic feel
             if (star.z <= 0) {
-                star.x = Math.random() * width;
-                star.y = Math.random() * height;
+                star.x = (Math.random() - 0.5) * width * 2;
+                star.y = (Math.random() - 0.5) * height * 2;
                 star.z = width;
             }
-
             const k = 128 / star.z;
             const px = star.x * k + width / 2;
             const py = star.y * k + height / 2;
-
             if (px >= 0 && px <= width && py >= 0 && py <= height) {
                 const size = star.size * k;
-                ctx.beginPath();
-                ctx.arc(px, py, size / 2, 0, Math.PI * 2);
-                ctx.fill();
+                starfieldCtx.beginPath();
+                starfieldCtx.arc(px, py, size / 2, 0, Math.PI * 2);
+                starfieldCtx.fill();
             }
         }
-        requestAnimationFrame(animate);
+        
+        // Shooting Stars
+        if (Math.random() > 0.995 && shootingStars.length < 3) {
+            shootingStars.push({
+                x: Math.random() * width,
+                y: 0,
+                len: Math.random() * 80 + 10,
+                speed: Math.random() * 10 + 5,
+                opacity: 1
+            });
+        }
+        for (let i = shootingStars.length - 1; i >= 0; i--) {
+            const s = shootingStars[i];
+            s.x += s.speed;
+            s.y += s.speed;
+            s.opacity -= 0.02;
+            if (s.opacity <= 0) {
+                shootingStars.splice(i, 1);
+            } else {
+                starfieldCtx.beginPath();
+                starfieldCtx.moveTo(s.x, s.y);
+                starfieldCtx.lineTo(s.x + s.len, s.y + s.len);
+                starfieldCtx.strokeStyle = `rgba(255, 255, 255, ${s.opacity})`;
+                starfieldCtx.stroke();
+            }
+        }
+
+        requestAnimationFrame(animateStarfield);
     }
 
-    init();
-    animate();
-    window.addEventListener('resize', init);
+    initStarfield();
+    animateStarfield();
+    window.addEventListener('resize', initStarfield);
+
+    // --- Interactive Data Globe ---
+    const globeCanvas = document.getElementById('data-globe-canvas');
+    if (globeCanvas) {
+        const globeCtx = globeCanvas.getContext('2d');
+        const globeSize = Math.min(globeCanvas.clientWidth, 500);
+        globeCanvas.width = globeSize * 2; // High DPI
+        globeCanvas.height = globeSize * 2;
+        globeCtx.scale(2, 2);
+        
+        const radius = globeSize / 2.5;
+        const dots = [];
+        const numDots = 150;
+        let rotation = 0;
+
+        for(let i=0; i<numDots; i++){
+            dots.push({
+                theta: Math.random() * Math.PI,
+                phi: Math.random() * 2 * Math.PI,
+                size: Math.random() * 3 + 1
+            });
+        }
+
+        function animateGlobe() {
+            globeCtx.clearRect(0,0, globeSize, globeSize);
+            
+            // Draw globe sphere
+            globeCtx.strokeStyle = "rgba(129, 140, 248, 0.3)";
+            globeCtx.beginPath();
+            globeCtx.arc(globeSize / 2, globeSize / 2, radius, 0, 2 * Math.PI);
+            globeCtx.stroke();
+
+            // Draw dots
+            dots.forEach(dot => {
+                const x = radius * Math.sin(dot.theta) * Math.cos(dot.phi + rotation);
+                const y = radius * Math.sin(dot.theta) * Math.sin(dot.phi + rotation);
+                const z = radius * Math.cos(dot.theta);
+
+                const projectedScale = 1 + z / (radius * 2);
+                const projectedX = x * projectedScale + globeSize/2;
+                const projectedY = y * projectedScale + globeSize/2;
+                
+                const alpha = (z + radius) / (2 * radius);
+                
+                if(z > -radius * 0.7) { // Only draw front-facing dots
+                    globeCtx.beginPath();
+                    globeCtx.arc(projectedX, projectedY, dot.size * projectedScale / 2, 0, 2 * Math.PI);
+                    globeCtx.fillStyle = `rgba(56, 189, 248, ${alpha})`;
+                    globeCtx.fill();
+                }
+            });
+
+            rotation += 0.005;
+            requestAnimationFrame(animateGlobe);
+        }
+        animateGlobe();
+    }
+
 
     // --- Holographic Card Tilt Effect ---
     const cards = document.querySelectorAll('.holographic-card');
@@ -343,9 +562,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 entry.target.classList.add('visible');
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.2 });
 
-    document.querySelectorAll('.reveal-container, .fade-in, .chat-ui, .chat-bubble').forEach(el => {
+    document.querySelectorAll('.reveal-container, .fade-in, .chat-ui, .chat-bubble, .timeline-item').forEach(el => {
         observer.observe(el);
     });
 
