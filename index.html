@@ -1,45 +1,561 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mehfooz Internet: Clarity in the Digital Crossroads</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-  <style>
-    /* FULL RESET + ACCESSIBLE and FLUID DESIGN */
-    html,body {margin:0;padding:0;box-sizing:border-box;width:100vw;min-height:100vh;scroll-behavior:smooth;overscroll-behavior-y:none;background:#141823;color:#f5f6fa;font-family:'Inter',sans-serif;}
-    *,*:before,*:after{box-sizing:inherit;}
-    a{text-decoration:none;color:inherit;}
-    /* Grid Layout System for Premium Structure */
-    .container{max-width:1320px;margin:0 auto;padding:0 2vw;}
-    section{padding:3vw 0;position:relative;overflow:hidden;}
-    .flex{display:flex;flex-wrap:wrap;align-items:center;}
-    .fade-in-up{animation:fadeInUp 1s cubic-bezier(.39,.575,.565,1) both;}
-    @keyframes fadeInUp{0%{opacity:0;transform:translate3d(0,60px,0);}100%{opacity:1;transform:none;}}
-    .fade-in{animation:fadeIn 1.2s cubic-bezier(.39,.575,.565,1) both;}
-    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-    /* Cinematic HERO section */
-    #hero {min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;position:relative;background:black;z-index:1;}
-    #hero-bgvideo{position:absolute;top:0;left:0;width:100vw;height:100vh;object-fit:cover;object-position:center;z-index:0;opacity:0.75;filter:blur(3px) brightness(0.95);}
-    .bg-overlay{position:absolute;inset:0;width:100vw;height:100vh;pointer-events:none;background:linear-gradient(120deg,rgba(20,24,35,0.94) 10%,rgba(45,66,136,0.75) 70%,rgba(13,228,247,0.27) 100%);z-index:1;}
-    .hero__headline{z-index:2;font-family:'Space Grotesk',sans-serif;font-size:clamp(2.8rem,7vw,5rem);font-weight:900;background:linear-gradient(96deg,#27d5e5 15%,#324eb5 88%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-2px;line-height:1.1;display:inline-block;opacity:0;animation:textIn .7s .2s cubic-bezier(.39,.575,.565,1) forwards;}
-    @keyframes textIn{to{opacity:1;}}
-    .hero__sub{color:#f5f6fa;background:rgba(25,29,41,0.62);padding:1.7rem 3rem 1.3rem 2.5rem;border-radius:2rem;box-shadow:0 10px 48px 0 rgba(14,125,213,0.16);font-size:1.45rem;margin-top:2.8rem;z-index:2;}
-    .pulse-arrow{animation:arrowDown 1.36s infinite alternate cubic-bezier(0.62,0.02,0.54,0.83);margin-top:80px;font-size:2.2rem;color:#12bff9;z-index:2;}
-    @keyframes arrowDown{from{transform:translateY(0);}to{transform:translateY(15px);}}
-    .animated-network{position:absolute;z-index:1;inset:0;width:100vw;height:100vh;pointer-events:none;overflow:hidden;mix-blend-mode:screen;}
-    /* Section HEADERS */
-    .section-title{font-family:'Space Grotesk',sans-serif;font-size:2.5rem;font-weight:800;color:#24e6ff;margin-bottom:1.4rem;line-height:1.2;text-align:center;}
-    .section-description{max-width:690px;margin:1.2rem auto 3.5rem;text-align:center;font-size:1.15rem;color:#b2d5ed;}
-    /* Scrollytelling styles: text with sticky/animated background */
-    .stickybg-section{background:linear-gradient(90deg,#1b3245 60%,rgba(30,36,65,.12) 100%);min-height:450px;}
-    .sticky-bgmap {position:fixed;top:80px;left:0;width:100vw;max-height:450px;pointer-events:none;z-index:0;opacity:0.25;}
-    /* Stepped/Animated narrative per scroll */
-    .narrative-step {margin: 90px 0 45px;width:90%;max-width:880px;background:rgba(23,25,44,0.91);border-radius:18px;padding:2.4rem 2.2rem 2.4rem 3.2rem;box-shadow:0 4px 32px 0 rgba(81,148,255,0.09);position:relative;z-index:2;}
-    /* Microinteractions for BUTTONS, ICONS, etc. */
-    .btn, .cta, button{display:inline-block;padding:15px 38px;font-size:1.18rem;border-radius:12px;background:linear-gradient(90deg,#324eb5 15%,#27d5e5 80% 100%);color:white;font-family:'Manrope',sans-serif;font-weight:700;border:none;cursor:pointer;box-shadow:0 2px 18px 0 rgba(22,107,174,0.11);transition:box-shadow .18s,transform .18s,background .32s;outline:none;}
-    .btn:hover{box-shadow:0 5px 30px 0 rgba(40,179,219,0.18);transform:translateY(-2px) scale(1.025);background:linear-gradient(91deg,#13e6fa 13%,#08136e 82% 100%);}
-    .ai-demo-btn{font-size:1.18rem;padding-left:2rem;padding-right:2rem;border-radius:20px;background:#ffffff0d;color:#19fff9;border:2px solid #27cce6;box-shadow:0 2px 8px 0 rgba(13,175,213,0.12);}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehfooz Internet - Clarity in the Digital Crossroads</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #050505;
+            --secondary-bg: #0A0A0A;
+            --tertiary-bg: #141414;
+            --accent-glow: rgba(0, 169, 255, 0.7);
+            --accent-blue: #00A9FF;
+            --accent-purple: #8B5CF6;
+            --text-primary: #EAEAEA;
+            --text-secondary: #A1A1AA;
+            --text-muted: #71717A;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --gradient-primary: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        }
+        
+        @keyframes subtle-glow {
+            0% { text-shadow: 0 0 4px rgba(0, 169, 255, 0.2); }
+            100% { text-shadow: 0 0 12px rgba(0, 169, 255, 0.5), 0 0 30px rgba(139, 92, 246, 0.2); }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            position: relative;
+            cursor: none;
+        }
+        
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            mix-blend-mode: difference;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.15s ease;
+            z-index: 9999;
+        }
+        .cursor.hovered {
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--primary-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 10px; }
+        
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+        section { padding: 12rem 0; position: relative; overflow: hidden; }
+
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+            transition-delay: 0.2s;
+        }
+        .reveal-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+        h1, h2, h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 2rem 0;
+            transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
+        }
+        .main-header.scrolled {
+            background-color: rgba(5, 5, 5, 0.5);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .navbar { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 600; text-decoration: none; color: var(--text-primary); }
+        .nav-links { display: flex; list-style: none; gap: 2.5rem; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--text-primary); }
+
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0; text-align: center; }
+        #hero-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .hero-content { position: relative; z-index: 2; }
+        .hero-title {
+            font-size: clamp(3rem, 7vw, 6rem);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            animation: subtle-glow 3s ease-in-out infinite alternate;
+        }
+        .hero-title .char { display: inline-block; opacity: 0; transform: translateY(30px) scale(0.8); animation: char-reveal 1s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
+        @keyframes char-reveal { to { opacity: 1; transform: translateY(0) scale(1); } }
+        .hero-subtitle { font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--text-secondary); max-width: 680px; margin: 0 auto; opacity: 0; transform: translateY(20px); animation: fade-up 1s forwards 1.5s; }
+        .scroll-prompt { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); color: var(--text-muted); font-size: 0.8rem; z-index: 2; opacity: 0; animation: fade-up 1s forwards 2.5s; }
+        .scroll-prompt span { display: block; margin-top: 0.5rem; animation: pulse 1.8s infinite; }
+        @keyframes fade-up { to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+        .challenge-section { background-color: var(--secondary-bg); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .challenge-grid { display: grid; gap: 10rem; }
+        .challenge-item { max-width: 650px; margin: 0 auto; text-align: center; }
+        .challenge-item h2 { font-size: clamp(2.2rem, 5vw, 3.5rem); margin-bottom: 1.5rem; }
+        .challenge-item p { font-size: 1.15rem; color: var(--text-secondary); }
+        
+        .solution-grid { display: grid; gap: 6rem; }
+        .solution-item { display: grid; grid-template-columns: 60px 1fr; gap: 2.5rem; align-items: start; }
+        .solution-icon { font-size: 2.5rem; line-height: 1; color: var(--accent-blue); filter: drop-shadow(0 0 8px var(--accent-glow)); }
+        .solution-content h3 { font-size: 2rem; margin-bottom: 1rem; }
+        .solution-content p { color: var(--text-secondary); max-width: 60ch; }
+        .solution-interactive { margin-top: 2rem; }
+        .btn-primary { display: inline-block; background: var(--gradient-primary); color: #fff; padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 500; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0, 169, 255, 0.25); }
+        
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; z-index: 1001; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
+        .modal.is-open { opacity: 1; visibility: visible; }
+        .modal-content { background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 18px; padding: 2.5rem; width: 90%; max-width: 520px; transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .modal.is-open .modal-content { transform: scale(1); }
+        .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.8rem; color: var(--text-secondary); cursor: pointer; background: none; border: none; transition: color 0.3s ease; }
+        .modal-close:hover { color: var(--text-primary); }
+        .chat-simulation { height: 400px; display: flex; flex-direction: column; }
+        .chat-messages { flex-grow: 1; overflow-y: auto; padding-right: 1rem; scrollbar-width: thin; }
+        .chat-message { margin-bottom: 1.2rem; max-width: 85%; opacity: 0; transform: translateY(15px); animation: fade-up 0.6s forwards; }
+        .chat-message.user { background: var(--tertiary-bg); padding: 0.9rem 1.2rem; border-radius: 16px 16px 4px 16px; margin-left: auto; }
+        .chat-message.bot { background: var(--accent-blue); color: var(--primary-bg); font-weight: 500; padding: 0.9rem 1.2rem; border-radius: 16px 16px 16px 4px; margin-right: auto; }
+        .chat-questions { padding-top: 1.5rem; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 0.8rem; }
+        .chat-questions button { background: var(--tertiary-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 1rem; border-radius: 10px; text-align: left; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease; }
+        .chat-questions button:hover { background-color: #1f1f1f; border-color: rgba(255,255,255,0.15); }
+
+        .difference-section { background: var(--secondary-bg); border-bottom: 1px solid var(--border-color); }
+        .section-header { text-align: center; max-width: 700px; margin: 0 auto 6rem auto; }
+        .section-header h2 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; }
+        .section-header p { color: var(--text-secondary); font-size: 1.15rem; }
+        .difference-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .difference-item { background: var(--tertiary-bg); padding: 2.5rem; border-radius: 16px; border: 1px solid var(--border-color); transition: background-color 0.3s, border-color 0.3s; }
+        .difference-item:hover { background-color: #1a1a1a; border-color: rgba(255,255,255,0.15); }
+        .difference-item h4 { font-size: 1.3rem; margin-bottom: 0.8rem; color: var(--accent-blue); }
+        .difference-item p { color: var(--text-secondary); font-size: 1rem; }
+        .competitor-table { width: 100%; margin-top: 6rem; border-collapse: collapse; font-size: 0.95rem; }
+        .competitor-table th, .competitor-table td { padding: 1.2rem; text-align: left; border-bottom: 1px solid var(--border-color); }
+        .competitor-table th { color: var(--text-secondary); font-weight: 500; }
+        .competitor-table td { text-align: center; }
+        .competitor-table td:first-child { text-align: left; font-weight: 500; color: var(--text-primary); }
+        .tick { color: var(--accent-blue); font-weight: bold; font-size: 1.4rem; }
+        
+        .principles-section { min-height: 100vh; padding-bottom: 0; }
+        .principles-sticky-container { position: relative; height: 350vh; }
+        .principles-sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+        .principle-item { position: absolute; max-width: 550px; opacity: 0; transform: scale(0.95); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .principle-item.active { opacity: 1; transform: scale(1); }
+        .principle-item h3 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1rem; color: var(--accent-blue); animation: subtle-glow 3s ease-in-out infinite alternate; }
+        .principle-item p { font-size: 1.15rem; color: var(--text-secondary); }
+        
+        .contact-section { background: var(--secondary-bg); border-top: 1px solid var(--border-color); }
+        .pathway-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 6rem; }
+        .pathway-card { background: var(--tertiary-bg); padding: 3rem 2rem; border: 1px solid var(--border-color); border-radius: 16px; text-align: center; cursor: pointer; position: relative; overflow: hidden; transition: transform 0.3s ease; }
+        .pathway-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at var(--x) var(--y), rgba(255,255,255,0.08) 0%, transparent 40%); opacity: 0; transition: opacity 0.4s ease; }
+        .pathway-card:hover { transform: translateY(-8px); }
+        .pathway-card:hover::before { opacity: 1; }
+        .pathway-card h4 { font-size: 1.4rem; position: relative; }
+        .contact-form { max-width: 700px; margin: 0 auto; }
+        .form-group { margin-bottom: 1.8rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 1.2rem; background: var(--tertiary-bg); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); font-size: 1rem; font-family: 'Inter', sans-serif; transition: border-color 0.3s, box-shadow 0.3s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(0, 169, 255, 0.2); }
+        .submit-btn { width: 100%; padding: 1.2rem; background: var(--gradient-primary); border: none; border-radius: 10px; color: #fff; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .submit-btn:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0, 169, 255, 0.25); }
+
+        .main-footer { padding: 5rem 0; text-align: center; border-top: 1px solid var(--border-color); }
+        .footer-links { display: flex; justify-content: center; gap: 2.5rem; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
+        .footer-links a:hover { color: var(--text-primary); }
+        .footer-bottom p { color: var(--text-muted); font-size: 0.9rem; }
+
+        @media (max-width: 768px) {
+            body { cursor: auto; }
+            .cursor { display: none; }
+            .nav-links { display: none; }
+            section { padding: 8rem 0; }
+            .solution-item { grid-template-columns: 1fr; text-align: center; }
+            .solution-icon { margin: 0 auto 1.5rem auto; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+
+    <header class="main-header" id="main-header">
+        <div class="container navbar">
+            <a href="#home" class="logo">Mehfooz Internet</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#challenge">The Challenge</a></li>
+                    <li><a href="#solution">Our Solution</a></li>
+                    <li><a href="#difference">The Difference</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <canvas id="hero-canvas"></canvas>
+            <div class="hero-content">
+                <h1 class="hero-title">Clarity in the Digital Crossroads.</h1>
+                <p class="hero-subtitle">Mehfooz Internet is empowering the communities of Gilgit Baltistan with the tools to navigate the digital world safely and confidently.</p>
+            </div>
+            <div class="scroll-prompt">
+                Scroll to Discover
+                <span>↓</span>
+            </div>
+        </section>
+
+        <section class="challenge-section" id="challenge">
+            <div class="container">
+                <div class="challenge-grid">
+                    <div class="challenge-item reveal-on-scroll">
+                        <h2>Where Progress Meets Peril.</h2>
+                        <p>In Gilgit Baltistan, the rapid arrival of new technology, including powerful AI, is outpacing digital literacy. This creates a critical vulnerability, exposing communities to tech-enabled misinformation, cyber threats, and digital exclusion.</p>
+                    </div>
+                    <div class="challenge-item reveal-on-scroll">
+                        <h2>Our Mission</h2>
+                        <p>To empower the people of Gilgit Baltistan with trustworthy, lifelong learning opportunities that promote online safety and digital literacy, enabling them to navigate and thrive in an increasingly connected world.</p>
+                    </div>
+                    <div class="challenge-item reveal-on-scroll">
+                        <h2>Our Vision</h2>
+                        <p>To cultivate a digitally literate society in Gilgit Baltistan where individuals of all backgrounds can confidently and responsibly navigate the digital landscape.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="solution-section" id="solution">
+            <div class="container">
+                <div class="section-header reveal-on-scroll">
+                    <h2>An Ecosystem of Empowerment</h2>
+                </div>
+                <div class="solution-grid">
+                    <div class="solution-item reveal-on-scroll">
+                        <div class="solution-icon">🤝</div>
+                        <div class="solution-content">
+                            <h3>Wisdom, Amplified.</h3>
+                            <p>We don't just provide information; we build on existing foundations of trust. Through a groundbreaking partnership model, we collaborate with local religious leaders (Ulema) who serve as trusted digital literacy ambassadors, bridging traditional knowledge with modern skills.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item reveal-on-scroll">
+                        <div class="solution-icon">🤖</div>
+                        <div class="solution-content">
+                            <h3>Personalized Guidance. Instantly.</h3>
+                            <p>Harnessing AI, MehfoozBot provides personalized, real-time assistance on digital literacy. It adapts to each user's language and learning style, offering immediate answers through familiar messaging interfaces.</p>
+                            <div class="solution-interactive">
+                                <button class="btn-primary" id="open-modal-btn">See MehfoozBot in Action</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="solution-item reveal-on-scroll">
+                        <div class="solution-icon">📚</div>
+                        <div class="solution-content">
+                            <h3>Knowledge, Co-Created.</h3>
+                            <p>Our platform offers localized mini-courses in multiple indigenous languages. This content is kept relevant and effective through our unique Community Feedback Ecosystem, where local students provide continuous input.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="difference-section" id="difference">
+            <div class="container">
+                <div class="section-header reveal-on-scroll">
+                    <h2>The Mehfooz Difference</h2>
+                     <p>Our unique blend of technology, cultural integration, and community engagement sets us apart, creating a powerful model for sustainable digital empowerment.</p>
+                </div>
+                <div class="difference-grid">
+                    <div class="difference-item reveal-on-scroll"><h4>Hyper-Localized Content</h4><p>Culturally tailored materials in multiple indigenous languages.</p></div>
+                    <div class="difference-item reveal-on-scroll"><h4>Community-Centric Engagement</h4><p>Deep integration with trusted local leaders (Ulema) fosters unparalleled acceptance.</p></div>
+                    <div class="difference-item reveal-on-scroll"><h4>Innovative Technology</h4><p>AI-driven chatbots provide personalized, interactive learning experiences.</p></div>
+                    <div class="difference-item reveal-on-scroll"><h4>Singular Focus</h4><p>Specifically targeting misinformation with critical thinking skills.</p></div>
+                    <div class="difference-item reveal-on-scroll"><h4>Multi-Platform Accessibility</h4><p>Meeting users where they are, on platforms like WhatsApp and Facebook.</p></div>
+                    <div class="difference-item reveal-on-scroll"><h4>Feedback-Driven Development</h4><p>A continuous feedback loop with local students ensures relevance.</p></div>
+                </div>
+                <div class="reveal-on-scroll">
+                    <table class="competitor-table">
+                        <thead>
+                            <tr>
+                                <th>Feature / Approach</th>
+                                <th>Mehfooz Internet</th>
+                                <th>Digital Rights Foundation</th>
+                                <th>Soch Fact Check</th>
+                                <th>Media Matters</th>
+                                <th>Maati TV</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>AI-Powered Personalization</td><td><span class="tick">✓</span></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>Ulema Partnership Model</td><td><span class="tick">✓</span></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>Student Feedback Ecosystem</td><td><span class="tick">✓</span></td><td></td><td></td><td></td><td></td></tr>
+                            <tr><td>Content in Indigenous Languages</td><td><span class="tick">✓</span></td><td></td><td></td><td></td><td><span class="tick">✓</span></td></tr>
+                            <tr><td>Focus on Misinformation</td><td><span class="tick">✓</span></td><td></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+                            <tr><td>Multi-Platform Social Delivery</td><td><span class="tick">✓</span></td><td></td><td></td><td></td><td><span class="tick">✓</span></td></tr>
+                             <tr><td>Digital Rights & Policy Advocacy</td><td></td><td><span class="tick">✓</span></td><td></td><td><span class="tick">✓</span></td><td></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <section class="principles-section" id="principles">
+            <div class="principles-sticky-container">
+                <div class="principles-sticky">
+                    <div id="principle-1" class="principle-item"><h3>Collaboration</h3><p>We build partnerships with local leaders, researchers, and community members to create a holistic approach.</p></div>
+                    <div id="principle-2" class="principle-item"><h3>Integrity</h3><p>We uphold the highest standards of accuracy and reliability, ensuring users receive trustworthy information.</p></div>
+                    <div id="principle-3" class="principle-item"><h3>Inclusivity</h3><p>We embrace diversity by providing resources in multiple languages and formats for everyone.</p></div>
+                    <div id="principle-4" class="principle-item"><h3>Innovation</h3><p>We leverage cutting-edge technologies like AI to continuously enhance our educational offerings.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <div class="section-header reveal-on-scroll">
+                    <h2>Become a Part of the Solution.</h2>
+                    <p>Whether you are a community leader, a potential partner, a researcher, or a student, there is a role for you in building a digitally resilient future.</p>
+                </div>
+                <div class="pathway-grid reveal-on-scroll">
+                    <div class="pathway-card" data-pathway="partner"><h4>For Partners & Investors</h4></div>
+                    <div class="pathway-card" data-pathway="researcher"><h4>For Researchers & Institutions</h4></div>
+                    <div class="pathway-card" data-pathway="community"><h4>For Community Members</h4></div>
+                </div>
+                <form class="contact-form reveal-on-scroll" id="contactForm">
+                     <div class="form-group">
+                        <select id="interest" name="interest" required>
+                            <option value="">I am a...</option>
+                            <option value="partner">Potential Partner / Investor</option>
+                            <option value="researcher">Researcher / Institution</option>
+                            <option value="community">Community Member</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="fullName" name="fullName" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Email Address" required>
+                    </div>
+                     <div class="form-group">
+                        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-logo">Mehfooz Internet</div>
+             <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="footer-bottom">
+                 <p>&copy; 2025 Mehfooz Internet. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal" id="mehfoozbot-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="close-modal-btn">&times;</button>
+            <h3>MehfoozBot Demo</h3>
+            <div class="chat-simulation">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="chat-message bot" style="animation-delay: 0.5s;">Hello! I'm MehfoozBot. How can I help you learn about digital safety today?</div>
+                </div>
+                <div class="chat-questions">
+                    <button data-question="How can I spot fake news?">How can I spot fake news?</button>
+                    <button data-question="Is my WhatsApp safe?">Is my WhatsApp safe?</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // --- CURSOR ---
+        const cursor = document.querySelector('.cursor');
+        if (window.matchMedia("(pointer: fine)").matches) {
+            document.addEventListener('mousemove', e => {
+                cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            });
+            document.querySelectorAll('a, button, .pathway-card').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+            });
+        } else {
+            cursor.style.display = 'none';
+        }
+
+        // --- HEADER ---
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // --- SCROLL ANIMATIONS ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+        // --- HERO TITLE ANIMATION ---
+        const heroTitle = document.querySelector('.hero-title');
+        const text = heroTitle.textContent;
+        heroTitle.innerHTML = '';
+        text.split('').forEach((char, index) => {
+            const span = document.createElement('span');
+            span.className = 'char';
+            span.textContent = char === ' ' ? '\u00A0' : char;
+            span.style.animationDelay = `${index * 0.04 + 0.5}s`;
+            heroTitle.appendChild(span);
+        });
+
+        // --- HERO CANVAS ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('hero-canvas'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.position.z = 5;
+
+        const points = new Float32Array(5000 * 3);
+        for (let i = 0; i < points.length; i++) {
+            points[i] = THREE.MathUtils.randFloatSpread(200);
+        }
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(points, 3));
+        const material = new THREE.PointsMaterial({ color: 0x555555, size: 0.15, transparent: true });
+        const particleSystem = new THREE.Points(geometry, material);
+        scene.add(particleSystem);
+        
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', e => {
+             mouseX = (e.clientX - window.innerWidth / 2) / 100;
+             mouseY = (e.clientY - window.innerHeight / 2) / 100;
+        });
+
+        const clock = new THREE.Clock();
+        const animate = () => {
+            const elapsedTime = clock.getElapsedTime();
+            particleSystem.rotation.y = elapsedTime * 0.05;
+            camera.position.x += (mouseX - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        };
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // --- MODAL ---
+        const modal = document.getElementById('mehfoozbot-modal');
+        const openBtn = document.getElementById('open-modal-btn');
+        const closeBtn = document.getElementById('close-modal-btn');
+        const chatMessages = document.getElementById('chat-messages');
+        const questionBtns = document.querySelectorAll('.chat-questions button');
+
+        const botResponses = {
+            "How can I spot fake news?": "Great question! Look for emotional language, check the source, and see if other reliable news outlets are reporting the same story. Be skeptical of headlines that seem too shocking.",
+            "Is my WhatsApp safe?": "WhatsApp has end-to-end encryption, which is very secure. However, always be cautious about clicking links from unknown numbers and enable two-step verification in your settings for extra security."
+        };
+        const addMessage = (text, type, delay = 0) => {
+            setTimeout(() => {
+                const msg = document.createElement('div');
+                msg.className = `chat-message ${type}`;
+                msg.textContent = text;
+                chatMessages.appendChild(msg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, delay);
+        };
+        openBtn.addEventListener('click', () => modal.classList.add('is-open'));
+        closeBtn.addEventListener('click', () => modal.classList.remove('is-open'));
+        modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('is-open'); });
+        questionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const q = btn.dataset.question;
+                addMessage(q, 'user');
+                addMessage(botResponses[q], 'bot', 1000);
+            });
+        });
+
+        // --- PRINCIPLES STICKY SCROLL ---
+        const principles = document.querySelectorAll('.principle-item');
+        const container = document.querySelector('.principles-sticky-container');
+        window.addEventListener('scroll', () => {
+            const rect = container.getBoundingClientRect();
+            if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
+                const progress = -rect.top / (container.offsetHeight - window.innerHeight);
+                const activeIndex = Math.min(principles.length - 1, Math.floor(progress * principles.length));
+                principles.forEach((p, i) => p.classList.toggle('active', i === activeIndex));
+            }
+        });
+
+        // --- CONTACT PATHWAYS ---
+        const pathwayCards = document.querySelectorAll('.pathway-card');
+        pathwayCards.forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--x', e.clientX - rect.left + 'px');
+                card.style.setProperty('--y', e.clientY - rect.top + 'px');
+            });
+            card.addEventListener('click', () => {
+                document.getElementById('interest').value = card.dataset.pathway;
+                document.getElementById('contactForm').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    });
+    </script>
+</body>
+</html>
+
