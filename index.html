@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehfooz - The Direction in the Noise</title>
+    <title>Mehfooz - The Signal in the Noise</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,18 +16,21 @@
             --accent-color-2: #818cf8; /* indigo-400 */
             --slate-800-alpha: rgba(30, 41, 59, 0.5);
             --cursor-color: #ffffff;
+            --spotlight-color: rgba(56, 189, 248, 0.08);
         }
 
         /* --- Custom Scrollbar --- */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-color);
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(var(--accent-color-1), var(--accent-color-2));
             border-radius: 4px;
+        }
+
+        /* --- Custom Text Selection --- */
+        ::selection {
+            background: var(--accent-color-1);
+            color: var(--bg-color);
         }
 
         body {
@@ -39,432 +42,180 @@
             -moz-osx-font-smoothing: grayscale;
             cursor: none;
         }
-        body.loading {
-            overflow: hidden;
-        }
+        body.loading { overflow: hidden; }
 
         .font-display { font-family: 'Bebas Neue', sans-serif; }
         
         /* --- Pre-loader --- */
         #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--bg-color);
             z-index: 10000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            display: flex; justify-content: center; align-items: center; flex-direction: column;
             transition: opacity 0.8s ease, visibility 0.8s;
         }
-        #preloader.loaded {
-            opacity: 0;
-            visibility: hidden;
+        #preloader.loaded { opacity: 0; visibility: hidden; }
+        .loader-text { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 0.5rem; overflow: hidden; }
+        .loader-char { display: inline-block; transform: translateY(100%); animation: reveal-char 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
+        @keyframes reveal-char { to { transform: translateY(0); } }
+        #loader-bar-container { width: 200px; height: 2px; background-color: rgba(255, 255, 255, 0.1); margin-top: 1rem; }
+        #loader-bar { width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2)); transition: width 2s cubic-bezier(0.23, 1, 0.32, 1); }
+
+        /* --- Background Effects --- */
+        #spotlight {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 500;
+            background: radial-gradient(circle at 50% 50%, transparent, var(--bg-color) 50%);
+            transition: background 0.2s linear;
         }
-        .loader-text {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 3rem;
-            letter-spacing: 0.5rem;
-            overflow: hidden;
+
+        .background-canvas {
+            width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0;
         }
-        .loader-char {
-            display: inline-block;
-            transform: translateY(100%);
-            animation: reveal-char 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-        }
-        @keyframes reveal-char {
-            to { transform: translateY(0); }
-        }
-        #loader-bar-container {
-            width: 200px;
-            height: 2px;
-            background-color: rgba(255, 255, 255, 0.1);
-            margin-top: 1rem;
-        }
-        #loader-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2));
-            transition: width 2s cubic-bezier(0.23, 1, 0.32, 1);
-        }
+        #starfield-canvas { z-index: -3; }
+        #nebula-canvas { z-index: -4; opacity: 0.3; }
+        #particles-canvas { z-index: -2; }
 
         /* --- Custom Cursor --- */
         #cursor-dot, #cursor-outline {
-            position: fixed;
-            top: 0;
-            left: 0;
+            position: fixed; top: 0; left: 0;
             z-index: 9999;
             pointer-events: none;
             border-radius: 50%;
             will-change: transform;
         }
-        #cursor-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--cursor-color);
-            transition: transform 0.2s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        #cursor-outline {
-            width: 40px;
-            height: 40px;
-            border: 1px solid var(--cursor-color);
-            transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s, opacity 0.3s, width 0.3s, height 0.3s;
-        }
-        .cursor-active {
-            transform: scale(1.5);
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        .cursor-text {
-            width: 80px;
-            height: 80px;
-        }
-        .dot-active {
-            transform: scale(0.5);
-        }
+        #cursor-dot { width: 8px; height: 8px; background-color: var(--cursor-color); transition: transform 0.2s cubic-bezier(0.19, 1, 0.22, 1); }
+        #cursor-outline { width: 40px; height: 40px; border: 1px solid var(--cursor-color); transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s, opacity 0.3s, width 0.3s, height 0.3s; }
+        .cursor-active { transform: scale(1.5); background-color: rgba(255, 255, 255, 0.1); }
+        .dot-active { transform: scale(0.5); }
         
         /* --- Navigation Header --- */
         #main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
             transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s;
             transform: translateY(-100%);
         }
-        #main-header.header-visible {
-            transform: translateY(0);
-            background-color: rgba(1, 4, 9, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        #main-header nav a {
-            position: relative;
-            transition: color 0.3s;
-        }
+        #main-header.header-visible { transform: translateY(0); background-color: rgba(1, 4, 9, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        #main-header nav a { position: relative; transition: color 0.3s; }
         #main-header nav a::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 1px;
-            bottom: -4px;
-            left: 0;
+            content: ''; position: absolute; width: 100%; height: 1px;
+            bottom: -4px; left: 0;
             background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2));
-            transform: scaleX(0);
-            transform-origin: bottom right;
+            transform: scaleX(0); transform-origin: bottom right;
             transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        #main-header nav a:hover {
-            color: white;
-        }
-        #main-header nav a:hover::after {
-            transform-origin: bottom left;
-            transform: scaleX(1);
-        }
-
-        /* --- Animated Starfield Background --- */
-        #starfield-canvas, #nebula-canvas {
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-        #starfield-canvas { z-index: -1; }
-        #nebula-canvas { z-index: -2; opacity: 0.3; }
+        #main-header nav a:hover { color: white; }
+        #main-header nav a:hover::after { transform-origin: bottom left; transform: scaleX(1); }
 
         /* --- Text & Element Animations --- */
-        .reveal-container {
-            display: inline-block;
-            overflow: hidden;
-            vertical-align: bottom; /* Fix alignment issues */
-        }
-        .reveal-text {
-            display: block;
-            transform: translateY(110%);
-            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        .visible .reveal-text {
-            transform: translateY(0);
-        }
+        .reveal-container { display: inline-block; overflow: hidden; vertical-align: bottom; }
+        .reveal-text { display: block; transform: translateY(110%); transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
+        .visible .reveal-text { transform: translateY(0); }
+        .fade-in { opacity: 0; transform: translateY(3rem) scale(0.95); transition: opacity 1.2s ease, transform 1.2s ease; }
+        .visible .fade-in { opacity: 1; transform: translateY(0) scale(1); }
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(3rem) scale(0.95);
-            transition: opacity 1.2s ease, transform 1.2s ease;
-        }
-        .visible .fade-in {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(0.5deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-        .float-anim {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* --- NEW: Why Now Section Pulse --- */
-        @keyframes pulse-glow {
-            0%, 100% {
-                box-shadow: 0 0 40px rgba(236, 72, 153, 0.2), 0 0 60px rgba(236, 72, 153, 0.1);
-            }
-            50% {
-                box-shadow: 0 0 60px rgba(236, 72, 153, 0.4), 0 0 80px rgba(236, 72, 153, 0.2);
-            }
-        }
-        .pulse-glow-border {
-            animation: pulse-glow 4s ease-in-out infinite;
-        }
+        @keyframes float { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(0.5deg); } 100% { transform: translateY(0px) rotate(0deg); } }
+        .float-anim { animation: float 6s ease-in-out infinite; }
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 40px rgba(236, 72, 153, 0.2), 0 0 60px rgba(236, 72, 153, 0.1); } 50% { box-shadow: 0 0 60px rgba(236, 72, 153, 0.4), 0 0 80px rgba(236, 72, 153, 0.2); } }
+        .pulse-glow-border { animation: pulse-glow 4s ease-in-out infinite; }
         
-        /* --- Holographic Card --- */
+        /* --- Card & Interactive Elements --- */
         .holographic-card {
-            background: rgba(10, 25, 47, 0.3);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(10, 25, 47, 0.3); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-            overflow: hidden;
-            transform-style: preserve-3d;
+            position: relative; overflow: hidden; transform-style: preserve-3d;
         }
-
         .holographic-card .glare {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0) 60%);
+            opacity: 0; transition: opacity 0.5s ease; pointer-events: none;
+        }
+        .holographic-card:before { /* Glowing border effect */
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: inherit;
+            border: 1px solid transparent;
+            background: linear-gradient(135deg, var(--accent-color-1), var(--accent-color-2)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
             opacity: 0;
             transition: opacity 0.5s ease;
-            pointer-events: none;
         }
+        .holographic-card:hover:before { opacity: 1; }
 
-        /* --- Chat UI --- */
-        .chat-ui {
-            transform: scale(0.9) rotateX(10deg);
-            opacity: 0;
-            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        .visible .chat-ui {
-            transform: scale(1) rotateX(0deg);
-            opacity: 1;
-        }
-        .chat-bubble {
-            opacity: 0;
-            transform: translateX(-20px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        .visible .chat-bubble {
-            opacity: 1;
-            transform: translateX(0);
-        }
+        .chat-ui { transform: scale(0.9) rotateX(10deg); opacity: 0; transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .visible .chat-ui { transform: scale(1) rotateX(0deg); opacity: 1; }
+        .chat-bubble { opacity: 0; transform: translateX(-20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .visible .chat-bubble { opacity: 1; transform: translateX(0); }
 
-        /* --- Animated Grid Background --- */
         #animated-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background-image:
-                linear-gradient(rgba(129, 140, 248, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(129, 140, 248, 0.1) 1px, transparent 1px);
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-image: linear-gradient(rgba(129, 140, 248, 0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(129, 140, 248, 0.07) 1px, transparent 1px);
             background-size: 50px 50px;
             animation: move-grid 20s linear infinite;
         }
-        @keyframes move-grid {
-            from { background-position: 0 0; }
-            to { background-position: 50px 50px; }
-        }
+        @keyframes move-grid { from { background-position: 0 0; } to { background-position: 50px 50px; } }
 
         /* --- Roadmap Timeline --- */
-        .timeline-item {
-            position: relative;
-            padding-left: 3rem;
-            padding-bottom: 3rem;
-            border-left: 2px solid rgba(255, 255, 255, 0.1);
-        }
-        .timeline-item:last-child {
-            border-left: 2px solid transparent;
-            padding-bottom: 0;
-        }
+        .timeline-item { position: relative; padding-left: 3rem; padding-bottom: 3rem; border-left: 2px solid rgba(255, 255, 255, 0.1); }
+        .timeline-item:last-child { border-left: 2px solid transparent; padding-bottom: 0; }
         .timeline-marker {
-            position: absolute;
-            left: -0.8rem; /* Adjusted for 2px border */
-            top: 0;
-            width: 1.5rem;
-            height: 1.5rem;
-            background-color: var(--bg-color);
-            border: 2px solid var(--accent-color-2);
-            border-radius: 50%;
-            transform: scale(0);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: absolute; left: -0.8rem; top: 0; width: 1.5rem; height: 1.5rem;
+            background-color: var(--bg-color); border: 2px solid var(--accent-color-2); border-radius: 50%;
+            transform: scale(0); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .visible .timeline-marker {
-            transform: scale(1);
-        }
+        .visible .timeline-marker { transform: scale(1); }
         
-        /* --- Impact Counters --- */
-        .impact-number {
-            font-family: 'Bebas Neue', sans-serif;
-        }
-        
-        /* --- FAQ Accordion --- */
-        .faq-item details {
-            transition: background-color 0.3s;
-        }
-        .faq-item details[open] {
-            background-color: rgba(30, 41, 59, 0.3);
-        }
-        .faq-item summary {
-            list-style: none;
-            cursor: pointer;
-        }
-        .faq-item summary::-webkit-details-marker {
-            display: none;
-        }
-        .faq-icon {
-            transition: transform 0.3s;
-        }
-        details[open] .faq-icon {
-            transform: rotate(45deg);
-        }
-
-        /* --- Blog Cards --- */
-        .blog-card {
-            transition: transform 0.4s ease, background-color 0.4s ease;
-        }
-        .blog-card:hover {
-            transform: translateY(-10px);
-            background-color: rgba(30, 41, 59, 0.7);
-        }
-        .blog-card-arrow {
-            transition: transform 0.3s ease;
-        }
-        .blog-card:hover .blog-card-arrow {
-            transform: translateX(5px);
-        }
-
-        /* --- Interactive Terminal --- */
-        #terminal {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: rgba(0,0,0,0.5);
-            border: 1px solid rgba(129, 140, 248, 0.3);
-            height: 400px;
-            overflow-y: auto;
-            color: #0f0;
-            text-shadow: 0 0 5px #0f0;
-        }
-        .terminal-line {
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-        .terminal-line.command::before {
-            content: '$ ';
-            color: var(--accent-color-1);
-        }
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
+        /* --- Terminal --- */
+        #terminal { font-family: 'Courier New', Courier, monospace; background-color: rgba(0,0,0,0.5); border: 1px solid rgba(129, 140, 248, 0.3); height: 400px; overflow-y: auto; color: #0f0; text-shadow: 0 0 5px #0f0; }
+        .terminal-line { white-space: pre-wrap; word-break: break-all; }
+        .terminal-line.command::before { content: '$ '; color: var(--accent-color-1); }
         
         /* --- Contact Form --- */
-        .form-input, .form-textarea, .form-select {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .form-input:focus, .form-textarea:focus, .form-select:focus {
-            outline: none;
-            border-color: var(--accent-color-1);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
-        }
-        .form-submit-button {
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .form-submit-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2);
-        }
-        .form-submit-button .button-glare {
-            position: absolute;
-            top: -50%;
-            left: -150%;
-            width: 20px;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(30deg);
-            transition: left 0.8s ease;
-            pointer-events: none;
-        }
-        .form-submit-button:hover .button-glare {
-            left: 150%;
-        }
+        .form-input, .form-textarea, .form-select { background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); transition: border-color 0.3s, box-shadow 0.3s; }
+        .form-input:focus, .form-textarea:focus, .form-select:focus { outline: none; border-color: var(--accent-color-1); box-shadow: 0 0 15px rgba(56, 189, 248, 0.3); }
+        .form-submit-button { position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .form-submit-button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(56, 189, 248, 0.2); }
+        .form-submit-button .button-glare { position: absolute; top: -50%; left: -150%; width: 20px; height: 200%; background: rgba(255, 255, 255, 0.3); transform: rotate(30deg); transition: left 0.8s ease; pointer-events: none; }
+        .form-submit-button:hover .button-glare { left: 150%; }
 
-        /* --- Scroll Progress Bar --- */
-        #progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2));
-            width: 0%;
-            z-index: 10001;
-            transition: width 0.1s linear;
-        }
-        
-        /* --- Buzzing Icons --- */
-        @keyframes buzz {
-            0%, 100% { transform: translate(0, 0) rotate(0); }
-            20% { transform: translate(-1px, 1px) rotate(-1deg); }
-            40% { transform: translate(-1px, -1px) rotate(-1deg); }
-            60% { transform: translate(1px, 1px) rotate(1deg); }
-            80% { transform: translate(1px, -1px) rotate(1deg); }
-        }
-        .buzzing-icon:hover {
-            animation: buzz 0.5s linear infinite;
-        }
+        #progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2)); width: 0%; z-index: 10001; transition: width 0.1s linear; }
     </style>
 </head>
 <body class="antialiased loading">
-    <!-- PRE-LOADER -->
+    <!-- LAYERS -->
     <div id="preloader">
         <div class="loader-text"></div>
         <div id="loader-bar-container"><div id="loader-bar"></div></div>
     </div>
-
-    <!-- CUSTOM CURSOR -->
     <div id="cursor-dot"></div>
     <div id="cursor-outline"></div>
-
-    <!-- PAGE ELEMENTS -->
     <div id="progress-bar"></div>
-    <canvas id="nebula-canvas"></canvas>
-    <canvas id="starfield-canvas"></canvas>
+    <div id="spotlight"></div>
+    <canvas id="nebula-canvas" class="background-canvas"></canvas>
+    <canvas id="starfield-canvas" class="background-canvas"></canvas>
+    <canvas id="particles-canvas" class="background-canvas"></canvas>
 
     <!-- HEADER -->
     <header id="main-header" class="p-6">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="#hero" class="font-display text-2xl tracking-wider">MEHFOOZ</a>
+            <a href="#hero" class="font-display text-2xl tracking-wider magnetic-button">MEHFOOZ</a>
             <nav class="hidden md:flex space-x-8 text-slate-400">
-                <a href="#problem">The Problem</a>
-                <a href="#solution">Our Solution</a>
-                <a href="#ecosystem">Our Ecosystem</a>
-                <a href="#roadmap">Roadmap</a>
-                <a href="#insights">Insights</a>
-                <a href="#faq">FAQ</a>
+                <a href="#problem" class="magnetic-button">The Problem</a>
+                <a href="#solution" class="magnetic-button">Our Solution</a>
+                <a href="#ecosystem" class="magnetic-button">Our Ecosystem</a>
+                <a href="#roadmap" class="magnetic-button">Roadmap</a>
+                <a href="#insights" class="magnetic-button">Insights</a>
+                <a href="#faq" class="magnetic-button">FAQ</a>
             </nav>
-            <a href="#contact" class="hidden md:inline-block border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-black transition-colors">
+            <a href="#contact" class="hidden md:inline-block border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-black transition-colors magnetic-button">
                 Contact
             </a>
         </div>
@@ -497,7 +248,6 @@
                     </h2>
                 </div>
                 <div class="mt-20 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Value Card 1: Collaboration -->
                     <div class="fade-in holographic-card p-8 rounded-2xl text-center">
                         <div class="glare"></div>
                         <div class="inline-block p-4 bg-sky-500/10 rounded-full mb-4">
@@ -506,7 +256,6 @@
                         <h3 class="font-display text-3xl">Collaboration</h3>
                         <p class="text-slate-400 mt-2 text-sm">We build partnerships with local leaders, researchers, and students to create a holistic approach to combating misinformation.</p>
                     </div>
-                    <!-- Value Card 2: Integrity -->
                     <div class="fade-in holographic-card p-8 rounded-2xl text-center" style="transition-delay: 0.2s;">
                         <div class="glare"></div>
                         <div class="inline-block p-4 bg-indigo-500/10 rounded-full mb-4">
@@ -515,7 +264,6 @@
                         <h3 class="font-display text-3xl">Integrity</h3>
                         <p class="text-slate-400 mt-2 text-sm">We uphold the highest standards of accuracy, ensuring users receive trustworthy information to build a foundation of truth.</p>
                     </div>
-                    <!-- Value Card 3: Inclusivity -->
                     <div class="fade-in holographic-card p-8 rounded-2xl text-center" style="transition-delay: 0.4s;">
                         <div class="glare"></div>
                         <div class="inline-block p-4 bg-emerald-500/10 rounded-full mb-4">
@@ -524,7 +272,6 @@
                         <h3 class="font-display text-3xl">Inclusivity</h3>
                         <p class="text-slate-400 mt-2 text-sm">We embrace diversity by providing resources in multiple indigenous languages, ensuring everyone has access to digital education.</p>
                     </div>
-                     <!-- Value Card 4: Innovation -->
                     <div class="fade-in holographic-card p-8 rounded-2xl text-center" style="transition-delay: 0.6s;">
                         <div class="glare"></div>
                         <div class="inline-block p-4 bg-rose-500/10 rounded-full mb-4">
@@ -594,7 +341,7 @@
             <div class="mt-20 grid md:grid-cols-3 gap-8 relative">
                 <div class="fade-in holographic-card p-8 rounded-2xl float-anim" style="animation-delay: -1s;">
                     <div class="glare"></div>
-                    <div class="buzzing-icon w-12 h-12 mb-4 text-sky-400">
+                    <div class="w-12 h-12 mb-4 text-sky-400">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                     </div>
                     <h3 class="font-display text-3xl">Community Trust</h3>
@@ -602,7 +349,7 @@
                 </div>
                 <div class="fade-in holographic-card p-8 rounded-2xl float-anim" style="animation-delay: -2.5s;">
                     <div class="glare"></div>
-                     <div class="buzzing-icon w-12 h-12 mb-4 text-sky-400">
+                     <div class="w-12 h-12 mb-4 text-sky-400">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
                      </div>
                     <h3 class="font-display text-3xl">Hyper-Localized Mini-Courses</h3>
@@ -610,7 +357,7 @@
                 </div>
                 <div class="fade-in holographic-card p-8 rounded-2xl float-anim" style="animation-delay: -4s;">
                     <div class="glare"></div>
-                     <div class="buzzing-icon w-12 h-12 mb-4 text-sky-400">
+                     <div class="w-12 h-12 mb-4 text-sky-400">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V4a2 2 0 012-2h8a2 2 0 012 2v2z" /></svg>
                      </div>
                     <h3 class="font-display text-3xl">Youth Feedback Loop</h3>
@@ -894,7 +641,7 @@
  * custom cursor effects, animations on scroll, interactive 3D elements, and form handling.
  * It is designed to be self-contained and executed after the DOM is fully loaded.
  * @author Gemini
- * @version 3.0.0
+ * @version 4.0.0
  */
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -905,19 +652,16 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {number} b - The ending value.
      * @returns {number} The interpolated value.
      */
-    const lerp = (t, a, b) => a + t * (b - a);
+    const lerp = (a, b, t) => a * (1 - t) + b * t;
+    const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
 
     // --- Module: Pre-loader Logic ---
-    // Manages the initial loading animation to ensure a smooth entry experience.
     (() => {
         const preloader = document.getElementById('preloader');
         if (!preloader) return;
-        
         const loaderText = preloader.querySelector('.loader-text');
         const loaderBar = document.getElementById('loader-bar');
         const text = "MEHFOOZ";
-
-        // Split text into characters for the reveal animation
         text.split('').forEach((char, i) => {
             const span = document.createElement('span');
             span.className = 'loader-char';
@@ -925,44 +669,42 @@ document.addEventListener('DOMContentLoaded', () => {
             span.style.animationDelay = `${i * 0.1}s`;
             if (loaderText) loaderText.appendChild(span);
         });
-
-        // Animate the loader bar after a short delay
-        setTimeout(() => {
-            if (loaderBar) loaderBar.style.width = '100%';
-        }, 100);
-
-        // Hide preloader after window loads and animations complete
+        setTimeout(() => { if (loaderBar) loaderBar.style.width = '100%'; }, 100);
         window.addEventListener('load', () => {
             setTimeout(() => {
                 preloader.classList.add('loaded');
                 document.body.classList.remove('loading');
-            }, 2500); // This delay should be longer than the loading animations
+            }, 2500);
         });
     })();
 
-
-    // --- Module: Custom Cursor ---
-    // Creates an interactive cursor that follows the mouse and reacts to hoverable elements.
+    // --- Module: Cursor and Spotlight ---
     (() => {
         const cursorDot = document.getElementById('cursor-dot');
         const cursorOutline = document.getElementById('cursor-outline');
-        if (!cursorDot || !cursorOutline) return;
-        
-        // Update cursor position on mouse move
-        window.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
-            
-            // Dot follows instantly
-            cursorDot.style.transform = `translate(${posX}px, ${posY}px)`;
+        const spotlight = document.getElementById('spotlight');
+        if (!cursorDot || !cursorOutline || !spotlight) return;
 
-            // Outline has a slight delay for a smoother effect
-            cursorOutline.animate({
-                transform: `translate(${posX - 20}px, ${posY - 20}px)`
-            }, { duration: 500, fill: "forwards"});
+        let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        let rendered = { ...mouse };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
         });
         
-        // Add hover effects to interactive elements
+        const updateCursor = () => {
+            rendered.x = lerp(rendered.x, mouse.x, 0.1);
+            rendered.y = lerp(rendered.y, mouse.y, 0.1);
+
+            cursorDot.style.transform = `translate(${mouse.x}px, ${mouse.y}px)`;
+            cursorOutline.style.transform = `translate(${rendered.x - 20}px, ${rendered.y - 20}px)`;
+            spotlight.style.background = `radial-gradient(circle at ${mouse.x}px ${mouse.y}px, var(--spotlight-color), transparent 40%, var(--bg-color) 70%)`;
+            
+            requestAnimationFrame(updateCursor);
+        };
+        updateCursor();
+
         const interactiveElements = 'a, button, .holographic-card, summary, .form-input, .form-textarea, .form-select';
         document.querySelectorAll(interactiveElements).forEach(el => {
             el.addEventListener('mouseenter', () => {
@@ -976,80 +718,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     })();
     
+    // --- Module: Magnetic Buttons ---
+    (() => {
+        document.querySelectorAll('.magnetic-button').forEach(el => {
+            el.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                this.style.transform = `translate(${x * 0.3}px, ${y * 0.5}px)`;
+            });
+            el.addEventListener('mouseleave', function(e) {
+                this.style.transform = 'translate(0,0)';
+            });
+        });
+    })();
+
     // --- Module: Header Visibility Controller ---
-    // Shows or hides the main navigation header based on scroll position.
     (() => {
         const header = document.getElementById('main-header');
         if (!header) return;
-
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 200) {
-                header.classList.add('header-visible');
-            } else {
-                header.classList.remove('header-visible');
-            }
+            header.classList.toggle('header-visible', window.scrollY > 200);
         });
     })();
 
     // --- Module: Dynamic Background Canvases ---
-    // Renders and animates a dynamic starfield and a Perlin noise nebula.
     (() => {
         const starfieldCanvas = document.getElementById('starfield-canvas');
         const nebulaCanvas = document.getElementById('nebula-canvas');
-        if (!starfieldCanvas || !nebulaCanvas) return;
+        const particlesCanvas = document.getElementById('particles-canvas');
+        if (!starfieldCanvas || !nebulaCanvas || !particlesCanvas) return;
 
         const starfieldCtx = starfieldCanvas.getContext('2d');
         const nebulaCtx = nebulaCanvas.getContext('2d');
+        const particlesCtx = particlesCanvas.getContext('2d');
+        
+        let width, height, stars = [], particles = [];
+        const starCount = 800, particleCount = 70;
+        let shootingStars = [], frame = 0, mouse = {x:0, y:0};
 
-        let width, height;
-        let stars = [];
-        const starCount = 800;  
-        let shootingStars = [];
-        let frame = 0;
-
-        // Perlin noise generator for the nebula effect
-        const noise = (() => {
-            const p = new Uint8Array(512);
-            for(let i=0; i < 256; i++) p[i] = p[i+256] = Math.floor(Math.random()*256);
-            const fade = t => t*t*t*(t*(t*6-15)+10);
-            const grad = (hash,x,y,z) => {
-                const h = hash & 15;
-                const u = h<8 ? x:y;
-                const v = h<4 ? y : h===12||h===14 ? x:z;
-                return ((h&1)===0?u:-u) + ((h&2)===0?v:-v);
-            }
-            return {
-                noise: (x,y,z) => {
-                    const X = Math.floor(x)&255, Y = Math.floor(y)&255, Z = Math.floor(z)&255;
-                    x-=Math.floor(x); y-=Math.floor(y); z-=Math.floor(z);
-                    const u = fade(x), v = fade(y), w = fade(z);
-                    const A=p[X]+Y, AA=p[A]+Z, AB=p[A+1]+Z, B=p[X+1]+Y, BA=p[B]+Z, BB=p[B+1]+Z;
-                    return lerp(w, lerp(v, lerp(u, grad(p[AA],x,y,z), grad(p[BA],x-1,y,z)),
-                                     lerp(u, grad(p[AB],x,y-1,z), grad(p[BB],x-1,y-1,z))),
-                               lerp(v, lerp(u, grad(p[AA+1],x,y,z-1), grad(p[BA+1],x-1,y,z-1)),
-                                     lerp(u, grad(p[AB+1],x,y-1,z-1), grad(p[BB+1],x-1,y-1,z-1))));
-                }
-            }
-        })();
+        const noise = (() => { /* Perlin Noise implementation */ const p = new Uint8Array(512); for(let i=0; i < 256; i++) p[i] = p[i+256] = Math.floor(Math.random()*256); const fade = t => t*t*t*(t*(t*6-15)+10); const grad = (h,x,y,z) => { const u = (h&15)<8 ? x:y, v = (h&15)<4 ? y : h===12||h===14 ? x:z; return ((h&1)===0?u:-u) + ((h&2)===0?v:-v); }; return { noise: (x,y,z) => { const X = Math.floor(x)&255, Y = Math.floor(y)&255, Z = Math.floor(z)&255; x-=Math.floor(x); y-=Math.floor(y); z-=Math.floor(z); const u=fade(x), v=fade(y), w=fade(z); const A=p[X]+Y, AA=p[A]+Z, AB=p[A+1]+Z, B=p[X+1]+Y, BA=p[B]+Z, BB=p[B+1]+Z; return lerp(lerp(lerp(grad(p[AA],x,y,z), grad(p[BA],x-1,y,z), u), lerp(grad(p[AB],x,y-1,z), grad(p[BB],x-1,y-1,z), u), v), lerp(lerp(grad(p[AA+1],x,y,z-1), grad(p[BA+1],x-1,y,z-1), u), lerp(grad(p[AB+1],x,y-1,z-1), grad(p[BB+1],x-1,y-1,z-1), u), v), w); } } })();
         let noiseZ = Math.random() * 100;
 
         function initBackgrounds() {
             width = window.innerWidth;
             height = window.innerHeight;
-            starfieldCanvas.width = width;
-            starfieldCanvas.height = height;
-            nebulaCanvas.width = width;
-            nebulaCanvas.height = height;
-            stars = [];
-            for (let i = 0; i < starCount; i++) {
-                stars.push({
-                    x: (Math.random() - 0.5) * width * 2,
-                    y: (Math.random() - 0.5) * height * 2,
-                    z: Math.random() * width * 1.5,
-                    size: Math.random() * 2 + 1,
-                    opacity: Math.random() * 0.5 + 0.5,
-                });
-            }
+            [starfieldCanvas, nebulaCanvas, particlesCanvas].forEach(c => { c.width = width; c.height = height; });
+            stars = Array.from({length: starCount}, () => ({ x: (Math.random() - 0.5) * width * 2, y: (Math.random() - 0.5) * height * 2, z: Math.random() * width * 1.5, size: Math.random() * 2 + 1, opacity: Math.random() * 0.5 + 0.5 }));
+            particles = Array.from({length: particleCount}, () => ({ x: Math.random() * width, y: Math.random() * height, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5, radius: Math.random() * 1.5 + 1 }));
         }
         
         function animateBackgrounds() {
@@ -1058,156 +774,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Animate Nebula (optimized to render less frequently)
-            if (frame % 3 === 0) { 
-                const imageData = nebulaCtx.createImageData(width, height);
-                const data = imageData.data;
-                noiseZ += 0.005;
-                for(let x=0; x < width; x+=4) {
-                    for(let y=0; y < height; y+=4) {
-                        const value = Math.abs(noise.noise(x/300, y/300, noiseZ));
-                        const c = value * 255;
-                        const r = lerp(value, 56, 129);
-                        const g = lerp(value, 189, 140);
-                        const b = lerp(value, 248, 248);
+            if (frame % 3 === 0) { /* Nebula Animation (optimized) */ const imageData = nebulaCtx.createImageData(width, height); const data = imageData.data; noiseZ += 0.005; for(let x=0; x < width; x+=4){ for(let y=0; y < height; y+=4) { const v = Math.abs(noise.noise(x/300, y/300, noiseZ)); const c = v * 255; const r=lerp(56,129,v), g=lerp(189,140,v), b=lerp(248,248,v); for(let dx=0; dx<4; dx++){ for(let dy=0; dy<4; dy++) { if(x+dx < width && y+dy < height){ let i=((y+dy)*width + (x+dx))*4; data[i]=r; data[i+1]=g; data[i+2]=b; data[i+3]=c*0.7; }}}}} nebulaCtx.putImageData(imageData, 0, 0); }
 
-                        for(let dx=0; dx<4; dx++) {
-                            for(let dy=0; dy<4; dy++) {
-                                if (x+dx < width && y+dy < height) {
-                                    let i = ((y+dy)*width + (x+dx)) * 4;
-                                    data[i] = r; data[i+1] = g; data[i+2] = b; data[i+3] = c * 0.7;
-                                }
-                            }
-                        }
-                    }
-                }
-                nebulaCtx.putImageData(imageData, 0, 0);
-            }
-
-            // Animate Stars
-            starfieldCtx.clearRect(0, 0, width, height);
-            stars.forEach(star => {
-                star.z -= 0.75;
-                if (star.z <= 0) {
-                    star.x = (Math.random() - 0.5) * width * 2;
-                    star.y = (Math.random() - 0.5) * height * 2;
-                    star.z = width;
-                }
-                const k = 128 / star.z;
-                const px = star.x * k + width / 2;
-                const py = star.y * k + height / 2;
-                if (px >= 0 && px <= width && py >= 0 && py <= height) {
-                    const size = star.size * k;
-                    starfieldCtx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
-                    starfieldCtx.beginPath();
-                    starfieldCtx.arc(px, py, size / 2, 0, Math.PI * 2);
-                    starfieldCtx.fill();
-                }
-            });
+            /* Starfield Animation */ starfieldCtx.clearRect(0, 0, width, height); stars.forEach(star => { star.z -= 0.75; if (star.z <= 0) { star.x = (Math.random()-0.5)*width*2; star.y=(Math.random()-0.5)*height*2; star.z = width; } const k = 128 / star.z, px = star.x*k+width/2, py=star.y*k+height/2; if (px>=0 && px<=width && py>=0 && py<=height) { const size=star.size*k; starfieldCtx.fillStyle = `rgba(255,255,255,${star.opacity})`; starfieldCtx.beginPath(); starfieldCtx.arc(px, py, size/2, 0, Math.PI*2); starfieldCtx.fill(); }});
             
-            // Generate and animate shooting stars
-            if (Math.random() > 0.995 && shootingStars.length < 3) {
-                shootingStars.push({
-                    x: Math.random() * width, y: 0,
-                    len: Math.random() * 80 + 10, speed: Math.random() * 10 + 5,
-                    opacity: 1
-                });
-            }
+            /* Particle Constellation Animation */ particlesCtx.clearRect(0,0,width,height); particles.forEach(p => { p.x += p.vx; p.y += p.vy; if(p.x < 0 || p.x > width) p.vx*=-1; if(p.y < 0 || p.y > height) p.vy*=-1; particlesCtx.fillStyle = `rgba(255, 255, 255, 0.5)`; particlesCtx.beginPath(); particlesCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); particlesCtx.fill(); }); for(let i=0; i<particles.length; i++){ for(let j=i; j<particles.length; j++){ const dist = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y); if (dist < 100){ particlesCtx.beginPath(); particlesCtx.moveTo(particles[i].x, particles[i].y); particlesCtx.lineTo(particles[j].x, particles[j].y); particlesCtx.strokeStyle = `rgba(255, 255, 255, ${1 - dist / 100})`; particlesCtx.stroke(); }}}
 
-            for (let i = shootingStars.length - 1; i >= 0; i--) {
-                const s = shootingStars[i];
-                s.x += s.speed; s.y += s.speed; s.opacity -= 0.02;
-                if (s.opacity <= 0) {
-                    shootingStars.splice(i, 1);
-                } else {
-                    starfieldCtx.beginPath();
-                    starfieldCtx.moveTo(s.x, s.y);
-                    starfieldCtx.lineTo(s.x + s.len, s.y + s.len);
-                    starfieldCtx.strokeStyle = `rgba(255, 255, 255, ${s.opacity})`;
-                    starfieldCtx.stroke();
-                }
-            }
-            frame++;
-            requestAnimationFrame(animateBackgrounds);
+            frame++; requestAnimationFrame(animateBackgrounds);
         }
 
-        initBackgrounds();
-        animateBackgrounds();
+        window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY });
+        initBackgrounds(); animateBackgrounds();
         window.addEventListener('resize', initBackgrounds);
     })();
 
-    // --- Module: Interactive Data Globe ---
-    // Renders a rotating 3D globe with data points.
-    (() => {
-        const globeCanvas = document.getElementById('data-globe-canvas');
-        if (!globeCanvas) return;
-
-        const globeCtx = globeCanvas.getContext('2d');
-        let globeSize = globeCanvas.clientWidth;
-        
-        function resizeGlobe() {
-            globeSize = globeCanvas.clientWidth;
-            globeCanvas.width = globeSize * 2; // Use higher resolution for crispness
-            globeCanvas.height = globeSize * 2;
-            globeCtx.scale(2, 2);
-        }
-        resizeGlobe();
-        window.addEventListener('resize', resizeGlobe);
-        
-        const radius = globeSize / 2.5;
-        const dots = [];
-        const numDots = 150;
-        let rotation = 0;
-
-        for(let i=0; i<numDots; i++){ dots.push({ theta: Math.random() * Math.PI, phi: Math.random() * 2 * Math.PI, size: Math.random() * 3 + 1 }); }
-
-        function animateGlobe() {
-            globeCtx.clearRect(0,0, globeSize, globeSize);
-            globeCtx.strokeStyle = "rgba(129, 140, 248, 0.3)";
-            globeCtx.beginPath();
-            globeCtx.arc(globeSize / 2, globeSize / 2, radius, 0, 2 * Math.PI);
-            globeCtx.stroke();
-
-            dots.forEach(dot => {
-                const x = radius * Math.sin(dot.theta) * Math.cos(dot.phi + rotation);
-                const y = radius * Math.sin(dot.theta) * Math.sin(dot.phi + rotation);
-                const z = radius * Math.cos(dot.theta);
-                const projectedScale = 1 + z / (radius * 2);
-                const projectedX = x * projectedScale + globeSize/2;
-                const projectedY = y * projectedScale + globeSize/2;
-                const alpha = (z + radius) / (2 * radius);
-                if(z > -radius * 0.7) { // Only draw dots on the front side
-                    globeCtx.beginPath();
-                    globeCtx.arc(projectedX, projectedY, dot.size * projectedScale / 2, 0, 2 * Math.PI);
-                    globeCtx.fillStyle = `rgba(56, 189, 248, ${alpha})`;
-                    globeCtx.fill();
-                }
-            });
-
-            rotation += 0.005;
-            requestAnimationFrame(animateGlobe);
-        }
-        animateGlobe();
-    })();
-
     // --- Module: Holographic Card Tilt Effect ---
-    // Adds a 3D tilt effect to cards on mouse movement.
     (() => {
-        const cards = document.querySelectorAll('.holographic-card');
-        cards.forEach(card => {
+        document.querySelectorAll('.holographic-card').forEach(card => {
             const glare = card.querySelector('.glare');
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left; 
-                const y = e.clientY - rect.top;
+                const x = e.clientX - rect.left, y = e.clientY - rect.top;
                 const { width, height } = rect;
-                const rotateX = (y / height - 0.5) * -20; // Invert for natural feel
+                const rotateX = (y / height - 0.5) * -20;
                 const rotateY = (x / width - 0.5) * 20;
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                if(glare) {
-                  glare.style.opacity = '1';
-                  glare.style.transform = `translate(${x - width/2}px, ${y - height/2}px)`;
-                }
+                if(glare) { glare.style.opacity = '1'; glare.style.transform = `translate(${x-width/2}px, ${y-height/2}px)`; }
             });
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
@@ -1217,104 +809,56 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
 
     // --- Module: Animated Counters ---
-    // Animates numbers from 0 to a target value when they become visible.
     const animateCounter = (el) => {
         const target = +el.getAttribute('data-target');
-        const duration = 2500;
-        let start = 0;
-        const step = timestamp => {
-            if (!start) start = timestamp;
-            const progress = Math.min((timestamp - start) / duration, 1);
-            // Ease-out quint function for a smooth deceleration
-            const easedProgress = 1 - Math.pow(1 - progress, 5);
-            const currentNum = Math.floor(easedProgress * target);
-            el.innerText = currentNum.toLocaleString();
-            if (progress < 1) {
-                window.requestAnimationFrame(step);
-            } else {
-                el.innerText = target.toLocaleString();
-            }
-        };
-        window.requestAnimationFrame(step);
+        const duration = 2500; let start = 0;
+        const step = ts => { if (!start) start = ts; const p = Math.min((ts - start) / duration, 1); const ep = 1 - Math.pow(1-p, 5); el.innerText = Math.floor(ep*target).toLocaleString(); if (p<1) requestAnimationFrame(step); else el.innerText = target.toLocaleString(); };
+        requestAnimationFrame(step);
     };
 
     // --- Module: Interactive Terminal Animation ---
-    // Simulates a terminal boot sequence and activity log.
     const animateTerminal = () => {
-        const terminalElement = document.getElementById('terminal');
-        if (!terminalElement || terminalElement.dataset.animated) return;
-        terminalElement.dataset.animated = 'true'; // Prevent re-animation
-
-        const lines = [
-            { text: "booting mehfoozOS v3.0...", delay: 20 },
-            { text: "initializing cognitive cores...", delay: 20 },
-            { text: "establishing secure uplink to community nodes...", status: "OK", delay: 50 },
-            { text: "loading linguistic models [ur, en, shn, btl, khw, wkh]...", status: "DONE", delay: 50 },
-            { text: "compiling community feedback data stream...", delay: 20},
-            { text: "syncing with global misinformation threat database...", status: "OK", delay: 50},
-            { text: "SYSTEM READY. Awaiting input.", delay: 20 },
-            { text: "", delay: 300 },
-            { text: "run monitor --social --realtime", delay: 40, command: true },
-            { text: "Monitoring active data streams for misinformation patterns...", delay: 20 },
-            { text: "[INFO] Pattern detected: Type-3 Viral Disinformation.", delay: 15 },
-            { text: "[INFO] Source: Encrypted Social Media Group.", delay: 15 },
-            { text: "[INFO] Cross-referencing with known narratives... Match found: 'false_health_remedy_v2'.", delay: 15 },
-            { text: "[ACTION] Deploying educational counter-module to 12,450 nodes.", delay: 15 },
-            { text: "[SUCCESS] Threat neutralized. Confidence: 99.8%", delay: 15, color: "#22c55e" },
-            { text: "", delay: 300 },
-            { text: "[INFO] Pattern detected: Phishing Scam.", delay: 15 },
-            { text: "[INFO] Vector: SMS. Target: Financial Institutions.", delay: 15 },
-            { text: "[ACTION] Analyzing payload... Standard credential theft attempt.", delay: 15 },
-            { text: "[ACTION] Issuing community-wide alert via MehfoozBot & social channels.", delay: 15 },
-            { text: "[SUCCESS] Alert deployed. Threat contained.", delay: 15, color: "#22c55e" },
-        ];
+        const terminal = document.getElementById('terminal');
+        if (!terminal || terminal.dataset.animated) return;
+        terminal.dataset.animated = 'true';
+        terminal.innerHTML = '';
+        
+        const lines = [ {t: "booting mehfoozOS v4.0..."}, {t: "initializing cognitive cores..."}, {t: "establishing secure uplink to community nodes...", s: "OK"}, {t: "loading linguistic models [ur, en, shn, btl, khw, wkh]...", s: "DONE"}, {t: "compiling community feedback data stream..."}, {t: "syncing with global misinformation threat database...", s: "OK"}, {t: "SYSTEM READY. Awaiting input."}, {t: "", d: 200}, {t: "run monitor --social --realtime", c:true}, {t: "Monitoring active data streams for misinformation patterns..."}, {t: "[INFO] Pattern detected: Type-3 Viral Disinformation."}, {t: "[INFO] Source: Encrypted Social Media Group."}, {t: "[INFO] Cross-referencing... Match found: 'false_health_remedy_v2'."}, {t: "[ACTION] Deploying educational counter-module to 12,450 nodes."}, {t: "[SUCCESS] Threat neutralized. Confidence: 99.8%", clr: "#22c55e"}, {t: "", d:200}, {t: "[INFO] Pattern detected: Phishing Scam."}, {t: "[INFO] Vector: SMS. Target: Financial Institutions."}, {t: "[ACTION] Analyzing payload... Standard credential theft attempt."}, {t: "[ACTION] Issuing community-wide alert via MehfoozBot & social channels."}, {t: "[SUCCESS] Alert deployed. Threat contained.", clr: "#22c55e"} ];
         
         let lineIndex = 0;
         const typeLine = () => {
             if (lineIndex >= lines.length) return;
-            
             const line = lines[lineIndex];
             const p = document.createElement('p');
             p.className = 'terminal-line';
-            if (line.command) p.classList.add('command');
-            if (line.color) p.style.color = line.color;
-
+            if (line.c) p.classList.add('command');
+            if (line.clr) p.style.color = line.clr;
+            terminal.appendChild(p);
             let charIndex = 0;
             const typeChar = () => {
-                if(charIndex < line.text.length) {
-                    p.textContent += line.text[charIndex];
-                    charIndex++;
-                    terminalElement.scrollTop = terminalElement.scrollHeight;
-                    setTimeout(typeChar, line.delay);
+                if(charIndex < line.t.length) {
+                    p.textContent += line.t[charIndex++];
+                    terminal.scrollTop = terminal.scrollHeight;
+                    setTimeout(typeChar, line.d || 15);
                 } else {
-                    if (line.status) {
-                        const statusSpan = document.createElement('span');
-                        statusSpan.textContent = ` [${line.status}]`;
-                        statusSpan.style.color = '#22c55e'; // green-500
-                        p.appendChild(statusSpan);
-                    }
+                    if (line.s) { const span = document.createElement('span'); span.textContent = ` [${line.s}]`; span.style.color = '#22c55e'; p.appendChild(span); }
                     lineIndex++;
-                    typeLine();
+                    setTimeout(typeLine, line.d || 50);
                 }
             };
-            terminalElement.appendChild(p);
             typeChar();
         };
-        
-        terminalElement.innerHTML = '';
         typeLine();
     };
 
     // --- Module: Scroll Animations Observer ---
-    // Uses IntersectionObserver to trigger animations when elements enter the viewport.
     (() => {
         const observer = new IntersectionObserver((entries, observerInstance) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    
                     if (entry.target.id === 'impact' && !entry.target.dataset.animated) {
-                        document.querySelectorAll('.impact-number').forEach(counter => { animateCounter(counter); });
+                        document.querySelectorAll('.impact-number').forEach(animateCounter);
                         entry.target.dataset.animated = 'true';
                     }
                     if (entry.target.id === 'terminal-section' && !entry.target.dataset.animated) {
@@ -1323,64 +867,34 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             });
-        }, { threshold: 0.25 }); // Trigger when 25% of the element is visible
-
-        const elementsToObserve = '.reveal-container, .fade-in, .chat-ui, .chat-bubble, .timeline-item, #impact, .faq-item, #terminal-section, #contact-form';
-        document.querySelectorAll(elementsToObserve).forEach(el => {
-            observer.observe(el);
-        });
+        }, { threshold: 0.25 });
+        document.querySelectorAll('.reveal-container, .fade-in, .chat-ui, .chat-bubble, .timeline-item, #impact, .faq-item, #terminal-section, #contact-form').forEach(el => observer.observe(el));
     })();
 
     // --- Module: Scroll Progress Bar ---
-    // Updates a progress bar at the top of the page based on scroll depth.
     (() => {
-        const progressBar = document.getElementById('progress-bar');
-        if (!progressBar) return;
-        
-        window.addEventListener('scroll', () => {
-            const totalHeight = document.body.scrollHeight - window.innerHeight;
-            const progress = (window.pageYOffset / totalHeight) * 100;
-            progressBar.style.width = `${progress}%`;
-        });
+        const bar = document.getElementById('progress-bar');
+        if (!bar) return;
+        window.addEventListener('scroll', () => { bar.style.width = `${(window.pageYOffset / (document.body.scrollHeight - window.innerHeight)) * 100}%`; });
     })();
     
-    // --- Module: Smooth Scrolling for Navigation ---
-    // Implements smooth scrolling for all anchor links pointing to page sections.
+    // --- Module: Smooth Scrolling ---
     (() => {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetElement = document.querySelector(this.getAttribute('href'));
-                if(targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
+        document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', function (e) { e.preventDefault(); document.querySelector(this.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' }); }));
     })();
 
     // --- Module: Contact Form Handler ---
-    // Manages the contact form submission and provides user feedback.
     (() => {
-        const form = document.getElementById('contact-form');
-        const formStatus = document.getElementById('form-status');
-        if (!form || !formStatus) return;
-
+        const form = document.getElementById('contact-form'), status = document.getElementById('form-status');
+        if (!form || !status) return;
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            formStatus.textContent = 'Sending...';
-            formStatus.className = 'text-blue-400';
-
-            // Simulate network delay
+            status.textContent = 'Sending...'; status.className = 'text-blue-400';
             setTimeout(() => {
-                // In a real application, you would send the form data to a server here.
-                formStatus.textContent = 'Thank you! Your message has been sent successfully.';
-                formStatus.className = 'text-green-400';
+                status.textContent = 'Thank you! Your message has been sent successfully.';
+                status.className = 'text-green-400';
                 form.reset();
-
-                // Clear the message after a few seconds
-                setTimeout(() => {
-                    formStatus.textContent = '';
-                }, 5000);
+                setTimeout(() => { status.textContent = ''; }, 5000);
             }, 1500);
         });
     })();
