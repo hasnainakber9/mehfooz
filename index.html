@@ -15,6 +15,7 @@
             --accent-color-1: #38bdf8;
             --accent-color-2: #818cf8;
             --slate-800-alpha: rgba(30, 41, 59, 0.5);
+            --cursor-color: #ffffff;
         }
 
         /* --- Custom Scrollbar --- */
@@ -36,9 +37,40 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            cursor: none;
         }
 
         .font-display { font-family: 'Bebas Neue', sans-serif; }
+        
+        /* --- Custom Cursor --- */
+        #cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--cursor-color);
+            border-radius: 50%;
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+            transition: transform 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        #cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--cursor-color);
+            border-radius: 50%;
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+            transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s, opacity 0.3s;
+        }
+        body:hover .cursor-active {
+            transform: scale(1.5);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        body:hover .dot-active {
+             transform: scale(0.5);
+        }
+
 
         /* --- Animated Starfield Background --- */
         #starfield-canvas {
@@ -200,6 +232,26 @@
         .visible .timeline-marker {
             transform: scale(1);
         }
+        
+        /* --- Impact Counters --- */
+        .impact-number {
+            font-family: 'Bebas Neue', sans-serif;
+        }
+        
+        /* --- Blog Cards --- */
+        .blog-card {
+            transition: transform 0.4s ease, background-color 0.4s ease;
+        }
+        .blog-card:hover {
+            transform: translateY(-10px);
+            background-color: rgba(30, 41, 59, 0.7);
+        }
+        .blog-card-arrow {
+            transition: transform 0.3s ease;
+        }
+        .blog-card:hover .blog-card-arrow {
+            transform: translateX(5px);
+        }
 
         /* --- Scroll Progress Bar --- */
         #progress-bar {
@@ -215,6 +267,8 @@
     </style>
 </head>
 <body class="antialiased">
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
     <div id="progress-bar"></div>
     <canvas id="starfield-canvas"></canvas>
 
@@ -274,7 +328,7 @@
                          <div class="glare"></div>
                         <div class="space-y-4 h-96 flex flex-col justify-end">
                             <div class="chat-bubble self-start bg-slate-700 rounded-lg p-3 max-w-xs">How do I know if a news story is fake?</div>
-                            <div class="chat-bubble self-end bg-blue-600 rounded-lg p-3 max-w-xs" style="transition-delay: 0.5s;">That's a great question. Check the source. Is it a well-known, reputable news organization?</div>
+                            <div class="chat-bubble self-end bg-blue-600 rounded-lg p-3 max-w-xs" style="transition-delay: 0.5s;">Great question. Check the source. Is it a well-known, reputable news organization?</div>
                             <div class="chat-bubble self-start bg-slate-700 rounded-lg p-3 max-w-xs" style="transition-delay: 1s;">It was a screenshot on WhatsApp.</div>
                             <div class="chat-bubble self-end bg-blue-600 rounded-lg p-3 max-w-xs" style="transition-delay: 1.5s;">Screenshots can be altered. A key sign of real news is a link to a credible source. Try searching the headline on a trusted site.</div>
                         </div>
@@ -347,6 +401,32 @@
                 </div>
             </div>
         </section>
+        
+        <!-- NEW SECTION: OUR IMPACT -->
+        <section id="impact-section" class="py-32 bg-slate-900/30">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="font-display text-6xl md:text-8xl tracking-tight float-anim">
+                    <span class="reveal-container"><span class="reveal-text">MEASURABLE IMPACT</span></span>
+                </h2>
+                <p class="mt-6 text-xl max-w-3xl mx-auto text-slate-400 fade-in">
+                    We are committed to transparently tracking our progress and sharing the tangible results of our efforts in communities.
+                </p>
+                <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div class="fade-in">
+                        <span class="impact-number text-7xl text-sky-400" data-target="15">0</span>
+                        <p class="mt-2 text-xl text-slate-300">Languages & Dialects Supported</p>
+                    </div>
+                    <div class="fade-in" style="transition-delay: 0.2s;">
+                        <span class="impact-number text-7xl text-sky-400" data-target="50000">0</span><span class="impact-number text-7xl text-sky-400">+</span>
+                        <p class="mt-2 text-xl text-slate-300">Individuals Empowered</p>
+                    </div>
+                    <div class="fade-in" style="transition-delay: 0.4s;">
+                        <span class="impact-number text-7xl text-sky-400" data-target="95">0</span><span class="impact-number text-7xl text-sky-400">%</span>
+                        <p class="mt-2 text-xl text-slate-300">Improved Misinformation Recognition</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- SECTION 6: TECHNOLOGY & DATA VISUALIZATION -->
         <section class="container mx-auto px-6 py-32">
@@ -359,6 +439,51 @@
                 </div>
                 <div class="fade-in">
                     <canvas id="data-globe-canvas" class="w-full h-auto aspect-square"></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <!-- NEW SECTION: LATEST INSIGHTS (BLOG) -->
+        <section class="py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-4xl mx-auto">
+                    <h2 class="font-display text-6xl md:text-8xl tracking-tight float-anim">
+                        <span class="reveal-container"><span class="reveal-text">LATEST INSIGHTS</span></span>
+                    </h2>
+                    <div class="reveal-container">
+                        <p class="mt-6 text-xl text-slate-400 reveal-text" style="transition-delay: 0.3s;">
+                            Exploring the evolving landscape of digital literacy, misinformation, and the technologies shaping our future.
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-20 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Blog Card 1 -->
+                    <a href="#" class="fade-in blog-card border border-slate-800 p-8 rounded-2xl block group">
+                        <p class="text-sm text-sky-400">DEEP DIVE</p>
+                        <h3 class="font-display text-3xl mt-2">The Anatomy of a Fake News Cascade</h3>
+                        <p class="text-slate-400 mt-4">An analysis of how false narratives propagate through closed social networks in Gilgit Baltistan.</p>
+                        <div class="mt-6 font-bold flex items-center">
+                            Read More <span class="ml-2 blog-card-arrow">&rarr;</span>
+                        </div>
+                    </a>
+                    <!-- Blog Card 2 -->
+                    <a href="#" class="fade-in blog-card border border-slate-800 p-8 rounded-2xl block group" style="transition-delay: 0.2s;">
+                        <p class="text-sm text-sky-400">TECHNOLOGY</p>
+                        <h3 class="font-display text-3xl mt-2">Training AI on Indigenous Languages</h3>
+                        <p class="text-slate-400 mt-4">The challenges and breakthroughs in developing NLP models for low-resource languages.</p>
+                        <div class="mt-6 font-bold flex items-center">
+                            Read More <span class="ml-2 blog-card-arrow">&rarr;</span>
+                        </div>
+                    </a>
+                    <!-- Blog Card 3 -->
+                    <a href="#" class="fade-in blog-card border border-slate-800 p-8 rounded-2xl block group" style="transition-delay: 0.4s;">
+                        <p class="text-sm text-sky-400">COMMUNITY</p>
+                        <h3 class="font-display text-3xl mt-2">Digital Scribes: How Ulema are Leading the Charge</h3>
+                        <p class="text-slate-400 mt-4">A case study on the success of our community partnership program and its impact on digital adoption.</p>
+                        <div class="mt-6 font-bold flex items-center">
+                            Read More <span class="ml-2 blog-card-arrow">&rarr;</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -388,12 +513,40 @@
             <div class="container mx-auto text-center text-slate-400">
                 <p>&copy; 2025 Mehfooz. All rights reserved.</p>
                 <p class="mt-2 text-sm">A new paradigm for digital literacy and community empowerment.</p>
+                <div class="mt-6 flex justify-center space-x-6">
+                    <a href="#" class="hover:text-white transition-colors">Twitter</a>
+                    <a href="#" class="hover:text-white transition-colors">LinkedIn</a>
+                    <a href="#" class="hover:text-white transition-colors">Facebook</a>
+                </div>
             </div>
         </footer>
     </main>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+
+    // --- Custom Cursor ---
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorOutline = document.getElementById('cursor-outline');
+    window.addEventListener('mousemove', (e) => {
+        const posX = e.clientX;
+        const posY = e.clientY;
+        cursorDot.style.left = `${posX}px`;
+        cursorDot.style.top = `${posY}px`;
+        cursorOutline.style.left = `${posX - 20}px`;
+        cursorOutline.style.top = `${posY - 20}px`;
+    });
+    
+    document.querySelectorAll('a, button, .holographic-card').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursorOutline.classList.add('cursor-active');
+            cursorDot.classList.add('dot-active');
+        });
+        el.addEventListener('mouseleave', () => {
+            cursorOutline.classList.remove('cursor-active');
+            cursorDot.classList.remove('dot-active');
+        });
+    });
 
     // --- Dynamic Starfield Background ---
     const starfieldCanvas = document.getElementById('starfield-canvas');
@@ -479,10 +632,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const globeCanvas = document.getElementById('data-globe-canvas');
     if (globeCanvas) {
         const globeCtx = globeCanvas.getContext('2d');
-        const globeSize = Math.min(globeCanvas.clientWidth, 500);
-        globeCanvas.width = globeSize * 2; // High DPI
-        globeCanvas.height = globeSize * 2;
-        globeCtx.scale(2, 2);
+        let globeSize = globeCanvas.clientWidth;
+        
+        function resizeGlobe() {
+            globeSize = globeCanvas.clientWidth;
+            globeCanvas.width = globeSize * 2; // High DPI
+            globeCanvas.height = globeSize * 2;
+            globeCtx.scale(2, 2);
+        }
+        resizeGlobe();
+        window.addEventListener('resize', resizeGlobe);
         
         const radius = globeSize / 2.5;
         const dots = [];
@@ -555,16 +714,45 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Scroll Animations ---
-    const observer = new IntersectionObserver((entries) => {
+    // --- Animated Counters ---
+    const animateCounters = (el) => {
+        const target = +el.getAttribute('data-target');
+        const duration = 2000;
+        const frameRate = 1000 / 60;
+        const totalFrames = Math.round(duration / frameRate);
+        let currentFrame = 0;
+
+        const counter = setInterval(() => {
+            currentFrame++;
+            const progress = currentFrame / totalFrames;
+            const currentNum = Math.round(target * progress);
+            el.innerText = currentNum.toLocaleString();
+
+            if (currentFrame === totalFrames) {
+                clearInterval(counter);
+                el.innerText = target.toLocaleString();
+            }
+        }, frameRate);
+    };
+
+    // --- Scroll Animations Observer ---
+    const observer = new IntersectionObserver((entries, observerInstance) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                
+                // Trigger counter animation
+                if (entry.target.id === 'impact-section') {
+                    document.querySelectorAll('.impact-number').forEach(counter => {
+                        animateCounters(counter);
+                    });
+                    observerInstance.unobserve(entry.target); // Animate only once
+                }
             }
         });
     }, { threshold: 0.2 });
 
-    document.querySelectorAll('.reveal-container, .fade-in, .chat-ui, .chat-bubble, .timeline-item').forEach(el => {
+    document.querySelectorAll('.reveal-container, .fade-in, .chat-ui, .chat-bubble, .timeline-item, #impact-section').forEach(el => {
         observer.observe(el);
     });
 
