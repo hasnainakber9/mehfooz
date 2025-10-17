@@ -39,9 +39,59 @@
             -moz-osx-font-smoothing: grayscale;
             cursor: none;
         }
+        body.loading {
+            overflow: hidden;
+        }
 
         .font-display { font-family: 'Bebas Neue', sans-serif; }
         
+        /* --- Pre-loader --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease;
+        }
+        #preloader.loaded {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loader-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 0.5rem;
+            overflow: hidden;
+        }
+        .loader-char {
+            display: inline-block;
+            transform: translateY(100%);
+            animation: reveal-char 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+        @keyframes reveal-char {
+            to { transform: translateY(0); }
+        }
+        #loader-bar-container {
+            width: 200px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin-top: 1rem;
+        }
+        #loader-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2));
+            transition: width 2s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+
         /* --- Custom Cursor --- */
         #cursor-dot {
             width: 8px;
@@ -63,11 +113,11 @@
             pointer-events: none;
             transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s, opacity 0.3s;
         }
-        body:hover .cursor-active {
+        .cursor-active {
             transform: scale(1.5);
             background-color: rgba(255, 255, 255, 0.1);
         }
-        body:hover .dot-active {
+        .dot-active {
              transform: scale(0.5);
         }
         
@@ -121,6 +171,15 @@
             left: 0;
             z-index: -1;
         }
+        #nebula-canvas {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -2;
+            opacity: 0.3;
+        }
 
         /* --- Text & Element Animations --- */
         .reveal-container {
@@ -152,11 +211,6 @@
             50% { transform: translateY(-10px) rotate(0.5deg); }
             100% { transform: translateY(0px) rotate(0deg); }
         }
-        @keyframes float-more {
-            0% { transform: translateY(0px) rotate(-1deg); }
-            50% { transform: translateY(-15px) rotate(1deg); }
-            100% { transform: translateY(0px) rotate(-1deg); }
-        }
         .float-anim {
             animation: float 6s ease-in-out infinite;
         }
@@ -178,8 +232,6 @@
             color: rgba(255, 255, 255, 0.07);
             animation: float 8s ease-in-out infinite alternate;
         }
-        .marquee-content span:nth-child(2n) { animation-delay: -2s; }
-        .marquee-content span:nth-child(3n) { animation-delay: -4s; }
         @keyframes marquee {
             from { transform: translateX(0); }
             to { transform: translateX(-50%); }
@@ -226,25 +278,6 @@
         .visible .chat-bubble {
             opacity: 1;
             transform: translateX(0);
-        }
-
-        /* --- Section Dividers & SVGs --- */
-        .section-line {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            transition: stroke-dashoffset 2s ease-in-out;
-        }
-        .visible .section-line {
-            stroke-dashoffset: 0;
-        }
-        .pulsing-glow {
-            filter: drop-shadow(0 0 5px var(--accent-color-1));
-            animation: pulse 4s infinite ease-in-out;
-        }
-        @keyframes pulse {
-            0% { filter: drop-shadow(0 0 5px var(--accent-color-1)); }
-            50% { filter: drop-shadow(0 0 15px var(--accent-color-2)); }
-            100% { filter: drop-shadow(0 0 5px var(--accent-color-1)); }
         }
 
         /* --- Roadmap Timeline --- */
@@ -314,6 +347,33 @@
             transform: translateX(5px);
         }
 
+        /* --- Interactive Terminal --- */
+        #terminal {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: rgba(0,0,0,0.5);
+            border: 1px solid rgba(129, 140, 248, 0.3);
+            height: 400px;
+            overflow-y: auto;
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+        }
+        .terminal-line {
+            white-space: pre-wrap;
+        }
+        .terminal-line.command::before {
+            content: '> ';
+        }
+        .terminal-line .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background: #0f0;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
         /* --- Scroll Progress Bar --- */
         #progress-bar {
             position: fixed;
@@ -322,15 +382,21 @@
             height: 4px;
             background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2));
             width: 0%;
-            z-index: 100;
+            z-index: 10001;
             transition: width 0.1s linear;
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased loading">
+    <div id="preloader">
+        <div class="loader-text"></div>
+        <div id="loader-bar-container"><div id="loader-bar"></div></div>
+    </div>
+
     <div id="cursor-dot"></div>
     <div id="cursor-outline"></div>
     <div id="progress-bar"></div>
+    <canvas id="nebula-canvas"></canvas>
     <canvas id="starfield-canvas"></canvas>
 
     <header id="main-header" class="p-6">
@@ -342,6 +408,7 @@
                 <a href="#roadmap">Roadmap</a>
                 <a href="#impact">Impact</a>
                 <a href="#insights">Insights</a>
+                <a href="#faq">FAQ</a>
             </nav>
             <a href="#contact" class="hidden md:inline-block border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-black transition-colors">
                 Contact
@@ -506,7 +573,7 @@
         </section>
 
         <!-- SECTION 6: TECHNOLOGY & DATA VISUALIZATION -->
-        <section class="container mx-auto px-6 py-32">
+        <section id="technology" class="container mx-auto px-6 py-32">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
                 <div class="fade-in float-anim">
                     <h2 class="font-display text-6xl md:text-7xl tracking-tight leading-none">THE ENGINE OF CLARITY</h2>
@@ -516,6 +583,12 @@
                 </div>
                 <div class="fade-in">
                     <canvas id="data-globe-canvas" class="w-full h-auto aspect-square"></canvas>
+                </div>
+            </div>
+            
+            <div id="terminal-section" class="mt-32 max-w-4xl mx-auto">
+                <div class="fade-in">
+                    <div id="terminal" class="rounded-lg p-4"></div>
                 </div>
             </div>
         </section>
@@ -659,6 +732,33 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
+    const lerp = (t, a, b) => a + t * (b - a);
+
+    // --- Pre-loader Logic ---
+    const preloader = document.getElementById('preloader');
+    const loaderText = document.querySelector('.loader-text');
+    const loaderBar = document.getElementById('loader-bar');
+    const text = "MEHFOOZ";
+    text.split('').forEach((char, i) => {
+        const span = document.createElement('span');
+        span.className = 'loader-char';
+        span.textContent = char;
+        span.style.animationDelay = `${i * 0.1}s`;
+        loaderText.appendChild(span);
+    });
+
+    setTimeout(() => {
+        loaderBar.style.width = '100%';
+    }, 100);
+
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            preloader.classList.add('loaded');
+            document.body.classList.remove('loading');
+        }, 2500);
+    });
+
+
     // --- Custom Cursor ---
     const cursorDot = document.getElementById('cursor-dot');
     const cursorOutline = document.getElementById('cursor-outline');
@@ -700,16 +800,50 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Dynamic Starfield Background ---
     const starfieldCanvas = document.getElementById('starfield-canvas');
     const starfieldCtx = starfieldCanvas.getContext('2d');
+    const nebulaCanvas = document.getElementById('nebula-canvas');
+    const nebulaCtx = nebulaCanvas.getContext('2d');
+
     let width, height;
     let stars = [];
-    const starCount = 500; // More stars for a richer field
+    const starCount = 700; 
     let shootingStars = [];
 
-    function initStarfield() {
+    // Perlin noise for nebula
+    const noise = (() => {
+        const p = new Uint8Array(512);
+        for(let i=0; i < 256; i++) p[i] = p[i+256] = Math.floor(Math.random()*256);
+        const fade = t => t*t*t*(t*(t*6-15)+10);
+        //const lerp = (t,a,b) => a+t*(b-a); // lerp is now global
+        const grad = (hash,x,y,z) => {
+            const h = hash & 15;
+            const u = h<8 ? x:y;
+            const v = h<4 ? y : h===12||h===14 ? x:z;
+            return ((h&1)===0?u:-u) + ((h&2)===0?v:-v);
+        }
+        return {
+            noise: (x,y,z) => {
+                const X = Math.floor(x)&255, Y = Math.floor(y)&255, Z = Math.floor(z)&255;
+                x-=Math.floor(x); y-=Math.floor(y); z-=Math.floor(z);
+                const u = fade(x), v = fade(y), w = fade(z);
+                const A=p[X]+Y, AA=p[A]+Z, AB=p[A+1]+Z,
+                      B=p[X+1]+Y, BA=p[B]+Z, BB=p[B+1]+Z;
+                return lerp(w, lerp(v, lerp(u, grad(p[AA],x,y,z), grad(p[BA],x-1,y,z)),
+                                      lerp(u, grad(p[AB],x,y-1,z), grad(p[BB],x-1,y-1,z))),
+                               lerp(v, lerp(u, grad(p[AA+1],x,y,z-1), grad(p[BA+1],x-1,y,z-1)),
+                                      lerp(u, grad(p[AB+1],x,y-1,z-1), grad(p[BB+1],x-1,y-1,z-1))));
+            }
+        }
+    })();
+    let noiseZ = 0;
+
+
+    function initBackgrounds() {
         width = window.innerWidth;
         height = window.innerHeight;
         starfieldCanvas.width = width;
         starfieldCanvas.height = height;
+        nebulaCanvas.width = width;
+        nebulaCanvas.height = height;
         stars = [];
         for (let i = 0; i < starCount; i++) {
             stars.push({
@@ -721,13 +855,50 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+    
+    let frame = 0;
+    function animateBackgrounds() {
+        if (!width || !height) {
+            requestAnimationFrame(animateBackgrounds);
+            return;
+        }
 
-    function animateStarfield() {
+        // --- Animate Nebula ---
+        if (frame % 2 === 0) { // Update nebula less frequently for performance
+            const imageData = nebulaCtx.createImageData(width, height);
+            const data = imageData.data;
+            noiseZ += 0.005;
+            for(let x=0; x < width; x+=4) {
+                for(let y=0; y < height; y+=4) {
+                    const value = Math.abs(noise.noise(x/300, y/300, noiseZ));
+                    const c = value * 255;
+                    const color1 = {r: 56, g: 189, b: 248}; // sky
+                    const color2 = {r: 129, g: 140, b: 248}; // indigo
+                    const r = lerp(value, color1.r, color2.r);
+                    const g = lerp(value, color1.g, color2.g);
+                    const b = lerp(value, color1.b, color2.b);
+
+                    for(let dx=0; dx<4; dx++) {
+                        for(let dy=0; dy<4; dy++) {
+                           if (x+dx < width && y+dy < height) {
+                                let i = ((y+dy)*width + (x+dx)) * 4;
+                                data[i] = r;
+                                data[i+1] = g;
+                                data[i+2] = b;
+                                data[i+3] = c * 0.7;
+                           }
+                        }
+                    }
+                }
+            }
+            nebulaCtx.putImageData(imageData, 0, 0);
+        }
+
+
+        // --- Animate Stars ---
         starfieldCtx.clearRect(0, 0, width, height);
-        
-        // Stars
         for (let star of stars) {
-            star.z -= 0.75; // Slower speed for a more majestic feel
+            star.z -= 0.75;
             if (star.z <= 0) {
                 star.x = (Math.random() - 0.5) * width * 2;
                 star.y = (Math.random() - 0.5) * height * 2;
@@ -745,21 +916,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
-        // Shooting Stars
         if (Math.random() > 0.995 && shootingStars.length < 3) {
             shootingStars.push({
-                x: Math.random() * width,
-                y: 0,
-                len: Math.random() * 80 + 10,
-                speed: Math.random() * 10 + 5,
+                x: Math.random() * width, y: 0,
+                len: Math.random() * 80 + 10, speed: Math.random() * 10 + 5,
                 opacity: 1
             });
         }
         for (let i = shootingStars.length - 1; i >= 0; i--) {
             const s = shootingStars[i];
-            s.x += s.speed;
-            s.y += s.speed;
-            s.opacity -= 0.02;
+            s.x += s.speed; s.y += s.speed; s.opacity -= 0.02;
             if (s.opacity <= 0) {
                 shootingStars.splice(i, 1);
             } else {
@@ -770,13 +936,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 starfieldCtx.stroke();
             }
         }
-
-        requestAnimationFrame(animateStarfield);
+        frame++;
+        requestAnimationFrame(animateBackgrounds);
     }
 
-    initStarfield();
-    animateStarfield();
-    window.addEventListener('resize', initStarfield);
+    initBackgrounds();
+    animateBackgrounds();
+    window.addEventListener('resize', initBackgrounds);
 
     // --- Interactive Data Globe ---
     const globeCanvas = document.getElementById('data-globe-canvas');
@@ -786,8 +952,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         function resizeGlobe() {
             globeSize = globeCanvas.clientWidth;
-            globeCanvas.width = globeSize * 2; // High DPI
-            globeCanvas.height = globeSize * 2;
+            globeCanvas.width = globeSize * 2; globeCanvas.height = globeSize * 2;
             globeCtx.scale(2, 2);
         }
         resizeGlobe();
@@ -798,36 +963,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const numDots = 150;
         let rotation = 0;
 
-        for(let i=0; i<numDots; i++){
-            dots.push({
-                theta: Math.random() * Math.PI,
-                phi: Math.random() * 2 * Math.PI,
-                size: Math.random() * 3 + 1
-            });
-        }
+        for(let i=0; i<numDots; i++){ dots.push({ theta: Math.random() * Math.PI, phi: Math.random() * 2 * Math.PI, size: Math.random() * 3 + 1 }); }
 
         function animateGlobe() {
             globeCtx.clearRect(0,0, globeSize, globeSize);
-            
-            // Draw globe sphere
             globeCtx.strokeStyle = "rgba(129, 140, 248, 0.3)";
             globeCtx.beginPath();
             globeCtx.arc(globeSize / 2, globeSize / 2, radius, 0, 2 * Math.PI);
             globeCtx.stroke();
 
-            // Draw dots
             dots.forEach(dot => {
                 const x = radius * Math.sin(dot.theta) * Math.cos(dot.phi + rotation);
                 const y = radius * Math.sin(dot.theta) * Math.sin(dot.phi + rotation);
                 const z = radius * Math.cos(dot.theta);
-
                 const projectedScale = 1 + z / (radius * 2);
                 const projectedX = x * projectedScale + globeSize/2;
                 const projectedY = y * projectedScale + globeSize/2;
-                
                 const alpha = (z + radius) / (2 * radius);
-                
-                if(z > -radius * 0.7) { // Only draw front-facing dots
+                if(z > -radius * 0.7) {
                     globeCtx.beginPath();
                     globeCtx.arc(projectedX, projectedY, dot.size * projectedScale / 2, 0, 2 * Math.PI);
                     globeCtx.fillStyle = `rgba(56, 189, 248, ${alpha})`;
@@ -848,12 +1001,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const glare = card.querySelector('.glare');
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            const x = e.clientX - rect.left; const y = e.clientY - rect.top;
             const { width, height } = rect;
             const rotateX = (y / height - 0.5) * -20;
             const rotateY = (x / width - 0.5) * 20;
-
             card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             glare.style.opacity = '1';
             glare.style.transform = `translate(${x - width/2}px, ${y - height/2}px)`;
@@ -867,25 +1018,89 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Animated Counters ---
     const animateCounter = (el) => {
         const target = +el.getAttribute('data-target');
-        const duration = 2500; // Slower for more dramatic effect
+        const duration = 2500;
         const frameRate = 1000 / 60;
         const totalFrames = Math.round(duration / frameRate);
         let currentFrame = 0;
-        
-        // Easing function
         const easeOutQuint = t => 1 - Math.pow(1 - t, 5);
-
         const counter = setInterval(() => {
             currentFrame++;
             const progress = easeOutQuint(currentFrame / totalFrames);
             const currentNum = Math.round(target * progress);
             el.innerText = currentNum.toLocaleString();
-
             if (currentFrame === totalFrames) {
                 clearInterval(counter);
                 el.innerText = target.toLocaleString();
             }
         }, frameRate);
+    };
+
+    // --- Terminal Animation ---
+    const terminalElement = document.getElementById('terminal');
+    const animateTerminal = () => {
+        const lines = [
+            { text: "booting mehfoozOS v1.0...", delay: 50 },
+            { text: "initializing cognitive cores...", delay: 50 },
+            { text: "establishing secure uplink...", status: "OK", delay: 100 },
+            { text: "loading linguistic models [ur, en, shn, btl]...", status: "DONE", delay: 100 },
+            { text: "compiling community feedback data...", delay: 50},
+            { text: "syncing with global threat database...", status: "OK", delay: 100},
+            { text: "SYSTEM READY.", delay: 50 },
+            { text: "", delay: 500 },
+            { text: "monitoring data streams for misinformation patterns...", delay: 50, command: true },
+            { text: "[08:21:27] Pattern detected: Type-3 Viral Disinformation. Source: Social Media Group.", delay: 20 },
+            { text: "[08:21:28] Cross-referencing with known narratives... Match found.", delay: 20 },
+            { text: "[08:21:29] Deploying educational counter-module to 5,000 nodes.", delay: 20 },
+            { text: "[08:21:30] Threat neutralized. Confidence: 99.8%", delay: 20, color: "#0f0" },
+            { text: "[08:21:45] Pattern detected: Phishing Scam. Vector: SMS.", delay: 20 },
+            { text: "[08:21:46] Analyzing payload... Standard credential theft attempt.", delay: 20 },
+            { text: "[08:21:47] Issuing community alert via MehfoozBot & social channels.", delay: 20 },
+            { text: "[08:21:48] Alert deployed. Threat contained.", delay: 20, color: "#0f0" },
+        ];
+        let lineIndex = 0;
+        let charIndex = 0;
+
+        const typeLine = () => {
+            if (lineIndex >= lines.length) {
+                const cursor = terminalElement.querySelector('.cursor');
+                if (cursor) cursor.remove();
+                return;
+            }
+            
+            const line = lines[lineIndex];
+            if (charIndex === 0) {
+                const p = document.createElement('p');
+                p.className = 'terminal-line';
+                if (line.command) p.classList.add('command');
+                if(line.color) p.style.color = line.color;
+                terminalElement.appendChild(p);
+            }
+
+            const currentElement = terminalElement.lastChild;
+            currentElement.textContent += line.text.charAt(charIndex);
+            charIndex++;
+
+            if (charIndex >= line.text.length) {
+                if(line.status) {
+                    const statusSpan = document.createElement('span');
+                    statusSpan.textContent = ` [${line.status}]`;
+                    statusSpan.style.color = '#0f0';
+                    currentElement.appendChild(statusSpan);
+                }
+                charIndex = 0;
+                lineIndex++;
+            }
+            
+            terminalElement.scrollTop = terminalElement.scrollHeight;
+            setTimeout(typeLine, line.delay || 50);
+        };
+        
+        terminalElement.innerHTML = '<p class="terminal-line"><span class="cursor"></span></p>';
+        setTimeout(() => {
+            const cursor = terminalElement.querySelector('.cursor');
+            if(cursor) cursor.parentElement.remove();
+            typeLine();
+        }, 1000);
     };
 
     // --- Scroll Animations Observer ---
@@ -894,18 +1109,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
                 
-                // Trigger counter animation
                 if (entry.target.id === 'impact') {
-                    document.querySelectorAll('.impact-number').forEach(counter => {
-                        animateCounter(counter);
-                    });
-                    observerInstance.unobserve(entry.target); // Animate only once
+                    document.querySelectorAll('.impact-number').forEach(counter => { animateCounter(counter); });
+                    observerInstance.unobserve(entry.target);
+                }
+                if (entry.target.id === 'terminal-section') {
+                    animateTerminal();
+                    observerInstance.unobserve(entry.target);
                 }
             }
         });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.25 });
 
-    document.querySelectorAll('.reveal-container, .fade-in, .chat-ui, .chat-bubble, .timeline-item, #impact, .faq-item').forEach(el => {
+    document.querySelectorAll('.reveal-container, .fade-in, .chat-ui, .chat-bubble, .timeline-item, #impact, .faq-item, #terminal-section').forEach(el => {
         observer.observe(el);
     });
 
@@ -921,12 +1137,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
         });
     });
-
 });
 </script>
 </body>
