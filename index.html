@@ -21,7 +21,7 @@
             --teal: #008080;
         }
 
-        /* For premium fonts, replace this with your font provider's link (e.g., Adobe Fonts) */
+        /* Using a mix of a professional serif (Playfair Display) for authority and a clean sans-serif (Inter) for clarity. */
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500&display=swap');
 
         html.lenis { height: auto; }
@@ -83,6 +83,15 @@
         .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 15px; line-height: 1.5; }
         .user-bubble { background-color: var(--teal); color: white; border-bottom-right-radius: 3px; align-self: flex-end; }
         .bot-bubble { background-color: #2a2825; color: var(--warm-text); border-bottom-left-radius: 3px; align-self: flex-start; }
+        select {
+           background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23A8A29A' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+           background-position: right 0.5rem center;
+           background-repeat: no-repeat;
+           background-size: 1.5em 1.5em;
+           padding-right: 2.5rem;
+           -webkit-appearance: none;
+           appearance: none;
+        }
 
         /* Navigation Styles */
         #friendly-nav { transform: translateY(200%); transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1); }
@@ -121,8 +130,8 @@
         <nav class="container mx-auto flex justify-between items-center p-6 md:p-8">
             <a href="#home" class="font-heading text-3xl text-gold">Mehfooz</a>
             <div class="hidden md:flex gap-8 text-lg text-medium-text">
-                 <a href="#journal" class="header-nav-link hover:text-warm-text transition-colors">Journal</a>
-                 <a href="#approach" class="header-nav-link hover:text-warm-text transition-colors">Approach</a>
+                 <a href="#journal" class="header-nav-link hover:text-warm-text transition-colors">Our Journal</a>
+                 <a href="#approach" class="header-nav-link hover:text-warm-text transition-colors">Our Approach</a>
                  <a href="#community" class="header-nav-link hover:text-warm-text transition-colors">Community</a>
                  <a href="#connect" class="header-nav-link hover:text-warm-text transition-colors">Connect</a>
             </div>
@@ -135,7 +144,7 @@
             <div class="px-4">
                 <h1 class="font-heading text-gold text-5xl md:text-8xl mb-4">A digital sanctuary.</h1>
                 <p class="text-xl md:text-2xl text-warm-text leading-relaxed max-w-4xl line-parent">
-                    <span class="line-child">For the people of Gilgit Baltistan, a safe space to find clarity in a connected world.</span>
+                    <span class="line-child">Empowering the communities of Gilgit Baltistan to navigate the digital world with confidence.</span>
                 </p>
             </div>
         </section>
@@ -162,19 +171,22 @@
         <section id="approach" class="content-section py-20 md:py-40">
             <div class="container mx-auto px-6 max-w-5xl">
                 <div class="text-center mb-20 line-parent">
-                    <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4 line-child">Our Approach is Simple</h2>
+                    <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4 line-child">Our Strategic Approach</h2>
                 </div>
-                <div class="grid md:grid-cols-3 gap-12 text-center">
+                <div class="grid md:grid-cols-3 gap-12 text-left md:text-center">
                     <div class="reveal-up">
-                        <h3 class="font-heading text-teal text-4xl mb-3">Listen First</h3>
+                        <p class="font-heading text-teal text-4xl mb-3">1.</p>
+                        <h3 class="font-heading text-2xl mb-3">Listen First</h3>
                         <p class="text-medium-text leading-relaxed">We partner with local elders and Ulema, honoring their wisdom as the foundation of our work.</p>
                     </div>
                     <div class="reveal-up">
-                        <h3 class="font-heading text-teal text-4xl mb-3">Guide Gently</h3>
+                        <p class="font-heading text-teal text-4xl mb-3">2.</p>
+                        <h3 class="font-heading text-2xl mb-3">Guide Gently</h3>
                         <p class="text-medium-text leading-relaxed">Our tools, like MehfoozBot, offer personal, patient help in local languages, making technology feel like a friend.</p>
                     </div>
                      <div class="reveal-up">
-                        <h3 class="font-heading text-teal text-4xl mb-3">Grow Together</h3>
+                        <p class="font-heading text-teal text-4xl mb-3">3.</p>
+                        <h3 class="font-heading text-2xl mb-3">Grow Together</h3>
                         <p class="text-medium-text leading-relaxed">Through mini-courses and feedback from local students, we ensure our knowledge is always relevant and co-created.</p>
                     </div>
                 </div>
@@ -205,14 +217,14 @@
                   <div class="mt-16 grid md:grid-cols-2 gap-12 text-left">
                       <div class="reveal-up">
                           <p class="font-heading text-teal text-7xl" id="user-counter">0+</p>
-                          <h3 class="text-2xl mt-2 font-semibold">Empowered Users</h3>
-                          <p class="text-medium-text mt-2">Leveraging our community networks for organic, sustainable growth.</p>
+                          <h3 class="text-2xl mt-2 font-semibold">User Base Expansion</h3>
+                          <p class="text-medium-text mt-2">Leveraging our community networks for organic, sustainable growth to reach over 100,000 users.</p>
                       </div>
                       <div class="reveal-up">
                            <div class="relative pt-8">
                                 <svg id="timeline-svg" class="absolute top-0 left-0 w-full h-full" viewbox="0 0 300 100" preserveAspectRatio="none"><path d="M 0 50, C 80 20, 150 80, 300 50" stroke="var(--teal)" stroke-width="2" fill="none" class="timeline-path"/></svg>
                                <h3 class="font-heading text-teal text-7xl">3+</h3>
-                               <h3 class="text-2xl mt-2 font-semibold">Platform Evolutions</h3>
+                               <h3 class="text-2xl mt-2 font-semibold">Platform Development</h3>
                                <p class="text-medium-text mt-2">Introducing AI-driven learning paths, offline capabilities, and expanded language support.</p>
                            </div>
                       </div>
@@ -250,7 +262,7 @@
               <div class="container mx-auto px-6 space-y-24">
                    <div class="text-center max-w-3xl mx-auto reveal-up">
                      <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4">Let's Connect</h2>
-                     <p class="text-xl text-medium-text">Whether through a conversation with our bot or a personal message, we'd love to hear from you.</p>
+                     <p class="text-xl text-medium-text">Whether you are a community member, a potential partner, or a researcher—we'd love to hear from you.</p>
                    </div>
                    <div class="max-w-2xl mx-auto reveal-up">
                      <h3 class="font-heading text-teal text-4xl mb-6 text-center">Chat with MehfoozBot</h3>
@@ -276,10 +288,20 @@
                              <input type="email" id="email" required class="w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal">
                            </div>
                            <div>
+                                <label for="interest" class="block mb-2 font-medium text-medium-text">I am a...</label>
+                                <select id="interest" class="w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal">
+                                    <option>Community Member</option>
+                                    <option>Potential Partner / Investor</option>
+                                    <option>Researcher / Institution</option>
+                                    <option>Student</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                           <div>
                              <label for="message" class="block mb-2 font-medium text-medium-text">Your Message</label>
                              <textarea id="message" rows="5" required class="w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal"></textarea>
                            </div>
-                         <button type="submit" class="w-full bg-teal text-white font-semibold py-4 px-6 rounded-lg hover:bg-opacity-80">Send with heart</button>
+                         <button type="submit" class="w-full bg-teal text-white font-semibold py-4 px-6 rounded-lg hover:bg-opacity-80">Send Message</button>
                      </form>
                       <div id="form-success" class="hidden text-center border border-teal rounded-lg p-8 mt-6">
                          <p class="font-heading text-teal text-3xl mb-2">Thank You!</p>
@@ -314,7 +336,7 @@
                 </a>
             </div>
             <p>&copy; 2025 Mehfooz Internet. All rights reserved.</p>
-            <p class="text-sm mt-2">Empowering the communities of Gilgit Baltistan with the tools to navigate the digital world safely and confidently.</p>
+            <p class="text-sm mt-2">Cultivating a digitally literate society in Gilgit Baltistan.</p>
         </div>
     </footer>
 
@@ -448,7 +470,17 @@
 
         // --- MAIN ANIMATIONS ---
         function initAnimations() {
-            gsap.to('.line-child', { y: 0, duration: 1, ease: 'power3.out', stagger: 0.2 });
+            gsap.utils.toArray('.line-child').forEach(el => {
+                gsap.fromTo(el, { y: '100%' }, { 
+                    y: '0%', 
+                    duration: 1, 
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: el.parentElement,
+                        start: 'top 85%'
+                    }
+                });
+            });
             
             gsap.utils.toArray('.word-anim').forEach(el => {
                 const words = el.querySelectorAll('p');
@@ -485,11 +517,14 @@
                     this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent).toLocaleString() + "+";
                 }
             });
+            gsap.to(userCounter, { textContent: "100000", scrollTrigger: { trigger: userCounter, start: "top 85%" }, duration: 2, ease: "power1.inOut"});
+
 
             const timelinePath = document.querySelector('.timeline-path');
-            gsap.from(timelinePath, {
-                strokeDashoffset: timelinePath.getTotalLength(),
-                strokeDasharray: timelinePath.getTotalLength(),
+            const length = timelinePath.getTotalLength();
+            gsap.set(timelinePath, { strokeDasharray: length, strokeDashoffset: length });
+            gsap.to(timelinePath, {
+                strokeDashoffset: 0,
                 duration: 2,
                 ease: 'power1.inOut',
                 scrollTrigger: {
