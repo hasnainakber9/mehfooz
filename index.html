@@ -3,28 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehfooz - A Digital Sanctuary</title>
+    <title>Mehfooz - A Digital Sanctuary for Gilgit Baltistan</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <style>
         :root {
-            --teal: #00A896;
-            --dark-bg: #0F172A; /* A slightly softer navy */
-            --light-text: #E2E8F0;
-            --medium-text: #94A3B8;
-            --gold: #F4B860;
-            --success: #22c55e;
-            --danger: #ef4444;
+            --warm-dark: #1A120B;
+            --warm-text: #EAE0D5;
+            --medium-text: #A8A29A;
+            --gold: #DAA520;
+            --teal: #008080;
+            --deep-navy: #02182B;
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Caveat:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Caveat:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            background-color: var(--dark-bg);
-            color: var(--light-text);
-            font-family: 'Inter', sans-serif;
+            background-color: var(--warm-dark);
+            color: var(--warm-text);
+            font-family: 'Lora', serif;
             overflow-x: hidden;
             cursor: none;
         }
@@ -32,442 +44,1173 @@
         .font-script {
             font-family: 'Caveat', cursive;
         }
+
+        .font-body {
+            font-family: 'Inter', sans-serif;
+        }
         
-        /* Gentle Light Cursor */
+        /* Sacred Loading Screen */
+        #sacred-loader {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, var(--deep-navy) 0%, var(--warm-dark) 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease;
+        }
+
+        #sacred-loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-logo {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: logoReveal 1.5s ease-out forwards;
+        }
+
+        @keyframes logoReveal {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), var(--teal));
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 20px var(--gold);
+        }
+
+        .loading-text {
+            font-family: 'Caveat', cursive;
+            color: var(--medium-text);
+            font-size: 1.2rem;
+        }
+
+        /* Custom Cursor */
         #cursor-light {
             position: fixed;
-            left: 0; top: 0;
-            width: 600px; height: 600px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
+            left: 0;
+            top: 0;
             pointer-events: none;
-            transform: translate(-50%, -50%);
-            background: radial-gradient(circle, rgba(244, 184, 96, 0.06) 0%, transparent 60%);
-            z-index: 9998;
-            transition: transform 0.2s ease-out;
-        }
-        #cursor-dot {
-            position: fixed;
-            width: 6px; height: 6px;
-            background-color: var(--gold);
-            border-radius: 50%;
-            left: 0; top: 0;
-            pointer-events: none;
+            background: radial-gradient(circle, rgba(218, 165, 32, 0.25) 0%, transparent 70%);
             transform: translate(-50%, -50%);
             z-index: 9999;
+            transition: transform 0.3s ease-out;
+            mix-blend-mode: screen;
         }
 
-        .page {
-            display: none; /* Pages are hidden by default */
-            min-height: 100vh;
+        #cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold);
+            left: 0;
+            top: 0;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+            transition: transform 0.1s ease-out;
         }
-        .page.active {
-            display: block;
+        
+        /* Three.js Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
         }
 
-        /* Page transition */
-        .page-enter { animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        .page-exit { animation: fadeOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .content-section {
+            position: relative;
+            z-index: 1;
+            padding: 20vh 0;
         }
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
+        
+        /* Enhanced Game Styles */
+        .game-container {
+            perspective: 1000px;
         }
 
-        /* MehfoozBot Demo Styles */
+        .whisper-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            cursor: none;
+            transform-style: preserve-3d;
+        }
+
+        .whisper-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            background: rgba(218, 165, 32, 0.15);
+            border-color: var(--gold);
+            box-shadow: 0 20px 60px rgba(218, 165, 32, 0.3);
+        }
+
+        .whisper-card.selected-correct {
+            background: rgba(0, 128, 128, 0.2);
+            border-color: var(--teal);
+            box-shadow: 0 0 40px rgba(0, 128, 128, 0.4);
+        }
+
+        .whisper-card.selected-wrong {
+            background: rgba(255, 77, 77, 0.2);
+            border-color: #ff4d4d;
+            box-shadow: 0 0 40px rgba(255, 77, 77, 0.4);
+        }
+
+        /* Animate-in styles */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        /* Enhanced Chat Styles */
         .chat-bubble {
             max-width: 75%;
-            padding: 10px 15px;
-            border-radius: 20px;
-        }
-        .user-bubble {
-            background-color: var(--teal);
-            color: white;
-            border-bottom-right-radius: 5px;
-            align-self: flex-end;
-        }
-        .bot-bubble {
-            background-color: #334155;
-            color: var(--light-text);
-            border-bottom-left-radius: 5px;
-            align-self: flex-start;
-        }
-        .question-pill {
-            cursor: pointer;
-            border: 1px solid var(--medium-text);
-            color: var(--medium-text);
-            padding: 8px 15px;
-            border-radius: 9999px;
-            transition: all 0.2s;
-        }
-        .question-pill:hover {
-            background-color: var(--teal);
-            border-color: var(--teal);
-            color: white;
+            padding: 14px 20px;
+            border-radius: 18px;
+            line-height: 1.6;
+            animation: messageSlideIn 0.4s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        /* Game Styles */
-        .game-card {
-            background-color: #1E293B;
-            border: 1px solid #334155;
+        @keyframes messageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
-        .game-choice-btn {
-            transition: all 0.2s ease-in-out;
+
+        .user-bubble {
+            background: linear-gradient(135deg, var(--teal), #006666);
+            color: white;
+            border-bottom-right-radius: 4px;
+            align-self: flex-end;
+            box-shadow: 0 4px 12px rgba(0, 128, 128, 0.3);
         }
-        .game-choice-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+
+        .bot-bubble {
+            background: rgba(42, 40, 37, 0.95);
+            color: var(--warm-text);
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+            border: 1px solid rgba(218, 165, 32, 0.2);
         }
-        .feedback-correct {
-            color: var(--success);
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 18px;
+            background: rgba(42, 40, 37, 0.95);
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            width: fit-content;
         }
-        .feedback-incorrect {
-            color: var(--danger);
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--medium-text);
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typingBounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        /* Form Enhancements */
+        .form-input {
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.2);
+        }
+
+        /* Success Animation */
+        .success-checkmark {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 3;
+            stroke: var(--teal);
+            stroke-miterlimit: 10;
+            box-shadow: inset 0 0 0 var(--teal);
+            animation: fillCheck 0.4s ease-in-out 0.4s forwards, scaleCheck 0.3s ease-in-out 0.9s both;
+        }
+
+        .checkmark-circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: var(--teal);
+            fill: none;
+            animation: strokeCircle 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+
+        .checkmark-check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: strokeCheck 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+
+        @keyframes strokeCircle {
+            100% { stroke-dashoffset: 0; }
+        }
+
+        @keyframes strokeCheck {
+            100% { stroke-dashoffset: 0; }
+        }
+
+        @keyframes scaleCheck {
+            0%, 100% { transform: none; }
+            50% { transform: scale3d(1.1, 1.1, 1); }
+        }
+
+        /* Scroll Progress Indicator */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--teal));
+            z-index: 9998;
+            transition: width 0.1s linear;
+        }
+
+        /* Navigation Enhancement */
+        nav {
+            background: rgba(26, 18, 11, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(218, 165, 32, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(26, 18, 11, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Particle glow effect */
+        .particle-glow {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-100px) translateX(20px);
+                opacity: 0;
+            }
+        }
+
+        /* Mobile menu */
+        #mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        #mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .loader-logo { font-size: 3rem; }
+            .progress-bar { width: 250px; }
+            #cursor-light, #cursor-dot { display: none; }
+            body { cursor: auto; }
+            .whisper-card { cursor: pointer; }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
 <body class="antialiased">
 
+    <!-- Sacred Loading Screen -->
+    <div id="sacred-loader">
+        <div class="loader-logo font-script text-gold">✦ Mehfooz ✦</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="loading-text">Preparing your sanctuary...</div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div id="scroll-progress"></div>
+
+    <!-- Custom Cursor -->
     <div id="cursor-light"></div>
     <div id="cursor-dot"></div>
 
-    <!-- PRE-SITE GAME -->
-    <section id="game-screen" class="fixed inset-0 bg-dark-bg z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
-        <div class="game-card w-full max-w-2xl rounded-2xl p-8 md:p-12 text-center shadow-2xl">
-            <h2 class="font-script text-gold text-4xl md:text-5xl mb-4">Test Your Digital Instincts</h2>
-            <p id="game-progress" class="text-medium-text mb-8">Question 1 of 3</p>
-            
-            <div id="game-content">
-                <p id="game-question-text" class="text-xl md:text-2xl min-h-[6rem] mb-8"></p>
-                <div id="game-choices" class="flex flex-col md:flex-row gap-4 justify-center">
-                    <button data-choice="credible" class="game-choice-btn w-full bg-teal text-white font-semibold py-3 px-6 rounded-lg">Looks Credible</button>
-                    <button data-choice="not-credible" class="game-choice-btn w-full bg-slate-600 hover:bg-slate-500 text-white font-semibold py-3 px-6 rounded-lg">Not Credible</button>
-                </div>
-                <p id="game-feedback" class="mt-6 min-h-[3rem] text-lg opacity-0"></p>
-            </div>
+    <!-- Three.js Canvas -->
+    <canvas id="bg-canvas"></canvas>
 
-            <div id="game-end-screen" class="hidden">
-                <h3 class="font-script text-teal text-4xl mb-4">Well Done!</h3>
-                <p class="text-xl text-medium-text mb-8">You're ready to explore. Every day, we face new challenges online. Being mindful is the first step.</p>
-                <button id="enter-site-btn" class="game-choice-btn bg-gold text-dark-bg font-bold py-4 px-8 rounded-lg text-xl">Enter Site</button>
+    <!-- Game Screen -->
+    <div id="game-screen" class="fixed inset-0 bg-warm-dark z-[100] flex items-center justify-center p-4 transition-opacity duration-500" style="display: none;">
+        <div class="text-center w-full max-w-4xl game-container">
+            <div id="game-intro">
+                <h2 class="font-script text-gold text-4xl md:text-6xl mb-4">Whispers & Truth</h2>
+                <p class="text-medium-text text-lg md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
+                    A gentle test of your digital intuition. Choose the whisper that feels more like the truth.
+                </p>
+                <div class="mb-8">
+                    <div class="inline-block bg-teal/20 border border-teal/30 rounded-full px-6 py-2 font-body text-sm">
+                        Question <span id="question-number">1</span> of <span id="total-questions">3</span>
+                    </div>
+                </div>
+            </div>
+            <div id="game-question-container" class="mt-8 grid md:grid-cols-2 gap-6 md:gap-8">
+                <!-- Game cards injected here -->
+            </div>
+            <div id="game-feedback" class="mt-8 text-lg md:text-xl max-w-2xl mx-auto min-h-[6rem] font-body"></div>
+            <div id="game-score" class="mt-4 text-medium-text font-body"></div>
+            <div id="game-end" class="hidden">
+                <svg class="success-checkmark mb-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                    <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                </svg>
+                <h3 class="font-script text-teal text-4xl md:text-5xl mb-4">A thoughtful journey begins.</h3>
+                <p class="text-xl text-medium-text mb-4 font-body">
+                    You answered <span id="final-score" class="text-gold font-bold">0</span> correctly.
+                </p>
+                <p class="text-lg text-medium-text mb-8 max-w-2xl mx-auto font-body">
+                    Navigating the digital world requires a calm mind and a careful heart. You're ready to explore Mehfooz.
+                </p>
+                <button id="enter-site-btn" class="bg-gold text-warm-dark font-bold py-4 px-10 rounded-full text-xl hover:bg-opacity-90 transition-all hover:scale-105 hover:shadow-2xl">
+                    Enter the Sanctuary
+                </button>
             </div>
         </div>
-    </section>
-
-    <div id="loader" class="fixed inset-0 bg-dark-bg z-[100] flex items-center justify-center hidden">
-        <p class="font-script text-gold text-5xl">Mehfooz</p>
     </div>
 
-    <header class="fixed top-0 left-0 w-full z-50 opacity-0" id="site-header">
-        <nav class="container mx-auto flex justify-between items-center p-6 md:p-8 bg-dark-bg/50 backdrop-blur-sm rounded-b-xl">
-            <a href="#" data-page="home" class="font-script text-3xl text-gold magnetic-link">Mehfooz</a>
-            <div class="hidden md:flex gap-8 text-lg">
-                <a href="#" data-page="approach" class="magnetic-link hover:text-teal transition-colors">Our Approach</a>
-                <a href="#" data-page="mehfoozbot" class="magnetic-link hover:text-teal transition-colors">MehfoozBot</a>
-                <a href="#" data-page="contact" class="magnetic-link hover:text-teal transition-colors">Contact</a>
-            </div>
-             <div class="md:hidden">
-                <!-- Mobile menu button can be added here -->
-            </div>
-        </nav>
-    </header>
-
+    <!-- Main Content -->
     <main id="main-content" class="opacity-0">
-
-        <!-- HOME PAGE -->
-        <section id="page-home" class="page active">
-            <div class="h-screen w-full relative flex items-center justify-center text-center overflow-hidden">
-                <div class="absolute inset-0 bg-black">
-                     <img src="https://images.unsplash.com/photo-1623581203333-53531b1bbf8e?q=80&w=1887&auto=format&fit=crop" 
-                        alt="A thoughtful portrait of a person from Gilgit Baltistan" 
-                        class="w-full h-full object-cover opacity-30 object-center">
+        <!-- Navigation -->
+        <header class="fixed top-0 left-0 w-full z-50">
+            <nav class="container mx-auto flex justify-between items-center p-4 md:p-6">
+                <a href="#home" class="font-script text-3xl md:text-4xl text-gold hover:scale-105 transition-transform">✦ Mehfooz</a>
+                <div class="hidden md:flex gap-8 text-base font-body">
+                    <a href="#journal" class="hover:text-gold transition-colors relative group">
+                        <span>Journal</span>
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#approach" class="hover:text-gold transition-colors relative group">
+                        <span>Approach</span>
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#community" class="hover:text-gold transition-colors relative group">
+                        <span>Community</span>
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#connect" class="hover:text-gold transition-colors relative group">
+                        <span>Connect</span>
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold transition-all group-hover:w-full"></span>
+                    </a>
                 </div>
-                <div class="absolute inset-0 bg-gradient-to-t from-dark-bg via-dark-bg/80 to-transparent z-10"></div>
-                <div class="z-20 px-4 pt-20">
-                    <h1 class="font-script text-gold text-5xl md:text-7xl mb-4">A safe space to find clarity.</h1>
-                    <p class="text-xl md:text-2xl text-light-text leading-relaxed max-w-4xl">
-                        In a connected world, we provide the tools and wisdom for the communities of Gilgit Baltistan to navigate the digital landscape with confidence.
+                <button id="mobile-menu-btn" class="md:hidden text-gold text-2xl">
+                    <span class="block">☰</span>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed right-0 top-0 h-full w-64 bg-warm-dark/95 backdrop-blur-xl z-40 shadow-2xl">
+            <div class="p-8">
+                <button id="close-menu" class="text-gold text-3xl mb-8 hover:scale-110 transition-transform">×</button>
+                <div class="flex flex-col gap-6 text-lg font-body">
+                    <a href="#home" class="mobile-link hover:text-gold transition-colors">Home</a>
+                    <a href="#journal" class="mobile-link hover:text-gold transition-colors">Journal</a>
+                    <a href="#approach" class="mobile-link hover:text-gold transition-colors">Approach</a>
+                    <a href="#community" class="mobile-link hover:text-gold transition-colors">Community</a>
+                    <a href="#connect" class="mobile-link hover:text-gold transition-colors">Connect</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <section id="home" class="content-section h-screen flex items-center justify-center text-center relative overflow-hidden">
+            <div class="px-4 relative z-10">
+                <h1 class="font-script text-gold text-5xl md:text-8xl mb-6 reveal-up" style="text-shadow: 0 0 40px rgba(218, 165, 32, 0.5);">
+                    A digital sanctuary.
+                </h1>
+                <p class="text-xl md:text-2xl text-warm-text leading-relaxed max-w-4xl mx-auto reveal-up font-body" style="animation-delay: 0.2s;">
+                    For the people of Gilgit Baltistan, a safe space to find clarity in a connected world.
+                </p>
+                <div class="mt-12 reveal-up" style="animation-delay: 0.4s;">
+                    <a href="#journal" class="inline-block bg-transparent border-2 border-gold text-gold px-8 py-4 rounded-full font-body font-semibold hover:bg-gold hover:text-warm-dark transition-all hover:scale-105">
+                        Begin Your Journey
+                    </a>
+                </div>
+            </div>
+            <!-- Floating particles -->
+            <div class="absolute inset-0 pointer-events-none" id="hero-particles"></div>
+        </section>
+
+        <!-- Journal Section -->
+        <section id="journal" class="content-section py-20 md:py-40">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="flex flex-col md:flex-row gap-12 md:gap-16 items-center">
+                    <div class="w-full md:w-1/2">
+                        <div class="overflow-hidden rounded-2xl shadow-2xl shadow-black/50 reveal-up">
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" 
+                                 alt="Community gathering in Gilgit Baltistan" 
+                                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h2 class="font-script text-gold text-5xl md:text-6xl mb-6 reveal-up">From Our Journal</h2>
+                        <p class="text-lg md:text-xl text-medium-text leading-relaxed mb-6 reveal-up font-body">
+                            Mehfooz began not with a line of code, but with a conversation. In a small Hunza teahouse, over cups of warm chai, we listened. We heard stories of connection and confusion, of hope and fear in a new digital world.
+                        </p>
+                        <p class="text-lg md:text-xl text-medium-text leading-relaxed reveal-up font-body">
+                            We learned that the need wasn't for more technology, but for more understanding. For a bridge between timeless wisdom and modern tools. Mehfooz is our promise to help build that bridge, together.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Approach Section -->
+        <section id="approach" class="content-section py-20 md:py-40 bg-black/20">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="text-center mb-16 reveal-up">
+                    <h2 class="font-script text-gold text-5xl md:text-7xl mb-4">Our Approach is Simple</h2>
+                    <p class="text-lg md:text-xl text-medium-text font-body max-w-2xl mx-auto">
+                        We believe in the power of listening, learning, and growing together.
                     </p>
                 </div>
-            </div>
-        </section>
-
-        <!-- OUR APPROACH PAGE -->
-        <section id="page-approach" class="page py-32 md:py-40">
-            <div class="container mx-auto px-6 space-y-24">
-                <div class="text-center max-w-3xl mx-auto">
-                    <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Approach is Rooted in Community</h2>
-                    <p class="text-xl text-medium-text">We believe in solutions that come from within, blending timeless wisdom with modern knowledge.</p>
-                </div>
-
-                <div class="grid md:grid-cols-2 items-center gap-12">
-                    <div class="order-2 md:order-1">
-                        <h3 class="font-script text-teal text-4xl mb-3">01. Listen First</h3>
-                        <p class="text-lg text-medium-text leading-relaxed">We don't arrive with answers. We begin by listening, partnering with local elders and trusted leaders. Their wisdom is the foundation upon which we build, ensuring our work is not just accepted, but embraced.</p>
-                    </div>
-                    <div class="order-1 md:order-2">
-                        <img src="https://images.unsplash.com/photo-1541535650829-addc658b4d8c?q=80&w=1887&auto=format&fit=crop" class="rounded-2xl shadow-2xl shadow-black/30" alt="An elder from Gilgit Baltistan sharing a story."/>
-                    </div>
-                </div>
-                 <div class="grid md:grid-cols-2 items-center gap-12">
-                    <div class="md:text-right">
-                        <h3 class="font-script text-teal text-4xl mb-3">02. Guide Gently</h3>
-                        <p class="text-lg text-medium-text leading-relaxed">Technology should feel like a friend, not a barrier. Our MehfoozBot offers personal, patient help in local languages, providing a friendly guide for anyone beginning their digital journey.</p>
-                    </div>
-                    <div>
-                        <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=1904&auto=format&fit=crop" class="rounded-2xl shadow-2xl shadow-black/30" alt="A person interacting with technology in a thoughtful way."/>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- MEHFOOZBOT PAGE -->
-        <section id="page-mehfoozbot" class="page py-32 md:py-40 flex items-center">
-            <div class="container mx-auto px-6 text-center">
-                 <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Chat with MehfoozBot</h2>
-                 <p class="text-xl text-medium-text max-w-2xl mx-auto mb-12">Ask a question or select a topic below to see how our AI guide can help.</p>
-
-                <div class="max-w-2xl mx-auto bg-slate-900/50 rounded-2xl shadow-2xl p-4 md:p-6 flex flex-col h-[60vh]">
-                    <div id="chat-log" class="flex-1 flex flex-col gap-4 p-4 overflow-y-auto">
-                        <!-- Chat messages will appear here -->
-                    </div>
-                    <div class="flex-shrink-0 pt-4 border-t border-slate-700">
-                        <div id="question-pills-container" class="flex flex-wrap justify-center gap-3 mb-4">
-                             <div class="question-pill" data-question="How can I spot fake news?">How can I spot fake news?</div>
-                             <div class="question-pill" data-question="Is my WhatsApp safe?">Is my WhatsApp safe?</div>
-                             <div class="question-pill" data-question="What is misinformation?">What is misinformation?</div>
+                <div class="mt-16 grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+                    <div class="w-full reveal-up">
+                        <div class="mb-4">
+                            <span class="inline-block w-12 h-12 bg-teal/20 rounded-full flex items-center justify-center text-teal text-2xl">1</span>
                         </div>
-                        <form id="chat-form" class="flex gap-3">
-                            <input type="text" id="chat-input" placeholder="Type your question..." class="flex-1 bg-slate-800 border border-slate-700 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-teal">
-                            <button type="submit" class="bg-teal text-white rounded-full px-5 py-3 font-semibold hover:bg-opacity-80 transition-colors">Send</button>
+                        <h3 class="font-script text-teal text-4xl md:text-5xl mb-4">Listen First.</h3>
+                        <p class="text-lg md:text-xl text-medium-text leading-relaxed font-body">
+                            We partner with local elders and trusted leaders, honoring their wisdom as the foundation of our work. We don't arrive with answers; we begin by listening.
+                        </p>
+                    </div>
+                    <div class="w-full reveal-up">
+                        <div class="overflow-hidden rounded-2xl shadow-2xl shadow-black/50">
+                            <img src="https://images.unsplash.com/photo-1541535650829-addc658b4d8c?q=80&w=1887&auto=format&fit=crop" 
+                                 alt="Elder from Gilgit Baltistan" 
+                                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        </div>
+                    </div>
+                    <div class="w-full reveal-up md:order-2">
+                        <div class="overflow-hidden rounded-2xl shadow-2xl shadow-black/50">
+                            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1974&auto=format&fit=crop" 
+                                 alt="Person using smartphone" 
+                                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                        </div>
+                    </div>
+                    <div class="w-full reveal-up md:order-1">
+                        <div class="mb-4">
+                            <span class="inline-block w-12 h-12 bg-teal/20 rounded-full flex items-center justify-center text-teal text-2xl">2</span>
+                        </div>
+                        <h3 class="font-script text-teal text-4xl md:text-5xl mb-4">Guide Gently.</h3>
+                        <p class="text-lg md:text-xl text-medium-text leading-relaxed font-body">
+                            Technology should feel like a friend, not a barrier. Our tools, like the MehfoozBot, offer personal, patient help in local languages, providing a friendly guide for everyone.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Community Section -->
+        <section id="community" class="content-section py-20 md:py-40">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center mb-16 reveal-up">
+                    <h2 class="font-script text-gold text-5xl md:text-7xl mb-4">The Heart of Our Community</h2>
+                </div>
+                <div class="reveal-up">
+                    <h3 class="font-script text-teal text-4xl md:text-5xl mb-8 text-center">Voices from the Valley</h3>
+                    <div class="space-y-10">
+                        <blockquote class="border-l-4 border-gold pl-6 md:pl-8 italic text-lg md:text-xl text-medium-text font-body">
+                            "For the first time, I felt I could ask a 'silly' question about my phone without feeling embarrassed. MehfoozBot helped me understand with patience and kindness."
+                            <cite class="block not-italic mt-3 text-warm-text">— A student from Gilgit</cite>
+                        </blockquote>
+                        <blockquote class="border-l-4 border-gold pl-6 md:pl-8 italic text-lg md:text-xl text-medium-text text-right font-body">
+                            "They didn't come to teach; they came to learn with us. That is why we trust them. That is why this work matters."
+                            <cite class="block not-italic mt-3 text-warm-text">— An elder from Hunza</cite>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Connect Section -->
+        <section id="connect" class="content-section py-20 md:py-40">
+            <div class="container mx-auto px-6 space-y-24">
+                <div class="text-center max-w-3xl mx-auto reveal-up">
+                    <h2 class="font-script text-gold text-5xl md:text-7xl mb-6">Let's Connect</h2>
+                    <p class="text-xl md:text-2xl text-medium-text font-body">
+                        Whether through a conversation with our bot or a personal message, we'd love to hear from you.
+                    </p>
+                </div>
+
+                <!-- MehfoozBot Chat -->
+                <div class="max-w-2xl mx-auto reveal-up">
+                    <div class="text-center mb-8">
+                        <h3 class="font-script text-teal text-4xl md:text-5xl mb-4">Chat with MehfoozBot</h3>
+                        <p class="text-medium-text font-body">Ask anything about digital safety, online privacy, or just say hello.</p>
+                    </div>
+                    <div class="bg-black/30 rounded-2xl shadow-2xl overflow-hidden border border-gold/20">
+                        <div id="chat-log" class="h-[50vh] md:h-[60vh] flex flex-col gap-4 p-6 overflow-y-auto">
+                            <!-- Messages will be added here -->
+                        </div>
+                        <div class="bg-black/40 p-4 border-t border-gold/10">
+                            <form id="chat-form" class="flex gap-3">
+                                <input 
+                                    type="text" 
+                                    id="chat-input" 
+                                    placeholder="Type your question here..." 
+                                    class="flex-1 bg-warm-dark/80 border border-medium-text/30 rounded-full py-3 px-6 focus:outline-none focus:ring-2 focus:ring-teal text-warm-text placeholder-medium-text font-body"
+                                    autocomplete="off"
+                                >
+                                <button type="submit" class="bg-teal text-white rounded-full px-6 py-3 font-semibold hover:bg-teal/80 transition-all hover:scale-105 font-body">
+                                    Send
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="max-w-xl mx-auto reveal-up">
+                    <div class="text-center mb-8">
+                        <h3 class="font-script text-teal text-4xl md:text-5xl mb-4">Send a Personal Message</h3>
+                        <p class="text-medium-text font-body">We read every message and respond with care.</p>
+                    </div>
+                    <div id="form-container">
+                        <form id="contact-form" class="space-y-6">
+                            <div>
+                                <label for="name" class="block mb-2 font-medium text-medium-text font-body">Your Name</label>
+                                <input 
+                                    type="text" 
+                                    id="name" 
+                                    required 
+                                    class="form-input w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-teal text-warm-text font-body"
+                                >
+                            </div>
+                            <div>
+                                <label for="email" class="block mb-2 font-medium text-medium-text font-body">Your Email</label>
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    required 
+                                    class="form-input w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-teal text-warm-text font-body"
+                                >
+                            </div>
+                            <div>
+                                <label for="message" class="block mb-2 font-medium text-medium-text font-body">Your Message</label>
+                                <textarea 
+                                    id="message" 
+                                    rows="6" 
+                                    required 
+                                    class="form-input w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-teal text-warm-text resize-none font-body"
+                                ></textarea>
+                            </div>
+                            <button 
+                                type="submit" 
+                                class="w-full bg-teal text-white font-semibold py-4 px-6 rounded-lg hover:bg-teal/80 transition-all hover:scale-105 font-body text-lg"
+                            >
+                                Send with Heart ✦
+                            </button>
                         </form>
                     </div>
+                    <div id="form-success" class="hidden text-center">
+                        <svg class="success-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                        <p class="font-script text-teal text-4xl md:text-5xl mb-3">Thank You!</p>
+                        <p class="text-medium-text text-lg font-body">Your message has been received. We'll respond with care soon.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- CONTACT PAGE -->
-        <section id="page-contact" class="page py-32 md:py-40 flex items-center">
+        <!-- Footer -->
+        <footer class="py-12 border-t border-gold/20 mt-20">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Let's Start a Conversation</h2>
-                <p class="text-xl text-medium-text max-w-2xl mx-auto mb-12">Whether you're a community member, a potential partner, or just curious, we'd love to hear from you.</p>
-
-                <form id="contact-form" class="max-w-xl mx-auto space-y-6 text-left">
-                     <div>
-                        <label for="name" class="block mb-2 font-medium">Your Name</label>
-                        <input type="text" id="name" name="name" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal">
-                    </div>
-                     <div>
-                        <label for="email" class="block mb-2 font-medium">Your Email</label>
-                        <input type="email" id="email" name="email" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal">
-                    </div>
-                     <div>
-                        <label for="message" class="block mb-2 font-medium">Your Message</label>
-                        <textarea id="message" name="message" rows="5" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal"></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-teal text-white font-semibold py-4 px-6 rounded-lg hover:bg-opacity-80 transition-colors">Send Message</button>
-                </form>
-                <div id="form-success" class="hidden max-w-xl mx-auto text-center border border-teal rounded-lg p-8">
-                    <p class="font-script text-teal text-3xl mb-2">Thank You!</p>
-                    <p class="text-medium-text">Your message has been sent. We'll be in touch soon.</p>
+                <div class="font-script text-gold text-3xl mb-4">✦ Mehfooz ✦</div>
+                <p class="text-medium-text mb-6 font-body">A digital sanctuary for Gilgit Baltistan</p>
+                <div class="flex justify-center gap-6 mb-6">
+                    <a href="#home" class="hover:text-gold transition-colors font-body">Home</a>
+                    <a href="#journal" class="hover:text-gold transition-colors font-body">Journal</a>
+                    <a href="#approach" class="hover:text-gold transition-colors font-body">Approach</a>
+                    <a href="#community" class="hover:text-gold transition-colors font-body">Community</a>
                 </div>
+                <p class="text-sm text-medium-text/70 font-body">© 2025 Mehfooz Internet. Made with ❤️ for Gilgit Baltistan.</p>
             </div>
-        </section>
+        </footer>
     </main>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const gameScreen = document.getElementById('game-screen');
-        const loader = document.getElementById('loader');
-        const siteHeader = document.getElementById('site-header');
-        const mainContent = document.getElementById('main-content');
-        const navLinks = document.querySelectorAll('nav a');
-
-        // --- GAME LOGIC ---
-        const gameData = [
-            { question: "A message from an unknown number says you've won a prize and asks for your bank details. It has many spelling errors.", answer: 'not-credible', explanation: "Correct! Unsolicited messages asking for personal info are usually scams. Poor grammar is a big red flag." },
-            { question: "A news article about a local event is published on the website of a well-known national newspaper.", answer: 'credible', explanation: "Correct! Established news organizations have editorial standards, making their reports generally reliable." },
-            { question: "A post on social media claims a simple home remedy cures a serious disease, without citing any scientific studies.", answer: 'not-credible', explanation: "Excellent! Health claims should always be backed by scientific evidence from reputable sources, not just personal stories." }
-        ];
-        let currentQuestionIndex = 0;
-
-        const questionText = document.getElementById('game-question-text');
-        const gameChoices = document.getElementById('game-choices');
-        const gameFeedback = document.getElementById('game-feedback');
-        const gameProgress = document.getElementById('game-progress');
-        const gameContent = document.getElementById('game-content');
-        const gameEndScreen = document.getElementById('game-end-screen');
-        const enterSiteBtn = document.getElementById('enter-site-btn');
-
-        function loadQuestion() {
-            const question = gameData[currentQuestionIndex];
-            questionText.textContent = question.question;
-            gameProgress.textContent = `Question ${currentQuestionIndex + 1} of ${gameData.length}`;
-            gameFeedback.textContent = '';
-            gameFeedback.style.opacity = 0;
-            gameChoices.style.pointerEvents = 'auto';
-            gameChoices.style.opacity = 1;
-        }
-
-        gameChoices.addEventListener('click', (e) => {
-            if (e.target.tagName !== 'BUTTON') return;
-            const choice = e.target.dataset.choice;
-            const question = gameData[currentQuestionIndex];
+        // ==========================================
+        // ENHANCED INITIALIZATION
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            gsap.registerPlugin(ScrollTrigger);
             
-            gameChoices.style.pointerEvents = 'none';
-            gameChoices.style.opacity = 0.5;
+            const mainContent = document.getElementById('main-content');
+            const gameScreen = document.getElementById('game-screen');
+            const sacredLoader = document.getElementById('sacred-loader');
+            const progressFill = document.getElementById('progress-fill');
 
-            if (choice === question.answer) {
-                gameFeedback.textContent = question.explanation;
-                gameFeedback.className = 'mt-6 min-h-[3rem] text-lg opacity-0 feedback-correct';
-            } else {
-                gameFeedback.textContent = "Not quite. " + question.explanation;
-                gameFeedback.className = 'mt-6 min-h-[3rem] text-lg opacity-0 feedback-incorrect';
-            }
-            gsap.to(gameFeedback, { opacity: 1, duration: 0.5 });
-
-            setTimeout(() => {
-                currentQuestionIndex++;
-                if (currentQuestionIndex < gameData.length) {
-                    loadQuestion();
-                } else {
-                    endGame();
+            // ==========================================
+            // SACRED LOADING EXPERIENCE
+            // ==========================================
+            let loadProgress = 0;
+            const loadInterval = setInterval(() => {
+                loadProgress += Math.random() * 15;
+                if (loadProgress >= 100) {
+                    loadProgress = 100;
+                    clearInterval(loadInterval);
+                    setTimeout(() => {
+                        sacredLoader.classList.add('hidden');
+                        setTimeout(() => {
+                            gameScreen.style.display = 'flex';
+                            gsap.from('#game-intro', {
+                                opacity: 0,
+                                y: 30,
+                                duration: 1,
+                                ease: 'power3.out'
+                            });
+                            loadGameStep();
+                        }, 800);
+                    }, 500);
                 }
-            }, 4000);
-        });
+                progressFill.style.width = `${loadProgress}%`;
+            }, 150);
 
-        function endGame() {
-            gsap.to(gameContent, { opacity: 0, duration: 0.5, onComplete: () => {
-                gameContent.classList.add('hidden');
-                gameEndScreen.classList.remove('hidden');
-                gsap.from(gameEndScreen, { opacity: 0, y: 20, duration: 0.5 });
-            }});
-        }
-
-        enterSiteBtn.addEventListener('click', () => {
-            gsap.to(gameScreen, { opacity: 0, duration: 1, onComplete: () => {
-                gameScreen.style.display = 'none';
-                initMainSite();
-            }});
-        });
-        
-        loadQuestion();
-
-        // --- MAIN SITE INITIALIZATION ---
-        function initMainSite() {
-            loader.classList.remove('hidden');
+            // ==========================================
+            // THREE.JS COSMIC BACKGROUND
+            // ==========================================
+            const canvas = document.getElementById('bg-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
             
-            // --- Intimate Cursor ---
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.position.z = 5;
+
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 2000;
+            const posArray = new Float32Array(particlesCount * 3);
+
+            for(let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 20;
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0xDAA520,
+                transparent: true,
+                opacity: 0.6
+            });
+
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+
+            // Animation loop
+            function animateThree() {
+                requestAnimationFrame(animateThree);
+                particlesMesh.rotation.y += 0.0002;
+                particlesMesh.rotation.x += 0.0001;
+                renderer.render(scene, camera);
+            }
+            animateThree();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            // ==========================================
+            // CUSTOM CURSOR
+            // ==========================================
             const cursorLight = document.getElementById('cursor-light');
             const cursorDot = document.getElementById('cursor-dot');
-            window.addEventListener('mousemove', e => {
-                gsap.to(cursorLight, { duration: 0.5, x: e.clientX, y: e.clientY, ease: 'power2.out' });
-                gsap.to(cursorDot, { duration: 0.2, x: e.clientX, y: e.clientY });
-            });
+            let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
             
-            // --- Page Navigation ---
-            function switchPage(targetPageId) {
-                const currentPage = document.querySelector('.page.active');
-                const targetPage = document.getElementById(`page-${targetPageId}`);
+            window.addEventListener('mousemove', e => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
 
-                if (currentPage && targetPage && currentPage !== targetPage) {
-                    currentPage.classList.add('page-exit');
-                    currentPage.addEventListener('animationend', () => {
-                        currentPage.classList.remove('active', 'page-exit');
-                        targetPage.classList.add('active', 'page-enter');
-                        window.scrollTo(0, 0);
-                    }, { once: true });
-                }
-            }
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', e => {
-                    e.preventDefault();
-                    const pageId = link.dataset.page;
-                    switchPage(pageId);
+            gsap.ticker.add(() => {
+                gsap.to(cursorLight, { 
+                    duration: 0.5, 
+                    x: mouse.x, 
+                    y: mouse.y, 
+                    ease: 'power2.out' 
+                });
+                gsap.to(cursorDot, { 
+                    duration: 0.1, 
+                    x: mouse.x, 
+                    y: mouse.y, 
+                    ease: 'power2.out' 
                 });
             });
 
-            // --- Site Loader ---
-            gsap.to(loader, {
-                delay: 1,
-                opacity: 0,
-                duration: 1,
-                onComplete: () => {
-                    loader.style.display = 'none';
-                    gsap.to(siteHeader, { opacity: 1, duration: 1.5 });
-                    gsap.to(mainContent, { opacity: 1, duration: 1.5 });
+            // ==========================================
+            // SMOOTH SCROLL
+            // ==========================================
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                smooth: true
+            });
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+
+            // ==========================================
+            // SCROLL PROGRESS
+            // ==========================================
+            const scrollProgress = document.getElementById('scroll-progress');
+            window.addEventListener('scroll', () => {
+                const winScroll = document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                scrollProgress.style.width = scrolled + '%';
+            });
+
+            // ==========================================
+            // NAVIGATION SCROLL EFFECT
+            // ==========================================
+            const nav = document.querySelector('nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
                 }
             });
 
-            // --- MehfoozBot Logic ---
+            // ==========================================
+            // MOBILE MENU
+            // ==========================================
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeMenu = document.getElementById('close-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+            });
+
+            closeMenu.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                });
+            });
+
+            // ==========================================
+            // ENHANCED GAME LOGIC
+            // ==========================================
+            const gameQuestions = [
+                {
+                    whispers: [
+                        { text: "URGENT! A secret cure for ALL diseases was just leaked by a brave doctor! Click NOW before they DELETE this!", truth: false },
+                        { text: "A recent medical study suggests new treatments show promise, though more research is needed to confirm long-term safety and effectiveness.", truth: true }
+                    ],
+                    feedback: "✓ Well done! Truth often speaks calmly and relies on evidence, while misinformation uses urgency and emotion to manipulate."
+                },
+                {
+                    whispers: [
+                        { text: "EVERYONE is saying this is the WORST thing to ever happen! The government is HIDING everything from us!", truth: false },
+                        { text: "Official reports from multiple agencies provide conflicting details, and the situation is still developing with ongoing investigations.", truth: true }
+                    ],
+                    feedback: "✓ Excellent choice! Misinformation often uses strong, simple, and alarming language. Truth is usually more complex and nuanced."
+                },
+                {
+                    whispers: [
+                        { text: "This one WEIRD trick will make you rich overnight! Doctors HATE him! SHARE immediately with EVERYONE you know!", truth: false },
+                        { text: "Financial experts recommend building wealth gradually through consistent saving, diversified investments, and long-term planning.", truth: true }
+                    ],
+                    feedback: "✓ Perfect! Misleading content often promises quick fixes and impossible results. Real advice acknowledges complexity and effort required."
+                }
+            ];
+
+            let gameStep = 0;
+            let correctAnswers = 0;
+            const gameContainer = document.getElementById('game-question-container');
+            const gameFeedbackEl = document.getElementById('game-feedback');
+            const gameScoreEl = document.getElementById('game-score');
+            const questionNumber = document.getElementById('question-number');
+            const totalQuestions = document.getElementById('total-questions');
+
+            totalQuestions.textContent = gameQuestions.length;
+
+            function loadGameStep() {
+                gameContainer.innerHTML = '';
+                gameFeedbackEl.textContent = '';
+                gameScoreEl.textContent = '';
+                questionNumber.textContent = gameStep + 1;
+
+                const step = gameQuestions[gameStep];
+                const whispers = [...step.whispers].sort(() => Math.random() - 0.5);
+
+                whispers.forEach((whisper, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'whisper-card rounded-xl p-6 md:p-8 text-base md:text-lg leading-relaxed';
+                    card.textContent = whisper.text;
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    
+                    gsap.to(card, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        delay: index * 0.2,
+                        ease: 'power3.out'
+                    });
+
+                    card.onclick = () => handleChoice(whisper.truth, step.feedback, card);
+                    gameContainer.appendChild(card);
+                });
+            }
+
+            function handleChoice(isTruth, feedback, selectedCard) {
+                gameContainer.style.pointerEvents = 'none';
+                
+                if (isTruth) {
+                    correctAnswers++;
+                    selectedCard.classList.add('selected-correct');
+                    gameFeedbackEl.innerHTML = `<span class="text-teal">${feedback}</span>`;
+                } else {
+                    selectedCard.classList.add('selected-wrong');
+                    gameFeedbackEl.innerHTML = `<span class="text-red-400">✗ Not quite. ${feedback}</span>`;
+                }
+
+                gsap.fromTo(gameFeedbackEl, 
+                    {opacity: 0, y: 10}, 
+                    {opacity: 1, y: 0, duration: 0.5}
+                );
+
+                gameScoreEl.textContent = `Score: ${correctAnswers}/${gameStep + 1}`;
+
+                setTimeout(() => {
+                    gameStep++;
+                    if (gameStep < gameQuestions.length) {
+                        gsap.to(gameContainer, {
+                            opacity: 0,
+                            y: -20,
+                            duration: 0.5,
+                            onComplete: () => {
+                                loadGameStep();
+                                gameContainer.style.pointerEvents = 'auto';
+                                gsap.fromTo(gameContainer,
+                                    {opacity: 0, y: 20},
+                                    {opacity: 1, y: 0, duration: 0.6}
+                                );
+                            }
+                        });
+                    } else {
+                        endGame();
+                    }
+                }, 3000);
+            }
+
+            function endGame() {
+                gsap.to([gameContainer, document.getElementById('game-intro'), gameFeedbackEl, gameScoreEl], {
+                    opacity: 0, 
+                    duration: 0.5,
+                    onComplete: () => {
+                        document.getElementById('game-end').classList.remove('hidden');
+                        document.getElementById('final-score').textContent = `${correctAnswers}/${gameQuestions.length}`;
+                        gsap.from(document.getElementById('game-end'), {
+                            opacity: 0, 
+                            y: 20, 
+                            duration: 1
+                        });
+                    }
+                });
+            }
+
+            document.getElementById('enter-site-btn').addEventListener('click', () => {
+                // Confetti celebration
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#DAA520', '#008080', '#EAE0D5']
+                });
+
+                gsap.to(gameScreen, { 
+                    opacity: 0, 
+                    duration: 1, 
+                    onComplete: () => {
+                        gameScreen.style.display = 'none';
+                        gsap.to(mainContent, { 
+                            opacity: 1, 
+                            duration: 1,
+                            onComplete: initAnimations
+                        });
+                    }
+                });
+            });
+
+            // ==========================================
+            // SCROLL ANIMATIONS
+            // ==========================================
+            function initAnimations() {
+                // Reveal animations
+                gsap.utils.toArray('.reveal-up').forEach(elem => {
+                    gsap.fromTo(elem, 
+                        { opacity: 0, y: 60 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 1.2,
+                            ease: 'power3.out',
+                            scrollTrigger: {
+                                trigger: elem,
+                                start: 'top 85%',
+                            }
+                        }
+                    );
+                });
+
+                // Image animations
+                gsap.utils.toArray('img').forEach(img => {
+                    gsap.fromTo(img.parentElement,
+                        { scale: 1.1 },
+                        {
+                            scale: 1,
+                            duration: 1.5,
+                            ease: 'power3.out',
+                            scrollTrigger: {
+                                trigger: img,
+                                start: 'top 90%'
+                            }
+                        }
+                    );
+                });
+
+                // Smooth scroll for anchor links
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        lenis.scrollTo(this.getAttribute('href'));
+                    });
+                });
+
+                // Hero particles
+                createHeroParticles();
+            }
+
+            // ==========================================
+            // HERO FLOATING PARTICLES
+            // ==========================================
+            function createHeroParticles() {
+                const heroParticles = document.getElementById('hero-particles');
+                for (let i = 0; i < 15; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle-glow';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 3 + 's';
+                    particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    heroParticles.appendChild(particle);
+                }
+            }
+
+            // ==========================================
+            // ENHANCED CHATBOT
+            // ==========================================
             const chatLog = document.getElementById('chat-log');
             const chatForm = document.getElementById('chat-form');
             const chatInput = document.getElementById('chat-input');
-            const questionPills = document.querySelectorAll('.question-pill');
 
             const botResponses = {
-                "default": "That's a great question. While I'm just a demo, in the full version of MehfoozBot, I can provide detailed, personalized guidance on digital safety and literacy.",
-                "How can I spot fake news?": "To spot fake news, check the source, look for evidence, and watch for unusual formatting. Real news sites usually have high standards. Also, consider if the story is designed to make you feel strong emotions.",
-                "Is my WhatsApp safe?": "WhatsApp has end-to-end encryption, which is very secure. To make it even safer, enable two-step verification in your settings and be cautious about sharing personal information with unknown contacts.",
-                "What is misinformation?": "Misinformation is false or inaccurate information that is spread, regardless of intent to deceive. It's different from disinformation, which is deliberately misleading."
+                "greeting": "Hello, dear friend! ✦ It's wonderful to connect with you. I'm here to help you navigate the digital world with confidence. What's on your mind today?",
+                "default": "That's a thoughtful question. In my full version, I can share detailed stories and guidance on that topic. For now, know that every question is a step toward clarity and understanding.",
+                "misinformation": "Great question about spotting misinformation! Here are some gentle tips:\n\n• Check if the source is trustworthy\n• Look for evidence and citations\n• Notice if the story tries to make you feel strong emotions (fear, anger)\n• Verify with multiple reliable sources\n\nRemember: A calm mind is a clear mind. Take your time to think before sharing.",
+                "safety": "To stay safe online, here are some caring reminders:\n\n• Use strong, unique passwords for each account\n• Be mindful about sharing personal information\n• Think of your data as something precious - protect it\n• Update your apps and devices regularly\n• Trust your instincts - if something feels wrong, it probably is\n\nYou're already on the right path by asking!",
+                "whatsapp": "WhatsApp is quite safe when used wisely! Here's how to stay protected:\n\n• Enable two-step verification in settings\n• Be cautious with unknown numbers\n• Don't click suspicious links (even from friends - their accounts might be hacked)\n• Verify forwarded messages before believing them\n• Use privacy settings to control who sees your information\n\nYour messages are encrypted, but your sharing habits matter most!",
+                "story": "Our story is one of listening and learning. It began in a small teahouse in Hunza, where we sat with elders and students, sharing chai and stories. We learned that technology should serve people, not the other way around.\n\nMehfooz was born from these conversations - a bridge between timeless wisdom and modern tools. You can read more about our journey in the 'Our Journal' section above.",
+                "thanks": "You're very welcome! ✦ It's my joy to help. Remember, there are no silly questions here - every question is an opportunity to learn and grow. Feel free to ask anything else!",
+                "bye": "Take care, friend! ✦ May your digital journey be safe and enlightening. I'm here whenever you need guidance. Safe travels!"
             };
+
+            function getBotResponse(userInput) {
+                const lowerInput = userInput.toLowerCase();
+                
+                if (lowerInput.includes('fake news') || lowerInput.includes('misinformation') || lowerInput.includes('spot lies')) {
+                    return botResponses.misinformation;
+                }
+                if (lowerInput.includes('whatsapp') || lowerInput.includes('whatapp')) {
+                    return botResponses.whatsapp;
+                }
+                if (lowerInput.includes('safe') || lowerInput.includes('security') || lowerInput.includes('password') || lowerInput.includes('privacy')) {
+                    return botResponses.safety;
+                }
+                if (lowerInput.includes('story') || lowerInput.includes('who are you') || lowerInput.includes('about you') || lowerInput.includes('why') || lowerInput.includes('how did')) {
+                    return botResponses.story;
+                }
+                if (lowerInput.includes('hello') || lowerInput.includes('hi') || lowerInput.includes('hey') || lowerInput.includes('salam')) {
+                    return botResponses.greeting;
+                }
+                if (lowerInput.includes('thank') || lowerInput.includes('thanks') || lowerInput.includes('appreciate')) {
+                    return botResponses.thanks;
+                }
+                if (lowerInput.includes('bye') || lowerInput.includes('goodbye') || lowerInput.includes('see you')) {
+                    return botResponses.bye;
+                }
+                
+                return botResponses.default;
+            }
 
             function addMessage(message, sender) {
                 const bubble = document.createElement('div');
-                bubble.className = `chat-bubble ${sender}-bubble`;
+                bubble.className = `chat-bubble ${sender}-bubble font-body`;
+                bubble.style.whiteSpace = 'pre-line'; // Preserve line breaks
                 bubble.textContent = message;
                 chatLog.appendChild(bubble);
                 chatLog.scrollTop = chatLog.scrollHeight;
             }
 
-            function handleUserMessage(message) {
-                if (!message.trim()) return;
-                addMessage(message, 'user');
-                chatInput.value = '';
-                
-                // Simulate bot thinking
-                setTimeout(() => {
-                    const response = botResponses[message] || botResponses['default'];
-                    addMessage(response, 'bot');
-                }, 1200);
+            function showTypingIndicator() {
+                const indicator = document.createElement('div');
+                indicator.className = 'typing-indicator';
+                indicator.id = 'typing-indicator';
+                indicator.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+                chatLog.appendChild(indicator);
+                chatLog.scrollTop = chatLog.scrollHeight;
+            }
+
+            function removeTypingIndicator() {
+                const indicator = document.getElementById('typing-indicator');
+                if (indicator) indicator.remove();
             }
 
             chatForm.addEventListener('submit', e => {
                 e.preventDefault();
-                handleUserMessage(chatInput.value);
+                const userInput = chatInput.value.trim();
+                
+                if (userInput) {
+                    addMessage(userInput, 'user');
+                    chatInput.value = '';
+                    
+                    showTypingIndicator();
+                    
+                    setTimeout(() => {
+                        removeTypingIndicator();
+                        const response = getBotResponse(userInput);
+                        addMessage(response, 'bot');
+                    }, 1200 + Math.random() * 800);
+                }
             });
 
-            questionPills.forEach(pill => {
-                pill.addEventListener('click', () => {
-                    const question = pill.dataset.question;
-                    handleUserMessage(question);
-                });
-            });
+            // Initial greeting
+            setTimeout(() => {
+                addMessage(botResponses.greeting, 'bot');
+            }, 500);
 
-            addMessage("Hello! I'm a demo of MehfoozBot. How can I help you today?", 'bot');
-
-            // --- Contact Form Logic ---
+            // ==========================================
+            // CONTACT FORM WITH CONFETTI
+            // ==========================================
             const contactForm = document.getElementById('contact-form');
+            const formContainer = document.getElementById('form-container');
             const formSuccess = document.getElementById('form-success');
+
             contactForm.addEventListener('submit', e => {
                 e.preventDefault();
-                gsap.to(contactForm, { 
-                    opacity: 0, 
-                    duration: 0.5,
+                
+                // Trigger confetti
+                confetti({
+                    particleCount: 150,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#DAA520', '#008080', '#EAE0D5', '#A8A29A']
+                });
+
+                gsap.to(formContainer, { 
+                    opacity: 0,
+                    y: -20,
+                    duration: 0.5, 
                     onComplete: () => {
-                        contactForm.style.display = 'none';
-                        formSuccess.style.display = 'block';
-                        gsap.fromTo(formSuccess, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
+                        formContainer.style.display = 'none';
+                        formSuccess.classList.remove('hidden');
+                        gsap.from(formSuccess, {
+                            opacity: 0, 
+                            y: 20, 
+                            duration: 0.8,
+                            ease: 'power3.out'
+                        });
                     }
                 });
             });
-        }
-    });
+        });
     </script>
 </body>
 </html>
-
