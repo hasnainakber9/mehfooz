@@ -3,135 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehfooz - Finding Clarity</title>
-    
+    <title>Mehfooz - A Living Journal</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
 
     <style>
         :root {
-            --space-dark: #0B0E1B; /* Darker, less saturated blue */
-            --light-text: #E0E0FF; /* Soft lavender white */
-            --medium-text: #9898B5; /* Muted lavender grey */
-            --cyan-glow: #00f0ff; 
-            --soft-gold: #E6C384; /* Softer, desaturated gold */
+            --warm-dark: #1A120B; /* Cozy dark background */
+            --warm-text: #EAE0D5; /* Off-white text */
+            --medium-text: #A8A29A; /* Muted text */
+            --gold: #DAA520;      /* Primary accent - warmer */
+            --teal: #48A9A6;       /* Secondary accent - soft */
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Poppins:wght@500;600;700&display=swap');
+        /* Fonts: Poppins for headings (clean, friendly), Lora for body (intimate, readable) */
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Poppins:wght@500;600;700&display=swap');
 
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto; }
 
         body {
-            background-color: var(--space-dark);
-            color: var(--light-text);
-            font-family: 'Cormorant Garamond', serif; /* Elegant body font */
-            font-size: 18px; /* Slightly larger base for readability */
+            background-color: var(--warm-dark);
+            color: var(--warm-text);
+            font-family: 'Lora', serif; /* Body font */
+            font-size: 17px;
             line-height: 1.7;
             overflow-x: hidden;
             cursor: none;
         }
+        /* Film Grain Overlay - Subtle */
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACRQTFRFNTU1MzMzNDQ0Nzc3NjY2Ojo6Nzc3NjY2Ozs7Ojo6NDQ0Ozs75xQuFAAAAAt0Uk5TABAQIDBAUGBwgKCw66pUAAAAk0lEQVQoz2NgoBjAALjU9DAwMIAIxkBgMAoAtzAwMDCQMzAwsCBgZmBgZmBg4GZgYEBhvGfABGf///8/AxMjAzMDAyMfA4MTI4MHA5Ojo5OjiT8PMyMzMxMzMyOHASMDExNxiQEJgcsdwszMzMTIzMzMwMgABgZCzMTEzMjAwMADwYyZmRkYmRmZGRgYmBkbMDAwAECAAQCkMgXj9nMsWQAAAABJRU5ErkJggg==');
+            opacity: 0.06;
+            z-index: 10002; /* Above background, below content */
+            animation: grain 7s steps(10) infinite;
+        }
+        @keyframes grain {
+          0%, 100% { transform: translate(0, 0); } 10% { transform: translate(-2%, -4%); } 20% { transform: translate(-6%, 2%); } 30% { transform: translate(3%, -10%); } 40% { transform: translate(-2%, 10%); } 50% { transform: translate(-6%, 4%); } 60% { transform: translate(6%, 0%); } 70% { transform: translate(0%, 6%); } 80% { transform: translate(1%, 14%); } 90% { transform: translate(-4%, 4%); }
+        }
+
 
         .font-heading {
-            font-family: 'Poppins', sans-serif; /* Clean, modern heading */
+            font-family: 'Poppins', sans-serif;
             font-weight: 600;
+            /* Reduced glow */
+             text-shadow: 0 0 5px rgba(218, 165, 32, 0.2); 
         }
         
-        /* Interactive Cursor */
-        #cursor-dot, #cursor-circle { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10003; will-change: transform; mix-blend-mode: difference; }
-        #cursor-dot { width: 6px; height: 6px; background-color: var(--cyan-glow); border-radius: 50%; }
-        #cursor-circle { width: 35px; height: 35px; border: 1px solid var(--cyan-glow); border-radius: 50%; transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s, background-color 0.3s, border-color 0.3s; }
-        body.link-hover #cursor-circle { transform: scale(1.6); border-color: transparent; background-color: rgba(0, 240, 255, 0.2); }
-        body.link-hover #cursor-dot { background-color: var(--light-text); } /* Dot becomes white on hover */
+        /* --- Custom Cursor --- */
+        #cursor-dot, #cursor-circle {
+            position: fixed;
+            top: 0; left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10003;
+            mix-blend-mode: normal; /* Changed from difference for softer look */
+            will-change: transform, width, height, background-color, border-color, opacity;
+        }
+        #cursor-dot {
+            width: 8px; height: 8px;
+            background-color: var(--gold);
+            transform: translate(-50%, -50%);
+        }
+        #cursor-circle {
+            width: 40px; height: 40px;
+            border: 1px solid var(--gold);
+            transform: translate(-50%, -50%);
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                        width 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
+                        height 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+                        border-color 0.4s ease,
+                        background-color 0.4s ease,
+                        opacity 0.4s ease;
+        }
+        body.link-hover #cursor-circle { 
+            transform: translate(-50%, -50%) scale(0.5); /* Shrink circle */
+            opacity: 0; /* Make circle disappear */
+        }
+        body.link-hover #cursor-dot {
+             transform: translate(-50%, -50%) scale(2.5); /* Grow dot */
+             background-color: var(--teal); /* Change dot color */
+        }
+
+
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0.1; /* Even more subtle */ }
+        .content-section { position: relative; z-index: 1; padding: 15vh 0; }
         
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0.5; /* More subtle */ }
-        .content-section { position: relative; z-index: 1; padding: 18vh 0; }
-        
-        /* Game Styles */
+        /* --- Seed Game --- */
         #seed-container { cursor: pointer; }
-        #seed-svg .plant-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; filter: drop-shadow(0 0 4px var(--cyan-glow)); } /* Subtler glow */
-        #seed-svg .seed { transition: all 0.5s ease; transform-origin: center; filter: drop-shadow(0 0 6px var(--soft-gold)); } /* Subtler glow */
-        #seed-container:hover .seed { transform: scale(1.15); } /* Slightly more hover effect */
+        #seed-svg .plant-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; filter: drop-shadow(0 0 4px var(--teal)); } /* Soft teal glow */
+        #seed-svg .seed { transition: all 0.5s ease; transform-origin: center; filter: drop-shadow(0 0 6px var(--gold)); } /* Soft gold glow */
+        #seed-container:hover .seed { transform: scale(1.15); } /* Slightly bigger hover */
 
-        /* Animate-in styles */
-        .reveal-up { opacity: 0; transform: translateY(60px); } /* Base state */
+        /* --- Animation Styles --- */
+        .reveal-up { opacity: 0; transform: translateY(50px); /* Adjust distance */ }
         .line-parent { overflow: hidden; display: block; }
-        .line-child { display: inline-block; transform: translateY(110%); }
-        .char { display: inline-block; /* Needed for transform */ will-change: transform, opacity; } /* Performance hint */
+        .line-child { display: inline-block; transform: translateY(110%); } /* Ensure transform starts correctly */
 
-        /* Chat & Form styles */
-        .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 18px; line-height: 1.6; font-size: 1.05rem; }
-        .user-bubble { background-color: var(--cyan-glow); color: var(--space-dark); border-bottom-right-radius: 4px; align-self: flex-end; font-weight: 500;}
-        .bot-bubble { background-color: rgba(160, 160, 192, 0.1); backdrop-filter: blur(8px); color: var(--light-text); border: 1px solid rgba(160, 160, 192, 0.15); border-bottom-left-radius: 4px; align-self: flex-start; }
+        /* --- Chat & Form --- */
+        .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 20px; line-height: 1.6; font-size: 1rem; }
+        .user-bubble { background-color: var(--teal); color: var(--warm-dark); border-bottom-right-radius: 4px; align-self: flex-end; font-weight: 500;}
+        .bot-bubble { background-color: rgba(234, 224, 213, 0.1); backdrop-filter: blur(5px); color: var(--warm-text); border: 1px solid rgba(234, 224, 213, 0.1); border-bottom-left-radius: 4px; align-self: flex-start; }
         input, select, textarea { 
-            color: var(--light-text); 
-            background-color: rgba(160, 160, 192, 0.08); /* Slightly more visible background */
+            color: var(--warm-text); /* Ensure text is visible */
+            background-color: rgba(255,255,255,0.05); /* Slightly transparent background */
             border: 1px solid var(--medium-text);
-            border-radius: 8px; /* Soften corners */
             transition: border-color 0.3s, box-shadow 0.3s;
+            border-radius: 8px; /* Slightly rounded corners */
         }
-        input::placeholder, textarea::placeholder { color: var(--medium-text); opacity: 0.7; }
+        input::placeholder, textarea::placeholder { color: var(--medium-text); opacity: 0.8; }
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: var(--cyan-glow);
-            box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.2);
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(218, 165, 32, 0.3);
         }
         select {
-           background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23a0a0c0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-           background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1em 1em; padding-right: 2.5rem; -webkit-appearance: none; appearance: none;
+           background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23A8A29A' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+           background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1em 1em; padding-right: 2.5rem; -webkit-appearance: none; appearance: none; color: var(--warm-text);
         }
-        select option { background-color: var(--space-dark); color: var(--light-text); }
-        button { transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease; } /* Smoother button transition */
-        button:hover { transform: scale(1.03); }
-        button:active { transform: scale(0.98); }
+        select option { background-color: var(--warm-dark); color: var(--warm-text); }
+        button { transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease; } /* Added bouncy ease */
+        button:hover { transform: scale(1.05); } /* Slightly larger hover */
+        button:active { transform: scale(0.97); }
 
 
-        /* Navigation Styles */
-        header { 
-            /* Remove background/blur initially for cleaner look */
-            transition: background-color 0.3s ease;
-        }
-        header.scrolled {
-             background-color: rgba(10, 5, 29, 0.7); /* Add blur/bg only on scroll */
-             backdrop-filter: blur(10px); 
-        }
-        #menu-toggle { z-index: 10001; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); background-color: transparent; border: 1px solid var(--medium-text); }
-        #menu-toggle:hover { transform: scale(1.1) rotate(90deg); border-color: var(--light-text); }
-        #menu-toggle span { background-color: var(--light-text); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s; }
-        #menu-toggle.open span { background-color: var(--soft-gold); }
+        /* --- Navigation --- */
+        header { backdrop-filter: blur(10px); background-color: rgba(26, 18, 11, 0.6); } /* Slightly more background blur */
+        #menu-toggle { z-index: 10001; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        #menu-toggle:hover { transform: scale(1.1) rotate(90deg); }
+        #menu-toggle span { background-color: var(--warm-text); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s; }
+        #menu-toggle.open span { background-color: var(--gold);}
         #menu-toggle.open span:nth-child(1) { transform: translateY(3.5px) rotate(45deg); } 
         #menu-toggle.open span:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
-        #menu-overlay { clip-path: circle(0% at calc(100% - 40px) 48px); background-color: rgba(10, 5, 29, 0.95); backdrop-filter: blur(15px); }
-        #menu-overlay.open { clip-path: circle(150% at calc(100% - 40px) 48px); }
-        .menu-link { transform: translateY(50px); opacity: 0; font-family: 'Poppins', sans-serif; font-weight: 500; letter-spacing: 1px; } 
-        .menu-link:hover { color: var(--cyan-glow); transform: translateY(50px) translateX(10px); } /* Keep subtle shift */
+        #menu-overlay { clip-path: circle(0% at calc(100% - 48px) 48px); background-color: rgba(26, 18, 11, 0.97); backdrop-filter: blur(20px); } /* Darker overlay, more blur */
+        #menu-overlay.open { clip-path: circle(150% at calc(100% - 48px) 48px); }
+        .menu-link { transform: translateY(50px); opacity: 0; font-family: 'Poppins', sans-serif; font-weight: 500; letter-spacing: 0.5px; /* Less spacing */ } 
+        .menu-link:hover { color: var(--gold); transform: translateY(50px) translateX(5px); } /* Smaller shift */
 
-        /* Buttons with subtle glow */
+        /* Added subtle glow to buttons */
         #enter-site-btn, #chat-form button, #contact-form button {
-            box-shadow: 0 0 15px rgba(var(--cyan-glow-rgb), 0); /* Initial state: no shadow */
-            transition: all 0.3s ease;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease; /* Ensure transition includes box-shadow */
         }
         #enter-site-btn:hover, #chat-form button:hover, #contact-form button:hover {
-             box-shadow: 0 5px 15px rgba(0, 240, 255, 0.2); /* Cyan glow on hover */
-             transform: translateY(-2px); /* Slight lift */
-        }
-        #enter-site-btn { background-color: var(--soft-gold); color: var(--space-dark); text-shadow: none; }
-         #enter-site-btn:hover { background-color: var(--soft-gold); box-shadow: 0 5px 15px rgba(240, 230, 140, 0.4); } /* Gold glow for gold button */
-
-        /* Reduced heading glow */
-        .font-heading {
-             text-shadow: 0 0 5px rgba(240, 230, 140, 0.2); /* Very subtle gold glow */
-        }
-        h1.font-heading { /* Slightly more glow for main title */
-             text-shadow: 0 0 10px rgba(240, 230, 140, 0.3);
-        }
-        .text-cyan-glow {
-            color: var(--cyan-glow);
-            text-shadow: 0 0 8px var(--cyan-glow);
+             box-shadow: 0 0 15px 3px rgba(218, 165, 32, 0.3); /* Softer gold glow */
+             transform: scale(1.03);
         }
         
     </style>
@@ -143,54 +164,60 @@
 
     <canvas id="bg-canvas"></canvas>
 
-    <div id="game-screen" class="fixed inset-0 bg-space-dark z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
+    <div id="game-screen" class="fixed inset-0 bg-warm-dark z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
         <div class="text-center w-full max-w-lg">
             <div id="game-intro">
-                <h2 class="font-heading text-soft-gold text-4xl md:text-6xl mb-2">A Seed of Trust</h2>
+                <h2 class="font-heading text-gold text-4xl md:text-6xl mb-2" style="text-shadow: 0 0 5px rgba(218, 165, 32, 0.3);">A Seed of Trust</h2>
                 <p class="font-body text-medium-text text-xl mb-8">Click and hold to begin.</p>
             </div>
-            <div id="seed-container" class="relative w-full aspect-square max-w-[200px] mx-auto"> {/* Smaller Seed */}
+            <div id="seed-container" class="relative w-full aspect-square max-w-[200px] mx-auto"> {/* Smaller seed */}
                 <svg id="seed-svg" class="w-full h-full" viewBox="0 0 200 200">
                     <defs>
                         <filter id="glow-teal" x="-50%" y="-50%" width="200%" height="200%">
-                          <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/> {/* Reduced blur */}
-                          <feMerge> <feMergeNode in="coloredBlur"/> <feMergeNode in="SourceGraphic"/> </feMerge>
+                          <feGaussianBlur stdDeviation="2" result="coloredBlur"/> {/* Reduced blur */}
+                          <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                          </feMerge>
                         </filter>
                          <filter id="glow-gold" x="-50%" y="-50%" width="200%" height="200%">
                           <feGaussianBlur stdDeviation="3" result="coloredBlur"/> {/* Reduced blur */}
-                          <feMerge> <feMergeNode in="coloredBlur"/> <feMergeNode in="SourceGraphic"/> </feMerge>
+                          <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                          </feMerge>
                         </filter>
                     </defs>
-                    <path class="plant-path" d="M100 180 C 100 140, 70 140, 70 100 C 70 60, 100 60, 100 20" stroke="var(--cyan-glow)" stroke-width="2.5" fill="none" stroke-linecap="round" filter="url(#glow-teal)"/>
-                    <path class="plant-path" d="M70 100 C 40 100, 40 70, 70 70" stroke="var(--cyan-glow)" stroke-width="2.5" fill="none" stroke-linecap="round" filter="url(#glow-teal)"/>
-                    <path class="plant-path" d="M100 140 C 130 140, 130 110, 100 110" stroke="var(--cyan-glow)" stroke-width="2.5" fill="none" stroke-linecap="round" filter="url(#glow-teal)"/>
-                    <circle class="seed" cx="100" cy="180" r="8" fill="var(--soft-gold)" filter="url(#glow-gold)"/> {/* Smaller seed */}
+                    <path class="plant-path" d="M100 180 C 100 140, 70 140, 70 100 C 70 60, 100 60, 100 20" stroke="var(--teal)" stroke-width="2" fill="none" stroke-linecap="round" />
+                    <path class="plant-path" d="M70 100 C 40 100, 40 70, 70 70" stroke="var(--teal)" stroke-width="2" fill="none" stroke-linecap="round" />
+                    <path class="plant-path" d="M100 140 C 130 140, 130 110, 100 110" stroke="var(--teal)" stroke-width="2" fill="none" stroke-linecap="round" />
+                    <circle class="seed" cx="100" cy="180" r="8" fill="var(--gold)" filter="url(#glow-gold)"/> {/* Smaller seed */}
                 </svg>
             </div>
             <div id="game-end" class="absolute bottom-10 left-1/2 -translate-x-1/2 w-full px-4">
-                <p id="game-feedback" class="font-heading text-cyan-glow text-xl mb-4 opacity-0"></p>
-                <button id="enter-site-btn" class="font-heading bg-soft-gold text-space-dark font-semibold py-3 px-8 rounded-full text-xl hover:bg-opacity-80 transition-all opacity-0 scale-90 pointer-events-none shadow-lg shadow-soft-gold/30">Begin Journey</button>
+                <p id="game-feedback" class="font-heading text-teal text-xl mb-4 opacity-0"></p>
+                <button id="enter-site-btn" class="font-heading bg-gold text-warm-dark font-semibold py-3 px-8 rounded-full text-xl hover:bg-opacity-90 transition-all opacity-0 scale-90 pointer-events-none shadow-lg shadow-gold/30">Begin Journey</button>
             </div>
         </div>
     </div>
     
-    <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-colors duration-300">
-        <nav class="container mx-auto flex justify-between items-center p-6 md:p-8">
-            <a href="#home" class="font-heading text-3xl text-soft-gold z-[10002]" style="text-shadow: 0 0 6px rgba(240, 230, 140, 0.5);">Mehfooz</a>
-            <button id="menu-toggle" class="w-10 h-10 flex flex-col justify-center items-center gap-1.5 rounded-full border border-medium-text/50 hover:border-light-text transition-colors">
-                <span class="w-5 h-0.5 bg-light-text block transition-transform duration-300"></span>
-                <span class="w-5 h-0.5 bg-light-text block transition-transform duration-300"></span>
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300"> {/* Added transition */}
+        <nav class="container mx-auto flex justify-between items-center px-6 py-4 md:px-8 md:py-6">
+            <a href="#home" class="font-heading text-3xl text-gold z-[10002]" style="text-shadow: 0 0 5px rgba(218, 165, 32, 0.4);">Mehfooz</a>
+            <button id="menu-toggle" class="w-10 h-10 flex flex-col justify-center items-center gap-1.5 rounded-full bg-warm-text/5 backdrop-blur-sm border border-warm-text/10 hover:border-gold transition-colors">
+                <span class="w-5 h-0.5 bg-warm-text block transition-transform duration-300"></span>
+                <span class="w-5 h-0.5 bg-warm-text block transition-transform duration-300"></span>
             </button>
         </nav>
     </header>
     
-    <div id="menu-overlay" class="fixed inset-0 bg-space-dark/95 backdrop-blur-xl z-[10000] flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]">
+    <div id="menu-overlay" class="fixed inset-0 bg-warm-dark/95 backdrop-blur-lg z-[10000] flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]">
         <div class="text-center">
-            <a href="#home" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-light-text hover:text-cyan-glow transition-colors duration-300">Home</a>
-            <a href="#journal" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-light-text hover:text-cyan-glow transition-colors duration-300">Our Story</a>
-            <a href="#approach" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-light-text hover:text-cyan-glow transition-colors duration-300">Approach</a>
-            <a href="#community" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-light-text hover:text-cyan-glow transition-colors duration-300">Community</a>
-            <a href="#connect" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-light-text hover:text-cyan-glow transition-colors duration-300">Connect</a>
+            <a href="#home" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Home</a>
+            <a href="#journal" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Our Story</a>
+            <a href="#approach" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Approach</a>
+            <a href="#community" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Community</a>
+            <a href="#connect" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Connect</a>
         </div>
     </div>
 
@@ -199,24 +226,24 @@
 
         <section id="home" class="content-section h-screen flex items-center justify-center text-center">
             <div class="px-4">
-                <h1 id="main-headline" class="font-heading text-soft-gold text-5xl md:text-8xl mb-4" style="text-shadow: 0 0 10px rgba(240, 230, 140, 0.4);">A digital sanctuary.</h1>
-                <p class="font-body text-xl md:text-2xl text-light-text leading-relaxed max-w-4xl line-parent mt-4">
-                    <span class="line-child">Empowering the communities of Gilgit Baltistan to navigate the digital world with confidence.</span>
+                <h1 class="font-heading text-gold text-5xl md:text-7xl lg:text-8xl mb-4" style="text-shadow: 0 0 8px rgba(218, 165, 32, 0.3);">A digital sanctuary.</h1>
+                <p class="font-body text-xl md:text-2xl text-warm-text leading-relaxed max-w-3xl mx-auto line-parent mt-4">
+                    <span class="line-child">Empowering the communities of Gilgit Baltistan to navigate the digital world safely and confidently.</span>
                 </p>
             </div>
         </section>
 
-        <section id="journal" class="content-section py-20 md:py-40">
+        <section id="journal" class="content-section py-20 md:py-32">
              <div class="container mx-auto px-6 max-w-4xl">
                  <div class="flex flex-col md:flex-row gap-12 items-center">
                      <div class="w-full md:w-1/2">
                          <div class="rounded-lg shadow-2xl shadow-black/30 parallax-container">
-                             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto-format=fit=crop" alt="A group of diverse people working together warmly" class="parallax-image rounded-lg">
+                             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto-format=fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="People gathered warmly around a table with tea" class="parallax-image rounded-lg">
                          </div>
                      </div>
                      <div class="w-full md:w-1/2">
-                         <h2 class="font-heading text-soft-gold text-5xl md:text-6xl mb-6 line-parent"><span class="line-child">Our Story</span></h2>
-                         <div class="font-body text-xl text-medium-text leading-relaxed space-y-6">
+                         <h2 class="font-heading text-gold text-4xl md:text-5xl mb-6 line-parent"><span class="line-child">Our Story</span></h2>
+                         <div class="font-body text-lg text-medium-text leading-relaxed space-y-6">
                             <p class="reveal-up">Our journey started simply, in a small teahouse in Skardu, sharing cups of warm chai and listening. We heard stories from our community – tales of wonder and worry about this fast-changing digital world.</p>
                             <p class="reveal-up">It became clear the need wasn't just for new tools, but for understanding and trust. We needed a bridge between timeless local wisdom and modern technology. Mehfooz is our promise to help build that bridge, hand-in-hand.</p>
                          </div>
@@ -225,24 +252,25 @@
              </div>
         </section>
 
-        <section id="approach" class="content-section py-20 md:py-40 bg-black/10"> {/* Subtle background variation */}
+        <section id="approach" class="content-section py-20 md:py-32 bg-black/10"> {/* Subtle background differentiation */}
             <div class="container mx-auto px-6 max-w-5xl">
                 <div class="text-center mb-20 line-parent">
-                    <h2 class="font-heading text-soft-gold text-5xl md:text-6xl mb-4 line-child">Our Strategic Approach</h2>
+                    <h2 class="font-heading text-gold text-4xl md:text-5xl mb-4 line-child">Our Approach</h2>
+                    <p class="font-body text-lg text-medium-text max-w-2xl mx-auto reveal-up">Rooted in respect, guided by community.</p>
                 </div>
-                <div class="grid md:grid-cols-3 gap-8 md:gap-12"> {/* Adjusted gap */}
-                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03]">
-                        <p class="font-heading text-cyan-glow text-5xl mb-4">1.</p>
+                <div class="grid md:grid-cols-3 gap-10"> {/* Reduced gap slightly */}
+                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5">
+                        <p class="font-heading text-teal text-5xl mb-3">1.</p>
                         <h3 class="font-heading text-2xl mb-3">Listen First</h3>
                         <p class="font-body text-medium-text leading-relaxed">We partner with local elders and Ulema, honoring their wisdom as the foundation of our work. Trust is built through understanding.</p>
                     </div>
-                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03]">
-                        <p class="font-heading text-cyan-glow text-5xl mb-4">2.</p>
+                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5">
+                        <p class="font-heading text-teal text-5xl mb-3">2.</p>
                         <h3 class="font-heading text-2xl mb-3">Guide Gently</h3>
                         <p class="font-body text-medium-text leading-relaxed">Our tools, like MehfoozBot, offer personal, patient help in local languages, making technology feel like a friendly companion.</p>
                     </div>
-                     <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03]">
-                        <p class="font-heading text-cyan-glow text-5xl mb-4">3.</p>
+                     <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5">
+                        <p class="font-heading text-teal text-5xl mb-3">3.</p>
                         <h3 class="font-heading text-2xl mb-3">Grow Together</h3>
                         <p class="font-body text-medium-text leading-relaxed">Through mini-courses and feedback from local students, we ensure our knowledge is always relevant and co-created with the community.</p>
                     </div>
@@ -250,43 +278,43 @@
             </div>
         </section>
         
-        <section id="community" class="content-section py-20 md:py-40">
+        <section id="community" class="content-section py-20 md:py-32">
             <div class="container mx-auto px-6 max-w-4xl">
                  <div class="text-center reveal-up">
-                    <h2 class="font-heading text-soft-gold text-5xl md:text-6xl mb-4">The Heart of Our Community</h2>
+                    <h2 class="font-heading text-gold text-4xl md:text-5xl mb-4">The Heart of Our Community</h2>
                  </div>
                  <div class="mt-16 reveal-up">
-                     <h3 class="font-heading text-cyan-glow text-4xl mb-8 text-center">Voices from the Valley</h3> {/* Increased margin */}
+                     <h3 class="font-heading text-teal text-3xl mb-8 text-center">Voices from the Valley</h3> {/* Slightly smaller */}
                      <div class="space-y-12">
-                         <blockquote class="border-l-4 border-soft-gold pl-6 italic font-body text-xl text-medium-text transition-transform duration-300 hover:scale-[1.02]">
+                         <blockquote class="border-l-4 border-gold pl-6 italic font-body text-xl text-medium-text transition-transform duration-300 hover:scale-[1.02] max-w-2xl mx-auto">
                             "I'm excited to finally have a safe place to ask questions. I can't wait to use MehfoozBot to learn about my phone without feeling shy. It feels like someone is finally listening."
-                            <cite class="block not-italic mt-2 text-light-text font-sans text-base">- A student from Gilgit</cite>
+                            <cite class="block not-italic mt-2 text-warm-text font-sans text-base">- A student from Gilgit</cite>
                          </blockquote>
-                         <blockquote class="border-l-4 border-soft-gold pl-6 italic font-body text-xl text-medium-text text-right transition-transform duration-300 hover:scale-[1.02]">
+                         <blockquote class="border-l-4 border-gold pl-6 italic font-body text-xl text-medium-text text-right transition-transform duration-300 hover:scale-[1.02] max-w-2xl mx-auto">
                             "To have something that respects our traditions while teaching our children about the future... this is a blessing we are all looking forward to. It will help us connect better."
-                            <cite class="block not-italic mt-2 text-light-text font-sans text-base">- An elder from Ghanche</cite>
+                            <cite class="block not-italic mt-2 text-warm-text font-sans text-base">- An elder from Ghanche</cite>
                          </blockquote>
                      </div>
                  </div>
             </div>
         </section>
         
-        <section id="vision" class="content-section py-20 md:py-40 bg-black/10"> {/* Subtle background variation */}
+        <section id="vision" class="content-section py-20 md:py-32 bg-black/10"> {/* Subtle background differentiation */}
               <div class="container mx-auto px-6 max-w-4xl text-center">
                   <div class="reveal-up">
-                      <h2 class="font-heading text-soft-gold text-5xl md:text-6xl mb-4">Our Five-Year Vision</h2>
+                      <h2 class="font-heading text-gold text-4xl md:text-5xl mb-4">Our Five-Year Vision</h2>
                       <p class="font-body text-xl text-medium-text max-w-3xl mx-auto">To scale our impact together, empowering communities across Pakistan.</p>
                   </div>
                   <div class="mt-16 grid md:grid-cols-2 gap-x-12 gap-y-16 text-left items-center">
                       <div class="reveal-up">
-                          <p class="font-heading text-cyan-glow text-7xl md:text-8xl" id="user-counter">0+</p>
+                          <p class="font-heading text-teal text-7xl md:text-8xl" id="user-counter">0+</p>
                           <h3 class="text-2xl mt-2 font-heading">User Base Expansion</h3>
                           <p class="font-body text-medium-text mt-2 text-lg">Leveraging our community networks for organic, sustainable growth to reach over 100,000 users.</p>
                       </div>
                       <div class="reveal-up">
                            <div class="relative pt-8">
-                                <svg id="timeline-svg" class="absolute top-0 left-0 w-full h-full" viewbox="0 0 300 100" preserveAspectRatio="none"><path d="M 0 50, C 80 20, 150 80, 300 50" stroke="var(--cyan-glow)" stroke-width="2" fill="none" class="timeline-path" style="filter: drop-shadow(0 0 5px var(--cyan-glow));"/></svg>
-                               <h3 class="font-heading text-cyan-glow text-7xl md:text-8xl">3+</h3>
+                                <svg id="timeline-svg" class="absolute top-0 left-0 w-full h-full opacity-50" viewbox="0 0 300 100" preserveAspectRatio="none"><path d="M 0 50, C 80 20, 150 80, 300 50" stroke="var(--teal)" stroke-width="2" fill="none" class="timeline-path" style="filter: drop-shadow(0 0 5px var(--teal));"/></svg>
+                               <h3 class="font-heading text-teal text-7xl md:text-8xl">3+</h3>
                                <h3 class="text-2xl mt-2 font-heading">Platform Development</h3>
                                <p class="font-body text-medium-text mt-2 text-lg">Introducing AI-driven learning paths, offline capabilities, and expanded language support.</p>
                            </div>
@@ -295,27 +323,27 @@
               </div>
         </section>
 
-         <section id="values" class="content-section py-20 md:py-40">
+         <section id="values" class="content-section py-20 md:py-32">
              <div class="container mx-auto px-6 max-w-5xl">
                   <div class="text-center reveal-up mb-20">
-                     <h2 class="font-heading text-soft-gold text-5xl md:text-6xl mb-4">Our Guiding Principles</h2>
+                     <h2 class="font-heading text-gold text-4xl md:text-5xl mb-4">Our Guiding Principles</h2>
                   </div>
                  <div class="grid md:grid-cols-4 gap-12 text-center">
-                     <div class="reveal-up value-container p-4 flex flex-col items-center">
-                         <svg class="w-16 h-16 text-medium-text value-icon mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a3.004 3.004 0 015.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                         <h3 class="text-2xl font-heading text-light-text">Collaboration</h3>
+                     <div class="reveal-up value-container p-4">
+                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a3.004 3.004 0 015.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                         <h3 class="text-2xl mt-4 font-heading">Collaboration</h3>
                      </div>
-                      <div class="reveal-up value-container p-4 flex flex-col items-center">
-                         <svg class="w-16 h-16 text-medium-text value-icon mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                         <h3 class="text-2xl font-heading text-light-text">Integrity</h3>
+                      <div class="reveal-up value-container p-4">
+                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                         <h3 class="text-2xl mt-4 font-heading">Integrity</h3>
                      </div>
-                      <div class="reveal-up value-container p-4 flex flex-col items-center">
-                         <svg class="w-16 h-16 text-medium-text value-icon mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                         <h3 class="text-2xl font-heading text-light-text">Inclusivity</h3>
+                      <div class="reveal-up value-container p-4">
+                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                         <h3 class="text-2xl mt-4 font-heading">Inclusivity</h3>
                      </div>
-                      <div class="reveal-up value-container p-4 flex flex-col items-center">
-                         <svg class="w-16 h-16 text-medium-text value-icon mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
-                         <h3 class="text-2xl font-heading text-light-text">Innovation</h3>
+                      <div class="reveal-up value-container p-4">
+                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                         <h3 class="text-2xl mt-4 font-heading">Innovation</h3>
                      </div>
                  </div>
              </div>
@@ -332,7 +360,8 @@
                      <div id="chat-log" class="bg-black/10 rounded-t-lg shadow-inner h-[50vh] flex flex-col gap-4 p-4 overflow-y-auto font-body"></div>
                      <div class="bg-black/10 rounded-b-lg p-4">
                         <div class="grid grid-cols-2 md:grid-cols-2 gap-2 mb-3" id="prompt-buttons">
-                           </div>
+                           {/* Prompt buttons will be injected here */}
+                        </div>
                          <form id="chat-form" class="flex gap-3">
                              <input type="text" id="chat-input" placeholder="Ask a friendly question..." class="font-body flex-1 bg-warm-dark/50 border border-medium-text/30 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-gold text-light-text placeholder-medium-text/80">
                              <button type="submit" class="font-heading bg-teal text-warm-dark rounded-full px-5 py-3 font-semibold hover:bg-opacity-80 transition-all duration-300 hover:shadow-lg hover:shadow-teal/30">Send</button>
@@ -343,15 +372,15 @@
                      <h3 class="font-heading text-teal text-4xl mb-6 text-center">Send a Personal Message</h3>
                      <form id="contact-form" class="space-y-6 text-left">
                            <div>
-                             <label for="name" class="block mb-2 font-medium text-medium-text font-heading">Your Name</label>
+                             <label for="name" class="block mb-2 font-medium text-medium-text font-heading text-sm uppercase tracking-wider">Your Name</label>
                              <input type="text" id="name" required class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text">
                            </div>
                            <div>
-                             <label for="email" class="block mb-2 font-medium text-medium-text font-heading">Your Email</label>
+                             <label for="email" class="block mb-2 font-medium text-medium-text font-heading text-sm uppercase tracking-wider">Your Email</label>
                              <input type="email" id="email" required class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text">
                            </div>
                            <div>
-                                <label for="interest" class="block mb-2 font-medium text-medium-text font-heading">I am a...</label>
+                                <label for="interest" class="block mb-2 font-medium text-medium-text font-heading text-sm uppercase tracking-wider">I am a...</label>
                                 <select id="interest" class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text">
                                     <option>Community Member</option>
                                     <option>Potential Partner / Investor</option>
@@ -361,8 +390,8 @@
                                 </select>
                             </div>
                            <div>
-                             <label for="message" class="block mb-2 font-medium text-medium-text font-heading">Your Message</label>
-                             <textarea id="message" rows="5" required class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text"></textarea>
+                             <label for="message" class="block mb-2 font-medium text-medium-text font-heading text-sm uppercase tracking-wider">Your Message</label>
+                             <textarea id="message" rows="5" required class="font-body w-full bg-warm-dark/50 border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text"></textarea>
                            </div>
                          <button type="submit" class="font-heading w-full bg-teal text-warm-dark font-semibold py-4 px-6 rounded-lg hover:bg-opacity-80 transition-all duration-300 hover:shadow-lg hover:shadow-teal/30">Send with heart</button>
                      </form>
@@ -389,7 +418,7 @@
                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
                 </a>
             </div>
-            <p class="font-body">&copy; 2025 Mehfooz Internet. All rights reserved.</p>
+            <p class="font-body">&copy; 2024 Mehfooz Internet. All rights reserved.</p> {/* Updated year */}
             <p class="font-body text-sm mt-2">Cultivating a digitally literate society in Gilgit Baltistan.</p>
         </div>
     </footer>
@@ -397,9 +426,6 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         gsap.registerPlugin(ScrollTrigger);
-        // Draggable might not be needed if seed game doesn't require dragging
-        // If keeping the seed game simple (hold only), Draggable isn't necessary.
-        // gsap.registerPlugin(Draggable); 
         
         const mainContent = document.getElementById('main-content');
         
@@ -410,54 +436,48 @@
         let circlePos = { ...mouse };
         let circleScale = 1;
         let isHovering = false;
-        let isMouseDown = false; // Track mouse down state
 
         window.addEventListener('mousemove', e => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
         });
-        
-        // Cursor grow/shrink on click/hold
-        window.addEventListener('mousedown', () => { isMouseDown = true; circleScale = 0.8; });
-        window.addEventListener('mouseup', () => { isMouseDown = false; circleScale = isHovering ? 1.4 : 1; }); // Return to hover or normal state
-
 
         gsap.ticker.add(() => {
             // Dot follows instantly
             gsap.set(cursorDot, { x: mouse.x - 4, y: mouse.y - 4 }); 
             
-            // Circle interpolates
+            // Circle interpolates for smoothness
             const dx = mouse.x - circlePos.x;
             const dy = mouse.y - circlePos.y;
-            circlePos.x += dx * 0.2; // Smoother interpolation
+            circlePos.x += dx * 0.2; // Adjust for desired smoothness
             circlePos.y += dy * 0.2;
             gsap.to(cursorCircle, { 
                 duration: 0.4, 
                 x: circlePos.x - 20, 
                 y: circlePos.y - 20, 
                 scale: circleScale,
-                opacity: isHovering ? 0.6 : 1, // Softer hover opacity
-                ease: 'expo.out' 
+                opacity: isHovering ? 0.5 : 1, // Make circle slightly transparent on hover
+                ease: 'expo.out' // Smooth ease
             });
         });
         
-        // Apply link-hover class for styling cursor
-         document.querySelectorAll('a, button, input, select, textarea, #seed-container, .value-container').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                circleScale = 1.4; 
+        // Apply hover effect to links, buttons, and specific interactive elements
+        document.querySelectorAll('a, button, input, select, textarea, #seed-container, .value-container, .prompt-button').forEach(el => {
+             el.addEventListener('mouseenter', () => {
+                circleScale = 1.6; // Scale up circle
                 isHovering = true;
-                document.body.classList.add('link-hover');
+                gsap.to(cursorDot, { scale: 0.5, backgroundColor: 'var(--teal)', duration: 0.3 }); // Shrink dot and change color
             });
             el.addEventListener('mouseleave', () => {
-                circleScale = 1; 
+                circleScale = 1;
                 isHovering = false;
-                 document.body.classList.remove('link-hover');
+                gsap.to(cursorDot, { scale: 1, backgroundColor: 'var(--gold)', duration: 0.3 }); // Reset dot
             });
         });
 
 
         // --- SMOOTH SCROLL ---
-        const lenis = new Lenis({ lerp: 0.09 }); // Slightly adjusted smoothness
+        const lenis = new Lenis({ lerp: 0.09 }); // Adjust lerp for desired smoothness (lower = smoother)
         function raf(time) {
             lenis.raf(time);
             requestAnimationFrame(raf);
@@ -476,7 +496,7 @@
 
         const menuTimeline = gsap.timeline({ paused: true })
             .to(menuOverlay, { 
-                clipPath: 'circle(150% at calc(100% - 40px) 48px)', 
+                clipPath: 'circle(150% at calc(100% - 48px) 48px)', // Corrected origin
                 duration: menuDuration, 
                 ease: menuEase 
             }, 0)
@@ -486,18 +506,19 @@
                 duration: 0.8, 
                 stagger: 0.06, 
                 ease: 'expo.out' 
-            }, 0.15); // Stagger links slightly later
+            }, 0.2);
 
         menuToggle.addEventListener('click', () => {
             isMenuOpen = !isMenuOpen;
             menuToggle.classList.toggle('open');
+            // menuOverlay.classList.toggle('open'); // GSAP handles the visual change
             if(isMenuOpen) {
                 menuTimeline.timeScale(1).play();
                 gsap.to(toggleSpans[0], { y: 3.5, rotate: 45, duration: 0.4, ease: 'expo.out' });
                 gsap.to(toggleSpans[1], { y: -3.5, rotate: -45, duration: 0.4, ease: 'expo.out' });
                 lenis.stop();
             } else {
-                menuTimeline.timeScale(1.5).reverse(); 
+                menuTimeline.timeScale(1.5).reverse();
                 gsap.to(toggleSpans[0], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
                 gsap.to(toggleSpans[1], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
                 lenis.start();
@@ -510,12 +531,15 @@
                 const target = link.getAttribute('href');
                 isMenuOpen = false;
                 menuToggle.classList.remove('open');
-                menuTimeline.reverse().then(() => { 
+                
+                menuTimeline.timeScale(1.5).reverse().then(() => { 
                     lenis.start();
-                    lenis.scrollTo(target, { 
-                        duration: 1.8, 
-                        easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) 
-                    });
+                     if (target && document.querySelector(target)) {
+                         lenis.scrollTo(target, { 
+                            duration: 1.8, 
+                            easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) // Expo out ease
+                        });
+                     }
                 });
                 gsap.to(toggleSpans[0], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
                 gsap.to(toggleSpans[1], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
@@ -541,49 +565,31 @@
             growthAnimation = gsap.timeline({ paused: true, onComplete: onSolved });
             growthAnimation.to(plantPaths, {
                 strokeDashoffset: 0,
-                duration: 0.6, // Quick growth
+                duration: 0.6, // **Faster growth**
                 ease: "power1.out",
-                stagger: 0.05 // Quick stagger
+                stagger: 0.05 // **Quicker stagger**
             });
         }
         
         function onSolved() {
             if(solved) return;
             solved = true;
-            seedContainer.style.pointerEvents = 'none'; // Disable further interaction
+            seedContainer.style.pointerEvents = 'none'; 
             feedbackEl.textContent = "Trust takes root.";
             gsap.to(feedbackEl, { opacity: 1, duration: 0.5 });
             gsap.to(enterBtn, { opacity: 1, scale: 1, pointerEvents: 'auto', duration: 0.5, delay: 0 }); // Show button immediately
         }
         
-        let pressTimer; // Timer for hold detection
-
         const startGrowth = (e) => { 
             e.preventDefault();
-            if (!solved) {
-                 // Start animation immediately on press
-                 growthAnimation.play();
-                 // If not solved after a short delay (meaning it was just a click), reverse.
-                 pressTimer = setTimeout(() => {
-                     // If animation is still running forward and hasn't completed, do nothing (hold is happening)
-                 }, 200); // 200ms threshold for hold vs click
-            }
-        };
-
-        const stopGrowth = () => {
-            clearTimeout(pressTimer); // Clear the timer if mouse/touch is released
-             // If the animation hasn't finished (it wasn't held long enough), reverse it.
-             if (!solved && growthAnimation.progress() < 1) { 
-                 growthAnimation.reverse();
-             }
+            if (!solved) growthAnimation.play(); 
         };
         
+        // Trigger growth on mousedown/touchstart (hold starts it)
         seedContainer.addEventListener('mousedown', startGrowth);
-        seedContainer.addEventListener('touchstart', startGrowth, {passive: false}); // passive: false needed for preventDefault
-        seedContainer.addEventListener('mouseup', stopGrowth);
-        seedContainer.addEventListener('mouseleave', stopGrowth); // Also stop if mouse leaves
-        seedContainer.addEventListener('touchend', stopGrowth);
-
+        seedContainer.addEventListener('touchstart', startGrowth, {passive: true});
+        
+        // No need for mouseup/touchend to reverse, it completes quickly now.
 
         enterBtn.addEventListener('click', () => {
              gsap.to(gameScreen, { 
@@ -605,33 +611,36 @@
         // --- THREE.JS BACKGROUND ---
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 3; // Adjusted for better view
-        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
+        camera.position.z = 4; // Adjusted camera further back slightly
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true, antialias: true }); 
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        const particleCount = 10000; // Keep density reasonable
+        const particleCount = 10000; 
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
-        const colorGold = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--gold').trim());
-        const colorTeal = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--teal').trim());
-        const colorWarmText = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--warm-text').trim());
+        // Using CSS variables converted to THREE.Color
+        const colorGoldThree = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--gold').trim());
+        const colorTealThree = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--teal').trim());
+        const colorWarmTextThree = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--warm-text').trim());
+
 
         for(let i = 0; i < particleCount; i++) {
             const i3 = i * 3;
-            const radius = 4 + Math.random() * 6; // Adjust particle spread
+            // Distribute more evenly in a sphere, slightly wider spread
+            const radius = 5 + Math.random() * 12; 
             const phi = Math.acos(-1 + (2 * Math.random()));
-            const theta = Math.sqrt(particleCount * Math.PI) * phi;
+            const theta = Math.sqrt(particleCount * Math.PI) * phi; 
             
             positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
             positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-            positions[i3 + 2] = radius * Math.cos(phi);
+            positions[i3 + 2] = radius * Math.cos(phi) - 5; // Start slightly behind
             
             const randColor = Math.random();
             let mixedColor;
-            if (randColor < 0.65) mixedColor = colorWarmText.clone().lerp(colorGold, Math.random() * 0.2); 
-            else if (randColor < 0.9) mixedColor = colorGold.clone();
-            else mixedColor = colorTeal.clone().lerp(colorWarmText, 0.4); 
+            if (randColor < 0.65) mixedColor = colorWarmTextThree.clone().lerp(colorGoldThree, Math.random() * 0.4); // More warm text + gold mix
+            else if (randColor < 0.9) mixedColor = colorGoldThree.clone();
+            else mixedColor = colorTealThree.clone().lerp(colorWarmTextThree, 0.6); // Slightly whiter teal
             
             colors[i3] = mixedColor.r; colors[i3 + 1] = mixedColor.g; colors[i3 + 2] = mixedColor.b;
         }
@@ -640,30 +649,30 @@
         particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         
         const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.015, // Slightly smaller for a finer feel
-            sizeAttenuation: true, transparent: true, opacity: 0.6, // More subtle
+            size: 0.02, // Slightly larger for better visibility
+            sizeAttenuation: true, transparent: true, opacity: 0.7, 
             vertexColors: true, blending: THREE.AdditiveBlending, depthWrite: false
         });
         const particles = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particles);
         const clock = new THREE.Clock();
 
-        function animate() {
+        function animateBackground() {
             const elapsedTime = clock.getElapsedTime();
-            const scrollY = lenis.scroll;
             
-            particles.rotation.y = elapsedTime * 0.015; // Slow, consistent rotation
-            particles.rotation.x = elapsedTime * 0.008;
-            
-            // Very subtle mouse parallax on camera
-            camera.position.x += ((mouse.x / window.innerWidth - 0.5) * 0.03 - camera.position.x) * 0.02;
-            camera.position.y += (-(mouse.y / window.innerHeight - 0.5) * 0.03 - camera.position.y) * 0.02;
+            // Slow, constant rotation for a calm background drift
+            particles.rotation.y = elapsedTime * 0.01; 
+            particles.rotation.x = elapsedTime * 0.005;
+
+            // Subtle mouse parallax effect on the camera position for depth
+            camera.position.x += ((mouse.x / window.innerWidth - 0.5) * 0.1 - camera.position.x) * 0.02;
+            camera.position.y += (-(mouse.y / window.innerHeight - 0.5) * 0.1 - camera.position.y) * 0.02;
             camera.lookAt(scene.position);
 
             renderer.render(scene, camera);
-            requestAnimationFrame(animate);
+            requestAnimationFrame(animateBackground);
         }
-        animate();
+        animateBackground(); // Start the background animation loop
 
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -672,74 +681,61 @@
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         });
 
-        // --- MAIN ANIMATIONS ---
+        // --- MAIN CONTENT ANIMATIONS ---
         function initAnimations() {
-             // Hero Headline Character Animation (if SplitText is available)
-            if (typeof SplitText !== 'undefined') {
-                const heroHeadline = document.querySelector('#home h1');
-                if (heroHeadline) {
-                    const split = new SplitText(heroHeadline, { type: "chars" });
-                    gsap.from(split.chars, {
-                        y: 80,
-                        opacity: 0,
-                        stagger: 0.03,
-                        duration: 0.8,
-                        ease: 'expo.out',
-                        delay: 0.5 // Delay after page load/transition
-                    });
-                }
-            } else {
-                 // Fallback: simple line animation if SplitText isn't loaded
-                 gsap.fromTo('#home h1', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: 'expo.out', delay: 0.5 });
-            }
-
-            // Hero Subheadline Line Animation
-            gsap.fromTo('#home p .line-child', { y: '100%' }, { 
-                y: '0%', 
-                duration: 1.2, 
-                ease: 'expo.out',
-                delay: 0.8 // Delay after headline starts
-            });
-            
-            // Section Title Line Animation
-            gsap.utils.toArray('.line-parent .line-child').forEach(el => {
-                 if (el.closest('#home')) return; // Skip hero elements already animated
+            // Animate lines in paragraphs (headers handled differently now)
+             gsap.utils.toArray('.line-parent:not(h1):not(h2):not(h3) .line-child').forEach(el => {
                 gsap.fromTo(el, { y: '110%' }, { 
                     y: '0%', 
                     duration: 1.5, 
-                    ease: 'expo.out',
+                    ease: 'expo.out', 
                     scrollTrigger: {
-                        trigger: el.closest('.line-parent'), // Trigger on the parent
-                        start: 'top 90%' 
+                        trigger: el.closest('.line-parent'), 
+                        start: 'top 90%'
                     }
                 });
             });
-            
-            // General reveal-up for content blocks
-            gsap.utils.toArray('.reveal-up').forEach(elem => {
-                gsap.fromTo(elem, { opacity: 0, y: 70 }, { // Increased distance
-                    opacity: 1, y: 0, duration: 1.6, ease: 'expo.out', // Smoother, longer duration
-                    scrollTrigger: { trigger: elem, start: 'top 88%' } // Start slightly earlier
+
+             // Animate heading characters
+            gsap.utils.toArray('.font-heading').forEach(heading => {
+                // Basic split for demo (can use SplitText if preferred)
+                if(heading.textContent.length > 0 && !heading.classList.contains('menu-link')) { // Exclude menu links from this
+                    const chars = heading.textContent.split('').map(char => `<span class="char" style="display:inline-block; transform: translateY(100%); opacity: 0;">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
+                    heading.innerHTML = chars;
+                    gsap.to(heading.querySelectorAll('.char'), {
+                        y: '0%',
+                        opacity: 1,
+                        duration: 0.8,
+                        stagger: 0.03, // Adjust for desired speed
+                        ease: 'expo.out',
+                        scrollTrigger: {
+                            trigger: heading,
+                            start: 'top 90%'
+                        }
+                    });
+                }
+            });
+
+            // Standard reveal-up for other elements
+            gsap.utils.toArray('.reveal-up:not(p):not(h1):not(h2):not(h3)').forEach(elem => { // Exclude text handled by other anims
+                gsap.fromTo(elem, { opacity: 0, y: 70 }, { 
+                    opacity: 1, y: 0, duration: 1.6, ease: 'expo.out',
+                    scrollTrigger: { trigger: elem, start: 'top 88%' }
                 });
             });
             
             // Parallax Images
             gsap.utils.toArray('.parallax-image').forEach(img => {
                 gsap.to(img, {
-                    y: '-10%', // Reduced parallax for calmness
+                    yPercent: -8, // Reduced parallax
                     ease: 'none',
-                    scrollTrigger: {
-                        trigger: img.closest('.parallax-container') || img.parentElement, 
-                        start: 'top bottom', 
-                        end: 'bottom top', 
-                        scrub: 1.5 // Smooth scrubbing
-                    }
+                    scrollTrigger: { trigger: img.closest('.parallax-container'), scrub: 2 } 
                 });
             });
             
             // Counter Animation
             const userCounter = document.getElementById('user-counter');
-            if (userCounter) {
+            if (userCounter) { 
                 gsap.from(userCounter, {
                     textContent: 0, duration: 3, ease: "expo.out", snap: { textContent: 1 },
                     scrollTrigger: { trigger: userCounter, start: "top 85%" },
@@ -761,24 +757,6 @@
                     scrollTrigger: { trigger: timelinePath, start: 'top 85%' }
                 });
             }
-
-            // --- Navigation Scroll Logic ---
-             function scrollToTarget(target) {
-                lenis.scrollTo(target, { 
-                    duration: 1.8, // Smooth scroll duration
-                    easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) // Expo out ease
-                });
-             }
-
-            // Handle Menu Links (already done inside menu toggle logic)
-            // Handle Logo and Footer Links
-            document.querySelectorAll('header a[href^="#"], footer a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    scrollToTarget(targetId);
-                });
-            });
         }
         
         // --- MEHFOOZBOT LOGIC ---
@@ -804,10 +782,10 @@
         
         function addMessage(message, sender, isImmediate = false) {
             const bubble = document.createElement('div');
-            bubble.className = `chat-bubble ${sender}-bubble`;
+            bubble.className = `chat-bubble ${sender}-bubble font-body`;
             bubble.textContent = message;
             chatLog.appendChild(bubble);
-            gsap.from(bubble, { opacity: 0, y: 20, duration: 0.6, delay: isImmediate ? 0 : 0.4, ease: 'expo.out' }); 
+            gsap.from(bubble, { opacity: 0, y: 20, duration: 0.6, delay: isImmediate ? 0 : 0.4, ease: 'expo.out' });
             chatLog.scrollTop = chatLog.scrollHeight;
         }
 
@@ -823,14 +801,14 @@
 
                 setTimeout(() => {
                     gsap.to(thinkingBubble, {opacity: 0, duration: 0.3, onComplete: () => thinkingBubble.remove()});
-                    const responseKey = Object.keys(promptQuestions).find(key => input.toLowerCase().includes(key.toLowerCase().split(' ')[2])) || 'default';
-                    const response = botResponses[promptQuestions[input] || responseKey];
+                    const responseKey = Object.keys(promptQuestions).find(key => input.toLowerCase().includes(key.toLowerCase().split(' ')[2])) || 'default'; // Basic keyword matching improved
+                    const response = botResponses[promptQuestions[input] || responseKey] || botResponses.default; // Fallback added
                     addMessage(response, 'bot');
                     chatInput.disabled = false;
                     chatInput.focus();
                     promptButtonsContainer.style.pointerEvents = 'auto';
                     gsap.to(promptButtonsContainer.querySelectorAll('button'), { opacity: 1, duration: 0.3 });
-                }, 900 + Math.random() * 600); 
+                }, 900 + Math.random() * 600);
              }
         }
 
@@ -841,7 +819,9 @@
         
         Object.keys(promptQuestions).forEach(question => {
             const button = document.createElement('button');
-            button.className = "font-body text-sm bg-space-dark/50 border border-medium-text/30 rounded-full py-2 px-3 text-medium-text hover:border-gold hover:text-gold transition-colors text-left";
+            // Added role="button" for accessibility
+            button.setAttribute('role', 'button'); 
+            button.className = "font-body text-sm bg-warm-dark/50 border border-medium-text/30 rounded-full py-2 px-3 text-medium-text hover:border-gold hover:text-gold transition-colors text-left";
             button.textContent = question;
             button.onclick = () => { handleUserInput(question); }
             promptButtonsContainer.appendChild(button);
@@ -854,24 +834,14 @@
         const formSuccess = document.getElementById('form-success');
         contactForm.addEventListener('submit', e => {
              e.preventDefault();
-             // Simulate form submission
+             // **Important:** Add actual form submission logic here (e.g., using fetch or AJAX)
+             // For now, we just show the success message
              gsap.to(contactForm, { opacity: 0, duration: 0.5, onComplete: () => {
                  contactForm.style.display = 'none';
                  formSuccess.classList.remove('hidden');
                  gsap.from(formSuccess, {opacity: 0, y: 20, duration: 0.5});
              }});
         });
-
-        // Split text for hero headline animation if SplitText loaded
-        if (typeof SplitText !== 'undefined') {
-            const heroHeadline = document.querySelector('#home h1');
-            if(heroHeadline) {
-                 const split = new SplitText(heroHeadline, { type: "chars" });
-                 // Hide original until animation
-                 gsap.set(heroHeadline, {opacity: 1}); // Ensure parent is visible
-                 gsap.set(split.chars, { y: '100%', opacity: 0 }); 
-            }
-        }
 
     });
     </script>
