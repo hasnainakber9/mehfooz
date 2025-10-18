@@ -5,74 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mehfooz | Clarity in the Digital Crossroads</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
+
     <style>
         /* ---
-        ROOT VARIABLES & RESET
+        SOPHISTICATED THEME (NAVY/TEAL/GOLD)
         ---
         */
         :root {
-            --teal: #00A896;
-            --gold: #F4B860;
             --dark-bg: #0F172A; /* Deep Navy */
             --light-text: #E2E8F0;
             --medium-text: #94A3B8;
             --card-bg: #1E293B; /* Slightly lighter navy */
             --border-color: #334155;
-            --success: #22c55e;
+            --gold: #F4B860;
+            --teal: #00A896;
             --danger: #ef4444;
-
-            --font-sans: 'Inter', sans-serif;
-            --font-script: 'Caveat', cursive;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Caveat:wght@700&display=swap');
 
-        /* ---
-        SMOOTH SCROLL (LENIS)
-        ---
-        */
-        html.lenis {
-            height: auto;
-        }
-        .lenis.lenis-smooth {
-            scroll-behavior: auto;
-        }
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto; }
 
         body {
             background-color: var(--dark-bg);
             color: var(--light-text);
-            font-family: var(--font-sans);
+            font-family: 'Inter', sans-serif; /* Modern, clean font */
             overflow-x: hidden;
             cursor: none;
         }
 
-        .antialiased {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+        .font-script {
+            font-family: 'Caveat', cursive;
         }
-
+        
         /* ---
-        CUSTOM CURSOR
+        INTIMATE CURSOR
         ---
         */
         #cursor-light {
             position: fixed;
-            left: 0; top: 0;
-            width: 600px; height: 600px;
+            width: 800px; height: 800px; /* Larger, more ambient light */
             border-radius: 50%;
+            left: 0; top: 0;
             pointer-events: none;
-            transform: translate(-50%, -50%);
             background: radial-gradient(circle, rgba(244, 184, 96, 0.07) 0%, transparent 60%);
+            transform: translate(-50%, -50%);
             z-index: 9999;
-            transition: transform 0.2s ease-out, opacity 0.3s ease;
+            transition: transform 0.3s ease-out;
         }
         #cursor-dot {
             position: fixed;
@@ -83,1359 +68,713 @@
             pointer-events: none;
             transform: translate(-50%, -50%);
             z-index: 10000;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-        body:hover > #cursor-light,
-        body:hover > #cursor-dot {
-            opacity: 1;
         }
         
-        /* Cursor hover state */
-        a:hover ~ #cursor-dot,
-        button:hover ~ #cursor-dot {
-            transform: translate(-50%, -50%) scale(1.5);
-            background-color: var(--teal);
-        }
-        a:hover ~ #cursor-light,
-        button:hover ~ #cursor-light {
-            transform: translate(-50%, -50%) scale(1.2);
-        }
-
-
-        /* ---
-        PRELOADER
-        ---
-        */
-        #loader {
+        #bg-canvas {
             position: fixed;
-            inset: 0;
-            background-color: var(--dark-bg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9998;
-        }
-        .loader-logo {
-            opacity: 0;
-            transform: scale(0.8);
-        }
-        .loader-logo path:nth-child(1) { --delay: 0.1s; }
-        .loader-logo path:nth-child(2) { --delay: 0.3s; }
-        .loader-logo path:nth-child(3) { --delay: 0.5s; }
-
-
-        /* ---
-        UTILITIES & TYPOGRAPHY
-        ---
-        */
-        .container {
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .font-script {
-            font-family: var(--font-script);
-        }
-
-        h1, h2, h3 {
-            font-family: var(--font-sans);
-            font-weight: 700;
-            color: var(--light-text);
-            line-height: 1.2;
-        }
-        h1 {
-            font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem);
-            letter-spacing: -0.02em;
-        }
-        h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-        }
-        h3 {
-            font-size: 1.5rem;
-            color: var(--light-text);
-        }
-        p {
-            font-size: 1.125rem;
-            line-height: 1.7;
-            color: var(--medium-text);
-            max-width: 65ch;
-        }
-        a {
-            color: var(--teal);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            cursor: none;
-        }
-        a:hover {
-            color: var(--gold);
-        }
-        
-        button, .btn {
-            cursor: none;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 4rem auto;
-            opacity: 0; /* Handled by GSAP */
-        }
-        .section-header h2 {
-            color: var(--gold);
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            margin-bottom: 0.5rem;
-        }
-        .section-header p {
-            margin: 0 auto;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* ---
-        BUTTONS
-        ---
-        */
-        .btn {
-            display: inline-block;
-            font-family: var(--font-sans);
-            font-weight: 600;
-            font-size: 1rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: 99px;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-        .btn-primary {
-            background-color: var(--teal);
-            color: white;
-        }
-        .btn-primary:hover {
-            background-color: var(--gold);
-            color: var(--dark-bg);
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        .btn-secondary {
-            background-color: var(--card-bg);
-            border-color: var(--border-color);
-            color: var(--light-text);
-        }
-        .btn-secondary:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-            transform: scale(1.05);
-        }
-        .btn-outline {
-            background-color: transparent;
-            border-color: var(--teal);
-            color: var(--teal);
-        }
-        .btn-outline:hover {
-            background-color: var(--teal);
-            color: white;
-        }
-
-        /* ---
-        HEADER
-        ---
-        */
-        #site-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 1rem 0;
-            z-index: 100;
-            opacity: 0;
-            transform: translateY(-100%);
-            transition: background-color 0.3s ease;
-        }
-        #site-header.scrolled {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0) 100%);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-        #site-header nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-logo {
-            font-size: 2.5rem;
-            color: var(--gold);
-            font-weight: 700;
-        }
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-        .nav-link {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--light-text);
-            position: relative;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--gold);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        .nav-link:hover::after,
-        .nav-link.active::after {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-        .nav-links .btn-outline {
-            padding: 0.5rem 1.25rem;
-        }
-
-        /* ---
-        SECTION 1: HERO
-        ---
-        */
-        #hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-background {
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-        }
-        .hero-background::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle, rgba(15, 23, 42, 0.4) 0%, var(--dark-bg) 70%);
-        }
-        .hero-background img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center 30%;
-            opacity: 0.4;
-            transform: scale(1.1); /* Initial state for parallax */
-        }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-        /* Sophisticated text reveal */
-        #hero-headline, #hero-subheadline {
-            opacity: 0;
-        }
-        #hero-headline .line-wrapper {
-            overflow: hidden;
-        }
-        #hero-headline .line {
-            transform: translateY(110%);
-        }
-        
-        #scroll-prompt {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--medium-text);
-            font-size: 0.875rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            opacity: 0;
-        }
-        .mouse {
-            width: 24px;
-            height: 38px;
-            border: 2px solid var(--medium-text);
-            border-radius: 12px;
-            position: relative;
-        }
-        .mouse::before {
-            content: '';
-            position: absolute;
-            width: 4px;
-            height: 6px;
-            background-color: var(--medium-text);
-            border-radius: 2px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: scroll-wheel 1.5s infinite;
-        }
-        @keyframes scroll-wheel {
-            0% { top: 6px; opacity: 1; }
-            100% { top: 20px; opacity: 0; }
-        }
-
-        /* ---
-        SECTION 2: SCROLLYTELLING CHALLENGE
-        ---
-        */
-        .challenge-sticky-container {
-            height: 300vh; /* This controls the scroll duration */
-            position: relative;
-        }
-        .challenge-content {
-            height: 100vh;
-            width: 100%;
-            position: sticky;
-            top: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow: hidden;
-        }
-        .challenge-step {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            opacity: 0;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .challenge-step h2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 1rem;
-            color: var(--light-text);
-        }
-        .challenge-step p {
-            font-size: 1.25rem;
-        }
-        .challenge-step .is-mission-statement {
-            font-family: var(--font-sans);
-            font-size: 1.5rem;
-            font-weight: 500;
-            line-height: 1.6;
-            color: var(--light-text);
-        }
-
-        /* Network Background Animation */
-        .network-background {
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            background-image:
-                linear-gradient(to right, var(--network-color, var(--teal)) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--network-color, var(--teal)) 1px, transparent 1px);
-            background-size: 50px 50px;
-            opacity: 0;
-            animation: pan-network 20s linear infinite;
-        }
-        @keyframes pan-network {
-            0% { background-position: 0 0; }
-            100% { background-position: 500px 500px; }
-        }
-
-
-        /* ---
-        SECTION 3: SOLUTIONS / PILLARS
-        ---
-        */
-        #solutions {
-            padding: 100px 0;
-        }
-        .solutions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        .pillar-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            position: relative;
-            overflow: hidden;
-            opacity: 0; /* Handled by GSAP */
-        }
-        /* Sophisticated glow effect */
-        .pillar-card::before {
-            content: '';
-            position: absolute;
             top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 0%, rgba(0, 168, 150, 0.2), transparent 70%);
-            opacity: 0;
-            transform: scaleY(0);
-            transform-origin: bottom;
-            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        
-        .pillar-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--teal);
-            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
-        }
-        .pillar-card:hover::before {
-            opacity: 1;
-            transform: scaleY(1.5);
-        }
-        .pillar-content {
-            position: relative;
-            z-index: 2;
+            width: 100%; height: 100vh;
+            z-index: -1;
         }
 
-        .pillar-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 1.5rem auto;
-            color: var(--teal);
+        .content-section {
             position: relative;
-        }
-        .pillar-icon svg {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 0; top: 0;
-            transition: all 0.4s ease;
-        }
-        /* Icon 1: Wisdom / Ulema */
-        .pillar-card:nth-child(1) .pillar-icon svg:first-child { opacity: 0.3; }
-        .pillar-card:nth-child(1) .pillar-icon svg:last-child { transform: scale(0.8); }
-        .pillar-card:nth-child(1):hover .pillar-icon svg:last-child { transform: scale(1); }
-        /* Icon 2: Bot */
-        .pillar-card:nth-child(2) .pillar-icon svg { transform-origin: bottom center; }
-        .pillar-card:nth-child(2):hover .pillar-icon svg { animation: wave 0.5s ease-in-out; }
-        @keyframes wave {
-            0%, 100% { transform: rotate(0); }
-            50% { transform: rotate(15deg); }
-        }
-        /* Icon 3: Courses */
-        .pillar-card:nth-child(3):hover .pillar-icon svg { transform: scale(1.1) rotate(-5deg); }
-
-        .pillar-card h3 {
-            margin-bottom: 0.75rem;
-        }
-        .pillar-card p {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        .pillar-card .btn {
-            width: 100%;
-        }
-        
-        /* This is the text from the file you disliked. I've added it here. */
-        .journal-section {
-            padding: 100px 0;
-        }
-        .journal-image-container {
-            overflow: hidden;
-            border-radius: 16px;
-            box-shadow: 0 20px 30px rgba(0,0,0,0.3);
-        }
-        .journal-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scale(1.1); /* For parallax */
+            z-index: 1;
+            padding: 20vh 0;
         }
         
         /* ---
-        SECTION 4: INSIGHTS
+        NEW GAME STYLES
         ---
         */
-        #insights {
-            padding: 100px 0;
+        #game-screen {
             background-color: var(--dark-bg);
         }
-        .insights-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 2rem;
+        .game-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: none;
         }
-        .insight-card {
-            display: block;
+        .game-statement-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            min-height: 10rem;
+        }
+        .game-btn {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
             transition: all 0.3s ease;
-            opacity: 0; /* Handled by GSAP */
         }
-        .insight-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--gold);
-            color: var(--light-text);
+        .game-btn:hover {
+            transform: translateY(-5px);
+            background-color: var(--teal);
+            border-color: var(--teal);
         }
-        .insight-label {
-            display: inline-block;
+        .game-btn.gold:hover {
             background-color: var(--gold);
+            border-color: var(--gold);
             color: var(--dark-bg);
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 0.25rem 0.75rem;
-            border-radius: 99px;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
-        .insight-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-        }
-        .insight-card p {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            color: var(--medium-text);
-        }
-        .insight-card span {
-            font-weight: 600;
-            color: var(--teal);
+        #enter-site-btn {
             transition: all 0.3s ease;
         }
-        .insight-card:hover span {
-            color: var(--gold);
-            padding-left: 5px;
+        #enter-site-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
+        /* Animate-in styles */
+        .reveal-up { opacity: 0; transform: translateY(40px); }
+
         /* ---
-        SECTION 5: CONTACT
+        CHAT & FORM STYLES (SOPHISTICATED)
         ---
         */
-        #contact {
-            padding: 100px 0;
-        }
-        #contact-form {
-            max-width: 700px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        .form-group-split {
-            display: flex;
-            gap: 1.5rem;
-        }
-        .form-group {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .form-group label {
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: var(--medium-text);
-        }
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 18px; line-height: 1.5; }
+        .user-bubble { background-color: var(--teal); color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
+        .bot-bubble { background-color: var(--card-bg); color: var(--light-text); border-bottom-left-radius: 4px; align-self: flex-start; }
+
+        .chat-prompt-btn {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0.875rem 1rem;
-            font-family: var(--font-sans);
-            font-size: 1rem;
-            color: var(--light-text);
+            color: var(--medium-text);
             transition: all 0.3s ease;
-            -webkit-appearance: none; /* Fix for iOS select styling */
         }
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .chat-prompt-btn:hover {
+            background-color: var(--teal);
+            border-color: var(--teal);
+            color: white;
+        }
+        
+        .form-input {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--light-text);
+        }
+        .form-input:focus {
             outline: none;
             border-color: var(--teal);
             box-shadow: 0 0 0 3px rgba(0, 168, 150, 0.3);
         }
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
+        
+        .btn-teal {
+             background-color: var(--teal);
+             color: white;
+             transition: all 0.3s ease;
         }
-        #contact-form .btn {
-            align-self: center;
-            padding-left: 3rem;
-            padding-right: 3rem;
-        }
-        #form-success {
-            max-width: 700px;
-            margin: 0 auto;
-            text-align: center;
-            border: 1px solid var(--success);
-            background-color: rgba(34, 197, 94, 0.1);
-            border-radius: 8px;
-            padding: 2rem;
-        }
-        #form-success h3 {
-            color: var(--success);
-            margin-bottom: 0.5rem;
+        .btn-teal:hover {
+            background-color: var(--gold);
+            color: var(--dark-bg);
+            transform: scale(1.05);
         }
 
         /* ---
-        BOT MODAL
+        FRIENDLY NAVIGATION
         ---
         */
-        #bot-modal {
-            position: fixed;
-            inset: 0;
-            background-color: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 200;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+        #friendly-nav {
+            transform: translateY(200%);
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
         }
-        #bot-modal:not(.hidden) {
-            opacity: 1;
-            pointer-events: all;
+        #friendly-nav.visible {
+            transform: translateY(0);
         }
-        .bot-modal-content {
-            background-color: var(--dark-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            width: 100%;
-            max-width: 500px;
-            padding: 2rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
-            position: relative;
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-        }
-        #bot-modal:not(.hidden) .bot-modal-content {
-            transform: scale(1);
-        }
-        .bot-modal-content h3 {
-            text-align: center;
+        .nav-link.active {
             color: var(--gold);
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
         }
-        .bot-modal-content p {
-            text-align: center;
-            font-size: 0.875rem;
-            margin-bottom: 1.5rem;
-        }
-        #close-bot-demo {
+        .nav-link::after {
+            content: '';
             position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            background: none;
-            border: none;
-            font-size: 2rem;
-            color: var(--medium-text);
-            transition: all 0.3s ease;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
         }
-        #close-bot-demo:hover {
-            color: var(--light-text);
-            transform: rotate(90deg);
-        }
-
-        #chat-log {
-            height: 300px;
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 1rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        .chat-bubble {
-            max-width: 75%;
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            line-height: 1.5;
-            opacity: 0;
-            transform: translateY(10px);
-            animation: fade-in 0.3s ease forwards;
-        }
-        @keyframes fade-in {
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .user-bubble {
-            background-color: var(--teal);
-            color: white;
-            border-bottom-right-radius: 4px;
-            align-self: flex-end;
-        }
-        .bot-bubble {
-            background-color: var(--border-color);
-            color: var(--light-text);
-            border-bottom-left-radius: 4px;
-            align-self: flex-start;
-        }
-        .typing-indicator {
-            display: flex;
-            gap: 4px;
-            align-items: center;
-        }
-        .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            background-color: var(--medium-text);
-            border-radius: 50%;
-            animation: bounce 1s infinite;
-        }
-        .typing-indicator span:nth-child(2) { animation-delay: 0.1s; }
-        .typing-indicator span:nth-child(3) { animation-delay: 0.2s; }
-        @keyframes bounce {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-6px); }
+        .nav-link.active::after,
+        .nav-link:hover::after {
+            transform: scaleX(1);
         }
 
-        #question-pills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+        .value-icon {
+            stroke-width: 1;
+            transition: all 0.4s ease;
         }
-        .question-pill {
-            cursor: none;
-            border: 1px solid var(--medium-text);
-            color: var(--medium-text);
-            padding: 0.5rem 0.875rem;
-            border-radius: 9999px;
-            transition: all 0.2s;
-            font-size: 0.875rem;
-        }
-        .question-pill:hover {
-            background-color: var(--teal);
-            border-color: var(--teal);
-            color: white;
-        }
-        #chat-form {
-            display: flex;
-            gap: 0.75rem;
-        }
-        #chat-form input {
-            flex: 1;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            font-family: var(--font-sans);
-            font-size: 1rem;
-            color: var(--light-text);
-        }
-        #chat-form input:focus {
-            outline: none;
-            border-color: var(--teal);
-        }
-
-        /* ---
-        FOOTER
-        ---
-        */
-        #site-footer {
-            padding: 3rem 0;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-            margin-top: 100px;
-        }
-        #site-footer p {
-            font-size: 0.875rem;
-        }
-
-        /* ---
-        RESPONSIVE
-        ---
-        */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none; /* Simplification for demo. A real site needs a menu. */
-            }
-            .form-group-split {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-            .challenge-step p {
-                font-size: 1.125rem;
-            }
-            .challenge-step .is-mission-statement {
-                font-size: 1.25rem;
-            }
-            .bot-modal-content {
-                width: 90vw;
-                padding: 1.5rem;
-            }
-            #chat-log {
-                height: 250px;
-            }
-            .journal-section {
-                flex-direction: column;
-            }
-            .journal-section > div {
-                width: 100%;
-            }
+        .value-container:hover .value-icon {
+            transform: scale(1.1);
+            stroke: var(--gold);
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <div id="loader">
-        <svg class="loader-logo" width="80" height="93" viewBox="0 0 80 93" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M40 0L79.0526 23.25V69.75L40 93L0.947441 69.75V23.25L40 0Z" fill="var(--gold)" opacity="0.1"/>
-            <path d="M40 9.3L71.0526 27.9V65.1L40 83.7L8.94744 65.1V27.9L40 9.3Z" fill="var(--gold)" opacity="0.3"/>
-            <path d="M40 18.6L63.0526 32.55V60.45L40 74.4L16.9474 60.45V32.55L40 18.6Z" fill="var(--gold)"/>
-        </svg>
-    </div>
-
     <div id="cursor-light"></div>
     <div id="cursor-dot"></div>
+    <canvas id="bg-canvas"></canvas>
 
-    <header id="site-header">
-        <nav class="container">
-            <a href="#hero" class="nav-logo font-script">Mehfooz</a>
-            <div class="nav-links">
-                <a href="#challenge" class="nav-link">The Challenge</a>
-                <a href="#solutions" class="nav-link">Our Solution</a>
-                <a href="#insights" class="nav-link">Insights</a>
-                <a href="#contact" class="nav-link btn btn-outline">Join Us</a>
-            </div>
-        </nav>
-    </header>
+    <div id="game-screen" class="fixed inset-0 z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
+        <div class="text-center w-full max-w-2xl">
+            
+             <div id="game-intro">
+                 <h2 class="font-script text-gold text-4xl md:text-6xl mb-2">A Quiet Moment</h2>
+                 <p class="text-medium-text text-lg mb-8">The digital world is full of voices. Before we begin, let's take a moment to listen to our own intuition.</p>
+                 <button id="game-start-btn" class="game-btn gold bg-gold text-dark-bg font-bold py-3 px-8 rounded-lg text-xl hover:scale-105">Begin</button>
+             </div>
+             
+             <div id="game-main" class="hidden">
+                <p id="game-prompt" class="text-lg text-teal mb-4"></p>
+                <div id="game-statement" class="game-statement-card rounded-lg p-6 md:p-8 text-xl md:text-2xl flex items-center justify-center mb-6">
+                    </div>
+                <div id="game-buttons" class="flex flex-col md:flex-row gap-4 justify-center">
+                    <button id="game-btn-1" class="game-btn text-lg font-semibold py-3 px-6 rounded-lg"></button>
+                    <button id="game-btn-2" class="game-btn text-lg font-semibold py-3 px-6 rounded-lg"></button>
+                </div>
+                <p id="game-feedback" class="mt-6 text-lg max-w-2xl mx-auto min-h-[4rem] text-medium-text"></p>
+             </div>
 
-    <main id="main-content">
+             <div id="game-end" class="hidden">
+                 <h3 class="font-script text-teal text-4xl mb-4">A Thoughtful Heart</h3>
+                 <p class="text-xl text-medium-text mb-8">The journey to clarity isn't about knowing all the answers, but about being willing to ask the right questions. You are ready.</p>
+                 <button id="enter-site-btn" class="bg-gold text-dark-bg font-bold py-3 px-8 rounded-lg text-xl">Enter Mehfooz</button>
+             </div>
+        </div>
+    </div>
+    
+    <main id="main-content" class="opacity-0">
+        <header class="fixed top-0 left-0 w-full z-50">
+            <nav class="container mx-auto flex justify-between items-center p-6 md:p-8">
+                <a href="#home" class="font-script text-3xl text-gold">Mehfooz</a>
+            </nav>
+        </header>
 
-        <section id="hero">
-            <div class="hero-background">
-                <img src="https://images.unsplash.com/photo-1623581203333-53531b1bbf8e?q=80&w=2400&auto=format&fit=crop" 
-                     alt="A thoughtful portrait of a person from Gilgit Baltistan">
-            </div>
-            <div class="hero-content container">
-                <h1 id="hero-headline">Clarity in the Digital Crossroads.</h1>
-                <p id="hero-subheadline">
-                    Mehfooz Internet is empowering the communities of Gilgit Baltistan with the tools to navigate the digital world safely and confidently.
+        <section id="home" class="content-section h-screen flex items-center justify-center text-center">
+            <div class="px-4">
+                <h1 class="font-script text-gold text-5xl md:text-8xl mb-4 reveal-up">Clarity in the Digital Crossroads.</h1>
+                <p class="text-xl md:text-2xl text-light-text leading-relaxed max-w-4xl reveal-up">
+                    For the people of Gilgit Baltistan, a safe space to find clarity in a connected world.
                 </p>
-                <div id="scroll-prompt">
-                    <div class="mouse"></div>
-                    <span>Scroll to Discover</span>
+                 <div class="absolute bottom-16 left-1/2 -translate-x-1/2">
+                    <a href="#journal" class="font-script text-medium-text animate-pulse">Scroll to Discover</a>
                 </div>
             </div>
         </section>
 
-        <section id="challenge" class="challenge-sticky-container">
-            <div class="challenge-content">
-                <div class="network-background"></div>
-                <div class="container">
-                    
-                    <div id="step-1" class="challenge-step">
-                        <h2>Where Progress Meets Peril.</h2>
-                        <p>In Gilgit Baltistan, technology is outpacing digital literacy. This creates a critical vulnerability, exposing communities to misinformation and digital threats as the network grows unchecked.</p>
-                    </div>
-
-                    <div id="step-2" class="challenge-step">
-                        <h2>Our Mission</h2>
-                        <p class="is-mission-statement">"To empower the people of Gilgit Baltistan with trustworthy, lifelong learning opportunities that promote online safety and digital literacy..."</p>
-                    </div>
-
-                    <div id="step-3" class="challenge-step">
-                        <h2>Our Vision</h2>
-                        <p>"...to cultivate a digitally literate society where individuals can confidently and responsibly navigate the digital landscape, transforming the network from a source of peril to a symbol of empowerment."</p>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-        
-        <section id="journal" class="content-section journal-section">
+        <section id="journal" class="content-section py-20 md:py-40">
              <div class="container mx-auto px-6 max-w-4xl">
-                 <div class="flex gap-12 items-center">
+                 <div class="flex flex-col md:flex-row gap-12 items-center">
                      <div class="w-full md:w-1/2">
-                         <div class="journal-image-container">
+                         <div class="overflow-hidden rounded-lg shadow-2xl shadow-black/50">
                             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto-format=fit=crop" alt="A diverse group of people from Skardu warmly interacting and learning together" class="w-full h-full object-cover">
                          </div>
                      </div>
                      <div class="w-full md:w-1/2">
-                         <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">From Our Journal</h2>
-                         <p class="text-lg text-medium-text leading-relaxed mb-6">Mehfooz began not with a line of code, but with a conversation. In a small <strong>Skardu</strong> teahouse, over cups of warm chai, we listened. We heard stories of connection and confusion, of hope and fear in a new digital world where progress was meeting peril.</p>
-                         <p class="text-lg text-medium-text leading-relaxed">We learned that the need wasn't for more technology, but for more understanding. For a bridge between timeless wisdom and modern tools. Mehfooz is our promise to help build that bridge, together.</p>
+                         <h2 class="font-script text-gold text-5xl md:text-6xl mb-4 reveal-up">From Our Journal</h2>
+                         <p class="text-lg text-medium-text leading-relaxed mb-6 reveal-up">Mehfooz began not with a line of code, but with a conversation. In a small <strong>Skardu</strong> teahouse, over cups of warm chai, we listened. We heard stories of connection and confusion, of hope and fear in a new digital world where progress was meeting peril.</p>
+                         <p class="text-lg text-medium-text leading-relaxed reveal-up">We learned that the need wasn't for more technology, but for more understanding. For a bridge between timeless wisdom and modern tools. Mehfooz is our promise to help build that bridge, together.</p>
                      </div>
                  </div>
              </div>
         </section>
 
-
-        <section id="solutions" class="container">
-            <div class="section-header">
-                <h2 class="font-script">An Ecosystem of Empowerment</h2>
-                <p>A unique, three-pronged solution built on trust, technology, and community.</p>
-            </div>
-            
-            <div class="solutions-grid">
-                <div class="pillar-card">
-                    <div class="pillar-content">
-                        <div class="pillar-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12s4.03 8.25 9 8.25zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5z" /></svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-4.682 2.72a3 3 0 01-4.682-2.72m4.682 2.72v.003M18 18.72v.003m-3.182 2.651a3 3 0 01-2.23 0M12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM6 18.72v.003m3.182 2.651a3 3 0 01-2.23 0M6 18.72a9.094 9.094 0 01-3.741-.479 3 3 0 014.682-2.72M6 18.72v.003" /></svg>
-                        </div>
-                        <h3>Wisdom, Amplified.</h3>
-                        <p>We partner with local religious leaders (Ulema) who serve as trusted digital literacy ambassadors, bridging traditional knowledge with modern skills.</p>
+        <section id="approach" class="content-section py-20 md:py-40">
+            <div class="container mx-auto px-6 max-w-5xl">
+                <div class="text-center reveal-up mb-20">
+                    <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Approach is Simple</h2>
+                </div>
+                <div class="grid md:grid-cols-3 gap-12 text-center">
+                    <div class="reveal-up">
+                        <h3 class="font-script text-teal text-4xl mb-3">Listen First</h3>
+                        <p class="text-medium-text leading-relaxed">We don't just provide information; we build on existing foundations of trust. Through a groundbreaking model, we collaborate with local religious leaders (Ulema) who serve as trusted digital literacy ambassadors.</p>
                     </div>
-                </div>
-
-                <div class="pillar-card">
-                    <div class="pillar-content">
-                        <div class="pillar-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        </div>
-                        <h3>Personalized Guidance.</h3>
-                        <p>Our Al-powered MehfoozBot provides immediate, real-time assistance, adapting to each user's language and learning style.</p>
-                        <button id="open-bot-demo" class="btn btn-secondary">See MehfoozBot in Action</button>
+                    <div class="reveal-up">
+                        <h3 class="font-script text-teal text-4xl mb-3">Guide Gently</h3>
+                        <p class="text-medium-text leading-relaxed">Harnessing the power of AI, our tool, MehfoozBot, offers personal, patient help. It adapts to each user's language and learning style, making technology feel like a friend.</p>
                     </div>
-                </div>
-                
-                <div class="pillar-card">
-                    <div class="pillar-content">
-                        <div class="pillar-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25" /></svg>
-                        </div>
-                        <h3>Knowledge, Co-Created.</h3>
-                        <p>Localized mini-courses in multiple indigenous languages, kept relevant through a unique feedback loop with local college students.</p>
+                     <div class="reveal-up">
+                        <h3 class="font-script text-teal text-4xl mb-3">Grow Together</h3>
+                        <p class="text-medium-text leading-relaxed">Through short, localized mini-courses and a unique feedback ecosystem with local college students, we ensure our knowledge is always relevant, effective, and co-created with the community.</p>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="insights">
-            <div classs="container">
-                <div class="section-header">
-                    <h2 class="font-script">Insights from the Digital Frontier</h2>
-                    <p>Establishing thought leadership and sharing our research from the field.</p>
-                </div>
-                
-                <div class="insights-grid">
-                    <a href="#" class="insight-card">
-                        <div class="insight-label">Report</div>
-                        <h3>The Urgency of Now: Misinformation in Conflict-Prone Regions</h3>
-                        <p>In areas like Gilgit Baltistan with limited access to reliable local news, social media has become the de facto public square...</p>
-                        <span>Read More &rarr;</span>
-                    </a>
-                    <a href="#" class="insight-card">
-                        <div class="insight-label">Data Point</div>
-                        <h3>The Literacy Gap: A Regional Analysis</h3>
-                        <p>Rapid technological adoption, including advanced AI tools, is outpacing digital literacy in Gilgit Baltistan...</p>
-                        <span>Read More &rarr;</span>
-                    </a>
-                    <a href="#" class="insight-card">
-                        <div class="insight-label">Field Note</div>
-                        <h3>Building Trust in the Village Square: Lessons from our Ulema Partnership</h3>
-                        <p>Our work on the ground demonstrates that effective digital literacy programs must be culturally integrated, not imposed...</p>
-                        <span>Read More &rarr;</span>
-                    </a>
                 </div>
             </div>
         </section>
         
-        <section id="contact">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="font-script">Become a Part of the Solution</h2>
-                    <p>Whether you are a community leader, a potential partner, or a researcher, there is a role for you in building a digitally resilient future.</p>
-                </div>
-                
-                <form id="contact-form">
-                    <div class="form-group-split">
-                        <div class="form-group">
-                            <label for="name">Your Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Your Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="interest">I am a...</label>
-                        <select id="interest" name="interest">
-                            <option value="partner">Potential Partner / Investor</option>
-                            <option value="researcher">Researcher / Institution</option>
-                            <option value="community">Community Member</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Your Message</label>
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                </form>
-                <div id="form-success" class="hidden">
-                    <h3 class="font-script">Thank You!</h3>
-                    <p>Your message has been sent. We'll be in touch soon.</p>
-                </div>
+        <section id="community" class="content-section py-20 md:py-40">
+            <div class="container mx-auto px-6 max-w-4xl">
+                 <div class="text-center reveal-up">
+                    <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">The Heart of Our Community</h2>
+                 </div>
+                 <div class="mt-16 reveal-up">
+                     <h3 class="font-script text-teal text-4xl mb-6 text-center">Voices from the Valley</h3>
+                     <div class="space-y-8">
+                         <blockquote class="border-l-4 border-gold pl-6 italic text-lg text-medium-text">"For the first time, I felt I could ask a 'silly' question about my phone without feeling embarrassed. MehfoozBot helped me understand."<cite class="block not-italic mt-2 text-light-text">- A student from Gilgit</cite></blockquote>
+                         <blockquote class="border-l-4 border-gold pl-6 italic text-lg text-medium-text text-right">"They didn’t come to teach; they came to learn with us. That is why we trust them."<cite class="block not-italic mt-2 text-light-text">- An elder from <strong>Skardu</strong></cite></blockquote>
+                     </div>
+                 </div>
             </div>
         </section>
+        
+        <section id="vision" class="content-section py-20 md:py-40">
+              <div class="container mx-auto px-6 max-w-4xl text-center">
+                  <div class="reveal-up">
+                      <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Five-Year Vision</h2>
+                      <p class="text-xl text-medium-text max-w-3xl mx-auto">To scale our impact together, offering an opportunity for partners to co-create a digitally resilient future.</p>
+                  </div>
+                  <div class="mt-16 grid md:grid-cols-2 gap-x-12 gap-y-16 text-left">
+                      <div class="reveal-up">
+                          <p class="font-script text-teal text-7xl" id="user-counter">0</p>
+                          <h3 class="text-2xl mt-2">Empowered Users Across Pakistan</h3>
+                          <p class="text-medium-text mt-2">Leveraging our established educational networks and community structures for organic, sustainable growth.</p>
+                      </div>
+                      <div class="reveal-up">
+                           <p class="font-script text-teal text-7xl">3+</p>
+                          <h3 class="text-2xl mt-2">Platform Evolutions</h3>
+                          <p class="text-medium-text mt-2">Introducing AI-driven learning paths, enhanced offline capabilities for remote areas, and expanded indigenous language support.</p>
+                      </div>
+                       <div class="reveal-up">
+                           <h3 class="font-script text-teal text-5xl mb-3">Deepened Integration</h3>
+                           <p class="text-medium-text mt-2">Strengthening our partnerships with educational institutions, community figures, and policymakers to ensure lasting adoption and impact.</p>
+                      </div>
+                      <div class="reveal-up">
+                           <h3 class="font-script text-teal text-5xl mb-3">Become a Partner</h3>
+                           <p class="text-medium-text mt-2">We are seeking partners for strategic guidance, technical support, funding, and operational efficiency to help us achieve this vision.</p>
+                      </div>
+                  </div>
+              </div>
+        </section>
+
+         <section id="values" class="content-section py-20 md:py-40">
+             <div class="container mx-auto px-6 max-w-5xl">
+                  <div class="text-center reveal-up mb-20">
+                     <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Guiding Principles</h2>
+                  </div>
+                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+                     <div class="reveal-up value-container">
+                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a3.004 3.004 0 015.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                         <h3 class="text-2xl mt-4 font-script text-teal">Collaboration</h3>
+                         <p class="text-medium-text mt-2">We build partnerships with local leaders, researchers, and community members to create a holistic approach.</p>
+                     </div>
+                      <div class="reveal-up value-container">
+                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                         <h3 class="text-2xl mt-4 font-script text-teal">Integrity</h3>
+                         <p class="text-medium-text mt-2">We uphold the highest standards of accuracy, ensuring users receive trustworthy information.</p>
+                     </div>
+                      <div class="reveal-up value-container">
+                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                         <h3 class="text-2xl mt-4 font-script text-teal">Inclusivity</h3>
+                         <p class="text-medium-text mt-2">We embrace diversity by providing resources in multiple languages, ensuring everyone has access.</p>
+                     </div>
+                      <div class="reveal-up value-container">
+                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                         <h3 class="text-2xl mt-4 font-script text-teal">Innovation</h3>
+                         <p class="text-medium-text mt-2">We leverage cutting-edge technologies like AI to continuously enhance our educational offerings.</p>
+                     </div>
+                 </div>
+             </div>
+          </section>
+
+        <section id="connect" class="content-section py-20 md:py-40">
+              <div class="container mx-auto px-6 space-y-24">
+                   <div class="text-center max-w-3xl mx-auto reveal-up">
+                     <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Become a Part of the Solution</h2>
+                     <p class="text-xl text-medium-text">Whether you are a community leader, a potential partner, or a researcher, there is a role for you. Let's connect.</p>
+                   </div>
+                   <div class="max-w-2xl mx-auto reveal-up">
+                     <h3 class="font-script text-teal text-4xl mb-6 text-center">Chat with MehfoozBot</h3>
+                     <div id="chat-log" class="bg-black/20 rounded-t-lg shadow-inner h-[50vh] flex flex-col gap-4 p-4 overflow-y-auto"></div>
+                     <div class="bg-black/20 rounded-b-lg p-4">
+                         <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3" id="prompt-buttons">
+                            </div>
+                         <form id="chat-form" class="flex gap-3">
+                             <input type="text" id="chat-input" placeholder="Ask a friendly question..." class="form-input flex-1 border-medium-text/30 rounded-full py-3 px-5 focus:ring-2 focus:ring-teal">
+                             <button type="submit" class="btn-teal rounded-full px-5 py-3 font-semibold">Send</button>
+                         </form>
+                     </div>
+                   </div>
+                   <div class="max-w-xl mx-auto reveal-up">
+                     <h3 class="font-script text-teal text-4xl mb-6 text-center">Send a Personal Message</h3>
+                     <form id="contact-form" class="space-y-6 text-left">
+                           <div>
+                             <label for="name" class="block mb-2 font-medium text-medium-text">Your Name</label>
+                             <input type="text" id="name" required class="form-input w-full border-medium-text/30 rounded-lg p-3">
+                           </div>
+                           <div>
+                             <label for="email" class="block mb-2 font-medium text-medium-text">Your Email</label>
+                             <input type="email" id="email" required class="form-input w-full border-medium-text/30 rounded-lg p-3">
+                           </div>
+                            <div>
+                                <label for="interest" class="block mb-2 font-medium text-medium-text">I am a...</label>
+                                <select id="interest" class="form-input w-full border-medium-text/30 rounded-lg p-3 appearance-none">
+                                    <option>Community Member</option>
+                                    <option>Potential Partner / Investor</option>
+                                    <option>Researcher / Institution</option>
+                                    <option>Student</option>
+                                </select>
+                            </div>
+                           <div>
+                             <label for="message" class="block mb-2 font-medium text-medium-text">Your Message</label>
+                             <textarea id="message" rows="5" required class="form-input w-full border-medium-text/30 rounded-lg p-3"></textarea>
+                           </div>
+                         <button type="submit" class="w-full btn-teal font-semibold py-4 px-6 rounded-lg">Send with heart</button>
+                     </form>
+                      <div id="form-success" class="hidden text-center border border-teal rounded-lg p-8 mt-6">
+                         <p class="font-script text-teal text-3xl mb-2">Thank You!</p>
+                         <p class="text-medium-text">Your message has been received. We'll be in touch soon.</p>
+                      </div>
+                   </div>
+              </div>
+        </section>
+
+        <nav id="friendly-nav" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-black/30 backdrop-blur-md rounded-full px-6 py-3 flex gap-6 text-lg text-medium-text">
+            <a href="#home" class="nav-link relative hover:text-light-text transition-colors active">Home</a>
+            <a href="#journal" class="nav-link relative hover:text-light-text transition-colors">Journal</a>
+            <a href="#approach" class="nav-link relative hover:text-light-text transition-colors">Approach</a>
+            <a href="#community" class="nav-link relative hover:text-light-text transition-colors">Community</a>
+            <a href="#connect" class="nav-link relative hover:text-light-text transition-colors">Connect</a>
+        </nav>
 
     </main>
-    
-    <div id="bot-modal" class="hidden">
-        <div class="bot-modal-content">
-            <button id="close-bot-demo">&times;</button>
-            <h3 class="font-script">Chat with MehfoozBot</h3>
-            <p>This is a simulated demo to show how our AI guide can help.</p>
-            
-            <div id="chat-log">
-                </div>
-            
-            <div id="question-pills-container">
-                 </div>
-            
-            <form id="chat-form">
-                <input type="text" id="chat-input" placeholder="Type your question..." autocomplete="off">
-                <button type="submit" class="btn btn-primary">Send</button>
-            </form>
-        </div>
-    </div>
 
-    <footer id="site-footer">
-        <div class="container">
-            <p>&copy; 2025 Mehfooz Internet. A digital sanctuary for all.</p>
-        </div>
-    </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
-    <script src="https://unpkg.com/split-type"></script>
-    
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            gsap.registerPlugin(ScrollTrigger);
+    document.addEventListener('DOMContentLoaded', function() {
+        gsap.registerPlugin(ScrollTrigger);
+        
+        const mainContent = document.getElementById('main-content');
+        const cursorLight = document.getElementById('cursor-light');
+        const friendlyNav = document.getElementById('friendly-nav');
+        
+        let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        gsap.ticker.add(() => { gsap.to(cursorLight, { duration: 0.5, x: mouse.x, y: mouse.y, ease: 'power2.out' }); });
 
-            // --- 1. LENIS SMOOTH SCROLL ---
-            const lenis = new Lenis();
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
+        // --- SMOOTH SCROLL ---
+        const lenis = new Lenis();
+        function raf(time) {
+            lenis.raf(time);
             requestAnimationFrame(raf);
-
-            // --- 2. CUSTOM CURSOR ---
-            const cursorDot = document.getElementById('cursor-dot');
-            const cursorLight = document.getElementById('cursor-light');
-            window.addEventListener('mousemove', e => {
-                gsap.to(cursorDot, { duration: 0.2, x: e.clientX, y: e.clientY });
-                gsap.to(cursorLight, { duration: 0.5, x: e.clientX, y: e.clientY, ease: 'power2.out' });
+        }
+        requestAnimationFrame(raf);
+        
+        // --- *** NAVIGATION FIX *** ---
+        // This is moved outside of any other function to run on load.
+        // It now correctly handles ALL anchor links, including the header.
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                lenis.scrollTo(this.getAttribute('href'));
             });
+        });
+
+        // --- "TRUST & DOUBT" GAME ---
+        const gameScreen = document.getElementById('game-screen');
+        const gameIntro = document.getElementById('game-intro');
+        const gameMain = document.getElementById('game-main');
+        const gameEnd = document.getElementById('game-end');
+        const gameStartBtn = document.getElementById('game-start-btn');
+        const gamePromptEl = document.getElementById('game-prompt');
+        const gameStatementEl = document.getElementById('game-statement');
+        const gameBtn1 = document.getElementById('game-btn-1');
+        const gameBtn2 = document.getElementById('game-btn-2');
+        const gameFeedbackEl = document.getElementById('game-feedback');
+        
+        const gameData = [
+            {
+                prompt: "A new message appears on your phone:",
+                statement: "URGENT: Your bank account is compromised! Click this link *immediately* to secure it and verify your identity.",
+                buttons: ["Trust", "Doubt"],
+                feedback: [
+                    "A feeling of urgency. This is often a trap. It's wise to pause.",
+                    "You paused. That's the first step to clarity. Urgency is often a trap."
+                ]
+            },
+            {
+                prompt: "A relative shares an article on social media:",
+                statement: "This simple home remedy cures all illnesses! Doctors are hiding it from you!",
+                buttons: ["Share", "Question"],
+                feedback: [
+                    "It's tempting to help, but extraordinary claims without proof can be harmful.",
+                    "You questioned it. That's the heart of critical thinking. Claims need evidence."
+                ]
+            }
+        ];
+        let gameStep = 0;
+
+        function loadGameStep(stepIndex) {
+            const step = gameData[stepIndex];
             
-            // --- 3. HEADER SCROLL EFFECT ---
-            const header = document.getElementById('site-header');
+            gsap.to([gamePromptEl, gameStatementEl, gameButtons], {opacity: 0, y: 10, duration: 0.3, onComplete: () => {
+                gamePromptEl.textContent = step.prompt;
+                gameStatementEl.textContent = step.statement;
+                gameBtn1.textContent = step.buttons[0];
+                gameBtn2.textContent = step.buttons[1];
+                gameFeedbackEl.textContent = '';
+                
+                gameBtn1.onclick = () => handleChoice(0);
+                gameBtn2.onclick = () => handleChoice(1);
+                
+                gsap.to([gamePromptEl, gameStatementEl, gameButtons], {opacity: 1, y: 0, duration: 0.5, stagger: 0.1});
+            }});
+        }
+        
+        function handleChoice(choiceIndex) {
+            const feedback = gameData[gameStep].feedback[choiceIndex];
+            gameFeedbackEl.textContent = feedback;
+            gsap.fromTo(gameFeedbackEl, {opacity: 0, y: 10}, {opacity: 1, y: 0, duration: 0.5});
+            
+            gameBtn1.disabled = true;
+            gameBtn2.disabled = true;
+            gsap.to([gameBtn1, gameBtn2], {opacity: 0.5, duration: 0.3});
+
+            setTimeout(() => {
+                gameStep++;
+                if (gameStep < gameData.length) {
+                    loadGameStep(gameStep);
+                    gameBtn1.disabled = false;
+                    gameBtn2.disabled = false;
+                    gsap.to([gameBtn1, gameBtn2], {opacity: 1, duration: 0.3});
+                } else {
+                    showGameEnd();
+                }
+            }, 3500);
+        }
+
+        function showGameEnd() {
+            gsap.to(gameMain, { opacity: 0, duration: 0.5, onComplete: () => {
+                gameMain.style.display = 'none';
+                gameEnd.classList.remove('hidden');
+                gsap.from(gameEnd, {opacity: 0, y: 20, duration: 1});
+            }});
+        }
+
+        gameStartBtn.addEventListener('click', () => {
+            gsap.to(gameIntro, { opacity: 0, duration: 0.5, onComplete: () => {
+                gameIntro.style.display = 'none';
+                gameMain.classList.remove('hidden');
+                gsap.from(gameMain, {opacity: 0, duration: 0.5});
+                loadGameStep(0);
+            }});
+        });
+
+        document.getElementById('enter-site-btn').addEventListener('click', () => {
+             gsap.to(gameScreen, { opacity: 0, duration: 1, onComplete: () => {
+                 gameScreen.style.display = 'none';
+                 gsap.to(mainContent, { opacity: 1, duration: 1 });
+                 initAnimations(); // Run main site animations
+             }});
+        });
+        
+        // --- THREE.JS BACKGROUND ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const particleCount = 7000;
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+        const colorGold = new THREE.Color(0xF4B860); // Updated Gold
+        const colorTeal = new THREE.Color(0x00A896); // Updated Teal
+
+        for(let i = 0; i < particleCount; i++) {
+            const i3 = i * 3;
+            positions[i3] = (Math.random() - 0.5) * 25;
+            positions[i3 + 1] = (Math.random() - 0.5) * 25;
+            positions[i3 + 2] = (Math.random() - 0.5) * 25;
+            
+            const mixedColor = Math.random() > 0.7 ? colorGold.clone() : colorTeal.clone().lerp(colorGold, Math.random() * 0.3);
+            colors[i3] = mixedColor.r;
+            colors[i3 + 1] = mixedColor.g;
+            colors[i3 + 2] = mixedColor.b;
+        }
+        const particlesGeometry = new THREE.BufferGeometry();
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.025,
+            sizeAttenuation: true,
+            transparent: true,
+            opacity: 0.6,
+            vertexColors: true
+        });
+        const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particles);
+
+        function animate() {
+            const scrollY = lenis.scroll;
+            const targetRotationY = scrollY * 0.0002;
+            particles.rotation.y += (targetRotationY - particles.rotation.y) * 0.05;
+            particles.rotation.x = mouse.y * 0.0001;
+            particles.position.y = -scrollY / window.innerHeight * 2;
+            
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        });
+
+        // --- MAIN ANIMATIONS (Called after game) ---
+        function initAnimations() {
+            // Friendly Nav visibility
             ScrollTrigger.create({
-                start: 'top top-=-100',
-                onEnter: () => header.classList.add('scrolled'),
-                onLeaveBack: () => header.classList.remove('scrolled')
+                start: 'top top-=-200',
+                onEnter: () => friendlyNav.classList.add('visible'),
+                onLeaveBack: () => friendlyNav.classList.remove('visible')
             });
 
-            // --- 4. PRELOADER & INTRO ANIMATION ---
-            
-            // Split hero text for animation
-            const heroHeadline = new SplitType('#hero-headline', { types: 'lines' });
-            gsap.set(heroHeadline.lines, { y: '110%' });
-            gsap.set('#hero-headline .line', { 'clip-path': 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' });
-
-
-            const loaderTL = gsap.timeline();
-            loaderTL
-                .to('.loader-logo', {
-                    opacity: 1,
-                    scale: 1,
-                    duration: 1,
-                    ease: 'power2.out'
-                })
-                .to('.loader-logo path', {
-                    opacity: 0,
-                    stagger: 0.1,
-                    delay: 0.5
-                })
-                .to('#loader', {
-                    opacity: 0,
-                    duration: 1,
-                    ease: 'expo.out',
-                    onComplete: () => document.getElementById('loader').classList.add('hidden')
-                }, '-=0.5')
-                .to('#site-header', {
+            // Section reveal animations
+            gsap.utils.toArray('.reveal-up').forEach(elem => {
+                gsap.fromTo(elem, { opacity: 0, y: 50 }, {
                     opacity: 1,
                     y: 0,
-                    duration: 1,
-                    ease: 'power2.out'
-                }, '-=0.5')
-                // Sophisticated Hero Text Reveal
-                .to(heroHeadline.lines, {
-                    y: '0%',
-                    stagger: 0.1,
                     duration: 1.2,
-                    ease: 'power3.out'
-                }, '-=0.5')
-                .to('#hero-headline', { opacity: 1 }, '-=1.2')
-                .to('#hero-subheadline', {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1,
-                    ease: 'power2.out'
-                }, '-=0.8')
-                .to('#scroll-prompt', {
-                    opacity: 1,
-                    duration: 1,
-                    delay: 0.5
-                }, '-=0.8');
-
-            // --- 5. NAVIGATION ---
-            // Smooth scroll
-            document.querySelectorAll('.nav-link, .nav-logo').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    lenis.scrollTo(targetId, { offset: -50 });
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: elem,
+                        start: 'top 85%',
+                    }
                 });
             });
-            
-            // Active link highlighting
-            gsap.utils.toArray('section').forEach(section => {
+            // Image parallax/reveal
+            gsap.utils.toArray('img').forEach(img => {
+                 gsap.fromTo(img.parentElement, { scale: 1.1, clipPath: 'inset(0% 50% 0% 50%)' }, {
+                     scale: 1,
+                     clipPath: 'inset(0% 0% 0% 0%)',
+                     duration: 1.5,
+                     ease: 'power3.out',
+                     scrollTrigger: {
+                         trigger: img,
+                         start: 'top 90%'
+                     }
+                 });
+            });
+
+            // Vision Counter Animation
+            gsap.to("#user-counter", {
+                textContent: 100000,
+                duration: 3,
+                ease: "power1.inOut",
+                snap: { textContent: 1 },
+                scrollTrigger: {
+                    trigger: "#user-counter",
+                    start: "top 80%",
+                },
+                onUpdate: function() {
+                    this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent).toLocaleString('en-US') + "+";
+                }
+            });
+
+            // Nav link active state
+            gsap.utils.toArray('.content-section').forEach((section) => {
                 ScrollTrigger.create({
                     trigger: section,
-                    start: 'top center',
-                    end: 'bottom center',
+                    start: 'top center-=100px',
+                    end: 'bottom center-=100px',
                     onToggle: self => {
                         if (self.isActive) {
-                            const sectionId = section.getAttribute('id');
-                            document.querySelectorAll('.nav-link').forEach(link => {
-                                link.classList.remove('active');
-                                if (link.getAttribute('href') === `#${sectionId}`) {
-                                    link.classList.add('active');
-                                }
-                            });
+                            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                            document.querySelector(`.nav-link[href="#${section.id}"]`)?.classList.add('active');
                         }
                     }
                 });
             });
+        }
+        
+        // --- SMARTER MEHFOOZBOT LOGIC ---
+        const chatLog = document.getElementById('chat-log');
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const promptButtonsContainer = document.getElementById('prompt-buttons');
 
+        const botResponses = {
+            "greeting": "Hello, friend. It's wonderful to connect with you. How can I help you find clarity today?",
+            "default": "That's a lovely question. While my abilities here are a demonstration, the full MehfoozBot can share stories and guidance on that. Every question is a step toward clarity.",
+            "misinformation": "To spot misinformation, it's helpful to pause and check the source, look for evidence, and notice if the story tries to make you feel strong emotions. A calm mind is a clear mind.",
+            "safety": "To stay safe online, it's wise to use strong, unique passwords and be cautious about sharing personal information. Think of your data as something precious you wouldn't leave unattended.",
+            "story": "Our story began with conversations in teahouses, listening to the hopes and worries of the community. You can read more in the 'From Our Journal' section above.",
+            "ulema": "We partner with trusted local Ulema (religious leaders). They act as digital literacy ambassadors, bridging traditional knowledge with modern skills to create unprecedented community acceptance."
+        };
+        const promptQuestions = {
+            "How do you work?": "ulema",
+            "What's your story?": "story",
+            "How to spot fake news?": "misinformation",
+            "How to stay safe?": "safety"
+        };
 
-            // --- 6. SCROLLYTELLING: THE CHALLENGE ---
-            const challengeTL = gsap.timeline({
-                scrollTrigger: {
-                    trigger: '.challenge-sticky-container',
-                    scrub: 1,
-                    pin: '.challenge-content',
-                    start: 'top top',
-                    end: 'bottom bottom'
-                }
-            });
+        function getBotResponse(userInput) {
+            const lowerInput = userInput.toLowerCase();
+            if (lowerInput.includes('fake news') || lowerInput.includes('misinformation')) return botResponses.misinformation;
+            if (lowerInput.includes('safe') || lowerInput.includes('whatsapp') || lowerInput.includes('security')) return botResponses.safety;
+            if (lowerInput.includes('story') || lowerInput.includes('who are you') || lowerInput.includes('why')) return botResponses.story;
+            if (lowerInput.includes('ulema') || lowerInput.includes('leaders') || lowerInput.includes('work')) return botResponses.ulema;
+            if (lowerInput.includes('hello') || lowerInput.includes('hi')) return botResponses.greeting;
+            return botResponses.default;
+        }
 
-            challengeTL
-                .to('.network-background', { opacity: 0.1, duration: 0.5 })
-                .to('#step-1', { opacity: 1, duration: 1 })
-                .to('.network-background', { 
-                    '--network-color': 'var(--danger)',
-                    opacity: 0.2,
-                    duration: 1 
-                }, '-=0.5')
-                .to('#step-1', { opacity: 0, duration: 1, delay: 1 })
-                .to('#step-2', { opacity: 1, duration: 1 })
-                .to('#step-2', { opacity: 0, duration: 1, delay: 1 })
-                .to('#step-3', { opacity: 1, duration: 1 })
-                .to('.network-background', {
-                    '--network-color': 'var(--gold)',
-                    opacity: 0.15,
-                    duration: 1
-                }, '-=0.5')
-                .to('#step-3', { opacity: 0, duration: 1, delay: 1 })
-                .to('.network-background', { opacity: 0, duration: 0.5 }, '-=0.5');
+        function addMessage(message, sender, isImmediate = false) {
+            const bubble = document.createElement('div');
+            bubble.className = `chat-bubble ${sender}-bubble`;
+            bubble.textContent = message;
+            chatLog.appendChild(bubble);
+            gsap.from(bubble, { opacity: 0, y: 20, duration: 0.5, delay: isImmediate ? 0 : 0.2 });
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
 
-            // --- 7. PARALLAX & SECTION REVEALS ---
-            
-            // Hero Background Parallax
-            gsap.to('.hero-background img', {
-                scale: 1,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '#hero',
-                    scrub: true,
-                    start: 'top top',
-                    end: 'bottom top'
-                }
-            });
-            
-            // Journal Section Parallax
-            gsap.to('.journal-image-container img', {
-                yPercent: -10,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '.journal-section',
-                    scrub: true,
-                    start: 'top bottom',
-                    end: 'bottom top'
-                }
-            });
-
-            // General Section Header Reveals
-            gsap.utils.toArray('.section-header, #contact-form').forEach(elem => {
-                gsap.fromTo(elem, 
-                    { opacity: 0, y: 50 },
-                    { 
-                        opacity: 1, 
-                        y: 0, 
-                        duration: 1,
-                        ease: 'power2.out',
-                        scrollTrigger: {
-                            trigger: elem,
-                            start: 'top 85%',
-                            toggleActions: 'play none none none'
-                        }
-                    }
-                );
-            });
-            
-            // Staggered Card Reveals
-            gsap.utils.toArray('.pillar-card, .insight-card').forEach((card, i) => {
-                 gsap.fromTo(card, 
-                    { opacity: 0, y: 50 },
-                    { 
-                        opacity: 1, 
-                        y: 0, 
-                        duration: 0.8,
-                        ease: 'power2.out',
-                        delay: (i % 3) * 0.15, // Stagger cards in a row
-                        scrollTrigger: {
-                            trigger: card.parentElement,
-                            start: 'top 80%',
-                            toggleActions: 'play none none none'
-                        }
-                    }
-                );
-            });
-
-
-            // --- 8. MEHFOOZBOT MODAL LOGIC ---
-            const openBotBtn = document.getElementById('open-bot-demo');
-            const closeBotBtn = document.getElementById('close-bot-demo');
-            const botModal = document.getElementById('bot-modal');
-            const chatLog = document.getElementById('chat-log');
-            const chatForm = document.getElementById('chat-form');
-            const chatInput = document.getElementById('chat-input');
-            const pillContainer = document.getElementById('question-pills-container');
-
-            const botResponses = {
-                "default": "That's a great question. While I'm just a demo, in the full version of MehfoozBot, I can provide detailed, personalized guidance on digital safety and literacy.",
-                "How can I spot fake news?": "To spot fake news, check the source, look for evidence, and watch for unusual formatting. Real news sites usually have high standards. Also, consider if the story is designed to make you feel strong emotions.",
-                "Is my WhatsApp safe?": "WhatsApp has end-to-end encryption, which is very secure. To make it even safer, enable two-step verification in your settings and be cautious about sharing personal information with unknown contacts.",
-                "What is misinformation?": "Misinformation is false or inaccurate information that is spread, regardless of intent to deceive. It's different from disinformation, which is deliberately misleading."
-            };
-
-            const questions = [
-                "How can I spot fake news?",
-                "Is my WhatsApp safe?",
-                "What is misinformation?"
-            ];
-
-            questions.forEach(q => {
-                const pill = document.createElement('div');
-                pill.className = 'question-pill';
-                pill.textContent = q;
-                pill.dataset.question = q;
-                pillContainer.appendChild(pill);
-            });
-
-            function addMessage(message, sender) {
-                const bubble = document.createElement('div');
-                bubble.className = `chat-bubble ${sender}-bubble`;
-                bubble.textContent = message;
-                chatLog.appendChild(bubble);
-                chatLog.scrollTop = chatLog.scrollHeight;
-            }
-
-            function addTypingIndicator() {
-                const typingBubble = document.createElement('div');
-                typingBubble.className = 'chat-bubble bot-bubble typing-indicator';
-                typingBubble.innerHTML = '<span></span><span></span><span></span>';
-                chatLog.appendChild(typingBubble);
-                chatLog.scrollTop = chatLog.scrollHeight;
-                return typingBubble;
-            }
-
-            function handleUserMessage(message) {
-                if (!message.trim()) return;
-                
-                addMessage(message, 'user');
+        function handleUserInput(input) {
+             if(input.trim()){
+                addMessage(input, 'user', true);
                 chatInput.value = '';
                 chatInput.disabled = true;
-                
-                const typing = addTypingIndicator();
-                
                 setTimeout(() => {
-                    chatLog.removeChild(typing);
-                    const response = botResponses[message] || botResponses['default'];
+                    const response = getBotResponse(input);
                     addMessage(response, 'bot');
                     chatInput.disabled = false;
                     chatInput.focus();
-                }, 1200 + Math.random() * 500);
-            }
+                }, 1200);
+             }
+        }
 
-            chatForm.addEventListener('submit', e => {
-                e.preventDefault();
-                handleUserMessage(chatInput.value);
-            });
-
-            pillContainer.addEventListener('click', e => {
-                if (e.target.classList.contains('question-pill')) {
-                    const question = e.target.dataset.question;
-                    handleUserMessage(question);
-                }
-            });
-
-            openBotBtn.addEventListener('click', () => {
-                botModal.classList.remove('hidden');
-                if (chatLog.children.length === 0) {
-                    const typing = addTypingIndicator();
-                    setTimeout(() => {
-                        chatLog.removeChild(typing);
-                        addMessage("Hello! I'm a demo of MehfoozBot. Click a question below or type your own.", 'bot');
-                    }, 1000);
-                }
-            });
-
-            closeBotBtn.addEventListener('click', () => {
-                botModal.classList.add('hidden');
-            });
-
-            // --- 9. CONTACT FORM LOGIC ---
-            const contactForm = document.getElementById('contact-form');
-            const formSuccess = document.getElementById('form-success');
-            contactForm.addEventListener('submit', e => {
-                e.preventDefault();
-                gsap.to(contactForm, {
-                    opacity: 0,
-                    duration: 0.5,
-                    onComplete: () => {
-                        contactForm.style.display = 'none';
-                        formSuccess.classList.remove('hidden');
-                        gsap.from(formSuccess, { opacity: 0, y: 20, duration: 0.5 });
-                    }
-                });
-            });
-
+        chatForm.addEventListener('submit', e => {
+             e.preventDefault();
+             handleUserInput(chatInput.value);
         });
-    </script>
+        
+        // Add prompt buttons to chat
+        Object.keys(promptQuestions).forEach(question => {
+            const button = document.createElement('button');
+            button.className = "chat-prompt-btn text-sm rounded-full py-2 px-3";
+            button.textContent = question;
+            button.onclick = () => {
+                handleUserInput(question);
+            }
+            promptButtonsContainer.appendChild(button);
+        });
 
+        addMessage(botResponses.greeting, 'bot', true);
+
+        // --- CONTACT FORM LOGIC ---
+        const contactForm = document.getElementById('contact-form');
+        const formSuccess = document.getElementById('form-success');
+        contactForm.addEventListener('submit', e => {
+             e.preventDefault();
+             gsap.to(contactForm, { opacity: 0, duration: 0.5, onComplete: () => {
+                 contactForm.style.display = 'none';
+                 formSuccess.classList.remove('hidden');
+                 gsap.from(formSuccess, {opacity: 0, y: 20, duration: 0.5});
+             }});
+        });
+
+    });
+    </script>
 </body>
 </html>
