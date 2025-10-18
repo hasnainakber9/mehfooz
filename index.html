@@ -5,15 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mehfooz | Clarity in the Digital Crossroads</title>
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
-
-    <style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script> <style>
         /* ---
-        SOPHISTICATED THEME (NAVY/TEAL/GOLD)
+        SOPHISTICATED THEME (NAVY/TEAL/GOLD) - REAPPLIED
         ---
         */
         :root {
@@ -25,6 +22,10 @@
             --gold: #F4B860;
             --teal: #00A896;
             --danger: #ef4444;
+            --success: #22c55e;
+
+            --font-sans: 'Inter', sans-serif;
+            --font-script: 'Caveat', cursive;
         }
 
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Caveat:wght@700&display=swap');
@@ -35,15 +36,16 @@
         body {
             background-color: var(--dark-bg);
             color: var(--light-text);
-            font-family: 'Inter', sans-serif; /* Modern, clean font */
+            font-family: var(--font-sans); /* Modern, clean font */
             overflow-x: hidden;
             cursor: none;
         }
-
-        .font-script {
-            font-family: 'Caveat', cursive;
-        }
         
+        .antialiased {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
         /* ---
         INTIMATE CURSOR
         ---
@@ -57,7 +59,8 @@
             background: radial-gradient(circle, rgba(244, 184, 96, 0.07) 0%, transparent 60%);
             transform: translate(-50%, -50%);
             z-index: 9999;
-            transition: transform 0.3s ease-out;
+            transition: transform 0.3s ease-out, opacity 0.3s ease;
+             opacity: 0; /* Hidden initially */
         }
         #cursor-dot {
             position: fixed;
@@ -68,6 +71,24 @@
             pointer-events: none;
             transform: translate(-50%, -50%);
             z-index: 10000;
+             transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
+            opacity: 0; /* Hidden initially */
+        }
+        body:hover > #cursor-light,
+        body:hover > #cursor-dot {
+            opacity: 1;
+        }
+        /* Cursor hover state */
+        a:hover ~ #cursor-dot,
+        button:hover ~ #cursor-dot,
+        select:hover ~ #cursor-dot {
+            transform: translate(-50%, -50%) scale(1.5);
+            background-color: var(--teal);
+        }
+        a:hover ~ #cursor-light,
+        button:hover ~ #cursor-light,
+        select:hover ~ #cursor-light {
+            transform: translate(-50%, -50%) scale(1.2);
         }
         
         #bg-canvas {
@@ -75,6 +96,11 @@
             top: 0; left: 0;
             width: 100%; height: 100vh;
             z-index: -1;
+            opacity: 0; /* Fade in */
+            transition: opacity 1s ease 0.5s;
+        }
+        body.site-entered #bg-canvas {
+            opacity: 1;
         }
 
         .content-section {
@@ -84,44 +110,59 @@
         }
         
         /* ---
-        NEW GAME STYLES
+        "TRUST OR DOUBT" GAME STYLES
         ---
         */
         #game-screen {
-            background-color: var(--dark-bg);
+            background-color: var(--dark-bg); /* Match theme */
         }
-        .game-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+        .game-card { /* General container style if needed */
+            /* background: var(--card-bg); */
+            /* border: 1px solid var(--border-color); */
             transition: all 0.3s ease;
             cursor: none;
         }
         .game-statement-card {
             background: rgba(255,255,255,0.05);
             border: 1px solid var(--border-color);
-            min-height: 10rem;
+            min-height: 10rem; /* Ensure space for text */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
         .game-btn {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
+            color: var(--light-text);
         }
-        .game-btn:hover {
+        .game-btn:hover:not(:disabled) { /* Only apply hover when not disabled */
             transform: translateY(-5px);
             background-color: var(--teal);
             border-color: var(--teal);
+            box-shadow: 0 5px 15px rgba(0, 168, 150, 0.3);
         }
-        .game-btn.gold:hover {
+        .game-btn.gold:hover:not(:disabled) {
             background-color: var(--gold);
             border-color: var(--gold);
             color: var(--dark-bg);
+             box-shadow: 0 5px 15px rgba(244, 184, 96, 0.3);
         }
+        .game-btn:disabled {
+            opacity: 0.5;
+            cursor: none; /* Already default, but reinforces */
+        }
+
         #enter-site-btn {
+            background-color: var(--gold);
+            color: var(--dark-bg);
             transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(244, 184, 96, 0.2);
         }
         #enter-site-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 20px rgba(244, 184, 96, 0.3);
         }
 
         /* Animate-in styles */
@@ -145,28 +186,44 @@
             background-color: var(--teal);
             border-color: var(--teal);
             color: white;
+            transform: translateY(-2px);
         }
         
         .form-input {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             color: var(--light-text);
+            border-radius: 8px; /* Consistent rounding */
+            padding: 0.875rem 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
         }
         .form-input:focus {
             outline: none;
             border-color: var(--teal);
             box-shadow: 0 0 0 3px rgba(0, 168, 150, 0.3);
         }
+        /* Style select arrow */
+        select.form-input {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2394A3B8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            background-size: 1.2em 1.2em;
+            padding-right: 2.5rem;
+        }
         
         .btn-teal {
              background-color: var(--teal);
              color: white;
              transition: all 0.3s ease;
+             border-radius: 99px; /* Pill shape */
         }
         .btn-teal:hover {
             background-color: var(--gold);
             color: var(--dark-bg);
             transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 168, 150, 0.3);
         }
 
         /* ---
@@ -176,14 +233,30 @@
         #friendly-nav {
             transform: translateY(200%);
             transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            position: fixed; /* Ensure it's fixed */
+            bottom: 2rem; /* Adjusted position */
+            left: 50%;
+            z-index: 50;
+            background: rgba(30, 41, 59, 0.7); /* card-bg with transparency */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
         #friendly-nav.visible {
-            transform: translateY(0);
+            transform: translate(-50%, 0); /* Centering */
         }
-        .nav-link.active {
+        #friendly-nav .nav-link { /* Target specifically within friendly nav */
+             color: var(--medium-text);
+             position: relative; /* Needed for ::after */
+             padding: 0.5rem 0; /* Add padding for better click area */
+        }
+         #friendly-nav .nav-link:hover {
+             color: var(--light-text);
+         }
+        #friendly-nav .nav-link.active {
             color: var(--gold);
         }
-        .nav-link::after {
+         /* Underline style */
+        #friendly-nav .nav-link::after {
             content: '';
             position: absolute;
             bottom: -4px;
@@ -193,12 +266,16 @@
             background: var(--gold);
             transform: scaleX(0);
             transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            transform-origin: center; /* Animate from center */
         }
-        .nav-link.active::after,
-        .nav-link:hover::after {
+        #friendly-nav .nav-link.active::after {
             transform: scaleX(1);
         }
-
+        #friendly-nav .nav-link:not(.active):hover::after {
+            transform: scaleX(0.5); /* Subtle hint on hover */
+             background: var(--light-text);
+        }
+        
         .value-icon {
             stroke-width: 1;
             transition: all 0.4s ease;
@@ -207,30 +284,171 @@
             transform: scale(1.1);
             stroke: var(--gold);
         }
+        
+        /* General button/link styles */
+        button, a, select {
+            cursor: none; /* Apply custom cursor */
+        }
+        
+        /* Ensure sections stack correctly */
+        section {
+            padding: 100px 0; /* Consistent padding */
+        }
+        #home { /* Override for hero */
+             min-height: 100vh;
+            padding: 0;
+        }
+         #journal, #approach, #community, #vision, #values, #connect {
+            padding-top: 120px; /* Standard top padding */
+             padding-bottom: 120px; /* Standard bottom padding */
+         }
+
+         /* ---
+         PRELOADER STYLES (MATCH THEME)
+         ---
+         */
+        #loader {
+            background-color: var(--dark-bg);
+        }
+        .loader-logo path:nth-child(1) { fill: var(--gold); opacity: 0.1; }
+        .loader-logo path:nth-child(2) { fill: var(--gold); opacity: 0.3; }
+        .loader-logo path:nth-child(3) { fill: var(--gold); }
+
+        /* ---
+        HEADER STYLES (MATCH THEME)
+        ---
+        */
+        #site-header {
+             /* Initial state is transparent */
+        }
+        #site-header.scrolled {
+            background: rgba(15, 23, 42, 0.7); /* dark-bg with transparency */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .nav-logo { color: var(--gold); }
+        .nav-link { color: var(--light-text); }
+        .nav-link:hover { color: var(--gold); }
+        .nav-link.btn-outline { border-color: var(--teal); color: var(--teal); }
+        .nav-link.btn-outline:hover { background-color: var(--teal); color: white; }
+
+        /* ---
+        HERO STYLES (MATCH THEME)
+        ---
+        */
+        #hero-headline { color: var(--gold); /* Script font */ }
+        #hero-subheadline { color: var(--light-text); }
+
+        /* ---
+        JOURNAL STYLES (MATCH THEME)
+        ---
+        */
+        #journal h2 { color: var(--gold); }
+        #journal p { color: var(--medium-text); }
+
+        /* ---
+        APPROACH STYLES (MATCH THEME)
+        ---
+        */
+        #approach h2 { color: var(--gold); }
+        #approach h3 { color: var(--teal); }
+        #approach p { color: var(--medium-text); }
+        
+        /* ---
+        COMMUNITY STYLES (MATCH THEME)
+        ---
+        */
+        #community h2 { color: var(--gold); }
+        #community h3 { color: var(--teal); }
+        #community blockquote { border-color: var(--gold); color: var(--medium-text); }
+        #community cite { color: var(--light-text); }
+
+        /* ---
+        VISION STYLES (MATCH THEME)
+        ---
+        */
+        #vision h2 { color: var(--gold); }
+        #vision p.text-medium-text { color: var(--medium-text); }
+        #vision .font-script.text-teal { color: var(--teal); }
+        #vision h3 { color: var(--light-text); }
+
+        /* ---
+        VALUES STYLES (MATCH THEME)
+        ---
+        */
+        #values h2 { color: var(--gold); }
+        #values h3 { color: var(--teal); }
+        #values p { color: var(--medium-text); }
+        #values .value-icon { color: var(--medium-text); } /* Tailwind overrides svg color, use color */
+         #values .value-container:hover .value-icon { color: var(--gold); } /* Use color for hover too */
+
+        /* ---
+        CONNECT STYLES (MATCH THEME)
+        ---
+        */
+        #connect h2 { color: var(--gold); }
+        #connect p.text-medium-text { color: var(--medium-text); }
+        #connect h3 { color: var(--teal); }
+        #connect label { color: var(--medium-text); }
+        #connect #form-success h3 { color: var(--teal); }
+        #connect #form-success p { color: var(--medium-text); }
+        
+        /* ---
+        BOT STYLES (MATCH THEME)
+        ---
+        */
+        #bot-modal { background-color: rgba(15, 23, 42, 0.7); }
+        .bot-modal-content { background-color: var(--dark-bg); border-color: var(--border-color); }
+        .bot-modal-content h3 { color: var(--gold); }
+        .bot-modal-content p { color: var(--medium-text); }
+        #close-bot-demo { color: var(--medium-text); }
+        #close-bot-demo:hover { color: var(--light-text); }
+        #chat-log { background-color: var(--card-bg); }
+        #prompt-buttons button { /* Already styled as chat-prompt-btn */ }
+        #chat-form input { /* Already styled as form-input */ }
+        #chat-form button { /* Already styled as btn-teal */ }
+
+        /* ---
+        FOOTER STYLES (MATCH THEME)
+        ---
+        */
+        #site-footer { border-color: var(--border-color); }
+        #site-footer p { color: var(--medium-text); }
+
+
     </style>
 </head>
 <body class="antialiased">
 
+    <div id="loader">
+        <svg class="loader-logo" width="80" height="93" viewBox="0 0 80 93" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 0L79.0526 23.25V69.75L40 93L0.947441 69.75V23.25L40 0Z"/>
+            <path d="M40 9.3L71.0526 27.9V65.1L40 83.7L8.94744 65.1V27.9L40 9.3Z"/>
+            <path d="M40 18.6L63.0526 32.55V60.45L40 74.4L16.9474 60.45V32.55L40 18.6Z"/>
+        </svg>
+    </div>
+
     <div id="cursor-light"></div>
     <div id="cursor-dot"></div>
+    
     <canvas id="bg-canvas"></canvas>
 
     <div id="game-screen" class="fixed inset-0 z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
-        <div class="text-center w-full max-w-2xl">
+        <div class="text-center w-full max-w-2xl game-card rounded-lg p-8 md:p-12">
             
              <div id="game-intro">
                  <h2 class="font-script text-gold text-4xl md:text-6xl mb-2">A Quiet Moment</h2>
                  <p class="text-medium-text text-lg mb-8">The digital world is full of voices. Before we begin, let's take a moment to listen to our own intuition.</p>
-                 <button id="game-start-btn" class="game-btn gold bg-gold text-dark-bg font-bold py-3 px-8 rounded-lg text-xl hover:scale-105">Begin</button>
+                 <button id="game-start-btn" class="game-btn gold font-bold py-3 px-8 rounded-lg text-xl">Begin</button>
              </div>
              
              <div id="game-main" class="hidden">
                 <p id="game-prompt" class="text-lg text-teal mb-4"></p>
-                <div id="game-statement" class="game-statement-card rounded-lg p-6 md:p-8 text-xl md:text-2xl flex items-center justify-center mb-6">
+                <div id="game-statement" class="game-statement-card rounded-lg p-6 md:p-8 text-xl md:text-2xl mb-6">
                     </div>
                 <div id="game-buttons" class="flex flex-col md:flex-row gap-4 justify-center">
-                    <button id="game-btn-1" class="game-btn text-lg font-semibold py-3 px-6 rounded-lg"></button>
-                    <button id="game-btn-2" class="game-btn text-lg font-semibold py-3 px-6 rounded-lg"></button>
+                    <button id="game-btn-1" class="game-btn text-lg font-semibold py-3 px-6 rounded-lg w-full md:w-auto"></button>
+                    <button id="game-btn-2" class="game-btn text-lg font-semibold py-3 px-6 rounded-lg w-full md:w-auto"></button>
                 </div>
                 <p id="game-feedback" class="mt-6 text-lg max-w-2xl mx-auto min-h-[4rem] text-medium-text"></p>
              </div>
@@ -238,15 +456,20 @@
              <div id="game-end" class="hidden">
                  <h3 class="font-script text-teal text-4xl mb-4">A Thoughtful Heart</h3>
                  <p class="text-xl text-medium-text mb-8">The journey to clarity isn't about knowing all the answers, but about being willing to ask the right questions. You are ready.</p>
-                 <button id="enter-site-btn" class="bg-gold text-dark-bg font-bold py-3 px-8 rounded-lg text-xl">Enter Mehfooz</button>
+                 <button id="enter-site-btn" class="font-bold py-3 px-8 rounded-lg text-xl">Enter Mehfooz</button>
              </div>
         </div>
     </div>
     
     <main id="main-content" class="opacity-0">
-        <header class="fixed top-0 left-0 w-full z-50">
-            <nav class="container mx-auto flex justify-between items-center p-6 md:p-8">
-                <a href="#home" class="font-script text-3xl text-gold">Mehfooz</a>
+        <header id="site-header" class="fixed top-0 left-0 w-full z-50"> <nav class="container mx-auto flex justify-between items-center p-6 md:p-8">
+                <a href="#home" class="nav-logo font-script text-3xl">Mehfooz</a>
+                <div class="hidden md:flex gap-6 text-lg">
+                    <a href="#journal" class="nav-link relative hover:text-gold transition-colors">Journal</a>
+                    <a href="#approach" class="nav-link relative hover:text-gold transition-colors">Approach</a>
+                    <a href="#community" class="nav-link relative hover:text-gold transition-colors">Community</a>
+                    <a href="#connect" class="nav-link relative hover:text-gold transition-colors">Connect</a>
+                </div>
             </nav>
         </header>
 
@@ -256,8 +479,7 @@
                 <p class="text-xl md:text-2xl text-light-text leading-relaxed max-w-4xl reveal-up">
                     For the people of Gilgit Baltistan, a safe space to find clarity in a connected world.
                 </p>
-                 <div class="absolute bottom-16 left-1/2 -translate-x-1/2">
-                    <a href="#journal" class="font-script text-medium-text animate-pulse">Scroll to Discover</a>
+                 <div id="scroll-prompt" class="absolute bottom-16 left-1/2 -translate-x-1/2 opacity-0"> <a href="#journal" class="font-script text-medium-text animate-pulse">Scroll to Discover</a>
                 </div>
             </div>
         </section>
@@ -281,8 +503,7 @@
 
         <section id="approach" class="content-section py-20 md:py-40">
             <div class="container mx-auto px-6 max-w-5xl">
-                <div class="text-center reveal-up mb-20">
-                    <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Approach is Simple</h2>
+                <div class="text-center reveal-up mb-20 section-header"> <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Approach is Simple</h2>
                 </div>
                 <div class="grid md:grid-cols-3 gap-12 text-center">
                     <div class="reveal-up">
@@ -292,7 +513,7 @@
                     <div class="reveal-up">
                         <h3 class="font-script text-teal text-4xl mb-3">Guide Gently</h3>
                         <p class="text-medium-text leading-relaxed">Harnessing the power of AI, our tool, MehfoozBot, offers personal, patient help. It adapts to each user's language and learning style, making technology feel like a friend.</p>
-                    </div>
+                         </div>
                      <div class="reveal-up">
                         <h3 class="font-script text-teal text-4xl mb-3">Grow Together</h3>
                         <p class="text-medium-text leading-relaxed">Through short, localized mini-courses and a unique feedback ecosystem with local college students, we ensure our knowledge is always relevant, effective, and co-created with the community.</p>
@@ -303,8 +524,7 @@
         
         <section id="community" class="content-section py-20 md:py-40">
             <div class="container mx-auto px-6 max-w-4xl">
-                 <div class="text-center reveal-up">
-                    <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">The Heart of Our Community</h2>
+                 <div class="text-center reveal-up section-header"> <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">The Heart of Our Community</h2>
                  </div>
                  <div class="mt-16 reveal-up">
                      <h3 class="font-script text-teal text-4xl mb-6 text-center">Voices from the Valley</h3>
@@ -318,8 +538,7 @@
         
         <section id="vision" class="content-section py-20 md:py-40">
               <div class="container mx-auto px-6 max-w-4xl text-center">
-                  <div class="reveal-up">
-                      <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Five-Year Vision</h2>
+                  <div class="reveal-up section-header"> <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Five-Year Vision</h2>
                       <p class="text-xl text-medium-text max-w-3xl mx-auto">To scale our impact together, offering an opportunity for partners to co-create a digitally resilient future.</p>
                   </div>
                   <div class="mt-16 grid md:grid-cols-2 gap-x-12 gap-y-16 text-left">
@@ -340,6 +559,7 @@
                       <div class="reveal-up">
                            <h3 class="font-script text-teal text-5xl mb-3">Become a Partner</h3>
                            <p class="text-medium-text mt-2">We are seeking partners for strategic guidance, technical support, funding, and operational efficiency to help us achieve this vision.</p>
+                           <a href="#connect" class="btn btn-outline mt-4">Connect With Us</a>
                       </div>
                   </div>
               </div>
@@ -347,8 +567,7 @@
 
          <section id="values" class="content-section py-20 md:py-40">
              <div class="container mx-auto px-6 max-w-5xl">
-                  <div class="text-center reveal-up mb-20">
-                     <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Guiding Principles</h2>
+                  <div class="text-center reveal-up mb-20 section-header"> <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Guiding Principles</h2>
                   </div>
                  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
                      <div class="reveal-up value-container">
@@ -377,8 +596,7 @@
 
         <section id="connect" class="content-section py-20 md:py-40">
               <div class="container mx-auto px-6 space-y-24">
-                   <div class="text-center max-w-3xl mx-auto reveal-up">
-                     <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Become a Part of the Solution</h2>
+                   <div class="text-center max-w-3xl mx-auto reveal-up section-header"> <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Become a Part of the Solution</h2>
                      <p class="text-xl text-medium-text">Whether you are a community leader, a potential partner, or a researcher, there is a role for you. Let's connect.</p>
                    </div>
                    <div class="max-w-2xl mx-auto reveal-up">
@@ -398,15 +616,15 @@
                      <form id="contact-form" class="space-y-6 text-left">
                            <div>
                              <label for="name" class="block mb-2 font-medium text-medium-text">Your Name</label>
-                             <input type="text" id="name" required class="form-input w-full border-medium-text/30 rounded-lg p-3">
+                             <input type="text" id="name" required class="form-input w-full">
                            </div>
                            <div>
                              <label for="email" class="block mb-2 font-medium text-medium-text">Your Email</label>
-                             <input type="email" id="email" required class="form-input w-full border-medium-text/30 rounded-lg p-3">
+                             <input type="email" id="email" required class="form-input w-full">
                            </div>
                             <div>
                                 <label for="interest" class="block mb-2 font-medium text-medium-text">I am a...</label>
-                                <select id="interest" class="form-input w-full border-medium-text/30 rounded-lg p-3 appearance-none">
+                                <select id="interest" class="form-input w-full">
                                     <option>Community Member</option>
                                     <option>Potential Partner / Investor</option>
                                     <option>Researcher / Institution</option>
@@ -415,7 +633,7 @@
                             </div>
                            <div>
                              <label for="message" class="block mb-2 font-medium text-medium-text">Your Message</label>
-                             <textarea id="message" rows="5" required class="form-input w-full border-medium-text/30 rounded-lg p-3"></textarea>
+                             <textarea id="message" rows="5" required class="form-input w-full"></textarea>
                            </div>
                          <button type="submit" class="w-full btn-teal font-semibold py-4 px-6 rounded-lg">Send with heart</button>
                      </form>
@@ -427,15 +645,21 @@
               </div>
         </section>
 
-        <nav id="friendly-nav" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-black/30 backdrop-blur-md rounded-full px-6 py-3 flex gap-6 text-lg text-medium-text">
-            <a href="#home" class="nav-link relative hover:text-light-text transition-colors active">Home</a>
-            <a href="#journal" class="nav-link relative hover:text-light-text transition-colors">Journal</a>
-            <a href="#approach" class="nav-link relative hover:text-light-text transition-colors">Approach</a>
-            <a href="#community" class="nav-link relative hover:text-light-text transition-colors">Community</a>
-            <a href="#connect" class="nav-link relative hover:text-light-text transition-colors">Connect</a>
+        <nav id="friendly-nav" class="rounded-full px-6 py-3 flex gap-6 text-lg">
+            <a href="#home" class="nav-link relative">Home</a>
+            <a href="#journal" class="nav-link relative">Journal</a>
+            <a href="#approach" class="nav-link relative">Approach</a>
+            <a href="#community" class="nav-link relative">Community</a>
+            <a href="#connect" class="nav-link relative">Connect</a>
         </nav>
 
     </main>
+
+    <footer id="site-footer">
+        <div class="container">
+            <p>&copy; 2025 Mehfooz Internet. A digital sanctuary for all.</p>
+        </div>
+    </footer>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -457,9 +681,8 @@
         }
         requestAnimationFrame(raf);
         
-        // --- *** NAVIGATION FIX *** ---
-        // This is moved outside of any other function to run on load.
-        // It now correctly handles ALL anchor links, including the header.
+        // --- *** ALL NAVIGATION LINKS HANDLER *** ---
+        // Moved here to ensure it's always available
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -467,7 +690,7 @@
             });
         });
 
-        // --- "TRUST & DOUBT" GAME ---
+        // --- "TRUST & DOUBT" GAME LOGIC ---
         const gameScreen = document.getElementById('game-screen');
         const gameIntro = document.getElementById('game-intro');
         const gameMain = document.getElementById('game-main');
@@ -478,6 +701,8 @@
         const gameBtn1 = document.getElementById('game-btn-1');
         const gameBtn2 = document.getElementById('game-btn-2');
         const gameFeedbackEl = document.getElementById('game-feedback');
+        const gameButtons = document.getElementById('game-buttons'); // Get button container
+        const enterSiteBtn = document.getElementById('enter-site-btn');
         
         const gameData = [
             {
@@ -485,8 +710,8 @@
                 statement: "URGENT: Your bank account is compromised! Click this link *immediately* to secure it and verify your identity.",
                 buttons: ["Trust", "Doubt"],
                 feedback: [
-                    "A feeling of urgency. This is often a trap. It's wise to pause.",
-                    "You paused. That's the first step to clarity. Urgency is often a trap."
+                    "A feeling of urgency rushed in. This is often a trap designed to bypass careful thought. It's wise to pause.",
+                    "You paused, listening to your doubt. That's the first step to clarity. Urgency is often a signal to be cautious."
                 ]
             },
             {
@@ -494,8 +719,8 @@
                 statement: "This simple home remedy cures all illnesses! Doctors are hiding it from you!",
                 buttons: ["Share", "Question"],
                 feedback: [
-                    "It's tempting to help, but extraordinary claims without proof can be harmful.",
-                    "You questioned it. That's the heart of critical thinking. Claims need evidence."
+                    "The desire to help is strong, but sharing unverified claims, even with good intentions, can sometimes cause harm.",
+                    "You questioned it, seeking more understanding. That's the heart of critical thinking. Claims need evidence."
                 ]
             }
         ];
@@ -504,16 +729,23 @@
         function loadGameStep(stepIndex) {
             const step = gameData[stepIndex];
             
-            gsap.to([gamePromptEl, gameStatementEl, gameButtons], {opacity: 0, y: 10, duration: 0.3, onComplete: () => {
+             // Fade out current content
+            gsap.to([gamePromptEl, gameStatementEl, gameButtons, gameFeedbackEl], {opacity: 0, y: 10, duration: 0.3, stagger: 0.05, onComplete: () => {
                 gamePromptEl.textContent = step.prompt;
                 gameStatementEl.textContent = step.statement;
                 gameBtn1.textContent = step.buttons[0];
                 gameBtn2.textContent = step.buttons[1];
-                gameFeedbackEl.textContent = '';
+                gameFeedbackEl.textContent = ''; // Clear feedback
                 
+                // Re-enable buttons
+                gameBtn1.disabled = false;
+                gameBtn2.disabled = false;
+                
+                // Assign new click handlers
                 gameBtn1.onclick = () => handleChoice(0);
                 gameBtn2.onclick = () => handleChoice(1);
                 
+                // Fade in new content
                 gsap.to([gamePromptEl, gameStatementEl, gameButtons], {opacity: 1, y: 0, duration: 0.5, stagger: 0.1});
             }});
         }
@@ -523,6 +755,7 @@
             gameFeedbackEl.textContent = feedback;
             gsap.fromTo(gameFeedbackEl, {opacity: 0, y: 10}, {opacity: 1, y: 0, duration: 0.5});
             
+            // Disable buttons visually and functionally
             gameBtn1.disabled = true;
             gameBtn2.disabled = true;
             gsap.to([gameBtn1, gameBtn2], {opacity: 0.5, duration: 0.3});
@@ -530,19 +763,17 @@
             setTimeout(() => {
                 gameStep++;
                 if (gameStep < gameData.length) {
-                    loadGameStep(gameStep);
-                    gameBtn1.disabled = false;
-                    gameBtn2.disabled = false;
-                    gsap.to([gameBtn1, gameBtn2], {opacity: 1, duration: 0.3});
+                     loadGameStep(gameStep); // Load next step
+                     // Opacity reset handled in loadGameStep fade-in
                 } else {
                     showGameEnd();
                 }
-            }, 3500);
+            }, 3500); // Time to read feedback
         }
 
         function showGameEnd() {
             gsap.to(gameMain, { opacity: 0, duration: 0.5, onComplete: () => {
-                gameMain.style.display = 'none';
+                gameMain.style.display = 'none'; // Use display none for layout
                 gameEnd.classList.remove('hidden');
                 gsap.from(gameEnd, {opacity: 0, y: 20, duration: 1});
             }});
@@ -550,84 +781,98 @@
 
         gameStartBtn.addEventListener('click', () => {
             gsap.to(gameIntro, { opacity: 0, duration: 0.5, onComplete: () => {
-                gameIntro.style.display = 'none';
+                gameIntro.style.display = 'none'; // Use display none
                 gameMain.classList.remove('hidden');
                 gsap.from(gameMain, {opacity: 0, duration: 0.5});
-                loadGameStep(0);
+                loadGameStep(0); // Load the first step
             }});
         });
 
-        document.getElementById('enter-site-btn').addEventListener('click', () => {
+        enterSiteBtn.addEventListener('click', () => {
              gsap.to(gameScreen, { opacity: 0, duration: 1, onComplete: () => {
                  gameScreen.style.display = 'none';
+                 document.body.classList.add('site-entered'); // Add class to body
                  gsap.to(mainContent, { opacity: 1, duration: 1 });
-                 initAnimations(); // Run main site animations
+                 initAnimations(); // Run main site animations ONLY NOW
              }});
         });
         
-        // --- THREE.JS BACKGROUND ---
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
-        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-        const particleCount = 7000;
-        const positions = new Float32Array(particleCount * 3);
-        const colors = new Float32Array(particleCount * 3);
-        const colorGold = new THREE.Color(0xF4B860); // Updated Gold
-        const colorTeal = new THREE.Color(0x00A896); // Updated Teal
-
-        for(let i = 0; i < particleCount; i++) {
-            const i3 = i * 3;
-            positions[i3] = (Math.random() - 0.5) * 25;
-            positions[i3 + 1] = (Math.random() - 0.5) * 25;
-            positions[i3 + 2] = (Math.random() - 0.5) * 25;
-            
-            const mixedColor = Math.random() > 0.7 ? colorGold.clone() : colorTeal.clone().lerp(colorGold, Math.random() * 0.3);
-            colors[i3] = mixedColor.r;
-            colors[i3 + 1] = mixedColor.g;
-            colors[i3 + 2] = mixedColor.b;
-        }
-        const particlesGeometry = new THREE.BufferGeometry();
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-        
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.025,
-            sizeAttenuation: true,
-            transparent: true,
-            opacity: 0.6,
-            vertexColors: true
-        });
-        const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particles);
-
-        function animate() {
-            const scrollY = lenis.scroll;
-            const targetRotationY = scrollY * 0.0002;
-            particles.rotation.y += (targetRotationY - particles.rotation.y) * 0.05;
-            particles.rotation.x = mouse.y * 0.0001;
-            particles.position.y = -scrollY / window.innerHeight * 2;
-            
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
+        // --- THREE.JS BACKGROUND (Keep if desired) ---
+        // (Assuming Three.js library is loaded via CDN)
+        try {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        });
 
-        // --- MAIN ANIMATIONS (Called after game) ---
+            const particleCount = 7000;
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            const colorGold = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--gold').trim());
+            const colorTeal = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--teal').trim());
+
+            for(let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+                positions[i3] = (Math.random() - 0.5) * 25;
+                positions[i3 + 1] = (Math.random() - 0.5) * 25;
+                positions[i3 + 2] = (Math.random() - 0.5) * 25;
+                
+                const mixedColor = Math.random() > 0.7 ? colorGold.clone() : colorTeal.clone().lerp(colorGold, Math.random() * 0.3);
+                colors[i3] = mixedColor.r;
+                colors[i3 + 1] = mixedColor.g;
+                colors[i3 + 2] = mixedColor.b;
+            }
+            const particlesGeometry = new THREE.BufferGeometry();
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.025,
+                sizeAttenuation: true,
+                transparent: true,
+                opacity: 0.6,
+                vertexColors: true,
+                depthWrite: false // Helps with transparency
+            });
+            const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particles);
+
+            function animateBackground() { // Renamed to avoid conflict
+                const scrollY = lenis.scroll;
+                const targetRotationY = scrollY * 0.0002;
+                particles.rotation.y += (targetRotationY - particles.rotation.y) * 0.05;
+                // Subtle mouse movement effect
+                particles.rotation.x += ( (mouse.y / window.innerHeight - 0.5) * 0.0005 - particles.rotation.x ) * 0.05;
+                particles.position.y = -scrollY / window.innerHeight * 2; // Keep scroll effect
+                
+                renderer.render(scene, camera);
+                requestAnimationFrame(animateBackground);
+            }
+            animateBackground(); // Start the background animation loop
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            });
+        } catch (e) {
+            console.error("Three.js initialization failed:", e);
+             // Hide canvas if it fails
+             document.getElementById('bg-canvas').style.display = 'none';
+        }
+
+
+        // --- MAIN SITE ANIMATIONS (Function to be called later) ---
         function initAnimations() {
+            console.log("Initializing main site animations..."); // Debug log
+
             // Friendly Nav visibility
             ScrollTrigger.create({
-                start: 'top top-=-200',
+                start: 'top top-=-300', // Show a bit earlier
+                end: 'bottom bottom+=200',
                 onEnter: () => friendlyNav.classList.add('visible'),
                 onLeaveBack: () => friendlyNav.classList.remove('visible')
             });
@@ -642,20 +887,32 @@
                     scrollTrigger: {
                         trigger: elem,
                         start: 'top 85%',
+                        // markers: true // Uncomment for debugging scroll trigger positions
                     }
                 });
             });
-            // Image parallax/reveal
+            
+            // Hero Text Animation (already done in loaderTL, but ensure opacity is set)
+            gsap.set(['#hero-headline', '#hero-subheadline'], { opacity: 1 }); // Ensure visibility if loader didn't run fully
+             gsap.to('#scroll-prompt', { opacity: 1, delay: 0.5, duration: 1 }); // Ensure scroll prompt shows
+
+
+            // Image parallax/reveal (Assuming images are within reveal-up containers or similar)
             gsap.utils.toArray('img').forEach(img => {
-                 gsap.fromTo(img.parentElement, { scale: 1.1, clipPath: 'inset(0% 50% 0% 50%)' }, {
-                     scale: 1,
-                     clipPath: 'inset(0% 0% 0% 0%)',
-                     duration: 1.5,
-                     ease: 'power3.out',
-                     scrollTrigger: {
-                         trigger: img,
-                         start: 'top 90%'
-                     }
+                 // Check if image is within a reveal-up parent for timing
+                 const parentTrigger = img.closest('.reveal-up') || img;
+                 gsap.fromTo(img.parentElement, // Target container for clip-path
+                     { scale: 1.1, clipPath: 'inset(10% 30% 10% 30%)', opacity: 0 },
+                     {
+                         scale: 1,
+                         clipPath: 'inset(0% 0% 0% 0%)',
+                         opacity: 1,
+                         duration: 1.5,
+                         ease: 'power3.out',
+                         scrollTrigger: {
+                             trigger: parentTrigger,
+                             start: 'top 80%' // Start animation slightly earlier
+                         }
                  });
             });
 
@@ -669,26 +926,38 @@
                     trigger: "#user-counter",
                     start: "top 80%",
                 },
+                // Use .toLocaleString for commas
                 onUpdate: function() {
                     this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent).toLocaleString('en-US') + "+";
                 }
             });
 
-            // Nav link active state
-            gsap.utils.toArray('.content-section').forEach((section) => {
+            // Nav link active state highlighting
+            gsap.utils.toArray('main section[id]').forEach((section) => { // Target only sections in main with an ID
                 ScrollTrigger.create({
                     trigger: section,
-                    start: 'top center-=100px',
+                    start: 'top center+=100px', // Adjust start/end slightly
                     end: 'bottom center-=100px',
+                    // markers: true, // For debugging
                     onToggle: self => {
-                        if (self.isActive) {
-                            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                            document.querySelector(`.nav-link[href="#${section.id}"]`)?.classList.add('active');
+                        const sectionId = section.getAttribute('id');
+                         const correspondingLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+                        if (correspondingLink) {
+                            if (self.isActive) {
+                                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                                correspondingLink.classList.add('active');
+                            } else {
+                                // Optional: remove active class when leaving the section view
+                                // correspondingLink.classList.remove('active');
+                            }
                         }
                     }
                 });
             });
-        }
+             // Ensure home is active initially if needed (after intro animations)
+             document.querySelector('.nav-link[href="#home"]')?.classList.add('active');
+
+        } // End initAnimations function
         
         // --- SMARTER MEHFOOZBOT LOGIC ---
         const chatLog = document.getElementById('chat-log');
@@ -707,12 +976,17 @@
         const promptQuestions = {
             "How do you work?": "ulema",
             "What's your story?": "story",
-            "How to spot fake news?": "misinformation",
-            "How to stay safe?": "safety"
+            "Spotting fake news?": "misinformation", // Shorter text
+            "Staying safe online?": "safety" // Shorter text
         };
 
         function getBotResponse(userInput) {
             const lowerInput = userInput.toLowerCase();
+             // Match based on shorter prompt text keys first
+             for (const [prompt, key] of Object.entries(promptQuestions)) {
+                 if (userInput === prompt) return botResponses[key];
+             }
+             // Then check keywords
             if (lowerInput.includes('fake news') || lowerInput.includes('misinformation')) return botResponses.misinformation;
             if (lowerInput.includes('safe') || lowerInput.includes('whatsapp') || lowerInput.includes('security')) return botResponses.safety;
             if (lowerInput.includes('story') || lowerInput.includes('who are you') || lowerInput.includes('why')) return botResponses.story;
@@ -726,8 +1000,10 @@
             bubble.className = `chat-bubble ${sender}-bubble`;
             bubble.textContent = message;
             chatLog.appendChild(bubble);
+            // Animate bubble appearance
             gsap.from(bubble, { opacity: 0, y: 20, duration: 0.5, delay: isImmediate ? 0 : 0.2 });
-            chatLog.scrollTop = chatLog.scrollHeight;
+            // Scroll smoothly to the bottom
+            gsap.to(chatLog, { duration: 0.5, scrollTo: { y: "max" }, ease: "power2.out" });
         }
 
         function handleUserInput(input) {
@@ -735,12 +1011,17 @@
                 addMessage(input, 'user', true);
                 chatInput.value = '';
                 chatInput.disabled = true;
+                 promptButtonsContainer.style.pointerEvents = 'none'; // Disable buttons too
+                 gsap.to(promptButtonsContainer.children, { opacity: 0.5, duration: 0.3 });
+
                 setTimeout(() => {
                     const response = getBotResponse(input);
                     addMessage(response, 'bot');
                     chatInput.disabled = false;
+                     promptButtonsContainer.style.pointerEvents = 'auto'; // Re-enable
+                     gsap.to(promptButtonsContainer.children, { opacity: 1, duration: 0.3 });
                     chatInput.focus();
-                }, 1200);
+                }, 1000 + Math.random() * 400); // Slightly faster bot response
              }
         }
 
@@ -755,11 +1036,12 @@
             button.className = "chat-prompt-btn text-sm rounded-full py-2 px-3";
             button.textContent = question;
             button.onclick = () => {
-                handleUserInput(question);
+                handleUserInput(question); // Send the full question text
             }
             promptButtonsContainer.appendChild(button);
         });
 
+        // Initial bot message
         addMessage(botResponses.greeting, 'bot', true);
 
         // --- CONTACT FORM LOGIC ---
@@ -774,7 +1056,14 @@
              }});
         });
 
-    });
+         // --- Initial Setup ---
+         // Ensure main content is hidden until game ends
+         gsap.set(mainContent, { opacity: 0 });
+         // Hide floating nav initially
+         gsap.set(friendlyNav, { y: '200%' }); // Start further down
+
+
+    }); // End DOMContentLoaded
     </script>
 </body>
 </html>
