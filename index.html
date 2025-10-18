@@ -3,1039 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehfooz - A Living Journal</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    {/* SplitText is removed for simpler line/reveal animations now */}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
+    <title>Mehfooz | Clarity in the Digital Crossroads</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-
-
-    <style>
-        :root {
-            --warm-dark: #1A120B; /* Cozy dark background */
-            --warm-text: #EAE0D5; /* Off-white text */
-            --medium-text: #A8A29A; /* Muted text */
-            --gold: #DAA520;      /* Primary accent - warmer gold */
-            --teal: #48A9A6;       /* Secondary accent - soft teal */
-            --font-heading: 'Poppins', sans-serif; /* Clean Sans for Headings/UI */
-            --font-body: 'Lora', serif; /* Readable Serif for Body */
-        }
-
-        html.lenis { height: auto; }
-        .lenis.lenis-smooth { scroll-behavior: auto; }
-
-        body {
-            background-color: var(--warm-dark);
-            color: var(--warm-text);
-            font-family: var(--font-body); /* Default to Lora */
-            font-size: 17px;
-            line-height: 1.7;
-            overflow-x: hidden;
-            cursor: none;
-            position: relative;
-        }
-        /* Film Grain Overlay - Subtle */
-        body::before {
-            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXVדהVlZWV/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f38AAAD/v//+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+v//+vf/+vf/+vf/+vf/+vf/+vf/+vf/+/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/+v//+v//+v//+/v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//v-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a.</p>!</xml>
-```python
-import pandas as pd
-import re
-import random
-from IPython.display import display, HTML
-
-# Read the provided HTML code into a pandas DataFrame (simulating reading the content of the HTML file)
-# This assumes the HTML provided is stored in a variable `html_content`
-# For local file loading: 
-# with open('path/to/your/html_file.html', 'r') as f:
-#     html_content = f.read()
-
-# For demonstration, let's assume the provided content is stored in a multi-line string:
-html_content = """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-K8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehfooz - A Living Journal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-    <script src="[https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js](https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js)"></script>
-    <script src="[https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js](https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js)"></script>
-    <script src="https'[cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js](https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js)"></script>
-    <script src="[https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js](https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js)"></script>
-    
-    <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-    <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-    <link href="[https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:wght@500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:wght@500;600;700&display=swap)" rel="stylesheet">
-
-
-    <style>
-        :root {
-            --space-dark: #0a051d; /* Deep space blue/purple */
-            --light-text: #f0f0f0; /* Soft white/light grey */
-            --medium-text: #a0a0c0; /* Muted lavender grey */
-            --cyan-glow: #00f0ff; 
-            --soft-gold: #f0e68c;
-            --font-heading: 'Poppins', sans-serif;
-            --font-body: 'Cormorant Garamond', serif;
-        }
-
-        html.lenis { height: auto; }
-        .lenis.lenis-smooth { scroll-behavior: auto; }
-
-        body {
-            background-color: var(--space-dark);
-            color: var(--light-text);
-            font-family: var(--font-body); /* Default to Lora */
-            font-size: 1.1rem; /* Slightly larger base */
-            line-height: 1.7;
-            overflow-x: hidden;
-            cursor: none;
-            position: relative; 
-        }
-        /* Film Grain Overlay */
-        body::before {
-            content: ''; position: fixed; top: -10%; left: -10%; width: 120%; height: 120%;
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXVדהVlZWV/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f38AAAD/v//+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+v//+vf/+vf/+vf/+vf/+vf/+vf/+vf/+/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/+v//+v//+v//+/v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//v-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a.');
-            opacity: 0.07; /* Softer grain */
-            pointer-events: none;
-            z-index: 10002; /* Above background, below content */
-            animation: grain 8s steps(10) infinite;
-        }
-        @keyframes grain {
-            0%, 100% { transform: translate(0, 0); } 10% { transform: translate(-2%, -4%); } 20% { transform: translate(-6%, 2%); } 30% { transform: translate(3%, -10%); } 40% { transform: translate(-2%, 10%); } 50% { transform: translate(-6%, 4%); } 60% { transform: translate(6%, 0%); } 70% { transform: translate(0%, 6%); } 80% { transform: translate(1%, 14%); } 90% { transform: translate(-4%, 4%); }
-        }
-
-        .font-heading {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-             /* Removed the strong text-shadow for a cleaner, more subtle look */
-        }
-        .font-body {
-            font-family: 'Lora', serif;
-            font-size: 1.1rem; /* Slightly larger body font for better readability and cozy feel */
-        }
-        
-        /* --- Custom Cursor --- */
-        #cursor-dot, #cursor-circle {
-            position: fixed;
-            top: 0; left: 0;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10003;
-            mix-blend-mode: difference; /* Softer blend mode */
-            will-change: transform, width, height, background-color, border-color, opacity;
-        }
-        #cursor-dot {
-            width: 8px; height: 8px;
-            background-color: var(--gold);
-            transform: translate(-50%, -50%);
-        }
-        #cursor-circle {
-            width: 35px; height: 35px; /* Slightly smaller base circle */
-            border: 1px solid var(--gold);
-            transform: translate(-50%, -50%);
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
-                        width 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
-                        height 0.4s cubic-bezier(0.19, 1, 0.22, 1),
-                        border-color 0.4s ease,
-                        background-color 0.4s ease,
-                        opacity 0.4s ease;
-        }
-        body.link-hover #cursor-circle { 
-            transform: translate(-50%, -50%) scale(1.4); /* Gentle expansion */
-            background-color: rgba(72, 169, 166, 0.1); /* Very subtle teal background */
-            border-color: var(--teal); /* Teal border on hover */
-        }
-        body.link-hover #cursor-dot {
-             transform: translate(-50%, -50%) scale(0.7); /* Dot shrinks slightly */
-             background-color: var(--teal); 
-        }
-
-        /* --- THREE.js Background Canvas --- */
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.2; /* Subtler particles */ }
-        
-        .content-section { 
-            position: relative; 
-            z-index: 1; 
-            padding: 18vh 0; /* Consistent vertical padding */
-            min-height: 80vh; /* Ensure sections have some height */
-        }
-        #home { min-height: 100vh; } /* Make hero full height */
-        
-        /* --- Seed Game --- */
-        #seed-container { cursor: pointer; }
-        #seed-svg .plant-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; filter: drop-shadow(0 0 4px var(--teal)); } /* Soft teal glow */
-        #seed-svg .seed { transition: all 0.5s ease; transform-origin: center; filter: drop-shadow(0 0 7px var(--gold)); } /* Soft gold glow */
-        #seed-container:active .seed { transform: scale(0.9); } /* Press effect */
-
-        /* --- Animation Styles --- */
-        .reveal-up { opacity: 0; transform: translateY(60px); }
-        .line-parent { overflow: hidden; display: block; }
-        .line-child { display: inline-block; transform: translateY(110%); }
-
-        /* --- Chat & Form --- */
-        .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 20px; line-height: 1.6; font-size: 1.05rem; } /* Slightly larger chat text */
-        .user-bubble { background-color: var(--teal); color: var(--warm-dark); border-bottom-right-radius: 4px; align-self: flex-end; font-weight: 500;}
-        .bot-bubble { background-color: rgba(234, 224, 213, 0.08); backdrop-filter: blur(5px); color: var(--warm-text); border: 1px solid rgba(234, 224, 213, 0.1); border-bottom-left-radius: 4px; align-self: flex-start; }
-        input, select, textarea { 
-            font-family: var(--font-body); /* Ensure inputs use body font */
-            color: var(--warm-text); 
-            background-color: rgba(255,255,255,0.05);
-            border: 1px solid var(--medium-text);
-            transition: border-color 0.3s, box-shadow 0.3s;
-            border-radius: 8px; 
-            padding: 12px 18px; /* Slightly more padding */
-        }
-        input::placeholder, textarea::placeholder { color: var(--medium-text); opacity: 0.7; font-style: italic;}
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 0 2px rgba(218, 165, 32, 0.2); 
-        }
-        select {
-           background-image: url("data:image/svg+xml,%3csvg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23A8A29A' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-           background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1em 1em; padding-right: 2.5rem; -webkit-appearance: none; appearance: none; color: var(--warm-text);
-        }
-        select option { background-color: var(--warm-dark); color: var(--warm-text); }
-        button { 
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background-color 0.3s ease; 
-            font-family: var(--font-heading); /* Use heading font for buttons */
-            font-weight: 500;
-        } 
-        button:hover { transform: scale(1.03); } 
-        button:active { transform: scale(0.98); }
-
-
-        /* --- Navigation --- */
-        header { 
-            backdrop-filter: blur(8px); 
-            background-color: rgba(26, 18, 11, 0.6); 
-            transition: background-color 0.3s ease;
-        }
-        #menu-toggle { 
-            z-index: 10001; 
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease; 
-            background-color: transparent; 
-            border: 1px solid var(--warm-text);
-            border-radius: 50%;
-            width: 48px; /* Slightly larger */
-            height: 48px;
-        }
-         #menu-toggle:hover { 
-             transform: scale(1.1) rotate(90deg); 
-             background-color: rgba(218, 165, 32, 0.1); 
-             border-color: var(--gold);
-         }
-        #menu-toggle span { 
-            background-color: var(--warm-text); 
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s; 
-            height: 1.5px; /* Thinner lines */
-            width: 18px; /* Slightly shorter lines */
-        }
-        #menu-toggle.open span { background-color: var(--gold);}
-        #menu-toggle.open span:nth-child(1) { transform: translateY(3.25px) rotate(45deg); } /* Adjusted y translate */
-        #menu-toggle.open span:nth-child(2) { transform: translateY(-3.25px) rotate(-45deg); } /* Adjusted y translate */
-        #menu-overlay { 
-            clip-path: circle(0% at calc(100% - 48px) 52px); /* Adjusted origin based on button size+padding */
-            background-color: rgba(26, 18, 11, 0.97); /* Almost opaque warm dark */
-            backdrop-filter: blur(15px); 
-            transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1); /* Smoother transition */
-        } 
-        #menu-overlay.open { clip-path: circle(150% at calc(100% - 48px) 52px); } /* Adjusted origin */
-        .menu-link { 
-            transform: translateY(50px); 
-            opacity: 0; 
-            font-family: var(--font-heading); /* Use Poppins for menu */
-            font-weight: 500; 
-            letter-spacing: 0.5px;
-            color: var(--warm-text); 
-            text-shadow: none; /* Remove default heading shadow in menu */
-            transition: color 0.3s ease, transform 0.3s ease; 
-         } 
-        .menu-link:hover { 
-            color: var(--gold); 
-            transform: translateY(50px) translateX(8px); /* Subtle shift */
-        }
-         /* Active link style */
-        .menu-link.active {
-            color: var(--gold);
-        }
-
-
-        /* Added subtle glow to buttons on hover */
-        #enter-site-btn, #chat-form button, #contact-form button {
-             transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); /* Ensure transition includes box-shadow */
-        }
-        #enter-site-btn:hover, 
-        #chat-form button:hover, 
-        #contact-form button:hover {
-             box-shadow: 0 0 15px 3px rgba(218, 165, 32, 0.3); /* Softer gold glow */
-             transform: scale(1.05);
-        }
-        .prompt-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 8px rgba(72, 169, 166, 0.3); /* Subtle Teal glow for prompts */
-        }
-        
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="antialiased">
 
-    <div id="cursor-dot"></div>
-    <div id="cursor-circle"></div>
-
-    <canvas id="bg-canvas"></canvas>
-
-    <div id="game-screen" class="fixed inset-0 bg-warm-dark z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
-        <div class="text-center w-full max-w-lg">
-            <div id="game-intro">
-                <h2 class="font-heading text-gold text-4xl md:text-6xl mb-2" style="text-shadow: 0 0 8px rgba(218, 165, 32, 0.4);">A Seed of Trust</h2>
-                <p class="font-body text-medium-text text-xl mb-8">Click and hold to begin.</p>
-            </div>
-            <div id="seed-container" class="relative w-full aspect-square max-w-[200px] mx-auto" role="button" aria-label="Grow the seed">
-                <svg id="seed-svg" class="w-full h-full" viewBox="0 0 200 200">
-                    <defs>
-                        <filter id="glow-teal" x="-50%" y="-50%" width="200%" height="200%">
-                          <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-                          <feMerge>
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                          </feMerge>
-                        </filter>
-                         <filter id="glow-gold" x="-50%" y="-50%" width="200%" height="200%">
-                          <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
-                          <feMerge>
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                          </feMerge>
-                        </filter>
-                    </defs>
-                    <path class="plant-path" d="M100 180 C 100 140, 70 140, 70 100 C 70 60, 100 60, 100 20" stroke="var(--teal)" stroke-width="2.5" fill="none" stroke-linecap="round" />
-                    <path class="plant-path" d="M70 100 C 40 100, 40 70, 70 70" stroke="var(--teal)" stroke-width="2.5" fill="none" stroke-linecap="round" />
-                    <path class="plant-path" d="M100 140 C 130 140, 130 110, 100 110" stroke="var(--teal)" stroke-width="2.5" fill="none" stroke-linecap="round" />
-                    <circle class="seed" cx="100" cy="180" r="8" fill="var(--gold)" filter="url(#glow-gold)"/> 
-                </svg>
-            </div>
-            <div id="game-end" class="absolute bottom-10 left-1/2 -translate-x-1/2 w-full px-4">
-                <p id="game-feedback" class="font-heading text-teal text-xl mb-4 opacity-0"></p>
-                <button id="enter-site-btn" class="font-heading bg-gold text-warm-dark font-semibold py-3 px-8 rounded-full text-xl hover:bg-opacity-90 transition-all opacity-0 scale-90 pointer-events-none shadow-lg shadow-gold/30">Begin Journey</button>
-            </div>
-        </div>
+    <div id="loader">
+        <svg class="loader-logo" width="80" height="93" viewBox="0 0 80 93" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 0L79.0526 23.25V69.75L40 93L0.947441 69.75V23.25L40 0Z" fill="var(--gold)" opacity="0.1"/>
+            <path d="M40 9.3L71.0526 27.9V65.1L40 83.7L8.94744 65.1V27.9L40 9.3Z" fill="var(--gold)" opacity="0.3"/>
+            <path d="M40 18.6L63.0526 32.55V60.45L40 74.4L16.9474 60.45V32.55L40 18.6Z" fill="var(--gold)"/>
+        </svg>
     </div>
-    
-    <header class="fixed top-0 left-0 w-full z-50 transition-opacity duration-500 opacity-0" id="main-header"> {/* Initially hidden */}
-        <nav class="container mx-auto flex justify-between items-center px-6 py-4 md:px-8 md:py-6">
-            <a href="#home" class="font-heading text-3xl text-gold z-[10002]" style="text-shadow: 0 0 5px rgba(218, 165, 32, 0.4);">Mehfooz</a>
-            <button id="menu-toggle" aria-label="Toggle Menu" aria-expanded="false" class="w-10 h-10 flex flex-col justify-center items-center gap-1.5 rounded-full bg-warm-text/5 backdrop-blur-sm border border-warm-text/10 hover:border-gold transition-colors">
-                <span class="w-5 h-0.5 bg-warm-text block transition-transform duration-300 origin-center"></span>
-                <span class="w-5 h-0.5 bg-warm-text block transition-transform duration-300 origin-center"></span>
-            </button>
+
+    <div id="cursor-light"></div>
+    <div id="cursor-dot"></div>
+
+    <header id="site-header">
+        <nav class="container">
+            <a href="#hero" class="nav-logo font-script">Mehfooz</a>
+            <div class="nav-links">
+                <a href="#challenge" class="nav-link">The Challenge</a>
+                <a href="#solutions" class="nav-link">Our Solution</a>
+                <a href="#insights" class="nav-link">Insights</a>
+                <a href="#contact" class="nav-link btn btn-outline">Join Us</a>
+            </div>
         </nav>
     </header>
+
+    <main id="main-content">
+
+        <section id="hero">
+            <div class="hero-background">
+                <img src="https://images.unsplash.com/photo-1623581203333-53531b1bbf8e?q=80&w=2400&auto=format&fit=crop" 
+                     alt="A thoughtful portrait of a person from Gilgit Baltistan">
+            </div>
+            <div class="hero-content container">
+                <h1 id="hero-headline">Clarity in the Digital Crossroads.</h1>
+                <p id="hero-subheadline">
+                    Mehfooz Internet is empowering the communities of Gilgit Baltistan with the tools to navigate the digital world safely and confidently.
+                </p>
+                <div id="scroll-prompt">
+                    <div class="mouse"></div>
+                    <span>Scroll to Discover</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="challenge" class="challenge-sticky-container">
+            <div class="challenge-content">
+                <div class="network-background"></div>
+                <div class="container">
+                    
+                    <div id="step-1" class="challenge-step">
+                        <h2>Where Progress Meets Peril.</h2>
+                        <p>In Gilgit Baltistan, technology is outpacing digital literacy. This creates a critical vulnerability, exposing communities to misinformation and digital threats as the network grows unchecked.</p>
+                    </div>
+
+                    <div id="step-2" class="challenge-step">
+                        <h2>Our Mission</h2>
+                        <p class="is-mission-statement">"To empower the people of Gilgit Baltistan with trustworthy, lifelong learning opportunities that promote online safety and digital literacy..."</p>
+                    </div>
+
+                    <div id="step-3" class="challenge-step">
+                        <h2>Our Vision</h2>
+                        <p>"...to cultivate a digitally literate society where individuals can confidently and responsibly navigate the digital landscape, transforming the network from a source of peril to a symbol of empowerment."</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="solutions" class="container reveal-up">
+            <div class="section-header">
+                <h2 class="font-script">An Ecosystem of Empowerment</h2>
+                <p>A unique, three-pronged solution built on trust, technology, and community.</p>
+            </div>
+            
+            <div class="solutions-grid">
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12s4.03 8.25 9 8.25zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-4.682 2.72a3 3 0 01-4.682-2.72m4.682 2.72v.003M18 18.72v.003m-3.182 2.651a3 3 0 01-2.23 0M12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM6 18.72v.003m3.182 2.651a3 3 0 01-2.23 0M6 18.72a9.094 9.094 0 01-3.741-.479 3 3 0 014.682-2.72M6 18.72v.003" /></svg>
+                    </div>
+                    <h3>Wisdom, Amplified.</h3>
+                    <p>We partner with local religious leaders (Ulema) who serve as trusted digital literacy ambassadors, bridging traditional knowledge with modern skills.</p>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <h3>Personalized Guidance.</h3>
+                    <p>Our Al-powered MehfoozBot provides immediate, real-time assistance, adapting to each user's language and learning style.</p>
+                    <button id="open-bot-demo" class="btn btn-secondary">See MehfoozBot in Action</button>
+                </div>
+                
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25" /></svg>
+                    </div>
+                    <h3>Knowledge, Co-Created.</h3>
+                    <p>Localized mini-courses in multiple indigenous languages, kept relevant through a unique feedback loop with local college students.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="insights" class="reveal-up">
+            <div classs="container">
+                <div class="section-header">
+                    <h2 class="font-script">Insights from the Digital Frontier</h2>
+                    <p>Establishing thought leadership and sharing our research from the field.</p>
+                </div>
+                
+                <div class="insights-grid">
+                    <a href="#" class="insight-card">
+                        <div class="insight-label">Report</div>
+                        <h3>The Urgency of Now: Misinformation in Conflict-Prone Regions</h3>
+                        <p>In areas like Gilgit Baltistan with limited access to reliable local news, social media has become the de facto public square...</p>
+                        <span>Read More &rarr;</span>
+                    </a>
+                    <a href="#" class="insight-card">
+                        <div class="insight-label">Data Point</div>
+                        <h3>The Literacy Gap: A Regional Analysis</h3>
+                        <p>Rapid technological adoption, including advanced AI tools, is outpacing digital literacy in Gilgit Baltistan...</p>
+                        <span>Read More &rarr;</span>
+                    </a>
+                    <a href="#" class="insight-card">
+                        <div class="insight-label">Field Note</div>
+                        <h3>Building Trust in the Village Square: Lessons from our Ulema Partnership</h3>
+                        <p>Our work on the ground demonstrates that effective digital literacy programs must be culturally integrated, not imposed...</p>
+                        <span>Read More &rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="reveal-up">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="font-script">Become a Part of the Solution</h2>
+                    <p>Whether you are a community leader, a potential partner, or a researcher, there is a role for you in building a digitally resilient future.</p>
+                </div>
+                
+                <form id="contact-form">
+                    <div class="form-group-split">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="interest">I am a...</label>
+                        <select id="interest" name="interest">
+                            <option value="partner">Potential Partner / Investor</option>
+                            <option value="researcher">Researcher / Institution</option>
+                            <option value="community">Community Member</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+                <div id="form-success" class="hidden">
+                    <h3 class="font-script">Thank You!</h3>
+                    <p>Your message has been sent. We'll be in touch soon.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
     
-    <div id="menu-overlay" class="fixed inset-0 bg-warm-dark/95 backdrop-blur-lg z-[10000] flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]">
-        <div class="text-center space-y-2">
-            <a href="#home" class="menu-link block font-heading text-5xl md:text-7xl text-warm-text hover:text-gold transition-colors duration-300">Home</a>
-            <a href="#journal" class="menu-link block font-heading text-5xl md:text-7xl text-warm-text hover:text-gold transition-colors duration-300">Our Story</a>
-            <a href="#approach" class="menu-link block font-heading text-5xl md:text-7xl text-warm-text hover:text-gold transition-colors duration-300">Approach</a>
-            <a href="#community" class="menu-link block font-heading text-5xl md:text-7xl text-warm-text hover:text-gold transition-colors duration-300">Community</a>
-            <a href="#connect" class="menu-link block font-heading text-5xl md:text-7xl text-warm-text hover:text-gold transition-colors duration-300">Connect</a>
+    <div id="bot-modal" class="hidden">
+        <div class="bot-modal-content">
+            <button id="close-bot-demo">&times;</button>
+            <h3 class="font-script">Chat with MehfoozBot</h3>
+            <p>This is a simulated demo to show how our AI guide can help.</p>
+            
+            <div id="chat-log">
+                </div>
+            
+            <div id="question-pills-container">
+                 </div>
+            
+            <form id="chat-form">
+                <input type="text" id="chat-input" placeholder="Type your question..." autocomplete="off">
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
         </div>
     </div>
 
-
-    <main id="main-content" class="opacity-0"> {/* Start main content as transparent */}
-
-        <section id="home" class="content-section h-screen flex flex-col items-center justify-center text-center">
-            <div class="px-4">
-                <h1 class="font-heading text-gold text-5xl md:text-7xl lg:text-8xl mb-4" style="text-shadow: 0 0 8px rgba(218, 165, 32, 0.3);">
-                    {/* Character animation will target spans */}
-                    <span class="inline-block">C</span><span class="inline-block">l</span><span class="inline-block">a</span><span class="inline-block">r</span><span class="inline-block">i</span><span class="inline-block">t</span><span class="inline-block">y</span>
-                    <span class="inline-block">&nbsp;</span>
-                    <span class="inline-block">i</span><span class="inline-block">n</span>
-                    <span class="inline-block">&nbsp;</span>
-                    <span class="inline-block">t</span><span class="inline-block">h</span><span class="inline-block">e</span>
-                    <span class="inline-block">&nbsp;</span>
-                    <span class="inline-block">D</span><span class="inline-block">i</span><span class="inline-block">g</span><span class="inline-block">i</span><span class="inline-block">t</span><span class="inline-block">a</span><span class="inline-block">l</span>
-                    <span class="inline-block">&nbsp;</span>
-                    <span class="inline-block">C</span><span class="inline-block">r</span><span class="inline-block">o</span><span class="inline-block">s</span><span class="inline-block">s</span><span class="inline-block">r</span><span class="inline-block">o</span><span class="inline-block">a</span><span class="inline-block">d</span><span class="inline-block">s</span><span class="inline-block">.</span>
-                </h1>
-                <p class="font-body text-xl md:text-2xl text-warm-text leading-relaxed max-w-3xl mx-auto line-parent mt-4">
-                    <span class="line-child">Mehfooz empowers the communities of Gilgit Baltistan to navigate the digital world safely and confidently.</span>
-                </p>
-            </div>
-             <div class="absolute bottom-10 left-1/2 -translate-x-1/2 reveal-up" style="--animation-delay: 1.5s;"> {/* Delay scroll prompt */}
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" class="mx-auto animate-bounce text-medium-text">
-                <path d="M12 5V19M12 19L19 12M12 19L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span class="font-body text-medium-text text-sm block mt-1">Scroll to discover</span>
-            </div>
-        </section>
-
-        <section id="journal" class="content-section py-20 md:py-32">
-             <div class="container mx-auto px-6 max-w-4xl">
-                 <div class="flex flex-col md:flex-row gap-12 items-center">
-                     <div class="w-full md:w-1/2 reveal-up">
-                         <div class="rounded-lg shadow-2xl shadow-black/30 overflow-hidden parallax-container">
-                             <img src="[https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto-format=fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D](https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto-format=fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)" alt="People gathered warmly around a table with tea" class="parallax-image rounded-lg">
-                         </div>
-                     </div>
-                     <div class="w-full md:w-1/2">
-                         <h2 class="font-heading text-gold text-4xl md:text-5xl mb-6 line-parent"><span class="line-child">Our Story</span></h2>
-                         <div class="font-body text-lg text-medium-text leading-relaxed space-y-6 word-anim">
-                            <p>Our journey started simply, in a small teahouse in Skardu, sharing cups of warm chai and listening. We heard stories from our community – tales of wonder and worry about this fast-changing digital world.</p>
-                            <p>It became clear the need wasn't just for new tools, but for understanding and trust. We needed a bridge between timeless local wisdom and modern technology. Mehfooz is our promise to help build that bridge, hand-in-hand.</p>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-        </section>
-
-        <section id="approach" class="content-section py-20 md:py-32 bg-black/5"> {/* Subtle background change */}
-            <div class="container mx-auto px-6 max-w-5xl">
-                <div class="text-center mb-16 md:mb-20 line-parent">
-                    <h2 class="font-heading text-gold text-4xl md:text-5xl mb-4 line-child">Our Approach</h2>
-                    <p class="font-body text-lg text-medium-text max-w-2xl mx-auto reveal-up">Rooted in respect, guided by community.</p>
-                </div>
-                <div class="grid md:grid-cols-3 gap-10">
-                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5">
-                        <p class="font-heading text-teal text-5xl mb-3">1.</p>
-                        <h3 class="font-heading text-2xl mb-3">Listen First</h3>
-                        <p class="font-body text-medium-text leading-relaxed">We partner with local elders and Ulema, honoring their wisdom as the foundation of our work. Trust is built through understanding.</p>
-                    </div>
-                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5" style="transition-delay: 0.1s;">
-                        <p class="font-heading text-teal text-5xl mb-3">2.</p>
-                        <h3 class="font-heading text-2xl mb-3">Guide Gently</h3>
-                        <p class="font-body text-medium-text leading-relaxed">Our tools, like MehfoozBot, offer personal, patient help in local languages, making technology feel like a friendly companion.</p>
-                    </div>
-                     <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5" style="transition-delay: 0.2s;">
-                        <p class="font-heading text-teal text-5xl mb-3">3.</p>
-                        <h3 class="font-heading text-2xl mb-3">Grow Together</h3>
-                        <p class="font-body text-medium-text leading-relaxed">Through mini-courses and feedback from local students, we ensure our knowledge is always relevant and co-created with the community.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="community" class="content-section py-20 md:py-32">
-            <div class="container mx-auto px-6 max-w-4xl">
-                 <div class="text-center reveal-up">
-                    <h2 class="font-heading text-gold text-4xl md:text-5xl mb-4">The Heart of Our Community</h2>
-                 </div>
-                 <div class="mt-16 reveal-up">
-                     <h3 class="font-heading text-teal text-3xl mb-8 text-center">Voices from the Valley</h3>
-                     <div class="space-y-12">
-                         <blockquote class="border-l-4 border-gold pl-6 italic font-body text-xl text-medium-text transition-transform duration-300 hover:scale-[1.02] max-w-2xl mx-auto reveal-up">
-                            "I'm excited to finally have a safe place to ask questions. I can't wait to use MehfoozBot to learn about my phone without feeling shy. It feels like someone is finally listening."
-                            <cite class="block not-italic mt-2 text-warm-text font-sans text-base">- A student from Gilgit</cite>
-                         </blockquote>
-                         <blockquote class="border-l-4 border-gold pl-6 italic font-body text-xl text-medium-text text-right transition-transform duration-300 hover:scale-[1.02] max-w-2xl mx-auto reveal-up" style="--animation-delay: 0.1s;">
-                            "To have something that respects our traditions while teaching our children about the future... this is a blessing we are all looking forward to. It will help us connect better."
-                            <cite class="block not-italic mt-2 text-warm-text font-sans text-base">- An elder from Ghanche</cite>
-                         </blockquote>
-                     </div>
-                 </div>
-            </div>
-        </section>
-        
-        <section id="vision" class="content-section py-20 md:py-32 bg-black/5"> {/* Subtle background change */}
-              <div class="container mx-auto px-6 max-w-4xl text-center">
-                  <div class="reveal-up">
-                      <h2 class="font-heading text-gold text-4xl md:text-5xl mb-4">Our Five-Year Vision</h2>
-                      <p class="font-body text-xl text-medium-text max-w-3xl mx-auto">To scale our impact together, empowering communities across Pakistan.</p>
-                  </div>
-                  <div class="mt-16 grid md:grid-cols-2 gap-x-12 gap-y-16 text-left items-center">
-                      <div class="reveal-up">
-                          <p class="font-heading text-teal text-7xl md:text-8xl" id="user-counter">0+</p>
-                          <h3 class="text-2xl mt-2 font-heading">User Base Expansion</h3>
-                          <p class="font-body text-medium-text mt-2 text-lg">Leveraging our community networks for organic, sustainable growth to reach over 100,000 users.</p>
-                      </div>
-                      <div class="reveal-up">
-                           <div class="relative pt-8">
-                                <svg id="timeline-svg" class="absolute top-0 left-0 w-full h-full opacity-50" viewbox="0 0 300 100" preserveAspectRatio="none"><path d="M 0 50, C 80 20, 150 80, 300 50" stroke="var(--teal)" stroke-width="2" fill="none" class="timeline-path" style="filter: drop-shadow(0 0 5px var(--teal));"/></svg>
-                               <h3 class="font-heading text-teal text-7xl md:text-8xl">3+</h3>
-                               <h3 class="text-2xl mt-2 font-heading">Platform Development</h3>
-                               <p class="font-body text-medium-text mt-2 text-lg">Introducing AI-driven learning paths, offline capabilities, and expanded language support.</p>
-                           </div>
-                      </div>
-                  </div>
-              </div>
-        </section>
-
-         <section id="values" class="content-section py-20 md:py-32">
-             <div class="container mx-auto px-6 max-w-5xl">
-                  <div class="text-center reveal-up mb-20">
-                     <h2 class="font-heading text-gold text-4xl md:text-5xl mb-4">Our Guiding Principles</h2>
-                  </div>
-                 <div class="grid md:grid-cols-4 gap-12 text-center">
-                     <div class="reveal-up value-container p-4">
-                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a3.004 3.004 0 015.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                         <h3 class="text-2xl mt-4 font-heading">Collaboration</h3>
-                     </div>
-                      <div class="reveal-up value-container p-4" style="transition-delay: 0.1s;">
-                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                         <h3 class="text-2xl mt-4 font-heading">Integrity</h3>
-                     </div>
-                      <div class="reveal-up value-container p-4" style="transition-delay: 0.2s;">
-                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                         <h3 class="text-2xl mt-4 font-heading">Inclusivity</h3>
-                     </div>
-                      <div class="reveal-up value-container p-4" style="transition-delay: 0.3s;">
-                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
-                         <h3 class="text-2xl mt-4 font-heading">Innovation</h3>
-                     </div>
-                 </div>
-             </div>
-          </section>
-
-        <section id="connect" class="content-section py-20 md:py-40">
-              <div class="container mx-auto px-6 space-y-24">
-                   <div class="text-center max-w-3xl mx-auto reveal-up">
-                     <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4">Let's chat.</h2>
-                     <p class="font-body text-xl text-medium-text">Whether you're a community member, a potential partner, or a researcher—we'd love to hear from you.</p>
-                   </div>
-                   <div class="max-w-2xl mx-auto reveal-up">
-                     <h3 class="font-heading text-teal text-4xl mb-6 text-center">Chat with MehfoozBot</h3>
-                     <div id="chat-log" class="bg-black/10 rounded-t-lg shadow-inner h-[50vh] flex flex-col gap-4 p-4 overflow-y-auto font-body"></div>
-                     <div class="bg-black/10 rounded-b-lg p-4">
-                        <div class="grid grid-cols-2 gap-2 mb-3" id="prompt-buttons"> {/* Simplified grid for prompts */}
-                           {/* Prompt buttons will be injected here */}
-                        </div>
-                         <form id="chat-form" class="flex gap-3">
-                             <input type="text" id="chat-input" placeholder="Ask a friendly question..." class="font-body flex-1 bg-warm-dark/50 border border-medium-text/30 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-gold text-light-text placeholder-medium-text/80">
-                             <button type="submit" class="font-heading bg-teal text-warm-dark rounded-full px-5 py-3 font-semibold hover:bg-opacity-80 transition-all duration-300 hover:shadow-lg hover:shadow-teal/30">Send</button>
-                         </form>
-                     </div>
-                   </div>
-                   <div class="max-w-xl mx-auto reveal-up">
-                     <h3 class="font-heading text-teal text-4xl mb-6 text-center">Send a Personal Message</h3>
-                     <form id="contact-form" class="space-y-6 text-left">
-                           <div>
-                             <label for="name" class="block mb-2 font-medium text-medium-text font-heading text-sm uppercase tracking-wider">Your Name</label>
-                             <input type="text" id="name" required class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text">
-                           </div>
-                           <div>
-                             <label for="email" class="block mb-2 font-medium text-medium-text font-heading text-sm uppercase tracking-wider">Your Email</label>
-                             <input type="email" id="email" required class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text">
-                           </div>
-                           <div>
-                                <label for="interest" class="block mb-2 font-medium text-medium-text font-heading text-sm uppercase tracking-wider">I am a...</label>
-                                <select id="interest" class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text">
-                                    <option>Community Member</option>
-                                    <option>Potential Partner / Investor</option>
-                                    <option>Researcher / Institution</option>
-                                    <option>Student</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                           <div>
-                             <label for="message" class="block mb-2 font-medium text-medium-text font-heading text-sm uppercase tracking-wider">Your Message</label>
-                             <textarea id="message" rows="5" required class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text"></textarea>
-                           </div>
-                         <button type="submit" class="font-heading w-full bg-teal text-warm-dark font-semibold py-4 px-6 rounded-lg hover:bg-opacity-80 transition-all duration-300 hover:shadow-lg hover:shadow-teal/30">Send with heart</button>
-                     </form>
-                      <div id="form-success" class="hidden text-center border border-teal rounded-lg p-8 mt-6">
-                         <p class="font-heading text-teal text-3xl mb-2">Thank You!</p>
-                         <p class="font-body text-medium-text">Your message has been received.</p>
-                      </div>
-                   </div>
-              </div>
-        </section>
-    </main>
-    
-    <footer class="py-12 bg-black/20 border-t border-white/5 mt-20">
-        <div class="container mx-auto px-6 text-center text-medium-text">
-            <a href="#home" class="font-heading text-3xl text-gold mb-4 inline-block">Mehfooz</a>
-            <div class="flex justify-center gap-6 mb-6">
-                <a href="#" class="hover:text-gold transition-colors" title="Facebook">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"/></svg>
-                </a>
-                <a href="#" class="hover:text-gold transition-colors" title="WhatsApp">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.447-4.435-9.884-9.888-9.884-5.448 0-9.886 4.434-9.889 9.885.002 2.024.603 3.965 1.667 5.63l-1.117 4.066 4.159-1.087z"/></svg>
-                </a>
-                <a href="#" class="hover:text-gold transition-colors" title="YouTube">
-                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zM9.999 15.198V8.802l5.541 3.198-5.541 3.198z" clip-rule="evenodd" /></svg>
-                </a>
-            </div>
-            <p class="font-body">&copy; 2024 Mehfooz Internet. All rights reserved.</p> 
-            <p class="font-body text-sm mt-2">Cultivating a digitally literate society in Gilgit Baltistan.</p>
+    <footer id="site-footer">
+        <div class="container">
+            <p>&copy; 2025 Mehfooz Internet. A digital sanctuary for all.</p>
         </div>
     </footer>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        gsap.registerPlugin(ScrollTrigger);
-        
-        const mainContent = document.getElementById('main-content');
-        
-        // --- CUSTOM CURSOR ---
-        const cursorDot = document.getElementById('cursor-dot');
-        const cursorCircle = document.getElementById('cursor-circle');
-        let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-        let circlePos = { ...mouse };
-        let circleScale = 1;
-        let isHovering = false;
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script src="script.js"></script>
 
-        window.addEventListener('mousemove', e => {
-            gsap.to(mouse, { duration: 0.3, x: e.clientX, y: e.clientY, ease: 'power2.out' });
-        });
-
-        gsap.ticker.add(() => {
-            gsap.set(cursorDot, { x: mouse.x - 4, y: mouse.y - 4 }); 
-            
-            const dx = mouse.x - circlePos.x;
-            const dy = mouse.y - circlePos.y;
-            circlePos.x += dx * 0.2; 
-            circlePos.y += dy * 0.2;
-            gsap.to(cursorCircle, { 
-                duration: 0.4, 
-                x: circlePos.x - 20, 
-                y: circlePos.y - 20, 
-                scale: circleScale,
-                opacity: isHovering ? 0.6 : 1, 
-                ease: 'expo.out' 
-            });
-            gsap.to(cursorDot, { 
-                duration: 0.4, 
-                scale: isHovering ? 2.0 : 1, // Grow dot more prominently
-                backgroundColor: isHovering ? 'var(--teal)' : 'var(--gold)',
-                ease: 'expo.out' 
-             });
-        });
-        
-        document.addEventListener('mouseover', (e) => {
-             if (e.target.closest('a, button, input, select, textarea, #seed-container, .value-container, .prompt-button')) {
-                 circleScale = 0.5; // Shrink circle on hover
-                 isHovering = true;
-             }
-         });
-         document.addEventListener('mouseout', (e) => {
-             if (e.target.closest('a, button, input, select, textarea, #seed-container, .value-container, .prompt-button')) {
-                 circleScale = 1;
-                 isHovering = false;
-             }
-         });
-
-
-        // --- SMOOTH SCROLL ---
-        const lenis = new Lenis({ lerp: 0.09 }); 
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-
-        // --- MENU ---
-        const menuToggle = document.getElementById('menu-toggle');
-        const menuOverlay = document.getElementById('menu-overlay');
-        const menuLinks = document.querySelectorAll('.menu-link');
-        const toggleSpans = menuToggle.querySelectorAll('span');
-        let isMenuOpen = false;
-
-        const menuEase = 'expo.inOut'; 
-        const menuDuration = 0.9;
-
-        const menuTimeline = gsap.timeline({ paused: true })
-            .to(menuOverlay, { 
-                clipPath: 'circle(150% at calc(100% - 40px) 48px)', // Corrected origin
-                duration: menuDuration, 
-                ease: menuEase 
-            }, 0)
-            .to(menuLinks, { 
-                y: 0, 
-                opacity: 1, 
-                duration: menuDuration * 0.7, 
-                stagger: 0.06, 
-                ease: 'expo.out' 
-            }, 0.15);
-
-        menuToggle.addEventListener('click', () => {
-            isMenuOpen = !isMenuOpen;
-            menuToggle.classList.toggle('open');
-            // menuOverlay.classList.toggle('open'); // GSAP handles the visual change
-            if(isMenuOpen) {
-                menuTimeline.timeScale(1).play();
-                gsap.to(toggleSpans[0], { y: 3.5, rotate: 45, duration: 0.4, ease: 'expo.out' });
-                gsap.to(toggleSpans[1], { y: -3.5, rotate: -45, duration: 0.4, ease: 'expo.out' });
-                lenis.stop();
-            } else {
-                menuTimeline.timeScale(1.5).reverse();
-                gsap.to(toggleSpans[0], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
-                gsap.to(toggleSpans[1], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
-                lenis.start();
-            }
-        });
-        
-        menuLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = link.getAttribute('href');
-                if (!target || !document.querySelector(target)) return; 
-
-                isMenuOpen = false;
-                menuToggle.classList.remove('open');
-                
-                menuTimeline.timeScale(1.5).reverse().then(() => { 
-                    lenis.start();
-                    lenis.scrollTo(target, { 
-                        duration: 1.8, 
-                        easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) 
-                    });
-                });
-                gsap.to(toggleSpans[0], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
-                gsap.to(toggleSpans[1], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
-            });
-        });
-
-        // --- "A SEED OF TRUST" GAME ---
-        const gameScreen = document.getElementById('game-screen');
-        const seedContainer = document.getElementById('seed-container');
-        const enterSiteBtn = document.getElementById('enter-site-btn'); // Renamed variable
-        const gameFeedbackEl = document.getElementById('game-feedback'); // Renamed variable
-        const plantPathsGame = document.querySelectorAll('#seed-svg .plant-path'); // Renamed variable
-        let growthAnim; // Renamed variable
-        let isSolved = false; // Renamed variable
-
-        function setupSeedInteraction() {
-            plantPathsGame.forEach(path => {
-                const length = path.getTotalLength();
-                path.style.strokeDasharray = length;
-                path.style.strokeDashoffset = length;
-             });
-
-            growthAnim = gsap.timeline({ paused: true, onComplete: onSeedSolved }); // Renamed timeline
-            growthAnim.to(plantPathsGame, {
-                strokeDashoffset: 0,
-                duration: 0.6, // Quick growth
-                ease: "power1.out",
-                stagger: 0.05 
-            });
-        }
-        
-        function onSeedSolved() { // Renamed function
-            if(isSolved) return;
-            isSolved = true;
-            seedContainer.style.pointerEvents = 'none'; 
-            gameFeedbackEl.textContent = "Trust takes root.";
-            gsap.to(gameFeedbackEl, { opacity: 1, duration: 0.5 });
-            gsap.to(enterSiteBtn, { opacity: 1, scale: 1, pointerEvents: 'auto', duration: 0.5, delay: 0 }); 
-        }
-        
-        const startSeedGrowth = (e) => { // Renamed function
-            e.preventDefault();
-            if (!isSolved) growthAnim.play(); 
-        };
-        
-        seedContainer.addEventListener('mousedown', startSeedGrowth);
-        seedContainer.addEventListener('touchstart', startSeedGrowth, {passive: true});
-        
-        enterSiteBtn.addEventListener('click', () => { // Used correct variable name
-             gsap.to(gameScreen, { 
-                 opacity: 0, 
-                 duration: 1.0, 
-                 ease: 'power1.inOut',
-                 onComplete: () => {
-                     gameScreen.style.display = 'none';
-                     gsap.to(mainContent, { opacity: 1, duration: 1, ease: 'power1.out' });
-                     initMainAnimations(); // Changed function name
-                     lenis.scrollTo('#home', { immediate: true });
-                 }
-             });
-        });
-
-        setupSeedInteraction(); // Changed function name
-
-
-        // --- THREE.JS BACKGROUND ---
-        let scene, camera, renderer, particles; 
-
-        function initThreeJS() {
-            const canvas = document.getElementById('bg-canvas');
-            if (!canvas) {
-                console.error("Canvas element #bg-canvas not found!");
-                return; 
-            }
-
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 4; 
-            renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true }); 
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-            const particleCount = 10000; 
-            const positions = new Float32Array(particleCount * 3);
-            const colors = new Float32Array(particleCount * 3);
-            // Use CSS variables for colors
-            const colorGoldThree = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--gold').trim());
-            const colorTealThree = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--teal').trim());
-            const colorWarmTextThree = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--warm-text').trim());
-
-            for(let i = 0; i < particleCount; i++) {
-                const i3 = i * 3;
-                const radius = 6 + Math.random() * 8; 
-                const phi = Math.acos(-1 + (2 * Math.random()));
-                const theta = Math.sqrt(particleCount * Math.PI) * phi;
-                
-                positions[i3] = radius * Math.sin(phi) * Math.cos(theta) * (Math.random() * 0.5 + 0.5); // Add slight random spread
-                positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta) * (Math.random() * 0.5 + 0.5);
-                positions[i3 + 2] = radius * Math.cos(phi) * (Math.random() * 0.5 + 0.5) - 5; 
-                
-                const randColor = Math.random();
-                let mixedColor;
-                if (randColor < 0.7) mixedColor = colorWarmTextThree.clone().lerp(colorGoldThree, Math.random() * 0.4); 
-                else if (randColor < 0.9) mixedColor = colorGoldThree.clone();
-                else mixedColor = colorTealThree.clone().lerp(colorWarmTextThree, 0.7); 
-                
-                colors[i3] = mixedColor.r; colors[i3 + 1] = mixedColor.g; colors[i3 + 2] = mixedColor.b;
-            }
-            const particlesGeometry = new THREE.BufferGeometry();
-            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            
-            const particlesMaterial = new THREE.PointsMaterial({
-                size: 0.018, sizeAttenuation: true, transparent: true, opacity: 0.7, 
-                vertexColors: true, blending: THREE.AdditiveBlending, depthWrite: false
-            });
-            particles = new THREE.Points(particlesGeometry, particlesMaterial);
-            scene.add(particles);
-        }
-
-        const clock = new THREE.Clock();
-
-        function animateBackground() {
-            if (!renderer || !scene || !camera || !particles) return; // Guard clause
-
-            const elapsedTime = clock.getElapsedTime();
-            
-            particles.rotation.y = elapsedTime * 0.015; 
-            particles.rotation.x = elapsedTime * 0.007;
-            
-            camera.position.x += ((mouse.x / window.innerWidth - 0.5) * 0.05 - camera.position.x) * 0.02;
-            camera.position.y += (-(mouse.y / window.innerHeight - 0.5) * 0.05 - camera.position.y) * 0.02;
-            camera.lookAt(scene.position);
-
-            renderer.render(scene, camera);
-            requestAnimationFrame(animateBackground);
-        }
-        
-        initThreeJS(); 
-        if (renderer) { // Only start animation if renderer was initialized
-             animateBackground();
-        }
-
-        window.addEventListener('resize', () => {
-            if (!camera || !renderer) return;
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        });
-
-        // --- MAIN CONTENT ANIMATIONS ---
-        function initMainAnimations() { // Renamed from initAnimations to avoid conflict
-            // Headline animation (wait for main content to be visible)
-            const heroHeadline = document.querySelector('#home h1');
-            if (heroHeadline) {
-                const chars = heroHeadline.textContent.split('').map(char => 
-                    `<span class="char inline-block" style="transform: translateY(110%); opacity: 0;">${char === ' ' ? '&nbsp;' : char}</span>`
-                ).join('');
-                heroHeadline.innerHTML = chars;
-                gsap.to(heroHeadline.querySelectorAll('.char'), {
-                    y: '0%',
-                    opacity: 1,
-                    duration: 0.8,
-                    stagger: 0.03,
-                    ease: 'expo.out',
-                    delay: 0.2 // Small delay after fade-in
-                });
-            }
-
-
-            // Animate lines in paragraphs and initial subtitle
-             gsap.utils.toArray('.line-parent .line-child').forEach(el => {
-                gsap.fromTo(el, { y: '110%' }, { 
-                    y: '0%', 
-                    duration: 1.5, 
-                    ease: 'expo.out', 
-                    scrollTrigger: {
-                        trigger: el.closest('.line-parent'), 
-                        start: 'top 90%'
-                    }
-                });
-            });
-
-            // Standard reveal-up for other elements
-            gsap.utils.toArray('.reveal-up').forEach(elem => {
-                gsap.fromTo(elem, { opacity: 0, y: 70 }, {
-                    opacity: 1, y: 0, duration: 1.6, ease: 'expo.out',
-                    scrollTrigger: { trigger: elem, start: 'top 88%'}
-                });
-            });
-            
-            // Parallax Images
-            gsap.utils.toArray('.parallax-image').forEach(img => {
-                 gsap.to(img, {
-                    yPercent: -10, 
-                    ease: 'none',
-                    scrollTrigger: { trigger: img.closest('.parallax-container'), scrub: 2 } 
-                });
-            });
-            
-            // Counter Animation
-            const userCounter = document.getElementById('user-counter');
-            if (userCounter) { 
-                ScrollTrigger.create({
-                   trigger: userCounter, 
-                   start: "top 85%",
-                   once: true,
-                   onEnter: () => {
-                       let counter = { value: 0 }; // Use an object for tweening
-                       gsap.to(counter, { 
-                           value: 100000, 
-                           duration: 3, 
-                           ease: "expo.out", 
-                           onUpdate: () => {
-                               userCounter.innerHTML = Math.ceil(counter.value).toLocaleString() + "+";
-                           }
-                       });
-                   }
-                });
-            }
-
-            // Timeline Path Animation
-            const timelinePath = document.querySelector('.timeline-path');
-            if(timelinePath) {
-                const length = timelinePath.getTotalLength();
-                gsap.set(timelinePath, { strokeDasharray: length, strokeDashoffset: length });
-                gsap.to(timelinePath, {
-                    strokeDashoffset: 0, duration: 3, ease: 'power1.inOut',
-                    scrollTrigger: { trigger: timelinePath, start: 'top 85%' }
-                });
-            }
-
-            // General Smooth Scroll Anchors (excluding menu links)
-            document.querySelectorAll('a[href^="#"]:not(.menu-link)').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        lenis.scrollTo(targetElement, { 
-                            duration: 1.8, 
-                            easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t), 
-                            offset: -80 // Adjust if needed for fixed header
-                        });
-                    }
-                });
-            });
-        }
-        
-        // --- MEHFOOZBOT LOGIC ---
-        const chatLog = document.getElementById('chat-log');
-        const chatForm = document.getElementById('chat-form');
-        const chatInput = document.getElementById('chat-input');
-        const promptButtonsContainer = document.getElementById('prompt-buttons');
-
-        const botResponses = {
-            "greeting": "Salaam! Welcome to Mehfooz. I'm here to help guide you. Feel free to ask anything, or try one of the prompts below.",
-            "default": "That's an interesting thought! While I'm still learning, the full Mehfooz platform offers resources on many topics. Maybe ask about our story, safety, or spotting fake news?",
-            "misinformation": "Spotting misinformation is key! Look closely at the source - is it trustworthy? Does it use strong, emotional language? Does it offer proof? Real news is often calmer and shows evidence. We have mini-courses on this!",
-            "safety": "Staying safe online is like protecting your home. Use strong, different passwords. Be careful what personal details you share, especially in messages or public posts. Think before you click links! Our resources cover this in detail.",
-            "story": "Mehfooz began with conversations in Skardu, listening to the community's hopes and worries about the digital world. We aim to build a bridge between traditional wisdom and modern tools. You can feel our story in the 'Our Story' section.",
-            "ulema": "We proudly partner with respected local Ulema. They are trusted voices who help us share digital literacy in a way that resonates deeply within the community, blending faith and knowledge."
-        };
-        const promptQuestions = {
-            "What's your story?": "story",
-            "How do you work with Ulema?": "ulema",
-            "Tips for spotting fake news?": "misinformation",
-            "How can I stay safe online?": "safety"
-        };
-        
-        function addMessage(message, sender, isImmediate = false) {
-            const bubble = document.createElement('div');
-            bubble.className = `chat-bubble ${sender}-bubble font-body`;
-            bubble.textContent = message;
-            chatLog.appendChild(bubble);
-            gsap.from(bubble, { opacity: 0, y: 20, duration: 0.6, delay: isImmediate ? 0 : 0.4, ease: 'expo.out' });
-            chatLog.scrollTop = chatLog.scrollHeight;
-        }
-
-        function handleUserInput(input) {
-             if(input.trim()){
-                addMessage(input, 'user', true);
-                chatInput.value = '';
-                chatInput.disabled = true;
-                promptButtonsContainer.style.pointerEvents = 'none';
-                gsap.to(promptButtonsContainer.querySelectorAll('button'), { opacity: 0.5, duration: 0.3 });
-                addMessage("Thinking...", 'bot', true); 
-                const thinkingBubble = chatLog.lastChild;
-
-                setTimeout(() => {
-                    gsap.to(thinkingBubble, {opacity: 0, duration: 0.3, onComplete: () => thinkingBubble.remove()});
-                    let responseKey = 'default';
-                    if (promptQuestions[input]) {
-                        responseKey = promptQuestions[input];
-                    } else { 
-                       const inputLower = input.toLowerCase();
-                       for (const key in promptQuestions) {
-                          const keywords = key.toLowerCase().replace(/[^a-z0-9\s]/gi, '').split(' ').filter(word => !['what\'s', 'how', 'do', 'you', 'can', 'i', 'is', 'a', 'the', 'for', 'with', 'tips'].includes(word) && word.length > 2);
-                          if (keywords.some(keyword => inputLower.includes(keyword))) {
-                             responseKey = promptQuestions[key];
-                             break;
-                          }
-                       }
-                    }
-                    const response = botResponses[responseKey];
-                    addMessage(response, 'bot');
-                    chatInput.disabled = false;
-                    chatInput.focus();
-                    promptButtonsContainer.style.pointerEvents = 'auto';
-                    gsap.to(promptButtonsContainer.querySelectorAll('button'), { opacity: 1, duration: 0.3 });
-                }, 900 + Math.random() * 600);
-             }
-        }
-
-        chatForm.addEventListener('submit', e => {
-             e.preventDefault();
-             handleUserInput(chatInput.value);
-        });
-        
-        Object.keys(promptQuestions).forEach(question => {
-            const button = document.createElement('button');
-            button.setAttribute('role', 'button'); 
-            button.className = "prompt-button font-body text-sm bg-warm-dark/50 border border-medium-text/30 rounded-full py-2 px-3 text-medium-text hover:border-gold hover:text-gold transition-colors text-left";
-            button.textContent = question;
-            button.onclick = () => { handleUserInput(question); }
-            promptButtonsContainer.appendChild(button);
-        });
-
-        setTimeout(() => { addMessage(botResponses.greeting, 'bot', true); }, 500);
-
-        // --- CONTACT FORM LOGIC ---
-        const contactForm = document.getElementById('contact-form');
-        const formSuccess = document.getElementById('form-success');
-        contactForm.addEventListener('submit', e => {
-             e.preventDefault();
-             // Simulate form submission
-             gsap.to(contactForm, { opacity: 0, duration: 0.5, onComplete: () => {
-                 contactForm.style.display = 'none';
-                 formSuccess.classList.remove('hidden');
-                 gsap.from(formSuccess, {opacity: 0, y: 20, duration: 0.5});
-             }});
-        });
-
-    });
-    </script>
 </body>
 </html>
