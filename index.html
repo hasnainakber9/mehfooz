@@ -21,7 +21,8 @@
             --teal: #008080;
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Caveat:wght@700&display=swap');
+        /* For premium fonts, replace this with your font provider's link (e.g., Adobe Fonts) */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500&display=swap');
 
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto; }
@@ -29,13 +30,13 @@
         body {
             background-color: var(--warm-dark);
             color: var(--warm-text);
-            font-family: 'Lora', serif;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             cursor: none;
         }
 
-        .font-script {
-            font-family: 'Caveat', cursive;
+        .font-heading {
+            font-family: 'Playfair Display', serif;
         }
         
         #cursor-light {
@@ -64,23 +65,19 @@
         }
         
         /* Game Styles */
-        #seed-container {
-            cursor: pointer;
-        }
-        #seed-svg .plant-path {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-        }
-        #seed-svg .seed {
-            transition: all 0.5s ease;
-            transform-origin: center;
-        }
-        #seed-container:hover .seed {
-            transform: scale(1.1);
-        }
+        #seed-container { cursor: pointer; }
+        #seed-svg .plant-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+        #seed-svg .seed { transition: all 0.5s ease; transform-origin: center; }
+        #seed-container:hover .seed { transform: scale(1.1); }
 
         /* Animate-in styles */
         .reveal-up { opacity: 0; transform: translateY(40px); }
+        .line-parent { overflow: hidden; }
+        .line-child { transform: translateY(100%); }
+        .word-anim p { line-height: 1.7; }
+        .word-anim .word { display: inline-block; transform: translateY(100%); opacity: 0; }
+        .parallax-container { overflow: hidden; }
+        .parallax-image { width: 100%; height: 120%; object-fit: cover; }
 
         /* Chat & Form styles */
         .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 15px; line-height: 1.5; }
@@ -88,21 +85,11 @@
         .bot-bubble { background-color: #2a2825; color: var(--warm-text); border-bottom-left-radius: 3px; align-self: flex-start; }
 
         /* Navigation Styles */
-        #friendly-nav {
-            transform: translateY(200%);
-            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        #friendly-nav.visible {
-            transform: translateY(0);
-        }
-        .nav-link.active, .header-nav-link.active {
-            color: var(--gold);
-        }
-
-        .value-icon {
-            stroke-width: 1.5;
-            transition: all 0.3s ease;
-        }
+        #friendly-nav { transform: translateY(200%); transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1); }
+        #friendly-nav.visible { transform: translateY(0); }
+        .nav-link.active, .header-nav-link.active { color: var(--gold); }
+        .value-icon { stroke-width: 1; transition: all 0.4s ease; }
+        .value-container:hover .value-icon { transform: scale(1.1); stroke: var(--gold); }
     </style>
 </head>
 <body class="antialiased">
@@ -112,8 +99,8 @@
     <div id="game-screen" class="fixed inset-0 bg-warm-dark z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
         <div class="text-center w-full max-w-lg">
             <div id="game-intro">
-                <h2 class="font-script text-gold text-4xl md:text-6xl mb-2">A Seed of Trust</h2>
-                <p class="text-medium-text text-lg mb-8">Click and hold to help it grow.</p>
+                <h2 class="font-heading text-gold text-4xl md:text-6xl mb-2">A Seed of Trust</h2>
+                <p class="text-medium-text text-lg mb-8">Click and hold to begin.</p>
             </div>
             <div id="seed-container" class="relative w-full aspect-square max-w-[250px] mx-auto">
                 <svg id="seed-svg" class="w-full h-full" viewBox="0 0 200 200">
@@ -132,7 +119,7 @@
     
     <header class="fixed top-0 left-0 w-full z-50 bg-warm-dark/30 backdrop-blur-md transition-all duration-300">
         <nav class="container mx-auto flex justify-between items-center p-6 md:p-8">
-            <a href="#home" class="font-script text-3xl text-gold">Mehfooz</a>
+            <a href="#home" class="font-heading text-3xl text-gold">Mehfooz</a>
             <div class="hidden md:flex gap-8 text-lg text-medium-text">
                  <a href="#journal" class="header-nav-link hover:text-warm-text transition-colors">Journal</a>
                  <a href="#approach" class="header-nav-link hover:text-warm-text transition-colors">Approach</a>
@@ -146,9 +133,9 @@
 
         <section id="home" class="content-section h-screen flex items-center justify-center text-center">
             <div class="px-4">
-                <h1 class="font-script text-gold text-5xl md:text-8xl mb-4">A digital sanctuary.</h1>
-                <p class="text-xl md:text-2xl text-warm-text leading-relaxed max-w-4xl">
-                    For the people of Gilgit Baltistan, a safe space to find clarity in a connected world.
+                <h1 class="font-heading text-gold text-5xl md:text-8xl mb-4">A digital sanctuary.</h1>
+                <p class="text-xl md:text-2xl text-warm-text leading-relaxed max-w-4xl line-parent">
+                    <span class="line-child">For the people of Gilgit Baltistan, a safe space to find clarity in a connected world.</span>
                 </p>
             </div>
         </section>
@@ -157,14 +144,16 @@
              <div class="container mx-auto px-6 max-w-4xl">
                  <div class="flex flex-col md:flex-row gap-12 items-center">
                      <div class="w-full md:w-1/2">
-                         <div class="overflow-hidden rounded-lg shadow-2xl shadow-black/50">
-                             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto-format=fit=crop" alt="A group of diverse people working together warmly" class="w-full h-full object-cover">
+                         <div class="rounded-lg shadow-2xl shadow-black/50 parallax-container">
+                             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto-format=fit=crop" alt="A group of diverse people working together warmly" class="parallax-image">
                          </div>
                      </div>
                      <div class="w-full md:w-1/2">
-                         <h2 class="font-script text-gold text-5xl md:text-6xl mb-4 reveal-up">From Our Journal</h2>
-                         <p class="text-lg text-medium-text leading-relaxed mb-6 reveal-up">Our journey started in a small teahouse in Skardu, sharing cups of warm chai and listening. We heard stories from our community—stories of hope and confusion in this new digital age.</p>
-                         <p class="text-lg text-medium-text leading-relaxed reveal-up">We realized the answer wasn't more tech, but more trust. A way to connect timeless local wisdom with modern tools. Mehfooz is our promise to build that bridge, together.</p>
+                         <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4 line-parent"><span class="line-child">From Our Journal</span></h2>
+                         <div class="word-anim text-lg text-medium-text leading-relaxed space-y-6">
+                            <p>Our journey started in a small teahouse in Skardu, sharing cups of warm chai and listening. We heard stories from our community—stories of hope and confusion in this new digital age.</p>
+                            <p>We realized the answer wasn't more tech, but more trust. A way to connect timeless local wisdom with modern tools. Mehfooz is our promise to build that bridge, together.</p>
+                         </div>
                      </div>
                  </div>
              </div>
@@ -172,20 +161,20 @@
 
         <section id="approach" class="content-section py-20 md:py-40">
             <div class="container mx-auto px-6 max-w-5xl">
-                <div class="text-center reveal-up mb-20">
-                    <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Approach is Simple</h2>
+                <div class="text-center mb-20 line-parent">
+                    <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4 line-child">Our Approach is Simple</h2>
                 </div>
                 <div class="grid md:grid-cols-3 gap-12 text-center">
                     <div class="reveal-up">
-                        <h3 class="font-script text-teal text-4xl mb-3">Listen First</h3>
+                        <h3 class="font-heading text-teal text-4xl mb-3">Listen First</h3>
                         <p class="text-medium-text leading-relaxed">We partner with local elders and Ulema, honoring their wisdom as the foundation of our work.</p>
                     </div>
                     <div class="reveal-up">
-                        <h3 class="font-script text-teal text-4xl mb-3">Guide Gently</h3>
+                        <h3 class="font-heading text-teal text-4xl mb-3">Guide Gently</h3>
                         <p class="text-medium-text leading-relaxed">Our tools, like MehfoozBot, offer personal, patient help in local languages, making technology feel like a friend.</p>
                     </div>
                      <div class="reveal-up">
-                        <h3 class="font-script text-teal text-4xl mb-3">Grow Together</h3>
+                        <h3 class="font-heading text-teal text-4xl mb-3">Grow Together</h3>
                         <p class="text-medium-text leading-relaxed">Through mini-courses and feedback from local students, we ensure our knowledge is always relevant and co-created.</p>
                     </div>
                 </div>
@@ -195,10 +184,10 @@
         <section id="community" class="content-section py-20 md:py-40">
             <div class="container mx-auto px-6 max-w-4xl">
                  <div class="text-center reveal-up">
-                    <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">The Heart of Our Community</h2>
+                    <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4">The Heart of Our Community</h2>
                  </div>
                  <div class="mt-16 reveal-up">
-                     <h3 class="font-script text-teal text-4xl mb-6 text-center">Voices from the Valley</h3>
+                     <h3 class="font-heading text-teal text-4xl mb-6 text-center">Voices from the Valley</h3>
                      <div class="space-y-8">
                          <blockquote class="border-l-4 border-gold pl-6 italic text-lg text-medium-text">"I'm excited to finally have a safe place to ask questions. I can't wait to use MehfoozBot to learn about my phone without feeling shy."<cite class="block not-italic mt-2 text-warm-text">- A student from Gilgit</cite></blockquote>
                          <blockquote class="border-l-4 border-gold pl-6 italic text-lg text-medium-text text-right">"To have something that respects our traditions while teaching our children about the future... this is a blessing we are all looking forward to."<cite class="block not-italic mt-2 text-warm-text">- An elder from Ghanche</cite></blockquote>
@@ -210,19 +199,22 @@
         <section id="vision" class="content-section py-20 md:py-40">
               <div class="container mx-auto px-6 max-w-4xl text-center">
                   <div class="reveal-up">
-                      <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Five-Year Vision</h2>
+                      <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4">Our Five-Year Vision</h2>
                       <p class="text-xl text-medium-text max-w-3xl mx-auto">To scale our impact together, empowering communities across Pakistan.</p>
                   </div>
                   <div class="mt-16 grid md:grid-cols-2 gap-12 text-left">
                       <div class="reveal-up">
-                          <p class="font-script text-teal text-7xl">100,000+</p>
-                          <h3 class="text-2xl mt-2">Empowered Users</h3>
+                          <p class="font-heading text-teal text-7xl" id="user-counter">0+</p>
+                          <h3 class="text-2xl mt-2 font-semibold">Empowered Users</h3>
                           <p class="text-medium-text mt-2">Leveraging our community networks for organic, sustainable growth.</p>
                       </div>
                       <div class="reveal-up">
-                           <p class="font-script text-teal text-7xl">3+</p>
-                          <h3 class="text-2xl mt-2">Platform Evolutions</h3>
-                          <p class="text-medium-text mt-2">Introducing AI-driven learning paths, offline capabilities, and expanded language support.</p>
+                           <div class="relative pt-8">
+                                <svg id="timeline-svg" class="absolute top-0 left-0 w-full h-full" viewbox="0 0 300 100" preserveAspectRatio="none"><path d="M 0 50, C 80 20, 150 80, 300 50" stroke="var(--teal)" stroke-width="2" fill="none" class="timeline-path"/></svg>
+                               <h3 class="font-heading text-teal text-7xl">3+</h3>
+                               <h3 class="text-2xl mt-2 font-semibold">Platform Evolutions</h3>
+                               <p class="text-medium-text mt-2">Introducing AI-driven learning paths, offline capabilities, and expanded language support.</p>
+                           </div>
                       </div>
                   </div>
               </div>
@@ -231,24 +223,24 @@
          <section id="values" class="content-section py-20 md:py-40">
              <div class="container mx-auto px-6 max-w-5xl">
                   <div class="text-center reveal-up mb-20">
-                     <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Guiding Principles</h2>
+                     <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4">Our Guiding Principles</h2>
                   </div>
                  <div class="grid md:grid-cols-4 gap-12 text-center">
-                     <div class="reveal-up">
-                         <svg class="w-16 h-16 mx-auto text-gold value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a3.004 3.004 0 015.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                         <h3 class="text-2xl mt-4">Collaboration</h3>
+                     <div class="reveal-up value-container">
+                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a3.004 3.004 0 015.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                         <h3 class="text-2xl mt-4 font-semibold">Collaboration</h3>
                      </div>
-                      <div class="reveal-up">
-                         <svg class="w-16 h-16 mx-auto text-gold value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                         <h3 class="text-2xl mt-4">Integrity</h3>
+                      <div class="reveal-up value-container">
+                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                         <h3 class="text-2xl mt-4 font-semibold">Integrity</h3>
                      </div>
-                      <div class="reveal-up">
-                         <svg class="w-16 h-16 mx-auto text-gold value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                         <h3 class="text-2xl mt-4">Inclusivity</h3>
+                      <div class="reveal-up value-container">
+                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                         <h3 class="text-2xl mt-4 font-semibold">Inclusivity</h3>
                      </div>
-                      <div class="reveal-up">
-                         <svg class="w-16 h-16 mx-auto text-gold value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
-                         <h3 class="text-2xl mt-4">Innovation</h3>
+                      <div class="reveal-up value-container">
+                         <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                         <h3 class="text-2xl mt-4 font-semibold">Innovation</h3>
                      </div>
                  </div>
              </div>
@@ -257,11 +249,11 @@
         <section id="connect" class="content-section py-20 md:py-40">
               <div class="container mx-auto px-6 space-y-24">
                    <div class="text-center max-w-3xl mx-auto reveal-up">
-                     <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Let's Connect</h2>
+                     <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4">Let's Connect</h2>
                      <p class="text-xl text-medium-text">Whether through a conversation with our bot or a personal message, we'd love to hear from you.</p>
                    </div>
                    <div class="max-w-2xl mx-auto reveal-up">
-                     <h3 class="font-script text-teal text-4xl mb-6 text-center">Chat with MehfoozBot</h3>
+                     <h3 class="font-heading text-teal text-4xl mb-6 text-center">Chat with MehfoozBot</h3>
                      <div id="chat-log" class="bg-black/20 rounded-t-lg shadow-inner h-[50vh] flex flex-col gap-4 p-4 overflow-y-auto"></div>
                      <div class="bg-black/20 rounded-b-lg p-4">
                         <div class="grid grid-cols-2 md:grid-cols-2 gap-2 mb-3" id="prompt-buttons">
@@ -273,7 +265,7 @@
                      </div>
                    </div>
                    <div class="max-w-xl mx-auto reveal-up">
-                     <h3 class="font-script text-teal text-4xl mb-6 text-center">Send a Personal Message</h3>
+                     <h3 class="font-heading text-teal text-4xl mb-6 text-center">Send a Personal Message</h3>
                      <form id="contact-form" class="space-y-6 text-left">
                            <div>
                              <label for="name" class="block mb-2 font-medium text-medium-text">Your Name</label>
@@ -290,7 +282,7 @@
                          <button type="submit" class="w-full bg-teal text-white font-semibold py-4 px-6 rounded-lg hover:bg-opacity-80">Send with heart</button>
                      </form>
                       <div id="form-success" class="hidden text-center border border-teal rounded-lg p-8 mt-6">
-                         <p class="font-script text-teal text-3xl mb-2">Thank You!</p>
+                         <p class="font-heading text-teal text-3xl mb-2">Thank You!</p>
                          <p class="text-medium-text">Your message has been received.</p>
                       </div>
                    </div>
@@ -309,7 +301,7 @@
     
     <footer class="py-12 bg-black/20 border-t border-white/10">
         <div class="container mx-auto px-6 text-center text-medium-text">
-            <a href="#home" class="font-script text-3xl text-gold mb-4 inline-block">Mehfooz</a>
+            <a href="#home" class="font-heading text-3xl text-gold mb-4 inline-block">Mehfooz</a>
             <div class="flex justify-center gap-6 mb-6">
                 <a href="#" class="hover:text-gold transition-colors" title="Facebook">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"/></svg>
@@ -353,28 +345,30 @@
         const feedbackEl = document.getElementById('game-feedback');
         const plantPaths = document.querySelectorAll('#seed-svg .plant-path');
         let growthAnimation;
+        let solved = false;
 
         function setupGrowthAnimation() {
             growthAnimation = gsap.timeline({ paused: true, onComplete: onSolved });
             growthAnimation.to(plantPaths, {
                 strokeDashoffset: 0,
-                duration: 3,
-                ease: "power1.inOut",
-                stagger: 0.2
+                duration: 0.8,
+                ease: "power2.out",
+                stagger: 0.1
             });
         }
         
         function onSolved() {
+            if(solved) return;
+            solved = true;
             feedbackEl.textContent = "Trust takes root.";
-            gsap.to(feedbackEl, { opacity: 1, duration: 1 });
-            gsap.to(enterBtn, { opacity: 1, scale: 1, pointerEvents: 'auto', duration: 0.5, delay: 0.5 });
+            gsap.to(feedbackEl, { opacity: 1, duration: 0.5 });
+            gsap.to(enterBtn, { opacity: 1, scale: 1, pointerEvents: 'auto', duration: 0.5, delay: 0.2 });
         }
-
-        seedContainer.addEventListener('mousedown', () => growthAnimation.play());
-        seedContainer.addEventListener('mouseup', () => growthAnimation.reverse());
-        seedContainer.addEventListener('mouseleave', () => growthAnimation.reverse());
-        seedContainer.addEventListener('touchstart', () => growthAnimation.play());
-        seedContainer.addEventListener('touchend', () => growthAnimation.reverse());
+        
+        const startGrowth = () => { if (!solved) growthAnimation.play(); };
+        
+        seedContainer.addEventListener('mousedown', startGrowth);
+        seedContainer.addEventListener('touchstart', startGrowth);
 
         enterBtn.addEventListener('click', () => {
              gsap.to(gameScreen, { 
@@ -454,37 +448,61 @@
 
         // --- MAIN ANIMATIONS ---
         function initAnimations() {
+            gsap.to('.line-child', { y: 0, duration: 1, ease: 'power3.out', stagger: 0.2 });
+            
+            gsap.utils.toArray('.word-anim').forEach(el => {
+                const words = el.querySelectorAll('p');
+                words.forEach(p => {
+                    const chars = p.innerText.split(' ');
+                    p.innerHTML = chars.map(c => `<span class="word">${c}&nbsp;</span>`).join('');
+                });
+                gsap.fromTo(el.querySelectorAll('.word'), 
+                    { y: '100%', opacity: 0 },
+                    { y: '0%', opacity: 1, duration: 0.5, ease: 'power3.out', stagger: 0.02,
+                    scrollTrigger: { trigger: el, start: 'top 80%' }
+                });
+            });
+            
+            gsap.utils.toArray('.parallax-image').forEach(img => {
+                gsap.to(img, {
+                    y: '-20%',
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: img.parentElement,
+                        scrub: true
+                    }
+                });
+            });
+            
+            const userCounter = document.getElementById('user-counter');
+            gsap.from(userCounter, {
+                textContent: 0,
+                duration: 2,
+                ease: "power1.inOut",
+                snap: { textContent: 1 },
+                scrollTrigger: { trigger: userCounter, start: "top 85%" },
+                onUpdate: function() {
+                    this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent).toLocaleString() + "+";
+                }
+            });
+
+            const timelinePath = document.querySelector('.timeline-path');
+            gsap.from(timelinePath, {
+                strokeDashoffset: timelinePath.getTotalLength(),
+                strokeDasharray: timelinePath.getTotalLength(),
+                duration: 2,
+                ease: 'power1.inOut',
+                scrollTrigger: {
+                    trigger: timelinePath,
+                    start: 'top 85%'
+                }
+            });
+
             // Friendly Nav visibility
             ScrollTrigger.create({
                 start: 'top top-=-100',
                 onEnter: () => friendlyNav.classList.add('visible'),
                 onLeaveBack: () => friendlyNav.classList.remove('visible')
-            });
-
-            // Section animations
-            gsap.utils.toArray('.reveal-up').forEach(elem => {
-                gsap.fromTo(elem, { opacity: 0, y: 50 }, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1.2,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: elem,
-                        start: 'top 85%',
-                    }
-                });
-            });
-            gsap.utils.toArray('img').forEach(img => {
-                 gsap.fromTo(img.parentElement, { scale: 1.1, clipPath: 'inset(0% 50% 0% 50%)' }, {
-                     scale: 1,
-                     clipPath: 'inset(0% 0% 0% 0%)',
-                     duration: 1.5,
-                     ease: 'power3.out',
-                     scrollTrigger: {
-                         trigger: img,
-                         start: 'top 90%'
-                     }
-                 });
             });
 
             // Nav link smooth scroll and active state
