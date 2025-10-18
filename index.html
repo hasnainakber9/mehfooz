@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mehfooz - A Living Journal</title>
-
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
 
     <style>
         :root {
@@ -20,9 +25,6 @@
             --teal: #48A9A6;       /* Secondary accent - soft */
         }
 
-        /* Fonts: Poppins for headings (clean, friendly), Lora for body (intimate, readable) */
-        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Poppins:wght@500;600;700&display=swap');
-
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto; }
 
@@ -30,18 +32,19 @@
             background-color: var(--warm-dark);
             color: var(--warm-text);
             font-family: 'Lora', serif; /* Body font */
-            font-size: 17px;
+            font-size: 17px; 
             line-height: 1.7;
             overflow-x: hidden;
             cursor: none;
+            position: relative; 
         }
-        /* Film Grain Overlay - Subtle */
+        /* Film Grain Overlay */
         body::before {
-            content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACRQTFRFNTU1MzMzNDQ0Nzc3NjY2Ojo6Nzc3NjY2Ozs7Ojo6NDQ0Ozs75xQuFAAAAAt0Uk5TABAQIDBAUGBwgKCw66pUAAAAk0lEQVQoz2NgoBjAALjU9DAwMIAIxkBgMAoAtzAwMDCQMzAwsCBgZmBgZmBg4GZgYEBhvGfABGf///8/AxMjAzMDAyMfA4MTI4MHA5Ojo5OjiT8PMyMzMxMzMyOHASMDExNxiQEJgcsdwszMzMTIzMzMwMgABgZCzMTEzMjAwMADwYyZmRkYmRmZGRgYmBkbMDAwAECAAQCkMgXj9nMsWQAAAABJRU5ErkJggg==');
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; /* Changed size */
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACRQTFRFNTU1MzMzNDQ0Nzc3NjY2Ojo6Nzc3NjY2Ozs7Ojo6NDQ0Ozs75xQuFAAAAAt0Uk5TABAQIDBAUGBwgKCw66pUAAAAk0lEQVQoz2NgoBjAALjU9DAwMIAIxkBgMAoAtzAwMDCQMzAwsCBgZmBgZmBg4GZgYEBhvGfABGf///8/AxMjAzMDAyMfA4MTI4MHA5Ojo5OjiT8PMyMzMxMzMyOHASMDExNxiQEJgcsdwszMzMTIzMzMwMgABgZCzMTEzMjAwMADwYyZmRkYmRmZGRgYmBkbMDAwAECAAQCkMgXj9nMsWQAAAABJRU5ErkJggg==');
             opacity: 0.06;
-            z-index: 10002; /* Above background, below content */
+            pointer-events: none;
+            z-index: 10002;
             animation: grain 7s steps(10) infinite;
         }
         @keyframes grain {
@@ -50,10 +53,12 @@
 
 
         .font-heading {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', sans-serif; /* Friendly but modern heading */
             font-weight: 600;
-            /* Reduced glow */
-             text-shadow: 0 0 5px rgba(218, 165, 32, 0.2); 
+             text-shadow: 0 0 8px rgba(218, 165, 32, 0.2); /* Reduced glow */
+        }
+        .font-body {
+            font-family: 'Lora', serif;
         }
         
         /* --- Custom Cursor --- */
@@ -63,17 +68,17 @@
             border-radius: 50%;
             pointer-events: none;
             z-index: 10003;
-            mix-blend-mode: normal; /* Changed from difference for softer look */
+            mix-blend-mode: difference; /* Use difference for better visibility on varied backgrounds */
             will-change: transform, width, height, background-color, border-color, opacity;
         }
         #cursor-dot {
             width: 8px; height: 8px;
-            background-color: var(--gold);
+            background-color: var(--gold); /* Gold dot */
             transform: translate(-50%, -50%);
         }
         #cursor-circle {
             width: 40px; height: 40px;
-            border: 1px solid var(--gold);
+            border: 1px solid var(--gold); /* Gold circle */
             transform: translate(-50%, -50%);
             transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
                         width 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
@@ -83,39 +88,40 @@
                         opacity 0.4s ease;
         }
         body.link-hover #cursor-circle { 
-            transform: translate(-50%, -50%) scale(0.5); /* Shrink circle */
-            opacity: 0; /* Make circle disappear */
+            transform: translate(-50%, -50%) scale(1.4); /* Slightly smaller hover scale */
+            border-color: var(--teal);
+            background-color: rgba(72, 169, 166, 0.15); /* Subtle teal background */
         }
         body.link-hover #cursor-dot {
-             transform: translate(-50%, -50%) scale(2.5); /* Grow dot */
-             background-color: var(--teal); /* Change dot color */
+             background-color: var(--teal);
+             transform: translate(-50%, -50%) scale(0.6); /* Shrink dot slightly */
         }
 
 
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0.1; /* Even more subtle */ }
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0.2; /* Subtler particles */ }
         .content-section { position: relative; z-index: 1; padding: 15vh 0; }
         
         /* --- Seed Game --- */
         #seed-container { cursor: pointer; }
-        #seed-svg .plant-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; filter: drop-shadow(0 0 4px var(--teal)); } /* Soft teal glow */
-        #seed-svg .seed { transition: all 0.5s ease; transform-origin: center; filter: drop-shadow(0 0 6px var(--gold)); } /* Soft gold glow */
-        #seed-container:hover .seed { transform: scale(1.15); } /* Slightly bigger hover */
+        #seed-svg .plant-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; filter: drop-shadow(0 0 3px var(--teal)); }
+        #seed-svg .seed { transition: all 0.5s ease; transform-origin: center; filter: drop-shadow(0 0 6px var(--gold)); }
+        #seed-container:hover .seed { transform: scale(1.15); }
 
         /* --- Animation Styles --- */
-        .reveal-up { opacity: 0; transform: translateY(50px); /* Adjust distance */ }
+        .reveal-up { opacity: 0; transform: translateY(50px); }
         .line-parent { overflow: hidden; display: block; }
-        .line-child { display: inline-block; transform: translateY(110%); } /* Ensure transform starts correctly */
+        .line-child { display: inline-block; transform: translateY(110%); }
 
         /* --- Chat & Form --- */
         .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 20px; line-height: 1.6; font-size: 1rem; }
         .user-bubble { background-color: var(--teal); color: var(--warm-dark); border-bottom-right-radius: 4px; align-self: flex-end; font-weight: 500;}
-        .bot-bubble { background-color: rgba(234, 224, 213, 0.1); backdrop-filter: blur(5px); color: var(--warm-text); border: 1px solid rgba(234, 224, 213, 0.1); border-bottom-left-radius: 4px; align-self: flex-start; }
+        .bot-bubble { background-color: rgba(234, 224, 213, 0.08); backdrop-filter: blur(5px); color: var(--warm-text); border: 1px solid rgba(234, 224, 213, 0.1); border-bottom-left-radius: 4px; align-self: flex-start; }
         input, select, textarea { 
-            color: var(--warm-text); /* Ensure text is visible */
-            background-color: rgba(255,255,255,0.05); /* Slightly transparent background */
+            color: var(--warm-text); 
+            background-color: rgba(255,255,255,0.05);
             border: 1px solid var(--medium-text);
             transition: border-color 0.3s, box-shadow 0.3s;
-            border-radius: 8px; /* Slightly rounded corners */
+            border-radius: 8px; 
         }
         input::placeholder, textarea::placeholder { color: var(--medium-text); opacity: 0.8; }
         input:focus, select:focus, textarea:focus {
@@ -128,31 +134,71 @@
            background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1em 1em; padding-right: 2.5rem; -webkit-appearance: none; appearance: none; color: var(--warm-text);
         }
         select option { background-color: var(--warm-dark); color: var(--warm-text); }
-        button { transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease; } /* Added bouncy ease */
-        button:hover { transform: scale(1.05); } /* Slightly larger hover */
+        button { transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background-color 0.3s ease; } /* Added background-color transition */
+        button:hover { transform: scale(1.05); } 
         button:active { transform: scale(0.97); }
 
 
         /* --- Navigation --- */
-        header { backdrop-filter: blur(10px); background-color: rgba(26, 18, 11, 0.6); } /* Slightly more background blur */
-        #menu-toggle { z-index: 10001; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        #menu-toggle:hover { transform: scale(1.1) rotate(90deg); }
-        #menu-toggle span { background-color: var(--warm-text); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s; }
+        header { 
+            backdrop-filter: blur(8px); 
+            background-color: rgba(26, 18, 11, 0.7); /* Slightly more opaque for readability */
+            transition: background-color 0.3s ease;
+        }
+        #menu-toggle { 
+            z-index: 10001; 
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease; 
+            background-color: transparent; /* Start transparent */
+            border: 1px solid var(--warm-text); /* Visible border */
+            border-radius: 50%;
+            width: 44px; /* Slightly larger */
+            height: 44px;
+        }
+         #menu-toggle:hover { 
+             transform: scale(1.1) rotate(90deg); 
+             background-color: rgba(218, 165, 32, 0.1); /* Gold hover */
+             border-color: var(--gold);
+         }
+        #menu-toggle span { 
+            background-color: var(--warm-text); 
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s; 
+        }
         #menu-toggle.open span { background-color: var(--gold);}
         #menu-toggle.open span:nth-child(1) { transform: translateY(3.5px) rotate(45deg); } 
         #menu-toggle.open span:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
-        #menu-overlay { clip-path: circle(0% at calc(100% - 48px) 48px); background-color: rgba(26, 18, 11, 0.97); backdrop-filter: blur(20px); } /* Darker overlay, more blur */
-        #menu-overlay.open { clip-path: circle(150% at calc(100% - 48px) 48px); }
-        .menu-link { transform: translateY(50px); opacity: 0; font-family: 'Poppins', sans-serif; font-weight: 500; letter-spacing: 0.5px; /* Less spacing */ } 
-        .menu-link:hover { color: var(--gold); transform: translateY(50px) translateX(5px); } /* Smaller shift */
-
-        /* Added subtle glow to buttons */
-        #enter-site-btn, #chat-form button, #contact-form button {
-            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease; /* Ensure transition includes box-shadow */
+        #menu-overlay { 
+            clip-path: circle(0% at calc(100% - 44px) 44px); /* Adjusted origin based on button size */
+            background-color: rgba(26, 18, 11, 0.98); /* Almost opaque */
+            backdrop-filter: blur(15px); 
+        } 
+        #menu-overlay.open { clip-path: circle(150% at calc(100% - 44px) 44px); } /* Adjusted origin */
+        .menu-link { 
+            transform: translateY(50px); 
+            opacity: 0; 
+            font-family: 'Poppins', sans-serif; 
+            font-weight: 500; 
+            letter-spacing: 0.5px;
+            text-shadow: none; /* Remove default heading shadow */
+            transition: color 0.3s ease, transform 0.3s ease; /* Smooth hover */
+         } 
+        .menu-link:hover { 
+            color: var(--gold); 
+            transform: translateY(50px) translateX(8px); /* Subtle shift */
         }
+         /* Active link style */
+        .menu-link.active {
+            color: var(--gold);
+        }
+
+
+        /* Added glow to buttons */
         #enter-site-btn:hover, #chat-form button:hover, #contact-form button:hover {
              box-shadow: 0 0 15px 3px rgba(218, 165, 32, 0.3); /* Softer gold glow */
-             transform: scale(1.03);
+             transform: scale(1.05); /* Ensure hover scale applies */
+        }
+        .prompt-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(72, 169, 166, 0.3); /* Teal glow for prompts */
         }
         
     </style>
@@ -167,30 +213,30 @@
     <div id="game-screen" class="fixed inset-0 bg-warm-dark z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
         <div class="text-center w-full max-w-lg">
             <div id="game-intro">
-                <h2 class="font-heading text-gold text-4xl md:text-6xl mb-2" style="text-shadow: 0 0 5px rgba(218, 165, 32, 0.3);">A Seed of Trust</h2>
+                <h2 class="font-heading text-gold text-4xl md:text-6xl mb-2" style="text-shadow: 0 0 8px rgba(218, 165, 32, 0.4);">A Seed of Trust</h2>
                 <p class="font-body text-medium-text text-xl mb-8">Click and hold to begin.</p>
             </div>
             <div id="seed-container" class="relative w-full aspect-square max-w-[200px] mx-auto"> {/* Smaller seed */}
                 <svg id="seed-svg" class="w-full h-full" viewBox="0 0 200 200">
                     <defs>
                         <filter id="glow-teal" x="-50%" y="-50%" width="200%" height="200%">
-                          <feGaussianBlur stdDeviation="2" result="coloredBlur"/> {/* Reduced blur */}
+                          <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/> {/* Softer glow */}
                           <feMerge>
                             <feMergeNode in="coloredBlur"/>
                             <feMergeNode in="SourceGraphic"/>
                           </feMerge>
                         </filter>
                          <filter id="glow-gold" x="-50%" y="-50%" width="200%" height="200%">
-                          <feGaussianBlur stdDeviation="3" result="coloredBlur"/> {/* Reduced blur */}
+                          <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/> {/* Softer glow */}
                           <feMerge>
                             <feMergeNode in="coloredBlur"/>
                             <feMergeNode in="SourceGraphic"/>
                           </feMerge>
                         </filter>
                     </defs>
-                    <path class="plant-path" d="M100 180 C 100 140, 70 140, 70 100 C 70 60, 100 60, 100 20" stroke="var(--teal)" stroke-width="2" fill="none" stroke-linecap="round" />
-                    <path class="plant-path" d="M70 100 C 40 100, 40 70, 70 70" stroke="var(--teal)" stroke-width="2" fill="none" stroke-linecap="round" />
-                    <path class="plant-path" d="M100 140 C 130 140, 130 110, 100 110" stroke="var(--teal)" stroke-width="2" fill="none" stroke-linecap="round" />
+                    <path class="plant-path" d="M100 180 C 100 140, 70 140, 70 100 C 70 60, 100 60, 100 20" stroke="var(--teal)" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                    <path class="plant-path" d="M70 100 C 40 100, 40 70, 70 70" stroke="var(--teal)" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                    <path class="plant-path" d="M100 140 C 130 140, 130 110, 100 110" stroke="var(--teal)" stroke-width="2.5" fill="none" stroke-linecap="round" />
                     <circle class="seed" cx="100" cy="180" r="8" fill="var(--gold)" filter="url(#glow-gold)"/> {/* Smaller seed */}
                 </svg>
             </div>
@@ -201,23 +247,24 @@
         </div>
     </div>
     
-    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300"> {/* Added transition */}
+    <header class="fixed top-0 left-0 w-full z-50">
         <nav class="container mx-auto flex justify-between items-center px-6 py-4 md:px-8 md:py-6">
             <a href="#home" class="font-heading text-3xl text-gold z-[10002]" style="text-shadow: 0 0 5px rgba(218, 165, 32, 0.4);">Mehfooz</a>
-            <button id="menu-toggle" class="w-10 h-10 flex flex-col justify-center items-center gap-1.5 rounded-full bg-warm-text/5 backdrop-blur-sm border border-warm-text/10 hover:border-gold transition-colors">
+             {/* Adjusted menu button position and size */}
+            <button id="menu-toggle" class="fixed top-6 right-6 md:top-8 md:right-8 w-10 h-10 flex flex-col justify-center items-center gap-1.5 rounded-full bg-warm-text/5 backdrop-blur-sm border border-warm-text/10 hover:border-gold transition-colors">
                 <span class="w-5 h-0.5 bg-warm-text block transition-transform duration-300"></span>
                 <span class="w-5 h-0.5 bg-warm-text block transition-transform duration-300"></span>
             </button>
         </nav>
     </header>
     
-    <div id="menu-overlay" class="fixed inset-0 bg-warm-dark/95 backdrop-blur-lg z-[10000] flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]">
-        <div class="text-center">
-            <a href="#home" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Home</a>
-            <a href="#journal" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Our Story</a>
-            <a href="#approach" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Approach</a>
-            <a href="#community" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Community</a>
-            <a href="#connect" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Connect</a>
+    <div id="menu-overlay" class="fixed inset-0 bg-warm-dark/95 backdrop-blur-xl z-[10000] flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]">
+        <div class="text-center space-y-2"> {/* Added spacing between links */}
+            <a href="#home" class="menu-link block font-heading text-5xl md:text-7xl text-warm-text hover:text-gold transition-colors duration-300">Home</a>
+            <a href="#journal" class="menu-link block font-heading text-5xl md:text-7xl text-warm-text hover:text-gold transition-colors duration-300">Our Story</a>
+            <a href="#approach" class="menu-link block font-heading text-5xl md:text-7xl text-warm-text hover:text-gold transition-colors duration-300">Approach</a>
+            <a href="#community" class="menu-link block font-heading text-5xl md:text-7xl text-warm-text hover:text-gold transition-colors duration-300">Community</a>
+            <a href="#connect" class="menu-link block font-heading text-5xl md:text-7xl text-warm-text hover:text-gold transition-colors duration-300">Connect</a>
         </div>
     </div>
 
@@ -230,46 +277,48 @@
                 <p class="font-body text-xl md:text-2xl text-warm-text leading-relaxed max-w-3xl mx-auto line-parent mt-4">
                     <span class="line-child">Empowering the communities of Gilgit Baltistan to navigate the digital world safely and confidently.</span>
                 </p>
+                 <div class="absolute bottom-16 left-1/2 -translate-x-1/2 reveal-up">
+                    <a href="#journal" class="font-body text-medium-text animate-pulse">Scroll to Discover</a>
+                </div>
             </div>
         </section>
 
         <section id="journal" class="content-section py-20 md:py-32">
              <div class="container mx-auto px-6 max-w-4xl">
                  <div class="flex flex-col md:flex-row gap-12 items-center">
-                     <div class="w-full md:w-1/2">
-                         <div class="rounded-lg shadow-2xl shadow-black/30 parallax-container">
+                     <div class="w-full md:w-1/2 reveal-up">
+                         <div class="rounded-lg shadow-2xl shadow-black/30 overflow-hidden parallax-container">
                              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto-format=fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="People gathered warmly around a table with tea" class="parallax-image rounded-lg">
                          </div>
                      </div>
                      <div class="w-full md:w-1/2">
                          <h2 class="font-heading text-gold text-4xl md:text-5xl mb-6 line-parent"><span class="line-child">Our Story</span></h2>
-                         <div class="font-body text-lg text-medium-text leading-relaxed space-y-6">
-                            <p class="reveal-up">Our journey started simply, in a small teahouse in Skardu, sharing cups of warm chai and listening. We heard stories from our community – tales of wonder and worry about this fast-changing digital world.</p>
-                            <p class="reveal-up">It became clear the need wasn't just for new tools, but for understanding and trust. We needed a bridge between timeless local wisdom and modern technology. Mehfooz is our promise to help build that bridge, hand-in-hand.</p>
+                         <div class="font-body text-lg text-medium-text leading-relaxed space-y-6 word-anim">
+                            <p>Our journey started simply, in a small teahouse in Skardu, sharing cups of warm chai and listening. We heard stories from our community – tales of wonder and worry about this fast-changing digital world.</p>
+                            <p>It became clear the need wasn't just for new tools, but for understanding and trust. We needed a bridge between timeless local wisdom and modern technology. Mehfooz is our promise to help build that bridge, hand-in-hand.</p>
                          </div>
                      </div>
                  </div>
              </div>
         </section>
 
-        <section id="approach" class="content-section py-20 md:py-32 bg-black/10"> {/* Subtle background differentiation */}
+        <section id="approach" class="content-section py-20 md:py-32 bg-black/5"> {/* Subtle background change */}
             <div class="container mx-auto px-6 max-w-5xl">
-                <div class="text-center mb-20 line-parent">
+                <div class="text-center mb-16 md:mb-20 line-parent">
                     <h2 class="font-heading text-gold text-4xl md:text-5xl mb-4 line-child">Our Approach</h2>
-                    <p class="font-body text-lg text-medium-text max-w-2xl mx-auto reveal-up">Rooted in respect, guided by community.</p>
                 </div>
-                <div class="grid md:grid-cols-3 gap-10"> {/* Reduced gap slightly */}
+                <div class="grid md:grid-cols-3 gap-10">
                     <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5">
                         <p class="font-heading text-teal text-5xl mb-3">1.</p>
                         <h3 class="font-heading text-2xl mb-3">Listen First</h3>
                         <p class="font-body text-medium-text leading-relaxed">We partner with local elders and Ulema, honoring their wisdom as the foundation of our work. Trust is built through understanding.</p>
                     </div>
-                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5">
+                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5" style="transition-delay: 0.1s;"> {/* Added delay */}
                         <p class="font-heading text-teal text-5xl mb-3">2.</p>
                         <h3 class="font-heading text-2xl mb-3">Guide Gently</h3>
                         <p class="font-body text-medium-text leading-relaxed">Our tools, like MehfoozBot, offer personal, patient help in local languages, making technology feel like a friendly companion.</p>
                     </div>
-                     <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5">
+                     <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5" style="transition-delay: 0.2s;"> {/* Added delay */}
                         <p class="font-heading text-teal text-5xl mb-3">3.</p>
                         <h3 class="font-heading text-2xl mb-3">Grow Together</h3>
                         <p class="font-body text-medium-text leading-relaxed">Through mini-courses and feedback from local students, we ensure our knowledge is always relevant and co-created with the community.</p>
@@ -284,13 +333,13 @@
                     <h2 class="font-heading text-gold text-4xl md:text-5xl mb-4">The Heart of Our Community</h2>
                  </div>
                  <div class="mt-16 reveal-up">
-                     <h3 class="font-heading text-teal text-3xl mb-8 text-center">Voices from the Valley</h3> {/* Slightly smaller */}
+                     <h3 class="font-heading text-teal text-3xl mb-8 text-center">Voices from the Valley</h3>
                      <div class="space-y-12">
-                         <blockquote class="border-l-4 border-gold pl-6 italic font-body text-xl text-medium-text transition-transform duration-300 hover:scale-[1.02] max-w-2xl mx-auto">
+                         <blockquote class="border-l-4 border-gold pl-6 italic font-body text-xl text-medium-text transition-transform duration-300 hover:scale-[1.02] max-w-2xl mx-auto reveal-up">
                             "I'm excited to finally have a safe place to ask questions. I can't wait to use MehfoozBot to learn about my phone without feeling shy. It feels like someone is finally listening."
                             <cite class="block not-italic mt-2 text-warm-text font-sans text-base">- A student from Gilgit</cite>
                          </blockquote>
-                         <blockquote class="border-l-4 border-gold pl-6 italic font-body text-xl text-medium-text text-right transition-transform duration-300 hover:scale-[1.02] max-w-2xl mx-auto">
+                         <blockquote class="border-l-4 border-gold pl-6 italic font-body text-xl text-medium-text text-right transition-transform duration-300 hover:scale-[1.02] max-w-2xl mx-auto reveal-up" style="transition-delay: 0.1s;">
                             "To have something that respects our traditions while teaching our children about the future... this is a blessing we are all looking forward to. It will help us connect better."
                             <cite class="block not-italic mt-2 text-warm-text font-sans text-base">- An elder from Ghanche</cite>
                          </blockquote>
@@ -299,7 +348,7 @@
             </div>
         </section>
         
-        <section id="vision" class="content-section py-20 md:py-32 bg-black/10"> {/* Subtle background differentiation */}
+        <section id="vision" class="content-section py-20 md:py-32 bg-black/5"> {/* Subtle background change */}
               <div class="container mx-auto px-6 max-w-4xl text-center">
                   <div class="reveal-up">
                       <h2 class="font-heading text-gold text-4xl md:text-5xl mb-4">Our Five-Year Vision</h2>
@@ -360,8 +409,7 @@
                      <div id="chat-log" class="bg-black/10 rounded-t-lg shadow-inner h-[50vh] flex flex-col gap-4 p-4 overflow-y-auto font-body"></div>
                      <div class="bg-black/10 rounded-b-lg p-4">
                         <div class="grid grid-cols-2 md:grid-cols-2 gap-2 mb-3" id="prompt-buttons">
-                           {/* Prompt buttons will be injected here */}
-                        </div>
+                           </div>
                          <form id="chat-form" class="flex gap-3">
                              <input type="text" id="chat-input" placeholder="Ask a friendly question..." class="font-body flex-1 bg-warm-dark/50 border border-medium-text/30 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-gold text-light-text placeholder-medium-text/80">
                              <button type="submit" class="font-heading bg-teal text-warm-dark rounded-full px-5 py-3 font-semibold hover:bg-opacity-80 transition-all duration-300 hover:shadow-lg hover:shadow-teal/30">Send</button>
@@ -391,7 +439,7 @@
                             </div>
                            <div>
                              <label for="message" class="block mb-2 font-medium text-medium-text font-heading text-sm uppercase tracking-wider">Your Message</label>
-                             <textarea id="message" rows="5" required class="font-body w-full bg-warm-dark/50 border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text"></textarea>
+                             <textarea id="message" rows="5" required class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text"></textarea>
                            </div>
                          <button type="submit" class="font-heading w-full bg-teal text-warm-dark font-semibold py-4 px-6 rounded-lg hover:bg-opacity-80 transition-all duration-300 hover:shadow-lg hover:shadow-teal/30">Send with heart</button>
                      </form>
@@ -438,46 +486,47 @@
         let isHovering = false;
 
         window.addEventListener('mousemove', e => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
+            gsap.to(mouse, { duration: 0.3, x: e.clientX, y: e.clientY, ease: 'power2.out' });
         });
 
         gsap.ticker.add(() => {
-            // Dot follows instantly
+            const dt = 1.0 - Math.pow(1.0 - 0.2, gsap.ticker.deltaRatio()); // Slightly faster interpolation
+            circlePos.x += (mouse.x - circlePos.x) * dt;
+            circlePos.y += (mouse.y - circlePos.y) * dt;
+
             gsap.set(cursorDot, { x: mouse.x - 4, y: mouse.y - 4 }); 
-            
-            // Circle interpolates for smoothness
-            const dx = mouse.x - circlePos.x;
-            const dy = mouse.y - circlePos.y;
-            circlePos.x += dx * 0.2; // Adjust for desired smoothness
-            circlePos.y += dy * 0.2;
-            gsap.to(cursorCircle, { 
-                duration: 0.4, 
-                x: circlePos.x - 20, 
-                y: circlePos.y - 20, 
-                scale: circleScale,
-                opacity: isHovering ? 0.5 : 1, // Make circle slightly transparent on hover
-                ease: 'expo.out' // Smooth ease
-            });
+            gsap.set(cursorCircle, { x: circlePos.x - 20, y: circlePos.y - 20 }); 
+
+             // Apply scale/opacity changes directly in the ticker for smoother visuals
+            gsap.to(cursorCircle, {
+                 duration: 0.3,
+                 scale: isHovering ? 1.4 : 1, // Adjusted scale
+                 opacity: isHovering ? 0.4 : 1,
+                 ease: 'power2.out'
+             });
+             gsap.to(cursorDot, {
+                 duration: 0.3,
+                 scale: isHovering ? 0.6 : 1, // Adjusted scale
+                 backgroundColor: isHovering ? 'var(--teal)' : 'var(--gold)',
+                 ease: 'power2.out'
+             });
         });
         
-        // Apply hover effect to links, buttons, and specific interactive elements
-        document.querySelectorAll('a, button, input, select, textarea, #seed-container, .value-container, .prompt-button').forEach(el => {
-             el.addEventListener('mouseenter', () => {
-                circleScale = 1.6; // Scale up circle
+        // Add/Remove hover class for easier targeting if needed
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.closest('a, button, input, select, textarea, #seed-container, .value-container')) {
                 isHovering = true;
-                gsap.to(cursorDot, { scale: 0.5, backgroundColor: 'var(--teal)', duration: 0.3 }); // Shrink dot and change color
-            });
-            el.addEventListener('mouseleave', () => {
-                circleScale = 1;
-                isHovering = false;
-                gsap.to(cursorDot, { scale: 1, backgroundColor: 'var(--gold)', duration: 0.3 }); // Reset dot
-            });
+            }
+        });
+         document.addEventListener('mouseout', (e) => {
+            if (e.target.closest('a, button, input, select, textarea, #seed-container, .value-container')) {
+                 isHovering = false;
+            }
         });
 
 
         // --- SMOOTH SCROLL ---
-        const lenis = new Lenis({ lerp: 0.09 }); // Adjust lerp for desired smoothness (lower = smoother)
+        const lenis = new Lenis({ lerp: 0.09 }); 
         function raf(time) {
             lenis.raf(time);
             requestAnimationFrame(raf);
@@ -494,24 +543,19 @@
         const menuEase = 'expo.inOut'; 
         const menuDuration = 0.9;
 
-        const menuTimeline = gsap.timeline({ paused: true })
-            .to(menuOverlay, { 
-                clipPath: 'circle(150% at calc(100% - 48px) 48px)', // Corrected origin
-                duration: menuDuration, 
-                ease: menuEase 
-            }, 0)
+        const menuTimeline = gsap.timeline({ paused: true, defaults: { duration: menuDuration, ease: menuEase } })
+            .to(menuOverlay, { clipPath: 'circle(150% at calc(100% - 40px) 48px)' }, 0)
             .to(menuLinks, { 
                 y: 0, 
                 opacity: 1, 
-                duration: 0.8, 
-                stagger: 0.06, 
+                duration: menuDuration * 0.8, // Slightly faster link reveal 
+                stagger: 0.05, 
                 ease: 'expo.out' 
-            }, 0.2);
+            }, 0.15); // Start links slightly after overlay starts
 
         menuToggle.addEventListener('click', () => {
             isMenuOpen = !isMenuOpen;
             menuToggle.classList.toggle('open');
-            // menuOverlay.classList.toggle('open'); // GSAP handles the visual change
             if(isMenuOpen) {
                 menuTimeline.timeScale(1).play();
                 gsap.to(toggleSpans[0], { y: 3.5, rotate: 45, duration: 0.4, ease: 'expo.out' });
@@ -537,7 +581,7 @@
                      if (target && document.querySelector(target)) {
                          lenis.scrollTo(target, { 
                             duration: 1.8, 
-                            easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) // Expo out ease
+                            easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) 
                         });
                      }
                 });
@@ -565,9 +609,9 @@
             growthAnimation = gsap.timeline({ paused: true, onComplete: onSolved });
             growthAnimation.to(plantPaths, {
                 strokeDashoffset: 0,
-                duration: 0.6, // **Faster growth**
+                duration: 0.6, // **Kept quick growth**
                 ease: "power1.out",
-                stagger: 0.05 // **Quicker stagger**
+                stagger: 0.05 // **Kept quick stagger**
             });
         }
         
@@ -585,11 +629,9 @@
             if (!solved) growthAnimation.play(); 
         };
         
-        // Trigger growth on mousedown/touchstart (hold starts it)
-        seedContainer.addEventListener('mousedown', startGrowth);
-        seedContainer.addEventListener('touchstart', startGrowth, {passive: true});
+        seedContainer.addEventListener('pointerdown', startGrowth); // Use pointerdown for better touch support
         
-        // No need for mouseup/touchend to reverse, it completes quickly now.
+        // Removed mouseup/touchend to keep it grown
 
         enterBtn.addEventListener('click', () => {
              gsap.to(gameScreen, { 
@@ -616,7 +658,7 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        const particleCount = 10000; 
+        const particleCount = 12000; // Adjusted particle count
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
         // Using CSS variables converted to THREE.Color
@@ -624,23 +666,22 @@
         const colorTealThree = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--teal').trim());
         const colorWarmTextThree = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--warm-text').trim());
 
-
         for(let i = 0; i < particleCount; i++) {
             const i3 = i * 3;
-            // Distribute more evenly in a sphere, slightly wider spread
-            const radius = 5 + Math.random() * 12; 
+            const radius = 6 + Math.random() * 8; 
             const phi = Math.acos(-1 + (2 * Math.random()));
-            const theta = Math.sqrt(particleCount * Math.PI) * phi; 
+            const theta = Math.sqrt(particleCount * Math.PI) * phi * (Math.random() - 0.5) * 2; 
             
             positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
             positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-            positions[i3 + 2] = radius * Math.cos(phi) - 5; // Start slightly behind
+            positions[i3 + 2] = radius * Math.cos(phi) - 5; 
             
             const randColor = Math.random();
             let mixedColor;
-            if (randColor < 0.65) mixedColor = colorWarmTextThree.clone().lerp(colorGoldThree, Math.random() * 0.4); // More warm text + gold mix
+            // Adjusted color distribution for warmer feel
+            if (randColor < 0.7) mixedColor = colorWarmTextThree.clone().lerp(colorGoldThree, Math.random() * 0.4); 
             else if (randColor < 0.9) mixedColor = colorGoldThree.clone();
-            else mixedColor = colorTealThree.clone().lerp(colorWarmTextThree, 0.6); // Slightly whiter teal
+            else mixedColor = colorTealThree.clone().lerp(colorWarmTextThree, 0.7); // Teal blended more with warm text
             
             colors[i3] = mixedColor.r; colors[i3 + 1] = mixedColor.g; colors[i3 + 2] = mixedColor.b;
         }
@@ -649,8 +690,7 @@
         particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         
         const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.02, // Slightly larger for better visibility
-            sizeAttenuation: true, transparent: true, opacity: 0.7, 
+            size: 0.018, sizeAttenuation: true, transparent: true, opacity: 0.6, // Slightly less opaque
             vertexColors: true, blending: THREE.AdditiveBlending, depthWrite: false
         });
         const particles = new THREE.Points(particlesGeometry, particlesMaterial);
@@ -660,13 +700,13 @@
         function animateBackground() {
             const elapsedTime = clock.getElapsedTime();
             
-            // Slow, constant rotation for a calm background drift
-            particles.rotation.y = elapsedTime * 0.01; 
-            particles.rotation.x = elapsedTime * 0.005;
-
+            // Slower, more atmospheric rotation
+            particles.rotation.y = elapsedTime * 0.015; 
+            particles.rotation.x = elapsedTime * 0.007;
+            
             // Subtle mouse parallax effect on the camera position for depth
-            camera.position.x += ((mouse.x / window.innerWidth - 0.5) * 0.1 - camera.position.x) * 0.02;
-            camera.position.y += (-(mouse.y / window.innerHeight - 0.5) * 0.1 - camera.position.y) * 0.02;
+            camera.position.x += ((mouse.x / window.innerWidth - 0.5) * 0.05 - camera.position.x) * 0.02;
+            camera.position.y += (-(mouse.y / window.innerHeight - 0.5) * 0.05 - camera.position.y) * 0.02;
             camera.lookAt(scene.position);
 
             renderer.render(scene, camera);
@@ -683,8 +723,8 @@
 
         // --- MAIN CONTENT ANIMATIONS ---
         function initAnimations() {
-            // Animate lines in paragraphs (headers handled differently now)
-             gsap.utils.toArray('.line-parent:not(h1):not(h2):not(h3) .line-child').forEach(el => {
+            // Animate lines in paragraphs and initial subtitle
+            gsap.utils.toArray('.line-parent .line-child').forEach(el => {
                 gsap.fromTo(el, { y: '110%' }, { 
                     y: '0%', 
                     duration: 1.5, 
@@ -696,29 +736,9 @@
                 });
             });
 
-             // Animate heading characters
-            gsap.utils.toArray('.font-heading').forEach(heading => {
-                // Basic split for demo (can use SplitText if preferred)
-                if(heading.textContent.length > 0 && !heading.classList.contains('menu-link')) { // Exclude menu links from this
-                    const chars = heading.textContent.split('').map(char => `<span class="char" style="display:inline-block; transform: translateY(100%); opacity: 0;">${char === ' ' ? '&nbsp;' : char}</span>`).join('');
-                    heading.innerHTML = chars;
-                    gsap.to(heading.querySelectorAll('.char'), {
-                        y: '0%',
-                        opacity: 1,
-                        duration: 0.8,
-                        stagger: 0.03, // Adjust for desired speed
-                        ease: 'expo.out',
-                        scrollTrigger: {
-                            trigger: heading,
-                            start: 'top 90%'
-                        }
-                    });
-                }
-            });
-
             // Standard reveal-up for other elements
-            gsap.utils.toArray('.reveal-up:not(p):not(h1):not(h2):not(h3)').forEach(elem => { // Exclude text handled by other anims
-                gsap.fromTo(elem, { opacity: 0, y: 70 }, { 
+            gsap.utils.toArray('.reveal-up').forEach(elem => {
+                gsap.fromTo(elem, { opacity: 0, y: 70 }, {
                     opacity: 1, y: 0, duration: 1.6, ease: 'expo.out',
                     scrollTrigger: { trigger: elem, start: 'top 88%' }
                 });
@@ -727,7 +747,7 @@
             // Parallax Images
             gsap.utils.toArray('.parallax-image').forEach(img => {
                 gsap.to(img, {
-                    yPercent: -8, // Reduced parallax
+                    yPercent: -8, 
                     ease: 'none',
                     scrollTrigger: { trigger: img.closest('.parallax-container'), scrub: 2 } 
                 });
@@ -757,6 +777,22 @@
                     scrollTrigger: { trigger: timelinePath, start: 'top 85%' }
                 });
             }
+
+            // Ensure all anchor links scroll smoothly (including logo and footer link)
+            document.querySelectorAll('a[href^="#"]:not(.menu-link)').forEach(anchor => { // Exclude menu links handled separately
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        lenis.scrollTo(targetElement, { 
+                            duration: 2, // Smooth scroll duration
+                            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Expo out ease
+                            offset: -80 // Adjust if you have a fixed header taking space
+                        });
+                    }
+                });
+            });
         }
         
         // --- MEHFOOZBOT LOGIC ---
@@ -782,7 +818,7 @@
         
         function addMessage(message, sender, isImmediate = false) {
             const bubble = document.createElement('div');
-            bubble.className = `chat-bubble ${sender}-bubble font-body`;
+            bubble.className = `chat-bubble ${sender}-bubble font-body text-base`; // Ensure consistent font
             bubble.textContent = message;
             chatLog.appendChild(bubble);
             gsap.from(bubble, { opacity: 0, y: 20, duration: 0.6, delay: isImmediate ? 0 : 0.4, ease: 'expo.out' });
@@ -801,14 +837,28 @@
 
                 setTimeout(() => {
                     gsap.to(thinkingBubble, {opacity: 0, duration: 0.3, onComplete: () => thinkingBubble.remove()});
-                    const responseKey = Object.keys(promptQuestions).find(key => input.toLowerCase().includes(key.toLowerCase().split(' ')[2])) || 'default'; // Basic keyword matching improved
-                    const response = botResponses[promptQuestions[input] || responseKey] || botResponses.default; // Fallback added
+                    // Try exact match first, then basic keyword
+                    let responseKey = 'default';
+                    if (promptQuestions[input]) {
+                        responseKey = promptQuestions[input];
+                    } else {
+                       const inputLower = input.toLowerCase();
+                       for (const key in promptQuestions) {
+                          // Check if keywords from the prompt question exist in the input
+                          const keywords = key.toLowerCase().split(' ').filter(word => !['what\'s', 'how', 'do', 'you', 'can', 'i', 'is', 'a', 'the', 'for', 'with', 'tips'].includes(word));
+                          if (keywords.some(keyword => inputLower.includes(keyword))) {
+                             responseKey = promptQuestions[key];
+                             break;
+                          }
+                       }
+                    }
+                    const response = botResponses[responseKey] || botResponses.default;
                     addMessage(response, 'bot');
                     chatInput.disabled = false;
                     chatInput.focus();
                     promptButtonsContainer.style.pointerEvents = 'auto';
                     gsap.to(promptButtonsContainer.querySelectorAll('button'), { opacity: 1, duration: 0.3 });
-                }, 900 + Math.random() * 600);
+                }, 900 + Math.random() * 600); // Variable delay
              }
         }
 
@@ -819,9 +869,8 @@
         
         Object.keys(promptQuestions).forEach(question => {
             const button = document.createElement('button');
-            // Added role="button" for accessibility
             button.setAttribute('role', 'button'); 
-            button.className = "font-body text-sm bg-warm-dark/50 border border-medium-text/30 rounded-full py-2 px-3 text-medium-text hover:border-gold hover:text-gold transition-colors text-left";
+            button.className = "prompt-button font-body text-sm bg-warm-dark/50 border border-medium-text/30 rounded-full py-2 px-3 text-medium-text hover:border-gold hover:text-gold transition-all duration-300 text-left hover:scale-105"; // Added class for cursor hover
             button.textContent = question;
             button.onclick = () => { handleUserInput(question); }
             promptButtonsContainer.appendChild(button);
@@ -835,7 +884,6 @@
         contactForm.addEventListener('submit', e => {
              e.preventDefault();
              // **Important:** Add actual form submission logic here (e.g., using fetch or AJAX)
-             // For now, we just show the success message
              gsap.to(contactForm, { opacity: 0, duration: 0.5, onComplete: () => {
                  contactForm.style.display = 'none';
                  formSuccess.classList.remove('hidden');
