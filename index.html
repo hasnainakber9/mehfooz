@@ -74,6 +74,15 @@
             background: rgba(218, 165, 32, 0.1);
             border-color: var(--gold);
         }
+        .whisper-card.correct {
+            border-color: var(--teal);
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(0, 128, 128, 0.5);
+        }
+        .whisper-card.incorrect {
+            opacity: 0.4;
+            filter: grayscale(80%);
+        }
 
         /* Animate-in styles */
         .reveal-up { opacity: 0; transform: translateY(40px); }
@@ -109,7 +118,7 @@
         <div class="text-center w-full max-w-4xl">
              <div id="game-intro">
                  <h2 class="font-script text-gold text-4xl md:text-6xl mb-2">Whispers & Truth</h2>
-                 <p class="text-medium-text text-lg mb-8">A short test of your digital intuition. Choose the whisper that feels more like the truth.</p>
+                 <p class="text-medium-text text-lg mb-8">A quick game of digital intuition. Which sounds more true?</p>
              </div>
              <div id="game-question-container" class="mt-8 grid md:grid-cols-2 gap-8">
                  </div>
@@ -341,17 +350,17 @@
         const gameQuestions = [
             {
                 whispers: [
-                    { text: "URGENT: A secret cure for all diseases was just leaked by a brave doctor! Click here NOW!", truth: false },
-                    { text: "A recent study suggests new treatments show promise, with more research needed to confirm safety.", truth: true }
+                    { text: "Secret cure for everything found! Click NOW!", truth: false },
+                    { text: "New study shows promise, but needs more research.", truth: true }
                 ],
-                feedback: "Truth often speaks calmly and relies on evidence, while misinformation often uses urgency and emotion."
+                feedback: "Well spotted! Truth often speaks calmly, while misinformation uses urgency."
             },
             {
                 whispers: [
-                    { text: "Everyone is saying this is the WORST thing to ever happen! The government is hiding everything!", truth: false },
-                    { text: "Official reports from multiple agencies provide conflicting details, and the situation is still developing.", truth: true }
+                    { text: "This is the WORST thing ever! They're hiding it all!", truth: false },
+                    { text: "Official reports are conflicting as the situation develops.", truth: true }
                 ],
-                feedback: "Misinformation often uses strong, simple, and alarming language. Truth is often more complex and nuanced."
+                feedback: "Exactly. Misinformation uses simple, alarming language. The truth is often more complex."
             }
         ];
         let gameStep = 0;
@@ -368,38 +377,53 @@
                 const card = document.createElement('div');
                 card.className = 'whisper-card rounded-lg p-6 text-lg';
                 card.textContent = whisper.text;
-                card.onclick = () => handleChoice(whisper.truth, step.feedback);
+                card.dataset.truth = whisper.truth;
+                card.onclick = () => handleChoice(whisper.truth, step.feedback, card);
                 gameContainer.appendChild(card);
             });
         }
         
-        function handleChoice(isTruth, feedback) {
+        function handleChoice(isTruth, feedback, clickedCard) {
             gameFeedbackEl.textContent = feedback;
             gsap.fromTo(gameFeedbackEl, {opacity: 0, y: 10}, {opacity: 1, y: 0, duration: 0.5});
-            gameContainer.style.pointerEvents = 'none';
+            
+            const cards = gameContainer.querySelectorAll('.whisper-card');
+            cards.forEach(card => {
+                card.style.pointerEvents = 'none';
+                if (card.dataset.truth === 'true') {
+                    card.classList.add('correct');
+                } else {
+                    card.classList.add('incorrect');
+                }
+            });
+            
             setTimeout(() => {
                 gameStep++;
                 if (gameStep < gameQuestions.length) {
                     loadGameStep();
-                    gameContainer.style.pointerEvents = 'auto';
                 } else {
                     endGame();
                 }
-            }, 4000);
+            }, 3000);
         }
 
         function endGame() {
-            gsap.to([gameContainer, document.getElementById('game-intro')], {opacity: 0, duration: 0.5});
+            gsap.to([gameContainer, document.getElementById('game-intro'), gameFeedbackEl], {opacity: 0, duration: 0.5});
             document.getElementById('game-end').classList.remove('hidden');
-            gsap.from(document.getElementById('game-end'), {opacity: 0, y: 20, duration: 1});
+            gsap.from(document.getElementById('game-end'), {opacity: 0, y: 20, duration: 1, delay: 0.5});
         }
 
         document.getElementById('enter-site-btn').addEventListener('click', () => {
-             gsap.to(gameScreen, { opacity: 0, duration: 1, onComplete: () => {
-                 gameScreen.style.display = 'none';
-                 gsap.to(mainContent, { opacity: 1, duration: 1 });
-                 initAnimations();
-             }});
+             gsap.to(gameScreen, { 
+                 opacity: 0, 
+                 duration: 1, 
+                 onComplete: () => {
+                     gameScreen.style.display = 'none';
+                     gsap.to(mainContent, { opacity: 1, duration: 1 });
+                     initAnimations();
+                     lenis.scrollTo('#home', { immediate: true });
+                 }
+             });
         });
 
         loadGameStep();
