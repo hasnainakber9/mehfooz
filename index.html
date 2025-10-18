@@ -8,7 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
-    <script src="https://unpkg.com/split-type"></script> <style>
+    <script src="https://unpkg.com/split-type"></script> <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Special+Elite&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+
+
+    <style>
         /* ---
         SOPHISTICATED THEME (NAVY/TEAL/GOLD) - REAPPLIED
         ---
@@ -24,11 +29,13 @@
             --danger: #ef4444;
             --success: #22c55e;
 
-            --font-sans: 'Inter', sans-serif;
-            --font-script: 'Caveat', cursive;
+            /* *** UPDATED FONT VARIABLES *** */
+            --font-sans: 'Ubuntu', sans-serif; /* Ubuntu for body */
+            --font-heading: 'Poppins', sans-serif; /* Poppins for headings */
+            --font-script: 'Special Elite', cursive; /* Special Elite for script */
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Caveat:wght@700&display=swap');
+        /* Removed previous font import */
 
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto; }
@@ -36,7 +43,8 @@
         body {
             background-color: var(--dark-bg);
             color: var(--light-text);
-            font-family: var(--font-sans); /* Modern, clean font */
+            /* *** APPLY UBUNTU TO BODY *** */
+            font-family: var(--font-sans);
             overflow-x: hidden;
             cursor: none;
         }
@@ -172,9 +180,12 @@
             text-align: center;
             border-radius: 0.75rem; /* Match card rounding */
             padding: 1.5rem;
-             font-style: italic; /* Add emphasis */
+             /* font-style: italic; /* Removed italic */
              color: var(--light-text); /* Slightly brighter */
              box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
+             font-family: var(--font-sans); /* Use Ubuntu */
+             font-size: 1.1rem; /* Adjust size if needed */
+             line-height: 1.6;
         }
         .game-btn {
             background-color: rgba(255, 255, 255, 0.05); /* Lighter bg */
@@ -184,6 +195,7 @@
             border-radius: 99px; /* Pill shape */
              padding: 0.8rem 1.5rem; /* Adjust padding */
              font-weight: 500;
+             font-family: var(--font-heading); /* Use Poppins for buttons */
         }
         .game-btn:hover:not(:disabled) {
             transform: translateY(-3px) scale(1.03); /* More lift */
@@ -192,11 +204,16 @@
             color: white; /* White text on hover */
             box-shadow: 0 8px 20px rgba(0, 168, 150, 0.25);
         }
+        .game-btn.gold { /* Keep gold class for styling the Begin button */
+             background-color: var(--gold);
+             color: var(--dark-bg);
+             border-color: var(--gold);
+        }
         .game-btn.gold:hover:not(:disabled) {
-            background-color: var(--gold);
-            border-color: var(--gold);
-            color: var(--dark-bg);
-             box-shadow: 0 8px 20px rgba(244, 184, 96, 0.25);
+            background-color: var(--teal); /* Change hover for gold button too */
+            border-color: var(--teal);
+            color: white;
+             box-shadow: 0 8px 20px rgba(0, 168, 150, 0.25);
         }
         .game-btn:disabled {
             opacity: 0.4;
@@ -211,6 +228,7 @@
             border-radius: 99px;
              font-weight: 700; /* Bolder */
              padding: 0.9rem 2rem; /* Larger */
+             font-family: var(--font-heading); /* Use Poppins */
         }
         #enter-site-btn:hover {
             transform: scale(1.05);
@@ -218,20 +236,62 @@
         }
         
          #game-feedback {
-             font-style: italic;
+             /* font-style: italic; */ /* Removed italic */
              color: var(--medium-text);
              min-height: 3rem; /* Ensure space for feedback */
+             font-family: var(--font-sans); /* Use Ubuntu */
+             font-size: 1rem;
          }
+         
+         /* Specific font application for game */
+         #game-intro h2, #game-end h3 { font-family: var(--font-script); } /* Special Elite */
+         #game-intro p, #game-end p { font-family: var(--font-sans); } /* Ubuntu */
+         #game-main p#game-prompt { font-family: var(--font-heading); font-weight: 500;} /* Poppins */
+         #game-main #game-statement { font-family: var(--font-sans);} /* Ubuntu */
 
 
         /* Animate-in styles */
         .reveal-up { opacity: 0; transform: translateY(40px); }
 
         /* ---
+        TYPOGRAPHY & FONT APPLICATION
+        ---
+        */
+        /* *** USE SPECIAL ELITE FOR SCRIPT ELEMENTS *** */
+        .font-script { font-family: var(--font-script); }
+
+        /* *** USE POPPINS FOR ALL HEADINGS *** */
+        h1, h2, h3 { font-family: var(--font-heading); font-weight: 700; }
+        h1 { font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem); letter-spacing: -0.01em; } /* Adjust spacing */
+        h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; }
+        h3 { font-size: 1.5rem; font-weight: 500; color: var(--light-text); } /* Lighter weight for H3 */
+
+        /* *** USE UBUNTU FOR PARAGRAPHS (already applied via body) *** */
+        p {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: var(--medium-text);
+            max-width: 65ch;
+            font-weight: 400; /* Standard weight */
+        }
+        blockquote p { /* Ensure blockquotes use body font */
+             font-family: var(--font-sans);
+        }
+
+        /* --- Apply Poppins to specific buttons/nav items for consistency --- */
+         .btn, .nav-link, #friendly-nav .nav-link, .chat-prompt-btn, .question-pill {
+             font-family: var(--font-heading); /* Poppins for UI elements */
+             font-weight: 500;
+         }
+         #contact-form label { font-family: var(--font-heading); font-weight: 500; }
+         #contact-form button { font-family: var(--font-heading); font-weight: 700; }
+
+
+        /* ---
         CHAT & FORM STYLES (SOPHISTICATED)
         ---
         */
-        .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 18px; line-height: 1.5; }
+        .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 18px; line-height: 1.5; font-family: var(--font-sans); } /* Ubuntu in chat */
         .user-bubble { background-color: var(--teal); color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
         .bot-bubble { background-color: var(--card-bg); color: var(--light-text); border-bottom-left-radius: 4px; align-self: flex-start; }
 
@@ -242,6 +302,7 @@
             transition: all 0.3s ease;
              border-radius: 99px; /* Pill */
              padding: 0.5rem 1rem; /* Adjust padding */
+             font-size: 0.875rem; /* Smaller text */
         }
         .chat-prompt-btn:hover {
             background-color: var(--teal);
@@ -259,6 +320,7 @@
             padding: 0.875rem 1rem;
             transition: all 0.3s ease;
             width: 100%;
+             font-family: var(--font-sans); /* Ubuntu for inputs */
         }
         .form-input:focus {
             outline: none;
@@ -313,7 +375,7 @@
              position: relative; /* Needed for ::after */
              padding: 0.5rem 1rem; /* Adjust padding */
              font-size: 1rem; /* Slightly smaller */
-             font-weight: 500;
+             /* font-weight: 500; Already set */
         }
          #friendly-nav .nav-link:hover {
              color: var(--light-text);
@@ -406,14 +468,17 @@
         HERO STYLES (MATCH THEME)
         ---
         */
-        #hero-headline { color: var(--gold); /* Script font */ }
+        /* #hero-headline { color: var(--gold); } Already handled by .font-script */
         #hero-subheadline { color: var(--light-text); }
+         #scroll-prompt span { font-family: var(--font-heading); font-weight: 500;} /* Poppins for prompt */
+         .mouse { border-color: var(--medium-text);}
+         .mouse::before { background-color: var(--medium-text); }
 
         /* ---
         JOURNAL STYLES (MATCH THEME)
         ---
         */
-        #journal h2 { color: var(--gold); }
+        #journal h2 { color: var(--gold); font-family: var(--font-script); } /* Script font for Journal */
         #journal p { color: var(--medium-text); }
         .journal-image-container { /* Add reveal animation */
             opacity: 0;
@@ -426,16 +491,21 @@
         APPROACH STYLES (MATCH THEME)
         ---
         */
-        #approach h2 { color: var(--gold); }
-        #approach h3 { color: var(--teal); }
+        #approach h2 { color: var(--gold); font-family: var(--font-script); } /* Script font */
+        #approach h3 { color: var(--teal); font-family: var(--font-script); } /* Script font */
         #approach p { color: var(--medium-text); }
+        .pillar-card { /* Styles for pillar cards in Approach */
+             background-color: var(--card-bg);
+             border: 1px solid var(--border-color);
+             /* Other pillar styles */
+         }
         
         /* ---
         COMMUNITY STYLES (MATCH THEME)
         ---
         */
-        #community h2 { color: var(--gold); }
-        #community h3 { color: var(--teal); }
+        #community h2 { color: var(--gold); font-family: var(--font-script); } /* Script font */
+        #community h3 { color: var(--teal); font-family: var(--font-script); } /* Script font */
         #community blockquote { border-color: var(--gold); color: var(--medium-text); }
         #community cite { color: var(--light-text); }
 
@@ -443,10 +513,10 @@
         VISION STYLES (MATCH THEME)
         ---
         */
-        #vision h2 { color: var(--gold); }
+        #vision h2 { color: var(--gold); font-family: var(--font-script); } /* Script font */
         #vision p.text-medium-text { color: var(--medium-text); }
-        #vision .font-script.text-teal { color: var(--teal); }
-        #vision h3 { color: var(--light-text); }
+        #vision .font-script.text-teal { color: var(--teal); font-family: var(--font-script); } /* Ensure script font */
+        #vision h3 { color: var(--light-text); font-family: var(--font-heading); } /* Poppins for subheads */
         #vision .btn-outline { border-color: var(--teal); color: var(--teal); }
         #vision .btn-outline:hover { background-color: var(--teal); color: white; }
 
@@ -455,19 +525,19 @@
         VALUES STYLES (MATCH THEME)
         ---
         */
-        #values h2 { color: var(--gold); }
-        #values h3 { color: var(--teal); }
+        #values h2 { color: var(--gold); font-family: var(--font-script); } /* Script font */
+        #values h3 { color: var(--teal); font-family: var(--font-script); } /* Script font */
         #values p { color: var(--medium-text); }
 
         /* ---
         CONNECT STYLES (MATCH THEME)
         ---
         */
-        #connect h2 { color: var(--gold); }
+        #connect h2 { color: var(--gold); font-family: var(--font-script); } /* Script font */
         #connect p.text-medium-text { color: var(--medium-text); }
-        #connect h3 { color: var(--teal); }
+        #connect h3 { color: var(--teal); font-family: var(--font-script); } /* Script font */
         #connect label { color: var(--medium-text); }
-        #connect #form-success h3 { color: var(--teal); }
+        #connect #form-success h3 { color: var(--teal); font-family: var(--font-script); } /* Script font */
         #connect #form-success p { color: var(--medium-text); }
         #chat-log { background-color: rgba(15, 23, 42, 0.5); /* Darker chat log */ }
         
@@ -477,17 +547,17 @@
         * / Bot Modal Styles - Keeping separate for clarity if used */
         #bot-modal { background-color: rgba(15, 23, 42, 0.7); }
         .bot-modal-content { background-color: var(--dark-bg); border-color: var(--border-color); }
-        .bot-modal-content h3 { color: var(--gold); }
+        .bot-modal-content h3 { color: var(--gold); font-family: var(--font-script); } /* Script font */
         .bot-modal-content p { color: var(--medium-text); }
         #close-bot-demo { color: var(--medium-text); }
         #close-bot-demo:hover { color: var(--light-text); }
         #bot-modal #chat-log { background-color: var(--card-bg); } /* Specific if in modal */
         #question-pills-container .question-pill { /* Style pills if used */
-             border-color: var(--medium-text); color: var(--medium-text); }
+             border-color: var(--medium-text); color: var(--medium-text); font-family: var(--font-heading); font-size: 0.875rem;}
          #question-pills-container .question-pill:hover {
             background-color: var(--teal); border-color: var(--teal); color: white; }
-        #bot-modal #chat-form input { /* Specific if in modal */ }
-        #bot-modal #chat-form button { /* Specific if in modal */ }
+        #bot-modal #chat-form input { /* Specific if in modal */ font-family: var(--font-sans); }
+        #bot-modal #chat-form button { /* Specific if in modal */ font-family: var(--font-heading); }
 
 
         /* ---
@@ -527,8 +597,8 @@
                         <div id="game-statement" class="game-statement-card rounded-lg p-6 md:p-8 text-xl md:text-2xl mb-6">
                             </div>
                         <div id="game-buttons" class="flex flex-col md:flex-row gap-4 justify-center">
-                            <button id="game-btn-1" class="game-btn text-lg font-semibold py-3 px-6 rounded-lg w-full md:w-auto"></button>
-                            <button id="game-btn-2" class="game-btn text-lg font-semibold py-3 px-6 rounded-lg w-full md:w-auto"></button>
+                            <button id="game-btn-1" class="game-btn text-lg py-3 px-6 rounded-lg w-full md:w-auto"></button>
+                            <button id="game-btn-2" class="game-btn text-lg py-3 px-6 rounded-lg w-full md:w-auto"></button>
                         </div>
                         <p id="game-feedback" class="mt-6 text-lg max-w-xl mx-auto min-h-[4rem] text-center"></p>
                     </div>
@@ -546,8 +616,7 @@
     <main id="main-content" class="opacity-0">
         <header id="site-header" class="fixed top-0 left-0 w-full z-50"> <nav class="container mx-auto flex justify-between items-center p-6 md:p-8">
                 <a href="#home" class="nav-logo font-script text-3xl">Mehfooz</a>
-                <div class="hidden md:flex gap-6 text-lg">
-                    <a href="#journal" class="nav-link relative">Journal</a>
+                <div class="hidden md:flex gap-6 text-lg items-center"> <a href="#journal" class="nav-link relative">Journal</a>
                     <a href="#approach" class="nav-link relative">Approach</a>
                     <a href="#community" class="nav-link relative">Community</a>
                     <a href="#connect" class="nav-link relative">Connect</a>
@@ -559,15 +628,16 @@
         </header>
 
         <section id="home" class="content-section h-screen flex items-center justify-center text-center">
-             <div class="hero-background"> <img src="https://images.unsplash.com/photo-1623581203333-53531b1bbf8e?q=80&w=2400&auto=format&fit=crop"
+             <div class="hero-background"> <img src="https://images.unsplash.com/photo-1623581203333-53531b1bbf8e?q=80&w=2400&auto=format=fit=crop"
                       alt="A thoughtful portrait of a person from Gilgit Baltistan">
              </div>
             <div class="px-4 hero-content container relative z-10"> <h1 id="hero-headline" class="text-gold text-5xl md:text-8xl mb-4 font-script"> Clarity in the Digital Crossroads.
                 </h1>
                 <p id="hero-subheadline" class="text-xl md:text-2xl text-light-text leading-relaxed max-w-4xl mx-auto"> For the people of Gilgit Baltistan, a safe space to find clarity in a connected world.
                 </p>
-                 <div id="scroll-prompt" class="absolute bottom-16 left-1/2 -translate-x-1/2 opacity-0"> <div class="mouse"></div> <span class="mt-2 font-script text-medium-text animate-pulse">Scroll to Discover</span>
-                </div>
+                 <div id="scroll-prompt" class="absolute bottom-16 left-1/2 -translate-x-1/2 opacity-0"> <div class="mouse w-6 h-10 border-2 border-medium-text rounded-full relative"> <div class="w-1 h-2 bg-medium-text rounded-full absolute left-1/2 transform -translate-x-1/2 animate-scroll-wheel"></div> <style> @keyframes scroll-wheel { 0% { top: 6px; opacity: 1; } 100% { top: 20px; opacity: 0; } } .animate-scroll-wheel { animation: scroll-wheel 1.5s infinite; } </style>
+                     </div>
+                    <span class="mt-2 text-medium-text animate-pulse">Scroll to Discover</span> </div>
             </div>
         </section>
 
@@ -588,8 +658,7 @@
 
         <section id="approach" class="content-section py-20 md:py-40">
             <div class="container mx-auto px-6 max-w-5xl">
-                <div class="text-center reveal-up mb-20 section-header">
-                    <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Approach is Simple</h2>
+                <div class="text-center reveal-up mb-20 section-header"> <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Approach is Simple</h2>
                 </div>
                 <div class="grid md:grid-cols-3 gap-12 text-center">
                     <div class="pillar-card reveal-up">
@@ -617,8 +686,7 @@
         
         <section id="community" class="content-section py-20 md:py-40">
             <div class="container mx-auto px-6 max-w-4xl">
-                 <div class="text-center reveal-up section-header">
-                    <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">The Heart of Our Community</h2>
+                 <div class="text-center reveal-up section-header"> <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">The Heart of Our Community</h2>
                  </div>
                  <div class="mt-16 reveal-up">
                      <h3 class="font-script text-teal text-4xl mb-6 text-center">Voices from the Valley</h3>
@@ -632,8 +700,7 @@
         
         <section id="vision" class="content-section py-20 md:py-40">
               <div class="container mx-auto px-6 max-w-4xl text-center">
-                  <div class="reveal-up section-header">
-                      <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Five-Year Vision</h2>
+                  <div class="reveal-up section-header"> <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Five-Year Vision</h2>
                       <p class="text-xl text-medium-text max-w-3xl mx-auto">To scale our impact together, offering an opportunity for partners to co-create a digitally resilient future.</p>
                   </div>
                   <div class="mt-16 grid md:grid-cols-2 gap-x-12 gap-y-16 text-left">
@@ -662,8 +729,7 @@
 
          <section id="values" class="content-section py-20 md:py-40">
              <div class="container mx-auto px-6 max-w-5xl">
-                  <div class="text-center reveal-up mb-20 section-header">
-                     <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Guiding Principles</h2>
+                  <div class="text-center reveal-up mb-20 section-header"> <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">Our Guiding Principles</h2>
                   </div>
                  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
                      <div class="reveal-up value-container">
@@ -711,22 +777,18 @@
                      <h3 class="font-script text-teal text-4xl mb-6 text-center">Send a Personal Message</h3>
                      <form id="contact-form" class="space-y-6 text-left">
                            <div>
-                             <label for="name" class="block mb-2 font-medium text-medium-text">Your Name</label>
-                             <input type="text" name="name" id="contact-name" required class="form-input w-full"> </div>
+                             <label for="contact-name" class="block mb-2 font-medium text-medium-text">Your Name</label> <input type="text" name="name" id="contact-name" required class="form-input w-full"> </div>
                            <div>
-                             <label for="email" class="block mb-2 font-medium text-medium-text">Your Email</label>
-                             <input type="email" name="email" id="contact-email" required class="form-input w-full"> </div>
+                             <label for="contact-email" class="block mb-2 font-medium text-medium-text">Your Email</label> <input type="email" name="email" id="contact-email" required class="form-input w-full"> </div>
                             <div>
-                                <label for="interest" class="block mb-2 font-medium text-medium-text">I am a...</label>
-                                <select name="interest" id="contact-interest" class="form-input w-full"> <option>Community Member</option>
+                                <label for="contact-interest" class="block mb-2 font-medium text-medium-text">I am a...</label> <select name="interest" id="contact-interest" class="form-input w-full"> <option>Community Member</option>
                                     <option>Potential Partner / Investor</option>
                                     <option>Researcher / Institution</option>
                                     <option>Student</option>
                                 </select>
                             </div>
                            <div>
-                             <label for="message" class="block mb-2 font-medium text-medium-text">Your Message</label>
-                             <textarea name="message" id="contact-message" rows="5" required class="form-input w-full"></textarea> </div>
+                             <label for="contact-message" class="block mb-2 font-medium text-medium-text">Your Message</label> <textarea name="message" id="contact-message" rows="5" required class="form-input w-full"></textarea> </div>
                          <button type="submit" class="w-full btn-teal font-semibold py-4 px-6 rounded-lg">Send with heart</button>
                      </form>
                       <div id="form-success" class="hidden text-center border border-teal rounded-lg p-8 mt-6">
@@ -746,15 +808,13 @@
 
     </main>
 
-    <div id="bot-modal" class="hidden">
-         <div class="bot-modal-content">
-             <button id="close-bot-demo">&times;</button>
-             <h3 class="font-script">Chat with MehfoozBot</h3>
-             <p>This is a simulated demo to show how our AI guide can help.</p>
-             <div id="modal-chat-log" class="chat-log-class"> </div>
-             <div id="modal-question-pills" class="question-pills-class"> </div>
-             <form id="modal-chat-form" class="chat-form-class"> <input type="text" id="modal-chat-input" placeholder="Type your question..." autocomplete="off">
-                 <button type="submit" class="btn btn-primary">Send</button>
+    <div id="bot-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-4"> <div class="bot-modal-content bg-dark-bg border border-border-color rounded-lg w-full max-w-md p-6 shadow-xl relative"> <button id="close-bot-demo" class="absolute top-3 right-4 text-2xl text-medium-text hover:text-light-text">&times;</button>
+             <h3 class="font-script text-gold text-2xl mb-2 text-center">Chat with MehfoozBot</h3>
+             <p class="text-medium-text text-sm mb-4 text-center">A simulated demo.</p>
+             <div id="modal-chat-log" class="chat-log-class h-64 bg-card-bg rounded p-3 overflow-y-auto mb-4 flex flex-col gap-3"> </div>
+             <div id="modal-question-pills" class="question-pills-class flex flex-wrap gap-2 mb-4"> </div>
+             <form id="modal-chat-form" class="chat-form-class flex gap-2"> <input type="text" id="modal-chat-input" placeholder="Type your question..." autocomplete="off" class="form-input flex-grow rounded-full">
+                 <button type="submit" class="btn btn-primary rounded-full px-4">Send</button>
              </form>
          </div>
      </div>
@@ -797,12 +857,14 @@
         // Setup navigation AFTER the site is entered
         function setupNavigation() {
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
+                // Remove existing listeners first to prevent duplicates
+                // anchor.removeEventListener('click', handleNavClick); // Need a named function
+                 const handleNavClick = function(e) { // Define named function
+                     e.preventDefault();
                      const targetId = this.getAttribute('href');
-                     // Add offset for fixed header if needed, adjust value as necessary
-                     lenis.scrollTo(targetId, { offset: -80 });
-                });
+                     lenis.scrollTo(targetId, { offset: -80 }); // Adjust offset if header height changes
+                 };
+                 anchor.addEventListener('click', handleNavClick);
             });
 
              // Header scroll effect (only after site entered)
@@ -814,9 +876,15 @@
 
             // Nav link active state highlighting
             gsap.utils.toArray('main section[id]').forEach((section) => {
+                 // Kill existing triggers for this section before creating new ones
+                 ScrollTrigger.getAll().forEach(trigger => {
+                     if (trigger.vars.trigger === section && trigger.vars.onToggle) {
+                         trigger.kill();
+                     }
+                 });
                 ScrollTrigger.create({
                     trigger: section,
-                    start: 'top center+=100px',
+                    start: 'top center+=100px', // Adjust start/end slightly
                     end: 'bottom center-=100px',
                     // markers: true, // For debugging
                     onToggle: self => {
@@ -835,9 +903,16 @@
                 });
             });
              // Ensure home is active initially
+             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); // Clear all first
              document.querySelectorAll('.nav-link[href="#home"]').forEach(link => link.classList.add('active'));
 
              // Friendly Nav visibility
+             // Kill existing triggers first
+             ScrollTrigger.getAll().forEach(trigger => {
+                 if (trigger.vars.trigger === 'body' && trigger.vars.onEnter) {
+                     trigger.kill();
+                 }
+             });
              ScrollTrigger.create({
                  trigger: 'body', // Use body as trigger
                  start: 'top top-=-300', // Show a bit earlier
@@ -887,11 +962,12 @@
         ];
         let gameStep = 0;
 
-         // GSAP Animation Timeline for the game
-         const gameTl = gsap.timeline({ paused: true });
-
-         gameTl.to(gameCard, { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.7)' })
+         // GSAP Animation Timeline for the game intro
+         const gameIntroTl = gsap.timeline({ paused: true });
+         gameIntroTl.to(gameCard, { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.7)' })
                .from([gameIntro.children], { opacity: 0, y: 20, stagger: 0.1, duration: 0.5 }, "-=0.3");
+         // Play the intro animation immediately
+         gameIntroTl.play();
 
 
          function loadGameStep(stepIndex) {
@@ -923,7 +999,7 @@
                  // Assign new click handlers
                  gameBtn1.onclick = () => handleChoice(0);
                  gameBtn2.onclick = () => handleChoice(1);
-             });
+             }, null, ">"); // Ensure call happens after fade out starts
 
              // Fade in new step elements
              tl.fromTo([gamePromptEl, gameStatementEl, gameButtons], { y: 10, opacity: 0 }, {
@@ -1003,16 +1079,13 @@
                       gsap.to(mainContent, { opacity: 1, duration: 1.5, ease: 'power2.out' });
                       gsap.to(siteHeader, { opacity: 1, y: 0, duration: 1, ease: 'power2.out', delay: 0.5 }); // Fade in header slightly later
                       
-                      setupNavigation(); // Setup nav links AFTER site is visible
-                      initSiteAnimations(); // Run main site scroll animations
+                      // *** IMPORTANT: Setup nav and animations AFTER site is visible ***
+                      setupNavigation();
+                      initSiteAnimations();
                   }
               });
          });
         
-         // Start the game animation
-         gameTl.play();
-
-
         // --- THREE.JS BACKGROUND (Keep if desired) ---
         // (Assuming Three.js library is loaded via CDN)
         try {
@@ -1059,7 +1132,7 @@
 
              // Subtle Animation Loop
              let clock = new THREE.Clock();
-             function animateBackground() {
+             function animateBackground() { // Renamed to avoid conflict
                  const elapsedTime = clock.getElapsedTime();
                  const scrollY = lenis.scroll;
 
@@ -1203,10 +1276,6 @@
                  });
              });
 
-             // Ensure initial active state for home link in floating nav
-             document.querySelector('#friendly-nav .nav-link[href="#home"]')?.classList.add('active');
-
-
         } // End initSiteAnimations function
         
         // --- SMARTER MEHFOOZBOT LOGIC ---
@@ -1267,16 +1336,19 @@
 
          // Generic function to add message to a specific chat log
          function addChatMessage(message, sender, targetLog, isImmediate = false) {
+             if (!targetLog) return; // Add check if targetLog exists
              const bubble = document.createElement('div');
              bubble.className = `chat-bubble ${sender}-bubble`;
              bubble.textContent = message;
              targetLog.appendChild(bubble);
              gsap.from(bubble, { opacity: 0, y: 20, duration: 0.5, delay: isImmediate ? 0 : 0.2 });
-             gsap.to(targetLog, { duration: 0.5, scrollTo: { y: "max", autoKill: false }, ease: "power2.out" });
+             // Check if scrollTo plugin is available or use native scroll
+              gsap.to(targetLog, { duration: 0.5, scrollTo: { y: "max", autoKill: false }, ease: "power2.out" });
          }
 
         // Generic function to handle user input for a specific chat instance
          function handleBotUserInput(input, targetLog, targetInput, targetPromptsContainer) {
+             if (!targetLog || !targetInput) return; // Add checks
              if(input.trim()){
                  addChatMessage(input, 'user', targetLog, true);
                  targetInput.value = '';
@@ -1296,7 +1368,7 @@
                           gsap.to(targetPromptsContainer.children, { opacity: 1, duration: 0.3 });
                       }
                      targetInput.focus();
-                 }, 1000 + Math.random() * 400);
+                 }, 1000 + Math.random() * 400); // Slightly faster bot response
              }
          }
 
@@ -1309,9 +1381,10 @@
              // Add prompt buttons to inline chat
              Object.keys(promptQuestions).forEach(question => {
                  const button = document.createElement('button');
+                 button.type = "button"; // Prevent form submission
                  button.className = "chat-prompt-btn text-sm rounded-full py-2 px-3";
                  button.textContent = question;
-                 button.onclick = () => { handleUserInput(question); } // Use the general handler
+                 button.onclick = () => { handleBotUserInput(question, chatLog, chatInput, promptButtonsContainer); } // Pass correct args
                  promptButtonsContainer.appendChild(button);
              });
              // Initial inline bot message
@@ -1329,7 +1402,7 @@
               // Add pills to modal
               modalQuestions.forEach(q => {
                   const pill = document.createElement('div');
-                  pill.className = 'question-pill cursor-pointer'; // Add cursor-pointer if needed
+                  pill.className = 'question-pill cursor-pointer border border-medium-text text-medium-text hover:bg-teal hover:border-teal hover:text-white transition-colors rounded-full px-3 py-1 text-sm'; // Added styles
                   pill.textContent = q;
                   pill.dataset.question = q;
                    pill.onclick = () => { handleBotUserInput(q, modalChatLog, modalChatInput, modalPillContainer); };
@@ -1345,6 +1418,7 @@
                        if (modalChatLog.children.length === 0) {
                            addChatMessage("Hello! Ask a question or click a topic.", 'bot', modalChatLog, true);
                        }
+                      gsap.fromTo(botModal, {opacity: 0}, {opacity: 1, duration: 0.3}); // Animate modal itself
                       gsap.fromTo(botModal.querySelector('.bot-modal-content'), {scale: 0.9, opacity: 0}, {scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out'});
                   });
               });
@@ -1352,7 +1426,9 @@
               // Close Modal Button
               closeBotBtn.addEventListener('click', () => {
                    gsap.to(botModal.querySelector('.bot-modal-content'), {scale: 0.9, opacity: 0, duration: 0.3, ease: 'power2.in', onComplete: () => {
-                        botModal.classList.add('hidden');
+                       gsap.to(botModal, {opacity: 0, duration: 0.2, onComplete: () => {
+                             botModal.classList.add('hidden');
+                       }});
                    }});
               });
          }
