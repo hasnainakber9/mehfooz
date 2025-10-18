@@ -3,102 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehfooz - A Living Journal</title>
-    
+    <title>Mehfooz - Find Your Clarity</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
 
     <style>
         :root {
-            --space-dark: #121212; /* A softer, charcoal black */
-            --light-text: #EAE0D5;
-            --medium-text: #A8A29A;
-            --soft-gold: #DAA520; /* Primary accent */
-            --teal-accent: #008080; /* Secondary accent for specific elements */
+            --bg-soft: #FAF3E0; /* Soft beige background */
+            --text-dark: #4A3F35; /* Earthy dark brown/grey */
+            --text-medium: #7A726A;
+            --accent-gold: #D4AF37; /* Softer, richer gold */
+            --accent-teal: #48A9A6; /* Muted teal */
         }
 
-        /* Swapped to more intimate and classic fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+        /* Switched fonts for a warmer, more modern/GenZ feel */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
 
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto; }
 
         body {
-            background-color: var(--space-dark);
-            color: var(--light-text);
-            font-family: 'Lora', serif; /* Softer body font */
+            background-color: var(--bg-soft);
+            color: var(--text-dark);
+            font-family: 'Lora', serif; /* Body font */
+            font-size: 17px; /* Slightly larger base */
+            line-height: 1.7;
             overflow-x: hidden;
             cursor: none;
+            /* Subtle animated gradient background */
+            background: linear-gradient(-45deg, #fdf8ed, #faf3e0, #f5eadd, #f0e1d1);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
         }
-        /* Film Grain Overlay */
-        body::before {
-            content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXVדהVlZWV/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f38AAAD/v//+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+v//+vf/+vf/+vf/+vf/+vf/+vf/+vf/+/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/+v//+v//+v//+/v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//v-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a--a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-_');
-            opacity: 0.08; /* Adjust for desired grain intensity */
-            pointer-events: none;
-            z-index: 999;
-            animation: grain 7s steps(10) infinite;
-        }
-        @keyframes grain {
-          0%, 100% { transform: translate(0, 0); } 10% { transform: translate(-5%, -10%); } 20% { transform: translate(-15%, 5%); } 30% { transform: translate(7%, -25%); } 40% { transform: translate(-5%, 25%); } 50% { transform: translate(-15%, 10%); } 60% { transform: translate(15%, 0%); } 70% { transform: translate(0%, 15%); } 80% { transform: translate(3%, 35%); } 90% { transform: translate(-10%, 10%); }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .font-heading {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', sans-serif; /* Friendly but modern heading */
             font-weight: 600;
-            text-shadow: 0 0 10px var(--cyan-glow); /* Subtle glow */
         }
-        .font-body {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.15rem; /* Slightly larger for elegance */
+
+        /* --- Custom Cursor --- */
+        #cursor-dot, #cursor-circle {
+            position: fixed;
+            top: 0; left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10003;
+            mix-blend-mode: exclusion; /* Softer blend */
+            will-change: transform, width, height, background-color, border-color;
         }
+        #cursor-dot {
+            width: 8px; height: 8px;
+            background-color: var(--accent-gold);
+        }
+        #cursor-circle {
+            width: 40px; height: 40px;
+            border: 1px solid var(--accent-gold);
+            transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1), 
+                        width 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
+                        height 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+                        border-color 0.4s ease;
+        }
+        body.link-hover #cursor-circle { 
+            transform: scale(1.6); 
+            border-color: var(--accent-teal);
+            width: 60px; /* Magnetic effect */
+            height: 60px;
+        }
+        body.link-hover #cursor-dot {
+             background-color: var(--accent-teal);
+        }
+
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0.15; /* Make particles more subtle */}
+
+        .content-section { position: relative; z-index: 1; padding: 15vh 0; /* Reduced padding slightly */ }
         
-        #cursor-dot, #cursor-circle { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10003; will-change: transform; }
-        #cursor-dot { width: 8px; height: 8px; background-color: var(--cyan-glow); border-radius: 50%; }
-        #cursor-circle { width: 40px; height: 40px; border: 1px solid var(--cyan-glow); border-radius: 50%; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s, background-color 0.4s; }
-        body.link-hover #cursor-circle { transform: scale(1.8); background-color: rgba(0, 240, 255, 0.2); border-color: transparent; }
-        
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
-        .content-section { position: relative; z-index: 1; padding: 20vh 0; }
-        
-        /* Game Styles */
+        /* --- Seed Game --- */
         #seed-container { cursor: pointer; }
-        #seed-svg .plant-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; filter: drop-shadow(0 0 5px var(--cyan-glow)); }
-        #seed-svg .seed { transition: all 0.5s ease; transform-origin: center; filter: drop-shadow(0 0 8px var(--soft-gold)); }
-        #seed-container:hover .seed { transform: scale(1.1); }
+        #seed-svg .plant-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; filter: drop-shadow(0 0 3px var(--accent-teal)); }
+        #seed-svg .seed { transition: all 0.5s ease; transform-origin: center; filter: drop-shadow(0 0 5px var(--gold)); }
+        #seed-container:hover .seed { transform: scale(1.2); } /* Slightly bigger hover */
 
-        /* Animate-in styles */
-        .reveal-up { opacity: 0; transform: translateY(50px); }
-        .line-parent { overflow: hidden; }
+        /* --- Animation Styles --- */
+        .reveal-up { opacity: 0; transform: translateY(60px); /* Slightly increased distance */ }
+        .line-parent { overflow: hidden; display: block; /* Ensure it takes block space */ }
         .line-child { display: inline-block; transform: translateY(110%); }
-        
-        /* Chat & Form styles */
-        .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 15px; line-height: 1.5; font-size: 1.1rem; }
-        .user-bubble { background-color: var(--cyan-glow); color: var(--space-dark); border-bottom-right-radius: 3px; align-self: flex-end; font-weight: 500;}
-        .bot-bubble { background-color: rgba(160, 160, 192, 0.1); backdrop-filter: blur(8px); color: var(--light-text); border: 1px solid rgba(160, 160, 192, 0.2); border-bottom-left-radius: 3px; align-self: flex-start; }
-        input, select, textarea { color: var(--light-text); }
-        input::placeholder, textarea::placeholder { color: var(--medium-text); opacity: 0.8; }
-        select {
-           background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23a0a0c0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-           background-position: right 0.5rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; padding-right: 2.5rem; -webkit-appearance: none; appearance: none; color: var(--light-text);
+        .char { display: inline-block; transform: translateY(110%); opacity: 0;} /* For character anims */
+
+        /* --- Chat & Form --- */
+        .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 20px; /* Rounder bubbles */ line-height: 1.6; font-size: 1rem; }
+        .user-bubble { background-color: var(--accent-teal); color: var(--warm-dark); border-bottom-right-radius: 4px; align-self: flex-end; font-weight: 500;}
+        .bot-bubble { background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); color: var(--light-text); border: 1px solid rgba(var(--warm-text-rgb), 0.1); border-bottom-left-radius: 4px; align-self: flex-start; }
+        input, select, textarea { 
+            color: var(--text-dark); 
+            background-color: rgba(255,255,255,0.1);
+            border: 1px solid var(--medium-text);
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
-        select option { background-color: var(--space-dark); color: var(--light-text); }
+        input::placeholder, textarea::placeholder { color: var(--medium-text); opacity: 0.8; }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(218, 165, 32, 0.3);
+        }
+        select {
+           background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%237A726A' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+           background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1em 1em; padding-right: 2.5rem; -webkit-appearance: none; appearance: none; color: var(--text-dark);
+        }
+        select option { background-color: var(--bg-soft); color: var(--text-dark); }
+        button { transition: transform 0.2s ease, box-shadow 0.3s ease; }
+        button:hover { transform: scale(1.03); }
+        button:active { transform: scale(0.98); }
 
 
-        /* Navigation Styles */
+        /* --- Navigation --- */
+        header { backdrop-filter: blur(10px); background-color: rgba(26, 18, 11, 0.5); /* Slightly darker, blurred header */ }
         #menu-toggle { z-index: 10001; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         #menu-toggle:hover { transform: scale(1.1) rotate(90deg); }
-        #menu-toggle span { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s; }
-        #menu-toggle.open span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
-        #menu-toggle.open span:nth-child(2) { transform: translateY(-4px) rotate(-45deg); }
-        #menu-overlay { clip-path: circle(0% at calc(100% - 40px) 48px); background-color: rgba(10, 5, 29, 0.9); backdrop-filter: blur(15px); }
+        #menu-toggle span { background-color: var(--warm-text); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s; }
+        #menu-toggle.open span:nth-child(1) { transform: translateY(3.5px) rotate(45deg); background-color: var(--gold); } /* Adjusted y translate */
+        #menu-toggle.open span:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); background-color: var(--gold); } /* Adjusted y translate */
+        #menu-overlay { clip-path: circle(0% at calc(100% - 40px) 48px); background-color: rgba(26, 18, 11, 0.95); backdrop-filter: blur(15px); } /* Darker overlay */
         #menu-overlay.open { clip-path: circle(150% at calc(100% - 40px) 48px); }
-        .menu-link { transform: translateY(50px); opacity: 0; text-shadow: 0 0 8px rgba(0, 240, 255, 0); transition: text-shadow 0.3s ease, color 0.3s ease, letter-spacing 0.3s ease; }
-        .menu-link:hover { color: var(--cyan-glow); text-shadow: 0 0 15px var(--cyan-glow); letter-spacing: 2px; }
+        .menu-link { transform: translateY(50px); opacity: 0; font-family: 'Poppins', sans-serif; font-weight: 500; letter-spacing: 1px; } /* Use Poppins for menu links */
+        .menu-link:hover { color: var(--gold); transform: translateY(50px) translateX(10px); } /* Shift right on hover */
 
+        /* Added glow to buttons */
+        #enter-site-btn:hover, #chat-form button:hover, #contact-form button:hover {
+             box-shadow: 0 0 15px rgba(218, 165, 32, 0.4);
+        }
+        
     </style>
 </head>
 <body class="antialiased">
@@ -108,10 +151,10 @@
 
     <canvas id="bg-canvas"></canvas>
 
-    <div id="game-screen" class="fixed inset-0 bg-space-dark z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
+    <div id="game-screen" class="fixed inset-0 bg-warm-dark z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
         <div class="text-center w-full max-w-lg">
             <div id="game-intro">
-                <h2 class="font-heading text-soft-gold text-4xl md:text-6xl mb-2" style="text-shadow: 0 0 10px var(--soft-gold);">A Seed of Trust</h2>
+                <h2 class="font-heading text-gold text-4xl md:text-6xl mb-2">A Seed of Trust</h2>
                 <p class="font-body text-medium-text text-xl mb-8">Click and hold to begin.</p>
             </div>
             <div id="seed-container" class="relative w-full aspect-square max-w-[250px] mx-auto">
@@ -125,36 +168,36 @@
                           </feMerge>
                         </filter>
                     </defs>
-                    <path class="plant-path" d="M100 180 C 100 140, 70 140, 70 100 C 70 60, 100 60, 100 20" stroke="var(--cyan-glow)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow)"/>
-                    <path class="plant-path" d="M70 100 C 40 100, 40 70, 70 70" stroke="var(--cyan-glow)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow)"/>
-                    <path class="plant-path" d="M100 140 C 130 140, 130 110, 100 110" stroke="var(--cyan-glow)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow)"/>
-                    <circle class="seed" cx="100" cy="180" r="10" fill="var(--soft-gold)" filter="url(#glow)"/>
+                    <path class="plant-path" d="M100 180 C 100 140, 70 140, 70 100 C 70 60, 100 60, 100 20" stroke="var(--teal)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+                    <path class="plant-path" d="M70 100 C 40 100, 40 70, 70 70" stroke="var(--teal)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+                    <path class="plant-path" d="M100 140 C 130 140, 130 110, 100 110" stroke="var(--teal)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+                    <circle class="seed" cx="100" cy="180" r="10" fill="var(--gold)" filter="url(#glow)"/>
                 </svg>
             </div>
             <div id="game-end" class="absolute bottom-10 left-1/2 -translate-x-1/2 w-full px-4">
-                <p id="game-feedback" class="font-heading text-cyan-glow text-xl mb-4 opacity-0"></p>
-                <button id="enter-site-btn" class="font-heading bg-soft-gold text-space-dark font-bold py-3 px-8 rounded-full text-xl hover:bg-opacity-80 transition-all opacity-0 scale-90 pointer-events-none shadow-lg shadow-soft-gold/30">Begin Journey</button>
+                <p id="game-feedback" class="font-heading text-teal text-xl mb-4 opacity-0"></p>
+                <button id="enter-site-btn" class="font-heading bg-gold text-warm-dark font-bold py-3 px-8 rounded-full text-xl hover:bg-opacity-80 transition-all opacity-0 scale-90 pointer-events-none shadow-lg shadow-gold/30">Begin Journey</button>
             </div>
         </div>
     </div>
     
     <header class="fixed top-0 left-0 w-full z-50">
         <nav class="container mx-auto flex justify-between items-center p-6 md:p-8">
-            <a href="#home" class="font-heading text-3xl text-soft-gold" style="text-shadow: 0 0 8px var(--soft-gold);">Mehfooz</a>
-            <button id="menu-toggle" class="w-12 h-12 flex flex-col justify-center items-center gap-1.5 rounded-full bg-light-text/10 backdrop-blur-sm">
-                <span class="w-6 h-0.5 bg-light-text block transition-transform duration-300"></span>
-                <span class="w-6 h-0.5 bg-light-text block transition-transform duration-300"></span>
+            <a href="#home" class="font-heading text-3xl text-gold z-[10002]" style="text-shadow: 0 0 5px rgba(218, 165, 32, 0.5);">Mehfooz</a>
+            <button id="menu-toggle" class="w-10 h-10 flex flex-col justify-center items-center gap-1.5 rounded-full bg-warm-text/10 backdrop-blur-sm">
+                <span class="w-5 h-0.5 bg-warm-text block transition-transform duration-300"></span>
+                <span class="w-5 h-0.5 bg-warm-text block transition-transform duration-300"></span>
             </button>
         </nav>
     </header>
     
-    <div id="menu-overlay" class="fixed inset-0 bg-space-dark/95 backdrop-blur-xl z-[10000] flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]">
+    <div id="menu-overlay" class="fixed inset-0 bg-warm-dark/95 backdrop-blur-lg z-[10000] flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]">
         <div class="text-center">
-            <a href="#home" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-light-text hover:text-cyan-glow transition-colors duration-300">Home</a>
-            <a href="#journal" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-light-text hover:text-cyan-glow transition-colors duration-300">Journal</a>
-            <a href="#approach" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-light-text hover:text-cyan-glow transition-colors duration-300">Approach</a>
-            <a href="#community" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-light-text hover:text-cyan-glow transition-colors duration-300">Community</a>
-            <a href="#connect" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-light-text hover:text-cyan-glow transition-colors duration-300">Connect</a>
+            <a href="#home" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Home</a>
+            <a href="#journal" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Our Story</a>
+            <a href="#approach" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Approach</a>
+            <a href="#community" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Community</a>
+            <a href="#connect" class="menu-link block font-heading text-5xl md:text-7xl my-4 text-warm-text hover:text-gold transition-colors duration-300">Connect</a>
         </div>
     </div>
 
@@ -163,8 +206,8 @@
 
         <section id="home" class="content-section h-screen flex items-center justify-center text-center">
             <div class="px-4">
-                <h1 class="font-heading text-soft-gold text-5xl md:text-8xl mb-4">A digital sanctuary.</h1>
-                <p class="font-body text-xl md:text-2xl text-light-text leading-relaxed max-w-4xl line-parent">
+                <h1 class="font-heading text-gold text-5xl md:text-8xl mb-4 char-anim" style="text-shadow: 0 0 10px rgba(218, 165, 32, 0.4);">A digital sanctuary.</h1>
+                <p class="font-body text-xl md:text-2xl text-warm-text leading-relaxed max-w-4xl line-parent mt-4">
                     <span class="line-child">Empowering the communities of Gilgit Baltistan to navigate the digital world with confidence.</span>
                 </p>
             </div>
@@ -174,15 +217,15 @@
              <div class="container mx-auto px-6 max-w-4xl">
                  <div class="flex flex-col md:flex-row gap-12 items-center">
                      <div class="w-full md:w-1/2">
-                         <div class="rounded-lg shadow-2xl shadow-cyan-glow/10 overflow-hidden">
-                             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto-format=fit=crop" alt="A group of diverse people working together warmly" class="parallax-image rounded-lg">
+                         <div class="rounded-lg shadow-2xl shadow-black/30 parallax-container">
+                             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format=fit=crop" alt="A group of diverse people working together warmly" class="parallax-image rounded-lg">
                          </div>
                      </div>
                      <div class="w-full md:w-1/2">
-                         <h2 class="font-heading text-soft-gold text-5xl md:text-6xl mb-4 line-parent"><span class="line-child">From Our Journal</span></h2>
-                         <div class="font-body text-xl text-medium-text leading-relaxed space-y-6">
-                            <p class="reveal-up">Our journey started in a small teahouse in Skardu, sharing cups of warm chai and listening. We heard stories from our community—stories of hope and confusion in this new digital age.</p>
-                            <p class="reveal-up">We realized the answer wasn't more tech, but more trust. A way to connect timeless local wisdom with modern tools. Mehfooz is our promise to build that bridge, together.</p>
+                         <h2 class="font-heading text-gold text-5xl md:text-6xl mb-6 line-parent"><span class="line-child">Our Story</span></h2>
+                         <div class="font-body text-lg text-medium-text leading-relaxed space-y-6">
+                            <p class="reveal-up">Our journey started simply, in a small teahouse in Skardu, sharing cups of warm chai and listening. We heard stories from our community – tales of wonder and worry about this fast-changing digital world.</p>
+                            <p class="reveal-up">It became clear the need wasn't just for new tools, but for understanding and trust. We needed a bridge between timeless wisdom and modern technology. Mehfooz is our promise to help build that bridge, hand-in-hand.</p>
                          </div>
                      </div>
                  </div>
@@ -192,23 +235,23 @@
         <section id="approach" class="content-section py-20 md:py-40">
             <div class="container mx-auto px-6 max-w-5xl">
                 <div class="text-center mb-20 line-parent">
-                    <h2 class="font-heading text-soft-gold text-5xl md:text-6xl mb-4 line-child">Our Strategic Approach</h2>
+                    <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4 line-child">Our Approach is Simple</h2>
                 </div>
-                <div class="grid md:grid-cols-3 gap-12 text-left md:text-center">
-                    <div class="reveal-up">
-                        <p class="font-heading text-cyan-glow text-4xl mb-3">1.</p>
+                <div class="grid md:grid-cols-3 gap-12 text-center">
+                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03]">
+                        <p class="font-heading text-teal text-4xl mb-3">1.</p>
                         <h3 class="font-heading text-2xl mb-3">Listen First</h3>
-                        <p class="font-body text-medium-text leading-relaxed">We partner with local elders and Ulema, honoring their wisdom as the foundation of our work.</p>
+                        <p class="font-body text-medium-text leading-relaxed">We partner with local elders and Ulema, honoring their wisdom as the foundation of our work. Trust is built through understanding.</p>
                     </div>
-                    <div class="reveal-up">
-                        <p class="font-heading text-cyan-glow text-4xl mb-3">2.</p>
+                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03]">
+                        <p class="font-heading text-teal text-4xl mb-3">2.</p>
                         <h3 class="font-heading text-2xl mb-3">Guide Gently</h3>
-                        <p class="font-body text-medium-text leading-relaxed">Our tools, like MehfoozBot, offer personal, patient help in local languages, making technology feel like a friend.</p>
+                        <p class="font-body text-medium-text leading-relaxed">Our tools, like MehfoozBot, offer personal, patient help in local languages, making technology feel like a friendly companion.</p>
                     </div>
-                     <div class="reveal-up">
-                        <p class="font-heading text-cyan-glow text-4xl mb-3">3.</p>
+                     <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03]">
+                        <p class="font-heading text-teal text-4xl mb-3">3.</p>
                         <h3 class="font-heading text-2xl mb-3">Grow Together</h3>
-                        <p class="font-body text-medium-text leading-relaxed">Through mini-courses and feedback from local students, we ensure our knowledge is always relevant and co-created.</p>
+                        <p class="font-body text-medium-text leading-relaxed">Through mini-courses and feedback from local students, we ensure our knowledge is always relevant and co-created with the community.</p>
                     </div>
                 </div>
             </div>
@@ -217,13 +260,19 @@
         <section id="community" class="content-section py-20 md:py-40">
             <div class="container mx-auto px-6 max-w-4xl">
                  <div class="text-center reveal-up">
-                    <h2 class="font-heading text-soft-gold text-5xl md:text-6xl mb-4">The Heart of Our Community</h2>
+                    <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4">The Heart of Our Community</h2>
                  </div>
                  <div class="mt-16 reveal-up">
-                     <h3 class="font-heading text-cyan-glow text-4xl mb-6 text-center">Voices from the Valley</h3>
-                     <div class="space-y-8">
-                         <blockquote class="border-l-4 border-soft-gold pl-6 italic font-body text-xl text-medium-text">"I'm excited to finally have a safe place to ask questions. I can't wait to use MehfoozBot to learn about my phone without feeling shy."<cite class="block not-italic mt-2 text-light-text font-sans">- A student from Gilgit</cite></blockquote>
-                         <blockquote class="border-l-4 border-soft-gold pl-6 italic font-body text-xl text-medium-text text-right">"To have something that respects our traditions while teaching our children about the future... this is a blessing we are all looking forward to."<cite class="block not-italic mt-2 text-light-text font-sans">- An elder from Ghanche</cite></blockquote>
+                     <h3 class="font-heading text-teal text-4xl mb-6 text-center">Voices from the Valley</h3>
+                     <div class="space-y-12"> {/* Increased spacing */}
+                         <blockquote class="border-l-4 border-gold pl-6 italic font-body text-xl text-medium-text transition-transform duration-300 hover:scale-[1.02]">
+                            "I'm excited to finally have a safe place to ask questions. I can't wait to use MehfoozBot to learn about my phone without feeling shy. It feels like someone is finally listening."
+                            <cite class="block not-italic mt-2 text-warm-text font-sans text-base">- A student from Gilgit</cite>
+                         </blockquote>
+                         <blockquote class="border-l-4 border-gold pl-6 italic font-body text-xl text-medium-text text-right transition-transform duration-300 hover:scale-[1.02]">
+                            "To have something that respects our traditions while teaching our children about the future... this is a blessing we are all looking forward to. It will help us connect better."
+                            <cite class="block not-italic mt-2 text-warm-text font-sans text-base">- An elder from Ghanche</cite>
+                         </blockquote>
                      </div>
                  </div>
             </div>
@@ -232,19 +281,19 @@
         <section id="vision" class="content-section py-20 md:py-40">
               <div class="container mx-auto px-6 max-w-4xl text-center">
                   <div class="reveal-up">
-                      <h2 class="font-heading text-soft-gold text-5xl md:text-6xl mb-4">Our Five-Year Vision</h2>
+                      <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4">Our Five-Year Vision</h2>
                       <p class="font-body text-xl text-medium-text max-w-3xl mx-auto">To scale our impact together, empowering communities across Pakistan.</p>
                   </div>
-                  <div class="mt-16 grid md:grid-cols-2 gap-12 text-left items-center">
+                  <div class="mt-16 grid md:grid-cols-2 gap-x-12 gap-y-16 text-left items-center">
                       <div class="reveal-up">
-                          <p class="font-heading text-cyan-glow text-7xl" id="user-counter">0+</p>
+                          <p class="font-heading text-teal text-7xl" id="user-counter">0+</p>
                           <h3 class="text-2xl mt-2 font-heading">User Base Expansion</h3>
                           <p class="font-body text-medium-text mt-2 text-lg">Leveraging our community networks for organic, sustainable growth to reach over 100,000 users.</p>
                       </div>
                       <div class="reveal-up">
                            <div class="relative pt-8">
-                                <svg id="timeline-svg" class="absolute top-0 left-0 w-full h-full" viewbox="0 0 300 100" preserveAspectRatio="none"><path d="M 0 50, C 80 20, 150 80, 300 50" stroke="var(--cyan-glow)" stroke-width="2" fill="none" class="timeline-path" style="filter: drop-shadow(0 0 5px var(--cyan-glow));"/></svg>
-                               <h3 class="font-heading text-cyan-glow text-7xl">3+</h3>
+                                <svg id="timeline-svg" class="absolute top-0 left-0 w-full h-full" viewbox="0 0 300 100" preserveAspectRatio="none"><path d="M 0 50, C 80 20, 150 80, 300 50" stroke="var(--teal)" stroke-width="2" fill="none" class="timeline-path" style="filter: drop-shadow(0 0 5px var(--teal));"/></svg>
+                               <h3 class="font-heading text-teal text-7xl">3+</h3>
                                <h3 class="text-2xl mt-2 font-heading">Platform Development</h3>
                                <p class="font-body text-medium-text mt-2 text-lg">Introducing AI-driven learning paths, offline capabilities, and expanded language support.</p>
                            </div>
@@ -256,7 +305,7 @@
          <section id="values" class="content-section py-20 md:py-40">
              <div class="container mx-auto px-6 max-w-5xl">
                   <div class="text-center reveal-up mb-20">
-                     <h2 class="font-heading text-soft-gold text-5xl md:text-6xl mb-4">Our Guiding Principles</h2>
+                     <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4">Our Guiding Principles</h2>
                   </div>
                  <div class="grid md:grid-cols-4 gap-12 text-center">
                      <div class="reveal-up value-container p-4">
@@ -282,35 +331,35 @@
         <section id="connect" class="content-section py-20 md:py-40">
               <div class="container mx-auto px-6 space-y-24">
                    <div class="text-center max-w-3xl mx-auto reveal-up">
-                     <h2 class="font-heading text-soft-gold text-5xl md:text-6xl mb-4">Let's talk.</h2>
+                     <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4">Let's chat.</h2>
                      <p class="font-body text-xl text-medium-text">Whether you're a community member, a potential partner, or a researcher—we'd love to hear from you.</p>
                    </div>
                    <div class="max-w-2xl mx-auto reveal-up">
-                     <h3 class="font-heading text-cyan-glow text-4xl mb-6 text-center">Chat with MehfoozBot</h3>
-                     <div id="chat-log" class="bg-black/20 rounded-t-lg shadow-inner h-[50vh] flex flex-col gap-4 p-4 overflow-y-auto font-body"></div>
-                     <div class="bg-black/20 rounded-b-lg p-4">
+                     <h3 class="font-heading text-teal text-4xl mb-6 text-center">Chat with MehfoozBot</h3>
+                     <div id="chat-log" class="bg-black/10 rounded-t-lg shadow-inner h-[50vh] flex flex-col gap-4 p-4 overflow-y-auto font-body"></div>
+                     <div class="bg-black/10 rounded-b-lg p-4">
                         <div class="grid grid-cols-2 md:grid-cols-2 gap-2 mb-3" id="prompt-buttons">
                            </div>
                          <form id="chat-form" class="flex gap-3">
-                             <input type="text" id="chat-input" placeholder="Ask a friendly question..." class="font-body flex-1 bg-space-dark/50 border border-medium-text/30 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-cyan-glow text-light-text placeholder-medium-text/80">
-                             <button type="submit" class="font-heading bg-cyan-glow text-space-dark rounded-full px-5 py-3 font-semibold hover:bg-opacity-80 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-glow/30">Send</button>
+                             <input type="text" id="chat-input" placeholder="Ask a friendly question..." class="font-body flex-1 bg-warm-dark/50 border border-medium-text/30 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-gold text-light-text placeholder-medium-text/80">
+                             <button type="submit" class="font-heading bg-teal text-warm-dark rounded-full px-5 py-3 font-semibold hover:bg-opacity-80 transition-all duration-300 hover:shadow-lg hover:shadow-teal/30">Send</button>
                          </form>
                      </div>
                    </div>
                    <div class="max-w-xl mx-auto reveal-up">
-                     <h3 class="font-heading text-cyan-glow text-4xl mb-6 text-center">Send a Personal Message</h3>
+                     <h3 class="font-heading text-teal text-4xl mb-6 text-center">Send a Personal Message</h3>
                      <form id="contact-form" class="space-y-6 text-left">
                            <div>
                              <label for="name" class="block mb-2 font-medium text-medium-text font-heading">Your Name</label>
-                             <input type="text" id="name" required class="font-body w-full bg-space-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-cyan-glow text-light-text">
+                             <input type="text" id="name" required class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text">
                            </div>
                            <div>
                              <label for="email" class="block mb-2 font-medium text-medium-text font-heading">Your Email</label>
-                             <input type="email" id="email" required class="font-body w-full bg-space-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-cyan-glow text-light-text">
+                             <input type="email" id="email" required class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text">
                            </div>
                            <div>
                                 <label for="interest" class="block mb-2 font-medium text-medium-text font-heading">I am a...</label>
-                                <select id="interest" class="font-body w-full bg-space-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-cyan-glow text-light-text">
+                                <select id="interest" class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text">
                                     <option>Community Member</option>
                                     <option>Potential Partner / Investor</option>
                                     <option>Researcher / Institution</option>
@@ -320,12 +369,12 @@
                             </div>
                            <div>
                              <label for="message" class="block mb-2 font-medium text-medium-text font-heading">Your Message</label>
-                             <textarea id="message" rows="5" required class="font-body w-full bg-space-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-cyan-glow text-light-text"></textarea>
+                             <textarea id="message" rows="5" required class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gold text-light-text"></textarea>
                            </div>
-                         <button type="submit" class="font-heading w-full bg-cyan-glow text-space-dark font-semibold py-4 px-6 rounded-lg hover:bg-opacity-80 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-glow/30">Send with heart</button>
+                         <button type="submit" class="font-heading w-full bg-teal text-warm-dark font-semibold py-4 px-6 rounded-lg hover:bg-opacity-80 transition-all duration-300 hover:shadow-lg hover:shadow-teal/30">Send with heart</button>
                      </form>
-                      <div id="form-success" class="hidden text-center border border-cyan-glow rounded-lg p-8 mt-6">
-                         <p class="font-heading text-cyan-glow text-3xl mb-2">Thank You!</p>
+                      <div id="form-success" class="hidden text-center border border-teal rounded-lg p-8 mt-6">
+                         <p class="font-heading text-teal text-3xl mb-2">Thank You!</p>
                          <p class="font-body text-medium-text">Your message has been received.</p>
                       </div>
                    </div>
@@ -333,17 +382,17 @@
         </section>
     </main>
     
-    <footer class="py-12 bg-black/20 border-t border-white/10 mt-20">
+    <footer class="py-12 bg-black/20 border-t border-white/5 mt-20">
         <div class="container mx-auto px-6 text-center text-medium-text">
-            <a href="#home" class="font-heading text-3xl text-soft-gold mb-4 inline-block">Mehfooz</a>
+            <a href="#home" class="font-heading text-3xl text-gold mb-4 inline-block">Mehfooz</a>
             <div class="flex justify-center gap-6 mb-6">
-                <a href="#" class="hover:text-cyan-glow transition-colors" title="Facebook">
+                <a href="#" class="hover:text-gold transition-colors" title="Facebook">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"/></svg>
                 </a>
-                <a href="#" class="hover:text-cyan-glow transition-colors" title="WhatsApp">
+                <a href="#" class="hover:text-gold transition-colors" title="WhatsApp">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.447-4.435-9.884-9.888-9.884-5.448 0-9.886 4.434-9.889 9.885.002 2.024.603 3.965 1.667 5.63l-1.117 4.066 4.159-1.087z"/></svg>
                 </a>
-                <a href="#" class="hover:text-cyan-glow transition-colors" title="YouTube">
+                <a href="#" class="hover:text-gold transition-colors" title="YouTube">
                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
                 </a>
             </div>
@@ -364,6 +413,7 @@
         let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
         let circlePos = { ...mouse };
         let circleScale = 1;
+        let isHovering = false;
 
         window.addEventListener('mousemove', e => {
             mouse.x = e.clientX;
@@ -371,29 +421,30 @@
         });
 
         gsap.ticker.add(() => {
-            gsap.to(cursorDot, { duration: 0.15, x: mouse.x - 4, y: mouse.y - 4 });
+            gsap.to(cursorDot, { duration: 0.15, x: mouse.x - 4, y: mouse.y - 4, ease: 'power2.out' });
             
             const dx = mouse.x - circlePos.x;
             const dy = mouse.y - circlePos.y;
-            circlePos.x += dx * 0.2;
+            circlePos.x += dx * 0.2; // Adjust speed (lower = smoother/more lag)
             circlePos.y += dy * 0.2;
             gsap.to(cursorCircle, { 
-                duration: 0.3, 
-                x: circlePos.x - 20,
+                duration: 0.4, // Slightly slower transition
+                x: circlePos.x - 20, 
                 y: circlePos.y - 20, 
                 scale: circleScale,
-                ease: 'power2.out' 
+                opacity: isHovering ? 0.6 : 1, // Fade slightly on hover
+                ease: 'expo.out' // Smoother ease
             });
         });
         
-        document.querySelectorAll('a, button, input, select, textarea, #seed-container').forEach(el => {
-            el.addEventListener('mouseenter', () => circleScale = 1.5);
-            el.addEventListener('mouseleave', () => circleScale = 1);
+        document.querySelectorAll('a, button, input, select, textarea, #seed-container, .value-container').forEach(el => {
+            el.addEventListener('mouseenter', () => { circleScale = 1.6; isHovering = true; }); // Slightly larger scale
+            el.addEventListener('mouseleave', () => { circleScale = 1; isHovering = false; });
         });
 
 
         // --- SMOOTH SCROLL ---
-        const lenis = new Lenis({ lerp: 0.08 });
+        const lenis = new Lenis({ lerp: 0.08 }); // Controls smoothness (0.1 is default)
         function raf(time) {
             lenis.raf(time);
             requestAnimationFrame(raf);
@@ -408,8 +459,8 @@
         let isMenuOpen = false;
 
         const menuTimeline = gsap.timeline({ paused: true })
-            .to(menuOverlay, { duration: 0.8, ease: 'power3.inOut' })
-            .to(menuLinks, { y: 0, opacity: 1, duration: 0.6, stagger: 0.07, ease: 'power3.out' }, "-=0.6");
+            .to(menuOverlay, { duration: 0.8, ease: 'expo.inOut' }) // Smoother ease
+            .to(menuLinks, { y: 0, opacity: 1, duration: 0.8, stagger: 0.05, ease: 'expo.out' }, "-=0.6");
 
         menuToggle.addEventListener('click', () => {
             isMenuOpen = !isMenuOpen;
@@ -417,13 +468,13 @@
             menuOverlay.classList.toggle('open');
             if(isMenuOpen) {
                 menuTimeline.play();
-                gsap.to(toggleSpans[0], { y: 3.5, rotate: 45, duration: 0.3, ease: 'power2.out' });
-                gsap.to(toggleSpans[1], { y: -3.5, rotate: -45, duration: 0.3, ease: 'power2.out' });
+                gsap.to(toggleSpans[0], { y: 3.5, rotate: 45, duration: 0.4, ease: 'expo.out' });
+                gsap.to(toggleSpans[1], { y: -3.5, rotate: -45, duration: 0.4, ease: 'expo.out' });
                 lenis.stop();
             } else {
                 menuTimeline.reverse();
-                gsap.to(toggleSpans[0], { y: 0, rotate: 0, duration: 0.3, ease: 'power2.out' });
-                gsap.to(toggleSpans[1], { y: 0, rotate: 0, duration: 0.3, ease: 'power2.out' });
+                gsap.to(toggleSpans[0], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
+                gsap.to(toggleSpans[1], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
                 lenis.start();
             }
         });
@@ -432,13 +483,14 @@
                 e.preventDefault();
                 const target = link.getAttribute('href');
                 isMenuOpen = false;
+                menuToggle.classList.remove('open');
                 menuOverlay.classList.remove('open');
                 menuTimeline.reverse().then(() => {
                     lenis.start();
-                    lenis.scrollTo(target, { duration: 1.5, ease: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) });
+                    lenis.scrollTo(target, { duration: 2, ease: 'power2.inOut' }); // Slightly longer scroll
                 });
-                gsap.to(toggleSpans[0], { y: 0, rotate: 0, duration: 0.3, ease: 'power2.out' });
-                gsap.to(toggleSpans[1], { y: 0, rotate: 0, duration: 0.3, ease: 'power2.out' });
+                gsap.to(toggleSpans[0], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
+                gsap.to(toggleSpans[1], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
             });
         });
 
@@ -456,24 +508,24 @@
                 const length = path.getTotalLength();
                 path.style.strokeDasharray = length;
                 path.style.strokeDashoffset = length;
-            });
+             });
 
             growthAnimation = gsap.timeline({ paused: true, onComplete: onSolved });
             growthAnimation.to(plantPaths, {
                 strokeDashoffset: 0,
-                duration: 0.8,
-                ease: "power2.out",
-                stagger: 0.1
+                duration: 0.6, // Quick growth
+                ease: "power1.out",
+                stagger: 0.05 // Quick stagger
             });
         }
         
         function onSolved() {
             if(solved) return;
             solved = true;
-            seedContainer.style.pointerEvents = 'none'; // Disable further interaction
+            seedContainer.style.pointerEvents = 'none'; // Disable further interaction after solved
             feedbackEl.textContent = "Trust takes root.";
             gsap.to(feedbackEl, { opacity: 1, duration: 0.5 });
-            gsap.to(enterBtn, { opacity: 1, scale: 1, pointerEvents: 'auto', duration: 0.5, delay: 0.2 });
+            gsap.to(enterBtn, { opacity: 1, scale: 1, pointerEvents: 'auto', duration: 0.5, delay: 0 }); // Show button immediately
         }
         
         const startGrowth = (e) => { 
@@ -483,12 +535,16 @@
         
         seedContainer.addEventListener('mousedown', startGrowth);
         seedContainer.addEventListener('touchstart', startGrowth, {passive: true});
+        // Prevent continuous triggering if already solved
+        seedContainer.addEventListener('mouseup', () => { if(solved) return; });
+        seedContainer.addEventListener('touchend', () => { if(solved) return; });
+
 
         enterBtn.addEventListener('click', () => {
              gsap.to(gameScreen, { 
                  opacity: 0, 
-                 duration: 1.2,
-                 ease: 'power1.in',
+                 duration: 1.0, // Smoother fade out
+                 ease: 'power1.inOut',
                  onComplete: () => {
                      gameScreen.style.display = 'none';
                      gsap.to(mainContent, { opacity: 1, duration: 1, ease: 'power1.out' });
@@ -504,26 +560,35 @@
         // --- THREE.JS BACKGROUND ---
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 2;
+        camera.position.z = 2.5; // Adjusted camera position
         const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        const particleCount = 20000;
+        const particleCount = 10000; // Adjusted for performance vs density
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
-        const colorCyan = new THREE.Color(0x00f0ff);
-        const colorGold = new THREE.Color(0xf0e68c);
-        const colorDeepBlue = new THREE.Color(0x4c33ff);
+        const colorGold = new THREE.Color(0xDAA520); // Using var(--gold)
+        const colorTeal = new THREE.Color(0x008080); // Using var(--teal)
+        const colorOffWhite = new THREE.Color(0xEAE0D5); // Using var(--warm-text)
 
         for(let i = 0; i < particleCount; i++) {
             const i3 = i * 3;
-            positions[i3] = (Math.random() - 0.5) * 20;
-            positions[i3 + 1] = (Math.random() - 0.5) * 20;
-            positions[i3 + 2] = (Math.random() - 0.5) * 20;
+            // Distribute more evenly in a sphere
+            const radius = 5 + Math.random() * 10;
+            const phi = Math.acos(-1 + (2 * Math.random()));
+            const theta = Math.sqrt(particleCount * Math.PI) * phi;
             
+            positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+            positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+            positions[i3 + 2] = radius * Math.cos(phi);
+            
+            // Mix colors - mostly warm text, some gold, less teal
             const randColor = Math.random();
-            let mixedColor = (randColor < 0.7) ? colorCyan.clone() : (randColor < 0.9) ? colorGold.clone() : colorDeepBlue.clone();
+            let mixedColor;
+            if (randColor < 0.7) mixedColor = colorOffWhite.clone().lerp(colorGold, Math.random() * 0.2); // Mostly off-white with hint of gold
+            else if (randColor < 0.9) mixedColor = colorGold.clone();
+            else mixedColor = colorTeal.clone();
             
             colors[i3] = mixedColor.r; colors[i3 + 1] = mixedColor.g; colors[i3 + 2] = mixedColor.b;
         }
@@ -532,8 +597,9 @@
         particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         
         const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.012, sizeAttenuation: true, transparent: true, opacity: 0.6, vertexColors: true,
-            blending: THREE.AdditiveBlending, depthWrite: false
+            size: 0.02, // Slightly smaller
+            sizeAttenuation: true, transparent: true, opacity: 0.7, // Slightly more opaque
+            vertexColors: true, blending: THREE.AdditiveBlending, depthWrite: false
         });
         const particles = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particles);
@@ -543,9 +609,16 @@
             const elapsedTime = clock.getElapsedTime();
             const scrollY = lenis.scroll;
             
-            particles.rotation.y = elapsedTime * 0.01 + scrollY * 0.0001;
-            particles.rotation.x = mouse.y / window.innerHeight * 0.1 - 0.05;
-            particles.rotation.z = -mouse.x / window.innerWidth * 0.1 + 0.05;
+            // Slow, subtle rotation independent of scroll for a calmer feel
+            particles.rotation.y = elapsedTime * 0.02; 
+            particles.rotation.x = elapsedTime * 0.01;
+            
+            // Mouse influence made much gentler
+            particles.rotation.z += ((-mouse.x / window.innerWidth * 0.05 + 0.025) - particles.rotation.z) * 0.02;
+            camera.position.x += ((mouse.x / window.innerWidth - 0.5) * 0.1 - camera.position.x) * 0.02;
+            camera.position.y += (-(mouse.y / window.innerHeight - 0.5) * 0.1 - camera.position.y) * 0.02;
+            camera.lookAt(scene.position);
+
 
             renderer.render(scene, camera);
             requestAnimationFrame(animate);
@@ -561,30 +634,43 @@
 
         // --- MAIN ANIMATIONS ---
         function initAnimations() {
-            gsap.utils.toArray('.line-child').forEach(el => {
+             gsap.utils.toArray('.line-child').forEach(el => {
                 gsap.fromTo(el, { y: '110%' }, { 
-                    y: '0%', duration: 1.5, ease: 'power4.out',
-                    scrollTrigger: { trigger: el.parentElement, start: 'top 90%' }
+                    y: '0%', 
+                    duration: 1.5, // Slower, more graceful
+                    ease: 'expo.out', // Smoother ease
+                    scrollTrigger: {
+                        trigger: el.parentElement,
+                        start: 'top 90%' // Start a bit earlier
+                    }
                 });
             });
             
             gsap.utils.toArray('.reveal-up').forEach(elem => {
-                gsap.fromTo(elem, { opacity: 0, y: 60 }, {
-                    opacity: 1, y: 0, duration: 1.5, ease: 'power4.out',
-                    scrollTrigger: { trigger: elem, start: 'top 85%' }
+                gsap.fromTo(elem, { opacity: 0, y: 80 }, { // Increased y offset slightly more
+                    opacity: 1, y: 0, duration: 1.8, ease: 'expo.out', // Slower, smoother
+                    scrollTrigger: { trigger: elem, start: 'top 90%' } // Start slightly earlier
+                });
+            });
+            
+            gsap.utils.toArray('.parallax-image').forEach(img => {
+                gsap.to(img, {
+                    y: '-10%', // Reduced parallax for calmness
+                    ease: 'none',
+                    scrollTrigger: { trigger: img.closest('.parallax-container'), scrub: 2 } // Slower scrub
                 });
             });
             
             const userCounter = document.getElementById('user-counter');
             if (userCounter) {
                 gsap.from(userCounter, {
-                    textContent: 0, duration: 2.5, ease: "power2.out", snap: { textContent: 1 },
+                    textContent: 0, duration: 3, ease: "expo.out", snap: { textContent: 1 },
                     scrollTrigger: { trigger: userCounter, start: "top 85%" },
                     onUpdate: function() { this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent).toLocaleString() + "+"; }
                 });
                  ScrollTrigger.create({
                     trigger: userCounter, start: "top 85%",
-                    onEnter: () => gsap.to(userCounter, { textContent: "100000", duration: 2.5, ease: "power2.out", onUpdate: function() { this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent).toLocaleString() + "+"; }})
+                    onEnter: () => gsap.to(userCounter, { textContent: "100000", duration: 3, ease: "expo.out", onUpdate: function() { this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent).toLocaleString() + "+"; }})
                  });
             }
 
@@ -593,18 +679,25 @@
                 const length = timelinePath.getTotalLength();
                 gsap.set(timelinePath, { strokeDasharray: length, strokeDashoffset: length });
                 gsap.to(timelinePath, {
-                    strokeDashoffset: 0, duration: 2.5, ease: 'power2.inOut',
+                    strokeDashoffset: 0, duration: 3, ease: 'power1.inOut', // Slower draw
                     scrollTrigger: { trigger: timelinePath, start: 'top 85%' }
                 });
             }
 
+            // Fixed navigation scroll for all links (menu, logo, footer)
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                if (!anchor.classList.contains('menu-link')) {
-                    anchor.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        lenis.scrollTo(this.getAttribute('href'), {duration: 2, ease: 'power2.inOut'});
-                    });
-                }
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        lenis.scrollTo(targetElement, { 
+                            duration: 2, // Slower, smoother scroll
+                            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Ease Out Expo
+                            offset: -80 // Adjust offset if header is fixed and covers content
+                        });
+                    }
+                });
             });
         }
         
@@ -615,11 +708,11 @@
         const promptButtonsContainer = document.getElementById('prompt-buttons');
 
         const botResponses = {
-            "greeting": "Salaam! Welcome to Mehfooz. How can I help you find clarity today?",
-            "default": "That's an interesting thought! While I'm still learning, the full Mehfooz platform offers resources on many topics. Ask me about our story, safety, or spotting fake news!",
-            "misinformation": "Spotting misinformation is key! Look closely at the source - is it trustworthy? Does it use strong, emotional language? Does it offer proof? Real news is often calmer and shows evidence.",
-            "safety": "Staying safe online is like protecting your home. Use strong, different passwords for important sites. Be careful what personal details you share, especially in messages or public posts. Think before you click links!",
-            "story": "Mehfooz began with conversations in Skardu, listening to the community's hopes and worries about the digital world. We aim to build a bridge between traditional wisdom and modern tools. You can feel our story in the 'Journal' section.",
+            "greeting": "Salaam! Welcome to Mehfooz. I'm here to help guide you. Feel free to ask anything, or try one of the prompts below.", // Friendlier greeting
+            "default": "That's an interesting question. While this is just a demo, the full Mehfooz experience helps with digital safety and finding truth online. Maybe ask about our story or how we work with Ulema?", // More helpful default
+            "misinformation": "Spotting misinformation is key! Look closely at the source - is it trustworthy? Does it use strong, emotional language? Does it offer proof? Real news is often calmer and shows evidence. We have mini-courses on this!", // Mention courses
+            "safety": "Staying safe online is like protecting your home. Use strong, different passwords. Be careful what personal details you share, especially in messages or public posts. Think before you click links! Our resources cover this in detail.", // Mention resources
+            "story": "Mehfooz began with conversations in Skardu, listening to the community's hopes and worries about the digital world. We aim to build a bridge between traditional wisdom and modern tools. You can feel our story in the 'Our Story' section.", // Matched section name
             "ulema": "We proudly partner with respected local Ulema. They are trusted voices who help us share digital literacy in a way that resonates deeply within the community, blending faith and knowledge."
         };
         const promptQuestions = {
@@ -634,7 +727,7 @@
             bubble.className = `chat-bubble ${sender}-bubble`;
             bubble.textContent = message;
             chatLog.appendChild(bubble);
-            gsap.from(bubble, { opacity: 0, y: 20, duration: 0.5, delay: isImmediate ? 0 : 0.3 });
+            gsap.from(bubble, { opacity: 0, y: 20, duration: 0.6, delay: isImmediate ? 0 : 0.4, ease: 'expo.out' }); // Smoother bubble animation
             chatLog.scrollTop = chatLog.scrollHeight;
         }
 
@@ -645,7 +738,7 @@
                 chatInput.disabled = true;
                 promptButtonsContainer.style.pointerEvents = 'none';
                 gsap.to(promptButtonsContainer.querySelectorAll('button'), { opacity: 0.5, duration: 0.3 });
-                addMessage("...", 'bot', true); 
+                addMessage("Thinking...", 'bot', true); // More engaging thinking message
                 const thinkingBubble = chatLog.lastChild;
 
                 setTimeout(() => {
@@ -657,7 +750,7 @@
                     chatInput.focus();
                     promptButtonsContainer.style.pointerEvents = 'auto';
                     gsap.to(promptButtonsContainer.querySelectorAll('button'), { opacity: 1, duration: 0.3 });
-                }, 800 + Math.random() * 500);
+                }, 900 + Math.random() * 600); // Slightly adjusted delay
              }
         }
 
@@ -668,7 +761,7 @@
         
         Object.keys(promptQuestions).forEach(question => {
             const button = document.createElement('button');
-            button.className = "font-body text-sm bg-space-dark/50 border border-medium-text/30 rounded-full py-2 px-3 text-medium-text hover:border-cyan-glow hover:text-cyan-glow transition-colors text-left";
+            button.className = "font-body text-sm bg-space-dark/50 border border-medium-text/30 rounded-full py-2 px-3 text-medium-text hover:border-gold hover:text-gold transition-colors text-left"; // Use gold for hover
             button.textContent = question;
             button.onclick = () => { handleUserInput(question); }
             promptButtonsContainer.appendChild(button);
@@ -681,6 +774,7 @@
         const formSuccess = document.getElementById('form-success');
         contactForm.addEventListener('submit', e => {
              e.preventDefault();
+             // Simulate form submission
              gsap.to(contactForm, { opacity: 0, duration: 0.5, onComplete: () => {
                  contactForm.style.display = 'none';
                  formSuccess.classList.remove('hidden');
