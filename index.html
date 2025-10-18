@@ -11,11 +11,9 @@
     
     <style>
         /* ---
-        STYLE.CSS CONTENT
+        ROOT VARIABLES & RESET
         ---
         */
-
-        /* --- ROOT VARIABLES & RESET --- */
         :root {
             --teal: #00A896;
             --gold: #F4B860;
@@ -37,7 +35,10 @@
             box-sizing: border-box;
         }
 
-        /* --- SMOOTH SCROLL (LENIS) --- */
+        /* ---
+        SMOOTH SCROLL (LENIS)
+        ---
+        */
         html.lenis {
             height: auto;
         }
@@ -58,7 +59,10 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* --- CUSTOM CURSOR --- */
+        /* ---
+        CUSTOM CURSOR
+        ---
+        */
         #cursor-light {
             position: fixed;
             left: 0; top: 0;
@@ -66,9 +70,9 @@
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
-            background: radial-gradient(circle, rgba(244, 184, 96, 0.06) 0%, transparent 60%);
+            background: radial-gradient(circle, rgba(244, 184, 96, 0.07) 0%, transparent 60%);
             z-index: 9999;
-            transition: transform 0.2s ease-out;
+            transition: transform 0.2s ease-out, opacity 0.3s ease;
         }
         #cursor-dot {
             position: fixed;
@@ -79,13 +83,29 @@
             pointer-events: none;
             transform: translate(-50%, -50%);
             z-index: 10000;
+            transition: transform 0.3s ease, background-color 0.3s ease;
         }
         body:hover > #cursor-light,
         body:hover > #cursor-dot {
             opacity: 1;
         }
+        
+        /* Cursor hover state */
+        a:hover ~ #cursor-dot,
+        button:hover ~ #cursor-dot {
+            transform: translate(-50%, -50%) scale(1.5);
+            background-color: var(--teal);
+        }
+        a:hover ~ #cursor-light,
+        button:hover ~ #cursor-light {
+            transform: translate(-50%, -50%) scale(1.2);
+        }
 
-        /* --- PRELOADER --- */
+
+        /* ---
+        PRELOADER
+        ---
+        */
         #loader {
             position: fixed;
             inset: 0;
@@ -104,7 +124,10 @@
         .loader-logo path:nth-child(3) { --delay: 0.5s; }
 
 
-        /* --- UTILITIES & TYPOGRAPHY --- */
+        /* ---
+        UTILITIES & TYPOGRAPHY
+        ---
+        */
         .container {
             width: 100%;
             max-width: 1100px;
@@ -143,15 +166,21 @@
             color: var(--teal);
             text-decoration: none;
             transition: color 0.3s ease;
+            cursor: none;
         }
         a:hover {
             color: var(--gold);
+        }
+        
+        button, .btn {
+            cursor: none;
         }
 
         .section-header {
             text-align: center;
             max-width: 800px;
             margin: 0 auto 4rem auto;
+            opacity: 0; /* Handled by GSAP */
         }
         .section-header h2 {
             color: var(--gold);
@@ -162,15 +191,14 @@
             margin: 0 auto;
         }
 
-        .reveal-up {
-            opacity: 0;
-            transform: translateY(50px);
-        }
         .hidden {
             display: none;
         }
 
-        /* --- BUTTONS --- */
+        /* ---
+        BUTTONS
+        ---
+        */
         .btn {
             display: inline-block;
             font-family: var(--font-sans);
@@ -180,7 +208,6 @@
             border-radius: 99px;
             border: 2px solid transparent;
             transition: all 0.3s ease;
-            cursor: none;
         }
         .btn-primary {
             background-color: var(--teal);
@@ -189,6 +216,8 @@
         .btn-primary:hover {
             background-color: var(--gold);
             color: var(--dark-bg);
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
         .btn-secondary {
             background-color: var(--card-bg);
@@ -198,6 +227,7 @@
         .btn-secondary:hover {
             border-color: var(--gold);
             color: var(--gold);
+            transform: scale(1.05);
         }
         .btn-outline {
             background-color: transparent;
@@ -209,7 +239,10 @@
             color: white;
         }
 
-        /* --- HEADER --- */
+        /* ---
+        HEADER
+        ---
+        */
         #site-header {
             position: fixed;
             top: 0;
@@ -219,6 +252,9 @@
             z-index: 100;
             opacity: 0;
             transform: translateY(-100%);
+            transition: background-color 0.3s ease;
+        }
+        #site-header.scrolled {
             background: linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0) 100%);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
@@ -242,15 +278,33 @@
             font-size: 1rem;
             font-weight: 500;
             color: var(--light-text);
+            position: relative;
         }
-        .nav-link:hover {
-            color: var(--gold);
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--gold);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            transform: scaleX(1);
+            transform-origin: left;
         }
         .nav-links .btn-outline {
             padding: 0.5rem 1.25rem;
         }
 
-        /* --- SECTION 1: HERO --- */
+        /* ---
+        SECTION 1: HERO
+        ---
+        */
         #hero {
             min-height: 100vh;
             display: flex;
@@ -277,21 +331,23 @@
             object-fit: cover;
             object-position: center 30%;
             opacity: 0.4;
-            transform: scale(1.1);
+            transform: scale(1.1); /* Initial state for parallax */
         }
         .hero-content {
             position: relative;
             z-index: 2;
+        }
+        /* Sophisticated text reveal */
+        #hero-headline, #hero-subheadline {
             opacity: 0;
         }
-        #hero-headline {
-            margin-bottom: 1.5rem;
+        #hero-headline .line-wrapper {
+            overflow: hidden;
         }
-        #hero-subheadline {
-            font-size: 1.25rem;
-            color: var(--light-text);
-            margin: 0 auto;
+        #hero-headline .line {
+            transform: translateY(110%);
         }
+        
         #scroll-prompt {
             position: absolute;
             bottom: 2rem;
@@ -328,7 +384,10 @@
             100% { top: 20px; opacity: 0; }
         }
 
-        /* --- SECTION 2: SCROLLYTELLING CHALLENGE --- */
+        /* ---
+        SECTION 2: SCROLLYTELLING CHALLENGE
+        ---
+        */
         .challenge-sticky-container {
             height: 300vh; /* This controls the scroll duration */
             position: relative;
@@ -390,7 +449,10 @@
         }
 
 
-        /* --- SECTION 3: SOLUTIONS / PILLARS --- */
+        /* ---
+        SECTION 3: SOLUTIONS / PILLARS
+        ---
+        */
         #solutions {
             padding: 100px 0;
         }
@@ -405,13 +467,38 @@
             border-radius: 16px;
             padding: 2rem;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0; /* Handled by GSAP */
         }
+        /* Sophisticated glow effect */
+        .pillar-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 168, 150, 0.2), transparent 70%);
+            opacity: 0;
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        
         .pillar-card:hover {
             transform: translateY(-10px);
             border-color: var(--teal);
             box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
         }
+        .pillar-card:hover::before {
+            opacity: 1;
+            transform: scaleY(1.5);
+        }
+        .pillar-content {
+            position: relative;
+            z-index: 2;
+        }
+
         .pillar-icon {
             width: 60px;
             height: 60px;
@@ -450,8 +537,27 @@
         .pillar-card .btn {
             width: 100%;
         }
-
-        /* --- SECTION 4: INSIGHTS --- */
+        
+        /* This is the text from the file you disliked. I've added it here. */
+        .journal-section {
+            padding: 100px 0;
+        }
+        .journal-image-container {
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+        }
+        .journal-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1); /* For parallax */
+        }
+        
+        /* ---
+        SECTION 4: INSIGHTS
+        ---
+        */
         #insights {
             padding: 100px 0;
             background-color: var(--dark-bg);
@@ -471,6 +577,7 @@
             border-radius: 16px;
             padding: 2rem;
             transition: all 0.3s ease;
+            opacity: 0; /* Handled by GSAP */
         }
         .insight-card:hover {
             transform: translateY(-10px);
@@ -508,7 +615,10 @@
             padding-left: 5px;
         }
 
-        /* --- SECTION 5: CONTACT --- */
+        /* ---
+        SECTION 5: CONTACT
+        ---
+        */
         #contact {
             padding: 100px 0;
         }
@@ -544,6 +654,7 @@
             font-size: 1rem;
             color: var(--light-text);
             transition: all 0.3s ease;
+            -webkit-appearance: none; /* Fix for iOS select styling */
         }
         .form-group input:focus,
         .form-group textarea:focus,
@@ -575,7 +686,10 @@
             margin-bottom: 0.5rem;
         }
 
-        /* --- BOT MODAL --- */
+        /* ---
+        BOT MODAL
+        ---
+        */
         #bot-modal {
             position: fixed;
             inset: 0;
@@ -628,7 +742,6 @@
             border: none;
             font-size: 2rem;
             color: var(--medium-text);
-            cursor: none;
             transition: all 0.3s ease;
         }
         #close-bot-demo:hover {
@@ -697,7 +810,7 @@
             margin-bottom: 1rem;
         }
         .question-pill {
-            cursor: pointer;
+            cursor: none;
             border: 1px solid var(--medium-text);
             color: var(--medium-text);
             padding: 0.5rem 0.875rem;
@@ -729,7 +842,10 @@
             border-color: var(--teal);
         }
 
-        /* --- FOOTER --- */
+        /* ---
+        FOOTER
+        ---
+        */
         #site-footer {
             padding: 3rem 0;
             text-align: center;
@@ -740,7 +856,10 @@
             font-size: 0.875rem;
         }
 
-        /* --- RESPONSIVE --- */
+        /* ---
+        RESPONSIVE
+        ---
+        */
         @media (max-width: 768px) {
             .nav-links {
                 display: none; /* Simplification for demo. A real site needs a menu. */
@@ -761,6 +880,12 @@
             }
             #chat-log {
                 height: 250px;
+            }
+            .journal-section {
+                flex-direction: column;
+            }
+            .journal-section > div {
+                width: 100%;
             }
         }
     </style>
@@ -832,8 +957,26 @@
                 </div>
             </div>
         </section>
+        
+        <section id="journal" class="content-section journal-section">
+             <div class="container mx-auto px-6 max-w-4xl">
+                 <div class="flex gap-12 items-center">
+                     <div class="w-full md:w-1/2">
+                         <div class="journal-image-container">
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto-format=fit=crop" alt="A diverse group of people from Skardu warmly interacting and learning together" class="w-full h-full object-cover">
+                         </div>
+                     </div>
+                     <div class="w-full md:w-1/2">
+                         <h2 class="font-script text-gold text-5xl md:text-6xl mb-4">From Our Journal</h2>
+                         <p class="text-lg text-medium-text leading-relaxed mb-6">Mehfooz began not with a line of code, but with a conversation. In a small <strong>Skardu</strong> teahouse, over cups of warm chai, we listened. We heard stories of connection and confusion, of hope and fear in a new digital world where progress was meeting peril.</p>
+                         <p class="text-lg text-medium-text leading-relaxed">We learned that the need wasn't for more technology, but for more understanding. For a bridge between timeless wisdom and modern tools. Mehfooz is our promise to help build that bridge, together.</p>
+                     </div>
+                 </div>
+             </div>
+        </section>
 
-        <section id="solutions" class="container reveal-up">
+
+        <section id="solutions" class="container">
             <div class="section-header">
                 <h2 class="font-script">An Ecosystem of Empowerment</h2>
                 <p>A unique, three-pronged solution built on trust, technology, and community.</p>
@@ -841,34 +984,40 @@
             
             <div class="solutions-grid">
                 <div class="pillar-card">
-                    <div class="pillar-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12s4.03 8.25 9 8.25zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5z" /></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-4.682 2.72a3 3 0 01-4.682-2.72m4.682 2.72v.003M18 18.72v.003m-3.182 2.651a3 3 0 01-2.23 0M12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM6 18.72v.003m3.182 2.651a3 3 0 01-2.23 0M6 18.72a9.094 9.094 0 01-3.741-.479 3 3 0 014.682-2.72M6 18.72v.003" /></svg>
+                    <div class="pillar-content">
+                        <div class="pillar-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12s4.03 8.25 9 8.25zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5z" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-4.682 2.72a3 3 0 01-4.682-2.72m4.682 2.72v.003M18 18.72v.003m-3.182 2.651a3 3 0 01-2.23 0M12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM6 18.72v.003m3.182 2.651a3 3 0 01-2.23 0M6 18.72a9.094 9.094 0 01-3.741-.479 3 3 0 014.682-2.72M6 18.72v.003" /></svg>
+                        </div>
+                        <h3>Wisdom, Amplified.</h3>
+                        <p>We partner with local religious leaders (Ulema) who serve as trusted digital literacy ambassadors, bridging traditional knowledge with modern skills.</p>
                     </div>
-                    <h3>Wisdom, Amplified.</h3>
-                    <p>We partner with local religious leaders (Ulema) who serve as trusted digital literacy ambassadors, bridging traditional knowledge with modern skills.</p>
                 </div>
 
                 <div class="pillar-card">
-                    <div class="pillar-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <div class="pillar-content">
+                        <div class="pillar-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <h3>Personalized Guidance.</h3>
+                        <p>Our Al-powered MehfoozBot provides immediate, real-time assistance, adapting to each user's language and learning style.</p>
+                        <button id="open-bot-demo" class="btn btn-secondary">See MehfoozBot in Action</button>
                     </div>
-                    <h3>Personalized Guidance.</h3>
-                    <p>Our Al-powered MehfoozBot provides immediate, real-time assistance, adapting to each user's language and learning style.</p>
-                    <button id="open-bot-demo" class="btn btn-secondary">See MehfoozBot in Action</button>
                 </div>
                 
                 <div class="pillar-card">
-                    <div class="pillar-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25" /></svg>
+                    <div class="pillar-content">
+                        <div class="pillar-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18c-2.305 0-4.408.867-6 2.292m0-14.25v14.25" /></svg>
+                        </div>
+                        <h3>Knowledge, Co-Created.</h3>
+                        <p>Localized mini-courses in multiple indigenous languages, kept relevant through a unique feedback loop with local college students.</p>
                     </div>
-                    <h3>Knowledge, Co-Created.</h3>
-                    <p>Localized mini-courses in multiple indigenous languages, kept relevant through a unique feedback loop with local college students.</p>
                 </div>
             </div>
         </section>
 
-        <section id="insights" class="reveal-up">
+        <section id="insights">
             <div classs="container">
                 <div class="section-header">
                     <h2 class="font-script">Insights from the Digital Frontier</h2>
@@ -898,7 +1047,7 @@
             </div>
         </section>
         
-        <section id="contact" class="reveal-up">
+        <section id="contact">
             <div class="container">
                 <div class="section-header">
                     <h2 class="font-script">Become a Part of the Solution</h2>
@@ -968,6 +1117,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -988,8 +1138,23 @@
                 gsap.to(cursorDot, { duration: 0.2, x: e.clientX, y: e.clientY });
                 gsap.to(cursorLight, { duration: 0.5, x: e.clientX, y: e.clientY, ease: 'power2.out' });
             });
+            
+            // --- 3. HEADER SCROLL EFFECT ---
+            const header = document.getElementById('site-header');
+            ScrollTrigger.create({
+                start: 'top top-=-100',
+                onEnter: () => header.classList.add('scrolled'),
+                onLeaveBack: () => header.classList.remove('scrolled')
+            });
 
-            // --- 3. PRELOADER & INTRO ANIMATION ---
+            // --- 4. PRELOADER & INTRO ANIMATION ---
+            
+            // Split hero text for animation
+            const heroHeadline = new SplitType('#hero-headline', { types: 'lines' });
+            gsap.set(heroHeadline.lines, { y: '110%' });
+            gsap.set('#hero-headline .line', { 'clip-path': 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' });
+
+
             const loaderTL = gsap.timeline();
             loaderTL
                 .to('.loader-logo', {
@@ -1015,8 +1180,17 @@
                     duration: 1,
                     ease: 'power2.out'
                 }, '-=0.5')
-                .to('.hero-content', {
+                // Sophisticated Hero Text Reveal
+                .to(heroHeadline.lines, {
+                    y: '0%',
+                    stagger: 0.1,
+                    duration: 1.2,
+                    ease: 'power3.out'
+                }, '-=0.5')
+                .to('#hero-headline', { opacity: 1 }, '-=1.2')
+                .to('#hero-subheadline', {
                     opacity: 1,
+                    y: 0,
                     duration: 1,
                     ease: 'power2.out'
                 }, '-=0.8')
@@ -1026,19 +1200,38 @@
                     delay: 0.5
                 }, '-=0.8');
 
-            // --- 4. NAVIGATION SCROLL-TO ---
+            // --- 5. NAVIGATION ---
+            // Smooth scroll
             document.querySelectorAll('.nav-link, .nav-logo').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
-                    lenis.scrollTo(targetId);
+                    lenis.scrollTo(targetId, { offset: -50 });
+                });
+            });
+            
+            // Active link highlighting
+            gsap.utils.toArray('section').forEach(section => {
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: 'top center',
+                    end: 'bottom center',
+                    onToggle: self => {
+                        if (self.isActive) {
+                            const sectionId = section.getAttribute('id');
+                            document.querySelectorAll('.nav-link').forEach(link => {
+                                link.classList.remove('active');
+                                if (link.getAttribute('href') === `#${sectionId}`) {
+                                    link.classList.add('active');
+                                }
+                            });
+                        }
+                    }
                 });
             });
 
-            // --- 5. SCROLLYTELLING: THE CHALLENGE ---
-            // This section is based on the blueprint: "a scroll-triggered animation of a digital network"
-            // that "flicker and turn red" and then "resolve into a stable... grid"
-            
+
+            // --- 6. SCROLLYTELLING: THE CHALLENGE ---
             const challengeTL = gsap.timeline({
                 scrollTrigger: {
                     trigger: '.challenge-sticky-container',
@@ -1049,37 +1242,54 @@
                 }
             });
 
-            // Animate network background
             challengeTL
-                .to('.network-background', { opacity: 0.1, duration: 0.5 }) // Fade in network
-                
-                // Step 1: "Peril"
+                .to('.network-background', { opacity: 0.1, duration: 0.5 })
                 .to('#step-1', { opacity: 1, duration: 1 })
                 .to('.network-background', { 
-                    '--network-color': 'var(--danger)', // Glitch to red
+                    '--network-color': 'var(--danger)',
                     opacity: 0.2,
                     duration: 1 
                 }, '-=0.5')
                 .to('#step-1', { opacity: 0, duration: 1, delay: 1 })
-                
-                // Step 2: "Mission"
                 .to('#step-2', { opacity: 1, duration: 1 })
                 .to('#step-2', { opacity: 0, duration: 1, delay: 1 })
-                
-                // Step 3: "Vision"
                 .to('#step-3', { opacity: 1, duration: 1 })
                 .to('.network-background', {
-                    '--network-color': 'var(--gold)', // Resolve to healthy gold/teal
+                    '--network-color': 'var(--gold)',
                     opacity: 0.15,
                     duration: 1
                 }, '-=0.5')
-                
-                // Fade out
                 .to('#step-3', { opacity: 0, duration: 1, delay: 1 })
                 .to('.network-background', { opacity: 0, duration: 0.5 }, '-=0.5');
 
-            // --- 6. GENERAL SECTION REVEALS ---
-            gsap.utils.toArray('.reveal-up').forEach(elem => {
+            // --- 7. PARALLAX & SECTION REVEALS ---
+            
+            // Hero Background Parallax
+            gsap.to('.hero-background img', {
+                scale: 1,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '#hero',
+                    scrub: true,
+                    start: 'top top',
+                    end: 'bottom top'
+                }
+            });
+            
+            // Journal Section Parallax
+            gsap.to('.journal-image-container img', {
+                yPercent: -10,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.journal-section',
+                    scrub: true,
+                    start: 'top bottom',
+                    end: 'bottom top'
+                }
+            });
+
+            // General Section Header Reveals
+            gsap.utils.toArray('.section-header, #contact-form').forEach(elem => {
                 gsap.fromTo(elem, 
                     { opacity: 0, y: 50 },
                     { 
@@ -1095,9 +1305,28 @@
                     }
                 );
             });
+            
+            // Staggered Card Reveals
+            gsap.utils.toArray('.pillar-card, .insight-card').forEach((card, i) => {
+                 gsap.fromTo(card, 
+                    { opacity: 0, y: 50 },
+                    { 
+                        opacity: 1, 
+                        y: 0, 
+                        duration: 0.8,
+                        ease: 'power2.out',
+                        delay: (i % 3) * 0.15, // Stagger cards in a row
+                        scrollTrigger: {
+                            trigger: card.parentElement,
+                            start: 'top 80%',
+                            toggleActions: 'play none none none'
+                        }
+                    }
+                );
+            });
 
-            // --- 7. MEHFOOZBOT MODAL LOGIC ---
-            // Based on blueprint
+
+            // --- 8. MEHFOOZBOT MODAL LOGIC ---
             const openBotBtn = document.getElementById('open-bot-demo');
             const closeBotBtn = document.getElementById('close-bot-demo');
             const botModal = document.getElementById('bot-modal');
@@ -1119,7 +1348,6 @@
                 "What is misinformation?"
             ];
 
-            // Populate question pills
             questions.forEach(q => {
                 const pill = document.createElement('div');
                 pill.className = 'question-pill';
@@ -1152,7 +1380,7 @@
                 chatInput.value = '';
                 chatInput.disabled = true;
                 
-                const typing = addTypingIndicator(); // Simulate bot "thinking"
+                const typing = addTypingIndicator();
                 
                 setTimeout(() => {
                     chatLog.removeChild(typing);
@@ -1175,11 +1403,9 @@
                 }
             });
 
-            // Open/Close Modal
             openBotBtn.addEventListener('click', () => {
                 botModal.classList.remove('hidden');
                 if (chatLog.children.length === 0) {
-                    // Add initial welcome message
                     const typing = addTypingIndicator();
                     setTimeout(() => {
                         chatLog.removeChild(typing);
@@ -1192,12 +1418,11 @@
                 botModal.classList.add('hidden');
             });
 
-            // --- 8. CONTACT FORM LOGIC ---
+            // --- 9. CONTACT FORM LOGIC ---
             const contactForm = document.getElementById('contact-form');
             const formSuccess = document.getElementById('form-success');
             contactForm.addEventListener('submit', e => {
                 e.preventDefault();
-                // In a real app, this would send data. Here, we just show success.
                 gsap.to(contactForm, {
                     opacity: 0,
                     duration: 0.5,
