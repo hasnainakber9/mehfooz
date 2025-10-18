@@ -13,10 +13,10 @@
 
     <style>
       /*
-        style.css (Refactor v3)
-        Summary: Infused with motion, cinematography, and interactive elements.
-        Changes: Added network animation, headline gradient, fixed image loading,
-        improved cursor visibility, refined alignments and interactive feedback.
+        style.css (Refactor v4)
+        Summary: Full mobile/tablet compatibility, enhanced visuals, and content updates.
+        Changes: Corrected responsive layouts, replaced placeholder with video,
+        updated table data and quotes, removed mission statement, improved overall polish.
       */
 
       /* ---
@@ -31,8 +31,6 @@
         --gold: #F4B860;
         --teal: #00A896;
         --white: #FFFFFF;
-        --black: #000000;
-        --danger: #ef4444;
         
         --font-heading: 'Syne', 'Helvetica Neue', sans-serif;
         --font-body: 'Ubuntu', 'Helvetica', 'Arial', sans-serif;
@@ -59,12 +57,8 @@
         -moz-osx-font-smoothing: grayscale;
       }
 
-      html.lenis {
-        height: auto;
-      }
-      .lenis.lenis-smooth {
-        scroll-behavior: auto;
-      }
+      html.lenis { height: auto; }
+      .lenis.lenis-smooth { scroll-behavior: auto; }
 
       body {
         background-color: var(--dark-bg);
@@ -112,9 +106,7 @@
         border-radius: 8px;
         transition: top 0.3s ease;
       }
-      .skip-link:focus {
-        top: 1rem;
-      }
+      .skip-link:focus { top: 1rem; }
 
       /* ---
         3. CUSTOM CURSOR
@@ -126,15 +118,14 @@
         top: 0;
         pointer-events: none;
         transform: translate(-50%, -50%);
-        z-index: 9999;
+        z-index: 10000;
         transition: opacity 0.3s ease;
-        opacity: 0; /* Initially hidden, made visible by JS */
+        opacity: 0;
       }
       #cursor-light {
         width: 800px;
         height: 800px;
-        background: radial-gradient(circle, rgba(244, 184, 96, 0.07) 0%, transparent
-            60%);
+        background: radial-gradient(circle, rgba(244, 184, 96, 0.07) 0%, transparent 60%);
         transition-property: transform;
         transition-duration: 0.3s;
         transition-timing-function: ease-out;
@@ -160,6 +151,11 @@
         transform: translate(-50%, -50%) scale(1.2);
       }
       
+      @media (hover: none) {
+        #cursor-light, #cursor-dot { display: none; }
+        body { cursor: auto; }
+      }
+      
       @media (prefers-reduced-motion: reduce) {
         body { cursor: auto; }
         #cursor-light, #cursor-dot { display: none; }
@@ -183,9 +179,7 @@
         text-align: center;
         transition: opacity 1s ease-in-out;
       }
-      .intro-content {
-        position: relative;
-      }
+      .intro-content { position: relative; }
       .intro-line {
         font-family: var(--font-script);
         font-size: clamp(2rem, 5vw, 3rem);
@@ -254,9 +248,7 @@
         text-decoration: none;
         transition: color 0.3s ease;
       }
-      .nav-logo:hover {
-        color: var(--light-text);
-      }
+      .nav-logo:hover { color: var(--light-text); }
       .nav-links {
         display: flex;
         align-items: center;
@@ -285,16 +277,10 @@
         transform-origin: left;
         transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
       }
-      .nav-link:hover {
-        color: var(--gold);
-      }
+      .nav-link:hover { color: var(--gold); }
       .nav-link.active::after,
-      .nav-link:hover::after {
-        transform: scaleX(1);
-      }
-      .nav-link.active {
-        color: var(--gold);
-      }
+      .nav-link:hover::after { transform: scaleX(1); }
+      .nav-link.active { color: var(--gold); }
       .mobile-nav-toggle {
         display: none;
         background: transparent;
@@ -335,8 +321,7 @@
         content: '';
         position: absolute;
         inset: 0;
-        background: radial-gradient(circle, transparent 50%, rgba(15, 23, 42, 0.7)
-            100%);
+        background: radial-gradient(circle, transparent 50%, rgba(15, 23, 42, 0.7) 100%);
         z-index: 2;
       }
       .hero-video,
@@ -347,12 +332,8 @@
         position: absolute;
         inset: 0;
       }
-      .hero-static-fallback {
-        display: none;
-      }
-      .hero-video {
-        display: block;
-      }
+      .hero-static-fallback { display: none; }
+      .hero-video { display: block; }
       .hero-content-container {
         position: relative;
         z-index: 3;
@@ -382,7 +363,7 @@
         font-size: clamp(1.25rem, 3vw, 1.75rem);
         color: var(--light-text);
         line-height: 1.5;
-        max-width: 600px;
+        max-width: 60ch;
         margin: 0 auto;
         opacity: 0; /* GSAP */
         transform: translateY(20px);
@@ -412,16 +393,13 @@
       .text-left { text-align: left; }
       .text-right { text-align: right; }
       .mx-auto { margin-left: auto; margin-right: auto; }
-      .max-w-xl { max-width: 36rem; }
-      .max-w-2xl { max-width: 42rem; }
       .max-w-3xl { max-width: 48rem; }
       .max-w-4xl { max-width: 56rem; }
       .max-w-5xl { max-width: 64rem; }
       .space-y-8 > * + * { margin-top: 2rem; }
-      .space-y-6 > * + * { margin-top: 1.5rem; }
+      .mt-6 { margin-top: 1.5rem; }
       .mb-16 { margin-bottom: 4rem; }
       .mb-20 { margin-bottom: 5rem; }
-      .mt-6 { margin-top: 1.5rem; }
       .hidden { display: none; }
       .opacity-0 { opacity: 0; }
 
@@ -459,10 +437,7 @@
         max-width: 65ch;
       }
       p + p { margin-top: 1.25rem; }
-      strong {
-        color: var(--gold);
-        font-weight: 700;
-      }
+      strong { color: var(--gold); font-weight: 700; }
 
       .section-header {
         opacity: 0; /* GSAP */
@@ -541,8 +516,9 @@
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         opacity: 0; /* GSAP */
         clip-path: inset(10% 20% 10% 20%);
+        aspect-ratio: 4 / 3;
       }
-      .journal-image-container img {
+      .journal-image-container video {
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -782,7 +758,13 @@
         transition: color 0.3s;
       }
       .insight-card-link:hover { color: var(--gold); }
+      
+      .space-y-24 > * + * {
+          margin-top: 6rem;
+      }
 
+      /* Other styles... */
+      
       .form-label {
         display: block;
         margin-bottom: 0.5rem;
@@ -966,8 +948,7 @@
         height: 1.25rem;
       }
 
-      .settings-modal,
-      .bot-modal {
+      .settings-modal, .bot-modal {
         position: fixed;
         top: 50%;
         left: 50%;
@@ -979,11 +960,9 @@
         visibility: hidden;
         transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
       }
-      .settings-modal[hidden],
-      .bot-modal[hidden] { display: block; }
+      .settings-modal[hidden], .bot-modal[hidden] { display: block; }
       
-      .settings-modal.is-visible,
-      .bot-modal.is-visible {
+      .settings-modal.is-visible, .bot-modal.is-visible {
         opacity: 1;
         visibility: visible;
         transform: translate(-50%, -50%) scale(1);
@@ -1004,8 +983,7 @@
         visibility: visible;
       }
 
-      .settings-modal-content,
-      .bot-modal-content {
+      .settings-modal-content, .bot-modal-content {
         background-color: var(--card-bg);
         border: 1px solid var(--border-color);
         border-radius: 1rem;
@@ -1013,8 +991,7 @@
         box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
         position: relative;
       }
-      .settings-title,
-      .bot-modal-title {
+      .settings-title, .bot-modal-title {
         font-family: var(--font-script);
         font-size: 1.75rem;
         color: var(--gold);
@@ -1182,9 +1159,7 @@
 
       @media (max-width: 768px) {
         body { font-size: 15px; }
-        .content-section { padding: 60px 0; }
-        #hero-video { display: none !important; }
-        #hero-static-fallback { display: block !important; }
+        .content-section { padding: 80px 0; }
         #hero-headline { font-size: 2.5rem; }
         #hero-subheadline { font-size: 1.125rem; }
 
@@ -1209,13 +1184,9 @@
         }
         .nav-link { font-size: 1.5rem; }
         .mobile-nav-toggle { display: block; }
-        .mobile-nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(1) {
-          transform: translateY(7px) rotate(45deg);
-        }
+        .mobile-nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .mobile-nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(2) { opacity: 0; }
-        .mobile-nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3) {
-          transform: translateY(-7px) rotate(-45deg);
-        }
+        .mobile-nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
         .custom-blockquote, .custom-blockquote.text-right {
           text-align: left;
@@ -1299,7 +1270,7 @@
                     <img
                         id="hero-static-fallback"
                         class="hero-static-fallback"
-                        src="https://placehold.co/1920x1080/0F172A/E2E8F0?text=Cosmic+Nebula"
+                        src="https://images.pexels.com/photos/110854/pexels-photo-110854.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                         alt="A cosmic nebula representing digital enlightenment."
                         loading="eager">
                 </div>
@@ -1317,8 +1288,7 @@
                      <div class="section-header reveal-up">
                         <h2 class="section-title">The Challenge & The Calling</h2>
                         <h3 class="section-subtitle">Where Progress Meets Peril</h3>
-                        <p class="section-body">In Gilgit Baltistan, rapid technological adoption is outpacing digital literacy. This creates a critical gap, leaving communities vulnerable to tech-enabled misinformation, inadequate online safety practices, and digital exclusion. Our mission is to bridge this gap.</p>
-                        <p class="section-body mt-6"><strong>Mission:</strong> To empower the people of Gilgit Baltistan with trustworthy, lifelong learning opportunities that promote online safety and digital literacy, enabling them to navigate and thrive in an increasingly connected world.</p>
+                        <p class="section-body">In Gilgit Baltistan, rapid technological adoption is outpacing digital literacy. This creates a critical gap, leaving communities vulnerable to tech-enabled misinformation, inadequate online safety practices, and digital exclusion. We exist to bridge this gap.</p>
                     </div>
                 </div>
             </section>
@@ -1328,11 +1298,14 @@
                     <div class="flex flex-col md:flex-row gap-12 items-center">
                         <div class="w-full md:w-1/2">
                             <div class="journal-image-container reveal-up">
-                                <img
-                                    src="https://placehold.co/800x600/1E293B/E2E8F0?text=Skardu+Community"
-                                    alt="A diverse group of people from Skardu warmly interacting and learning together"
-                                    class="w-full h-full object-cover"
-                                    loading="lazy">
+                               <video
+                                    src="https://videos.pexels.com/video-files/8051785/8051785-hd_1920_1080_25fps.mp4"
+                                    autoplay
+                                    muted
+                                    loop
+                                    playsinline
+                                    preload="auto">
+                                </video>
                             </div>
                         </div>
                         <div class="w-full md:w-1/2">
@@ -1455,7 +1428,7 @@
                     </div>
                     <div class="space-y-8">
                         <blockquote class="custom-blockquote reveal-up">
-                            <p>"For the first time, I felt I could ask a 'silly' question about my phone without feeling embarrassed. MehfoozBot helped me understand."</p>
+                            <p>"For the first time, I felt I could ask a 'silly' question about my phone without feeling embarrassed. Mehfooz looks promising."</p>
                             <cite>- A student from Gilgit</cite>
                         </blockquote>
                         <blockquote class="custom-blockquote text-right reveal-up">
@@ -1474,7 +1447,7 @@
                     </div>
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
                         <div class="insight-card reveal-up">
-                            <img src="https://placehold.co/600x400/0F172A/E2E8F0?text=Data+Report" alt="Data charts on a screen" class="insight-card-img">
+                            <img src="https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Data charts on a screen" class="insight-card-img">
                             <div class="insight-card-content">
                                 <div class="insight-card-text">
                                     <p class="insight-card-category">Report</p>
@@ -1485,7 +1458,7 @@
                             </div>
                         </div>
                         <div class="insight-card reveal-up">
-                            <img src="https://placehold.co/600x400/0F172A/E2E8F0?text=Field+Note" alt="A person using a smartphone" class="insight-card-img">
+                            <img src="https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="A person using a smartphone" class="insight-card-img">
                             <div class="insight-card-content">
                                 <div class="insight-card-text">
                                     <p class="insight-card-category">Field Note</p>
@@ -1496,7 +1469,7 @@
                             </div>
                         </div>
                         <div class="insight-card reveal-up">
-                            <img src="https://placehold.co/600x400/0F172A/E2E8F0?text=Data+Point" alt="People collaborating around a table" class="insight-card-img">
+                            <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="People collaborating around a table" class="insight-card-img">
                             <div class="insight-card-content">
                                  <div class="insight-card-text">
                                     <p class="insight-card-category">Data Point</p>
@@ -1699,7 +1672,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
-    <script src="https://unpkg.com/split-type"></script>
     <script>
       // CDN Fallback Example
       if (typeof gsap === 'undefined') {
@@ -1709,10 +1681,10 @@
 
     <script>
       /*
-        script.js (Refactor v4)
-        Summary: Manages all site interactivity, animations, and accessibility features.
-        Changes: Added network animation, headline gradient, fixed image loading,
-        improved cursor visibility, refined alignments and interactive feedback.
+        script.js (Refactor v5)
+        Summary: Full mobile/tablet compatibility, enhanced visuals, and content updates.
+        Changes: Corrected responsive layouts, replaced placeholder with video,
+        updated table data and quotes, removed mission statement, improved overall polish.
       */
 
       document.addEventListener('DOMContentLoaded', function() {
@@ -1785,6 +1757,10 @@
         }
 
         function initCustomCursor() {
+            if (window.matchMedia("(hover: none)").matches) {
+                document.body.style.cursor = 'auto';
+                return;
+            }
             if (!els.cursorDot || !els.cursorLight || document.body.classList.contains('reduced-motion')) return;
 
             gsap.set([els.cursorDot, els.cursorLight], { opacity: 1 });
@@ -1793,14 +1769,12 @@
             window.addEventListener('mousemove', e => {
                 mouse.x = e.clientX;
                 mouse.y = e.clientY;
-            });
+            }, { passive: true });
 
-            if (typeof gsap !== 'undefined') {
-                gsap.ticker.add(() => {
-                    gsap.to(els.cursorDot, { duration: 0.2, x: mouse.x, y: mouse.y });
-                    gsap.to(els.cursorLight, { duration: 0.5, x: mouse.x, y: mouse.y, ease: 'power2.out' });
-                });
-            }
+            gsap.ticker.add(() => {
+                gsap.to(els.cursorDot, { duration: 0.2, x: mouse.x, y: mouse.y });
+                gsap.to(els.cursorLight, { duration: 0.5, x: mouse.x, y: mouse.y, ease: 'power2.out' });
+            });
         }
         
         function initIntroAnimation() {
@@ -1953,14 +1927,14 @@
 
             function createNodes() {
                 nodes = [];
-                const density = 60;
+                const density = window.innerWidth < 768 ? 80 : 60; // Less dense on mobile
                 const cols = Math.floor(canvas.width / density);
                 const rows = Math.floor(canvas.height / density);
 
                 for (let i = 0; i < cols; i++) {
                     for (let j = 0; j < rows; j++) {
-                        const x = i * density + (Math.random() - 0.5) * density;
-                        const y = j * density + (Math.random() - 0.5) * density;
+                        const x = i * density + (Math.random()) * density;
+                        const y = j * density + (Math.random()) * density;
                         nodes.push(new Node(x, y));
                     }
                 }
@@ -1973,11 +1947,11 @@
                         const dy = nodes[i].y - nodes[j].y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
 
-                        if (dist < 80) {
+                        if (dist < 90) {
                             ctx.beginPath();
                             ctx.moveTo(nodes[i].x, nodes[i].y);
                             ctx.lineTo(nodes[j].x, nodes[j].y);
-                            const opacity = 1 - (dist / 80);
+                            const opacity = 1 - (dist / 90);
                             const color = nodes[i].isGlitched && nodes[j].isGlitched ? `rgba(239, 68, 68, ${opacity * 0.5})` : `rgba(51, 65, 85, ${opacity * 0.5})`;
                             ctx.strokeStyle = color;
                             ctx.lineWidth = 0.5;
@@ -1998,30 +1972,27 @@
             animate();
             window.addEventListener('resize', resizeCanvas);
 
-            gsap.to({}, {
-                scrollTrigger: {
-                    trigger: '#challenge',
-                    start: 'top center',
-                    end: 'bottom center',
-                    onUpdate: (self) => {
-                        const progress = self.progress;
-                        nodes.forEach(node => {
-                            if (Math.random() < progress * 0.01) { // Increase glitch chance as you scroll
-                                node.isGlitched = true;
-                                node.color = `rgba(239, 68, 68, ${Math.random() * 0.5 + 0.5})`;
-                            } else if (node.isGlitched && Math.random() > 0.95) {
-                                // Chance to recover
-                                 node.isGlitched = false;
-                                 node.color = node.baseColor;
-                            }
-                        });
-                    },
-                     onLeaveBack: () => {
-                        nodes.forEach(node => {
-                            node.isGlitched = false;
-                            node.color = node.baseColor;
-                        });
-                    }
+            ScrollTrigger.create({
+                trigger: '#challenge',
+                start: 'top center',
+                end: 'bottom center',
+                onUpdate: (self) => {
+                    const progress = self.progress;
+                    nodes.forEach(node => {
+                        if (Math.random() < progress * 0.01) {
+                            node.isGlitched = true;
+                            node.color = `rgba(239, 68, 68, ${Math.random() * 0.5 + 0.5})`;
+                        } else if (node.isGlitched && Math.random() > 0.95) {
+                             node.isGlitched = false;
+                             node.color = node.baseColor;
+                        }
+                    });
+                },
+                 onLeaveBack: () => {
+                    nodes.forEach(node => {
+                        node.isGlitched = false;
+                        node.color = node.baseColor;
+                    });
                 }
             });
         }
@@ -2161,7 +2132,7 @@
                     if (els.modalChatLog.children.length === 0) {
                         addChatMessage("Hello! Ask a question or click a topic.", 'bot', els.modalChatLog);
                     }
-                    els.modalChatInput.focus();
+                    setTimeout(() => els.modalChatInput.focus(), 300); // Focus after transition
                 });
             }
         }
@@ -2186,7 +2157,6 @@
             });
         }
         
-        // Accessibility and Modal Toggles
         function toggleModal(modal, forceOpen) {
           if (!modal || !els.modalBackdrop) return;
           const show = forceOpen === undefined ? !modal.classList.contains('is-visible') : forceOpen;
@@ -2197,7 +2167,7 @@
                 modal.classList.add('is-visible');
                 els.modalBackdrop.classList.add('is-visible');
             }});
-            gsap.to(modal, { scale: 1, duration: 0.3, ease: 'back.out(1.7)' });
+            gsap.fromTo(modal, {scale: 0.95}, { scale: 1, duration: 0.3, ease: 'back.out(1.7)' });
           } else {
             gsap.to(modal, { scale: 0.95, opacity: 0, duration: 0.3, onComplete: () => {
                 modal.classList.remove('is-visible');
@@ -2216,7 +2186,7 @@
           els.helpToggleBtn?.setAttribute('aria-expanded', show);
           if (show) {
              els.keyboardHelp.removeAttribute('hidden');
-             gsap.to(els.keyboardHelp, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.7)', onStart: () => els.keyboardHelp.classList.add('is-visible') });
+             gsap.fromTo(els.keyboardHelp, {opacity: 0, scale: 0.95}, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.7)', onStart: () => els.keyboardHelp.classList.add('is-visible') });
           } else {
              gsap.to(els.keyboardHelp, { opacity: 0, scale: 0.95, duration: 0.3, onComplete: () => {
                 els.keyboardHelp.classList.remove('is-visible');
