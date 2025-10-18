@@ -8,21 +8,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
 
     <style>
         :root {
-            --warm-dark: #1A120B; /* Warmer, earthy dark */
+            --warm-dark: #1A120B;
             --warm-text: #EAE0D5;
             --medium-text: #A8A29A;
             --gold: #DAA520;
             --teal: #008080;
         }
 
-        /* Using a mix of a professional serif (Playfair Display) for authority and a clean sans-serif (Inter) for clarity. */
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0-500;1,400&family=Poppins:wght@500;600&display=swap');
 
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto; }
@@ -30,39 +28,54 @@
         body {
             background-color: var(--warm-dark);
             color: var(--warm-text);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Lora', serif;
             overflow-x: hidden;
             cursor: none;
         }
-
-        .font-heading {
-            font-family: 'Playfair Display', serif;
-        }
-        
-        #cursor-light {
-            position: fixed;
-            width: 80px; height: 80px;
-            border-radius: 50%;
-            left: 0; top: 0;
-            pointer-events: none;
-            background: radial-gradient(circle, rgba(218, 165, 32, 0.25) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            transition: transform 0.3s ease-out;
-        }
-        
-        #bg-canvas {
+        body::before {
+            content: '';
             position: fixed;
             top: 0; left: 0;
-            width: 100%; height: 100vh;
-            z-index: -1;
+            width: 100vw; height: 100vh;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXVדהVlZWV/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f38AAAD/v//+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+v//+vf/+vf/+vf/+vf/+vf/+vf/+vf/+/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/+v//+v//+v//+/v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-d-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a--a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a--a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a--a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a--a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a--a-t');
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 999;
+            animation: grain 8s steps(10) infinite;
+        }
+        @keyframes grain {
+          0%, 100% { transform: translate(0, 0); } 10% { transform: translate(-5%, -10%); } 20% { transform: translate(-15%, 5%); } 30% { transform: translate(7%, -25%); } 40% { transform: translate(-5%, 25%); } 50% { transform: translate(-15%, 10%); } 60% { transform: translate(15%, 0%); } 70% { transform: translate(0%, 15%); } 80% { transform: translate(3%, 35%); } 90% { transform: translate(-10%, 10%); }
         }
 
-        .content-section {
-            position: relative;
-            z-index: 1;
-            padding: 20vh 0;
+        .font-heading {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
         }
+        .font-body {
+            font-family: 'Lora', serif;
+        }
+        
+        #cursor-dot, #cursor-circle {
+            position: fixed;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+        }
+        #cursor-dot {
+            width: 8px; height: 8px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        #cursor-circle {
+            width: 40px; height: 40px;
+            border: 1px solid white;
+            border-radius: 50%;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+        
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
+        .content-section { position: relative; z-index: 1; padding: 20vh 0; }
         
         /* Game Styles */
         #seed-container { cursor: pointer; }
@@ -73,43 +86,30 @@
         /* Animate-in styles */
         .reveal-up { opacity: 0; transform: translateY(40px); }
         .line-parent { overflow: hidden; }
-        .line-child { transform: translateY(100%); }
-        .word-anim p { line-height: 1.7; }
-        .word-anim .word { display: inline-block; transform: translateY(100%); opacity: 0; }
-        .parallax-container { overflow: hidden; }
-        .parallax-image { width: 100%; height: 120%; object-fit: cover; }
-
+        .line-child { display: inline-block; transform: translateY(110%); }
+        
         /* Chat & Form styles */
         .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 15px; line-height: 1.5; }
         .user-bubble { background-color: var(--teal); color: white; border-bottom-right-radius: 3px; align-self: flex-end; }
         .bot-bubble { background-color: #2a2825; color: var(--warm-text); border-bottom-left-radius: 3px; align-self: flex-start; }
-        select {
-           background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23A8A29A' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-           background-position: right 0.5rem center;
-           background-repeat: no-repeat;
-           background-size: 1.5em 1.5em;
-           padding-right: 2.5rem;
-           -webkit-appearance: none;
-           appearance: none;
-        }
-
+        
         /* Navigation Styles */
-        #friendly-nav { transform: translateY(200%); transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1); }
-        #friendly-nav.visible { transform: translateY(0); }
-        .nav-link.active, .header-nav-link.active { color: var(--gold); }
-        .value-icon { stroke-width: 1; transition: all 0.4s ease; }
-        .value-container:hover .value-icon { transform: scale(1.1); stroke: var(--gold); }
+        #menu-toggle { z-index: 10001; }
+        #menu-overlay { clip-path: circle(0% at 95% 5%); }
+        #menu-overlay.open { clip-path: circle(150% at 95% 5%); }
+        .menu-link { transform: translateY(50px); opacity: 0; }
     </style>
 </head>
 <body class="antialiased">
 
-    <div id="cursor-light"></div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-circle"></div>
 
     <div id="game-screen" class="fixed inset-0 bg-warm-dark z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
         <div class="text-center w-full max-w-lg">
             <div id="game-intro">
                 <h2 class="font-heading text-gold text-4xl md:text-6xl mb-2">A Seed of Trust</h2>
-                <p class="text-medium-text text-lg mb-8">Click and hold to begin.</p>
+                <p class="font-body text-medium-text text-lg mb-8">Click and hold to begin.</p>
             </div>
             <div id="seed-container" class="relative w-full aspect-square max-w-[250px] mx-auto">
                 <svg id="seed-svg" class="w-full h-full" viewBox="0 0 200 200">
@@ -120,30 +120,39 @@
                 </svg>
             </div>
             <div id="game-end" class="absolute bottom-10 left-1/2 -translate-x-1/2 w-full px-4">
-                <p id="game-feedback" class="text-teal text-xl mb-4 opacity-0"></p>
-                <button id="enter-site-btn" class="bg-gold text-warm-dark font-bold py-3 px-8 rounded-lg text-xl hover:bg-opacity-80 transition-all opacity-0 scale-90 pointer-events-none">Begin Journey</button>
+                <p id="game-feedback" class="font-heading text-teal text-xl mb-4 opacity-0"></p>
+                <button id="enter-site-btn" class="font-heading bg-gold text-warm-dark font-bold py-3 px-8 rounded-full text-xl hover:bg-opacity-80 transition-all opacity-0 scale-90 pointer-events-none">Begin Journey</button>
             </div>
         </div>
     </div>
     
-    <header class="fixed top-0 left-0 w-full z-50 bg-warm-dark/30 backdrop-blur-md transition-all duration-300">
+    <header class="fixed top-0 left-0 w-full z-50">
         <nav class="container mx-auto flex justify-between items-center p-6 md:p-8">
             <a href="#home" class="font-heading text-3xl text-gold">Mehfooz</a>
-            <div class="hidden md:flex gap-8 text-lg text-medium-text">
-                 <a href="#journal" class="header-nav-link hover:text-warm-text transition-colors">Our Journal</a>
-                 <a href="#approach" class="header-nav-link hover:text-warm-text transition-colors">Our Approach</a>
-                 <a href="#community" class="header-nav-link hover:text-warm-text transition-colors">Community</a>
-                 <a href="#connect" class="header-nav-link hover:text-warm-text transition-colors">Connect</a>
-            </div>
+            <button id="menu-toggle" class="w-12 h-12 flex flex-col justify-center items-center gap-1.5 rounded-full bg-warm-text/10 backdrop-blur-sm">
+                <span class="w-6 h-0.5 bg-warm-text block transition-transform"></span>
+                <span class="w-6 h-0.5 bg-warm-text block transition-transform"></span>
+            </button>
         </nav>
     </header>
+    
+    <div id="menu-overlay" class="fixed inset-0 bg-warm-dark z-[10000] flex items-center justify-center transition-all duration-700 ease-in-out">
+        <div class="text-center">
+            <a href="#home" class="menu-link block font-heading text-5xl md:text-7xl my-4 hover:text-gold transition-colors">Home</a>
+            <a href="#journal" class="menu-link block font-heading text-5xl md:text-7xl my-4 hover:text-gold transition-colors">Journal</a>
+            <a href="#approach" class="menu-link block font-heading text-5xl md:text-7xl my-4 hover:text-gold transition-colors">Approach</a>
+            <a href="#community" class="menu-link block font-heading text-5xl md:text-7xl my-4 hover:text-gold transition-colors">Community</a>
+            <a href="#connect" class="menu-link block font-heading text-5xl md:text-7xl my-4 hover:text-gold transition-colors">Connect</a>
+        </div>
+    </div>
+
 
     <main id="main-content" class="opacity-0">
 
         <section id="home" class="content-section h-screen flex items-center justify-center text-center">
             <div class="px-4">
                 <h1 class="font-heading text-gold text-5xl md:text-8xl mb-4">A digital sanctuary.</h1>
-                <p class="text-xl md:text-2xl text-warm-text leading-relaxed max-w-4xl line-parent">
+                <p class="font-body text-xl md:text-2xl text-warm-text leading-relaxed max-w-4xl line-parent">
                     <span class="line-child">Empowering the communities of Gilgit Baltistan to navigate the digital world with confidence.</span>
                 </p>
             </div>
@@ -153,15 +162,15 @@
              <div class="container mx-auto px-6 max-w-4xl">
                  <div class="flex flex-col md:flex-row gap-12 items-center">
                      <div class="w-full md:w-1/2">
-                         <div class="rounded-lg shadow-2xl shadow-black/50 parallax-container">
-                             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto-format=fit=crop" alt="A group of diverse people working together warmly" class="parallax-image">
+                         <div class="rounded-lg shadow-2xl shadow-black/50 overflow-hidden">
+                             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto-format=fit=crop" alt="A group of diverse people working together warmly" class="w-full h-full object-cover">
                          </div>
                      </div>
                      <div class="w-full md:w-1/2">
                          <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4 line-parent"><span class="line-child">From Our Journal</span></h2>
-                         <div class="word-anim text-lg text-medium-text leading-relaxed space-y-6">
-                            <p>Our journey started in a small teahouse in Skardu, sharing cups of warm chai and listening. We heard stories from our community—stories of hope and confusion in this new digital age.</p>
-                            <p>We realized the answer wasn't more tech, but more trust. A way to connect timeless local wisdom with modern tools. Mehfooz is our promise to build that bridge, together.</p>
+                         <div class="font-body text-lg text-medium-text leading-relaxed space-y-6">
+                            <p class="reveal-up">Our journey started in a small teahouse in Skardu, sharing cups of warm chai and listening. We heard stories from our community—stories of hope and confusion in this new digital age.</p>
+                            <p class="reveal-up">We realized the answer wasn't more tech, but more trust. A way to connect timeless local wisdom with modern tools. Mehfooz is our promise to build that bridge, together.</p>
                          </div>
                      </div>
                  </div>
@@ -177,17 +186,17 @@
                     <div class="reveal-up">
                         <p class="font-heading text-teal text-4xl mb-3">1.</p>
                         <h3 class="font-heading text-2xl mb-3">Listen First</h3>
-                        <p class="text-medium-text leading-relaxed">We partner with local elders and Ulema, honoring their wisdom as the foundation of our work.</p>
+                        <p class="font-body text-medium-text leading-relaxed">We partner with local elders and Ulema, honoring their wisdom as the foundation of our work.</p>
                     </div>
                     <div class="reveal-up">
                         <p class="font-heading text-teal text-4xl mb-3">2.</p>
                         <h3 class="font-heading text-2xl mb-3">Guide Gently</h3>
-                        <p class="text-medium-text leading-relaxed">Our tools, like MehfoozBot, offer personal, patient help in local languages, making technology feel like a friend.</p>
+                        <p class="font-body text-medium-text leading-relaxed">Our tools, like MehfoozBot, offer personal, patient help in local languages, making technology feel like a friend.</p>
                     </div>
                      <div class="reveal-up">
                         <p class="font-heading text-teal text-4xl mb-3">3.</p>
                         <h3 class="font-heading text-2xl mb-3">Grow Together</h3>
-                        <p class="text-medium-text leading-relaxed">Through mini-courses and feedback from local students, we ensure our knowledge is always relevant and co-created.</p>
+                        <p class="font-body text-medium-text leading-relaxed">Through mini-courses and feedback from local students, we ensure our knowledge is always relevant and co-created.</p>
                     </div>
                 </div>
             </div>
@@ -201,8 +210,8 @@
                  <div class="mt-16 reveal-up">
                      <h3 class="font-heading text-teal text-4xl mb-6 text-center">Voices from the Valley</h3>
                      <div class="space-y-8">
-                         <blockquote class="border-l-4 border-gold pl-6 italic text-lg text-medium-text">"I'm excited to finally have a safe place to ask questions. I can't wait to use MehfoozBot to learn about my phone without feeling shy."<cite class="block not-italic mt-2 text-warm-text">- A student from Gilgit</cite></blockquote>
-                         <blockquote class="border-l-4 border-gold pl-6 italic text-lg text-medium-text text-right">"To have something that respects our traditions while teaching our children about the future... this is a blessing we are all looking forward to."<cite class="block not-italic mt-2 text-warm-text">- An elder from Ghanche</cite></blockquote>
+                         <blockquote class="border-l-4 border-gold pl-6 italic font-body text-lg text-medium-text">"I'm excited to finally have a safe place to ask questions. I can't wait to use MehfoozBot to learn about my phone without feeling shy."<cite class="block not-italic mt-2 text-warm-text">- A student from Gilgit</cite></blockquote>
+                         <blockquote class="border-l-4 border-gold pl-6 italic font-body text-lg text-medium-text text-right">"To have something that respects our traditions while teaching our children about the future... this is a blessing we are all looking forward to."<cite class="block not-italic mt-2 text-warm-text">- An elder from Ghanche</cite></blockquote>
                      </div>
                  </div>
             </div>
@@ -212,20 +221,20 @@
               <div class="container mx-auto px-6 max-w-4xl text-center">
                   <div class="reveal-up">
                       <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4">Our Five-Year Vision</h2>
-                      <p class="text-xl text-medium-text max-w-3xl mx-auto">To scale our impact together, empowering communities across Pakistan.</p>
+                      <p class="font-body text-xl text-medium-text max-w-3xl mx-auto">To scale our impact together, empowering communities across Pakistan.</p>
                   </div>
-                  <div class="mt-16 grid md:grid-cols-2 gap-12 text-left">
+                  <div class="mt-16 grid md:grid-cols-2 gap-12 text-left items-center">
                       <div class="reveal-up">
                           <p class="font-heading text-teal text-7xl" id="user-counter">0+</p>
-                          <h3 class="text-2xl mt-2 font-semibold">User Base Expansion</h3>
-                          <p class="text-medium-text mt-2">Leveraging our community networks for organic, sustainable growth to reach over 100,000 users.</p>
+                          <h3 class="text-2xl mt-2 font-heading">User Base Expansion</h3>
+                          <p class="font-body text-medium-text mt-2">Leveraging our community networks for organic, sustainable growth to reach over 100,000 users.</p>
                       </div>
                       <div class="reveal-up">
                            <div class="relative pt-8">
                                 <svg id="timeline-svg" class="absolute top-0 left-0 w-full h-full" viewbox="0 0 300 100" preserveAspectRatio="none"><path d="M 0 50, C 80 20, 150 80, 300 50" stroke="var(--teal)" stroke-width="2" fill="none" class="timeline-path"/></svg>
                                <h3 class="font-heading text-teal text-7xl">3+</h3>
-                               <h3 class="text-2xl mt-2 font-semibold">Platform Development</h3>
-                               <p class="text-medium-text mt-2">Introducing AI-driven learning paths, offline capabilities, and expanded language support.</p>
+                               <h3 class="text-2xl mt-2 font-heading">Platform Development</h3>
+                               <p class="font-body text-medium-text mt-2">Introducing AI-driven learning paths, offline capabilities, and expanded language support.</p>
                            </div>
                       </div>
                   </div>
@@ -240,19 +249,19 @@
                  <div class="grid md:grid-cols-4 gap-12 text-center">
                      <div class="reveal-up value-container">
                          <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a3.004 3.004 0 015.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                         <h3 class="text-2xl mt-4 font-semibold">Collaboration</h3>
+                         <h3 class="text-2xl mt-4 font-heading">Collaboration</h3>
                      </div>
                       <div class="reveal-up value-container">
                          <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                         <h3 class="text-2xl mt-4 font-semibold">Integrity</h3>
+                         <h3 class="text-2xl mt-4 font-heading">Integrity</h3>
                      </div>
                       <div class="reveal-up value-container">
                          <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                         <h3 class="text-2xl mt-4 font-semibold">Inclusivity</h3>
+                         <h3 class="text-2xl mt-4 font-heading">Inclusivity</h3>
                      </div>
                       <div class="reveal-up value-container">
                          <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
-                         <h3 class="text-2xl mt-4 font-semibold">Innovation</h3>
+                         <h3 class="text-2xl mt-4 font-heading">Innovation</h3>
                      </div>
                  </div>
              </div>
@@ -261,18 +270,18 @@
         <section id="connect" class="content-section py-20 md:py-40">
               <div class="container mx-auto px-6 space-y-24">
                    <div class="text-center max-w-3xl mx-auto reveal-up">
-                     <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4">Let's Connect</h2>
-                     <p class="text-xl text-medium-text">Whether you are a community member, a potential partner, or a researcher—we'd love to hear from you.</p>
+                     <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4">Let's talk.</h2>
+                     <p class="font-body text-xl text-medium-text">Whether you're a community member, a potential partner, or a researcher—we'd love to hear from you.</p>
                    </div>
                    <div class="max-w-2xl mx-auto reveal-up">
                      <h3 class="font-heading text-teal text-4xl mb-6 text-center">Chat with MehfoozBot</h3>
-                     <div id="chat-log" class="bg-black/20 rounded-t-lg shadow-inner h-[50vh] flex flex-col gap-4 p-4 overflow-y-auto"></div>
+                     <div id="chat-log" class="bg-black/20 rounded-t-lg shadow-inner h-[50vh] flex flex-col gap-4 p-4 overflow-y-auto font-body"></div>
                      <div class="bg-black/20 rounded-b-lg p-4">
                         <div class="grid grid-cols-2 md:grid-cols-2 gap-2 mb-3" id="prompt-buttons">
                            </div>
                          <form id="chat-form" class="flex gap-3">
-                             <input type="text" id="chat-input" placeholder="Ask a friendly question..." class="flex-1 bg-warm-dark/50 border border-medium-text/30 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-teal text-white">
-                             <button type="submit" class="bg-teal text-white rounded-full px-5 py-3 font-semibold hover:bg-opacity-80">Send</button>
+                             <input type="text" id="chat-input" placeholder="Ask a friendly question..." class="font-body flex-1 bg-warm-dark/50 border border-medium-text/30 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-teal text-white">
+                             <button type="submit" class="font-heading bg-teal text-white rounded-full px-5 py-3 font-semibold hover:bg-opacity-80">Send</button>
                          </form>
                      </div>
                    </div>
@@ -280,16 +289,16 @@
                      <h3 class="font-heading text-teal text-4xl mb-6 text-center">Send a Personal Message</h3>
                      <form id="contact-form" class="space-y-6 text-left">
                            <div>
-                             <label for="name" class="block mb-2 font-medium text-medium-text">Your Name</label>
-                             <input type="text" id="name" required class="w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal">
+                             <label for="name" class="block mb-2 font-medium text-medium-text font-heading">Your Name</label>
+                             <input type="text" id="name" required class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal">
                            </div>
                            <div>
-                             <label for="email" class="block mb-2 font-medium text-medium-text">Your Email</label>
-                             <input type="email" id="email" required class="w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal">
+                             <label for="email" class="block mb-2 font-medium text-medium-text font-heading">Your Email</label>
+                             <input type="email" id="email" required class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal">
                            </div>
                            <div>
-                                <label for="interest" class="block mb-2 font-medium text-medium-text">I am a...</label>
-                                <select id="interest" class="w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal">
+                                <label for="interest" class="block mb-2 font-medium text-medium-text font-heading">I am a...</label>
+                                <select id="interest" class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal">
                                     <option>Community Member</option>
                                     <option>Potential Partner / Investor</option>
                                     <option>Researcher / Institution</option>
@@ -298,27 +307,18 @@
                                 </select>
                             </div>
                            <div>
-                             <label for="message" class="block mb-2 font-medium text-medium-text">Your Message</label>
-                             <textarea id="message" rows="5" required class="w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal"></textarea>
+                             <label for="message" class="block mb-2 font-medium text-medium-text font-heading">Your Message</label>
+                             <textarea id="message" rows="5" required class="font-body w-full bg-warm-dark/50 border border-medium-text/30 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-teal"></textarea>
                            </div>
-                         <button type="submit" class="w-full bg-teal text-white font-semibold py-4 px-6 rounded-lg hover:bg-opacity-80">Send Message</button>
+                         <button type="submit" class="font-heading w-full bg-teal text-white font-semibold py-4 px-6 rounded-lg hover:bg-opacity-80">Send with heart</button>
                      </form>
                       <div id="form-success" class="hidden text-center border border-teal rounded-lg p-8 mt-6">
                          <p class="font-heading text-teal text-3xl mb-2">Thank You!</p>
-                         <p class="text-medium-text">Your message has been received.</p>
+                         <p class="font-body text-medium-text">Your message has been received.</p>
                       </div>
                    </div>
               </div>
         </section>
-
-        <nav id="friendly-nav" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-black/30 backdrop-blur-md rounded-full px-6 py-3 flex gap-6 text-lg text-medium-text md:hidden">
-            <a href="#home" class="nav-link hover:text-warm-text transition-colors active">Home</a>
-            <a href="#journal" class="nav-link hover:text-warm-text transition-colors">Journal</a>
-            <a href="#approach" class="nav-link hover:text-warm-text transition-colors">Approach</a>
-            <a href="#community" class="nav-link hover:text-warm-text transition-colors">Community</a>
-            <a href="#connect" class="nav-link hover:text-warm-text transition-colors">Connect</a>
-        </nav>
-
     </main>
     
     <footer class="py-12 bg-black/20 border-t border-white/10">
@@ -345,12 +345,32 @@
         gsap.registerPlugin(ScrollTrigger, Draggable);
         
         const mainContent = document.getElementById('main-content');
-        const cursorLight = document.getElementById('cursor-light');
-        const friendlyNav = document.getElementById('friendly-nav');
         
+        // --- CUSTOM CURSOR ---
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorCircle = document.getElementById('cursor-circle');
         let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-        window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-        gsap.ticker.add(() => { gsap.to(cursorLight, { duration: 0.5, x: mouse.x, y: mouse.y, ease: 'power2.out' }); });
+        let circlePos = { ...mouse };
+
+        window.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        gsap.ticker.add(() => {
+            gsap.to(cursorDot, { duration: 0.2, x: mouse.x, y: mouse.y });
+            
+            const dx = mouse.x - circlePos.x;
+            const dy = mouse.y - circlePos.y;
+            circlePos.x += dx * 0.15;
+            circlePos.y += dy * 0.15;
+            gsap.to(cursorCircle, { duration: 0, x: circlePos.x - 20, y: circlePos.y - 20 });
+        });
+        
+        document.querySelectorAll('a, button, #seed-container').forEach(el => {
+            el.addEventListener('mouseenter', () => gsap.to(cursorCircle, { duration: 0.3, scale: 1.5, opacity: 0.5 }));
+            el.addEventListener('mouseleave', () => gsap.to(cursorCircle, { duration: 0.3, scale: 1, opacity: 1 }));
+        });
 
         // --- SMOOTH SCROLL ---
         const lenis = new Lenis();
@@ -359,6 +379,44 @@
             requestAnimationFrame(raf);
         }
         requestAnimationFrame(raf);
+
+        // --- MENU ---
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const menuLinks = document.querySelectorAll('.menu-link');
+        const toggleSpans = menuToggle.querySelectorAll('span');
+        let isMenuOpen = false;
+
+        const menuTimeline = gsap.timeline({ paused: true })
+            .to(menuOverlay, { duration: 0.8, ease: 'power3.inOut' })
+            .to(menuLinks, { y: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: 'power3.out' }, "-=0.5");
+
+        menuToggle.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            menuOverlay.classList.toggle('open');
+            if(isMenuOpen) {
+                menuTimeline.play();
+                gsap.to(toggleSpans[0], { y: 6, rotate: 45, duration: 0.3 });
+                gsap.to(toggleSpans[1], { y: -2, rotate: -45, duration: 0.3 });
+                lenis.stop();
+            } else {
+                menuTimeline.reverse();
+                gsap.to(toggleSpans[0], { y: 0, rotate: 0, duration: 0.3 });
+                gsap.to(toggleSpans[1], { y: 0, rotate: 0, duration: 0.3 });
+                lenis.start();
+            }
+        });
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                menuOverlay.classList.remove('open');
+                menuTimeline.reverse();
+                gsap.to(toggleSpans[0], { y: 0, rotate: 0, duration: 0.3 });
+                gsap.to(toggleSpans[1], { y: 0, rotate: 0, duration: 0.3 });
+                lenis.start();
+                lenis.scrollTo(link.getAttribute('href'));
+            });
+        });
 
         // --- "A SEED OF TRUST" GAME ---
         const gameScreen = document.getElementById('game-screen');
@@ -420,7 +478,6 @@
 
         const particleCount = 7000;
         const positions = new Float32Array(particleCount * 3);
-        const colors = new Float32Array(particleCount * 3);
         const colorGold = new THREE.Color(0xDAA520);
         const colorTeal = new THREE.Color(0x008080);
 
@@ -429,22 +486,12 @@
             positions[i3] = (Math.random() - 0.5) * 25;
             positions[i3 + 1] = (Math.random() - 0.5) * 25;
             positions[i3 + 2] = (Math.random() - 0.5) * 25;
-            
-            const mixedColor = Math.random() > 0.7 ? colorGold.clone() : colorTeal.clone().lerp(colorGold, Math.random() * 0.3);
-            colors[i3] = mixedColor.r;
-            colors[i3 + 1] = mixedColor.g;
-            colors[i3 + 2] = mixedColor.b;
         }
         const particlesGeometry = new THREE.BufferGeometry();
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         
         const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.025,
-            sizeAttenuation: true,
-            transparent: true,
-            opacity: 0.6,
-            vertexColors: true
+            size: 0.02, sizeAttenuation: true, transparent: true, opacity: 0.5, color: 0xDAA520
         });
         const particles = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particles);
@@ -470,12 +517,7 @@
 
         // --- MAIN ANIMATIONS ---
         function initAnimations() {
-            gsap.fromTo('.line-child', { y: '100%' }, { 
-                y: '0%', 
-                duration: 1, 
-                ease: 'power3.out',
-                stagger: 0.2
-            });
+            gsap.to('.line-child', { y: 0, duration: 1, ease: 'power3.out', stagger: 0.2 });
             
             gsap.utils.toArray('.reveal-up').forEach(elem => {
                 gsap.fromTo(elem, { opacity: 0, y: 50 }, {
@@ -490,22 +532,9 @@
                 });
             });
 
-            gsap.utils.toArray('.word-anim').forEach(el => {
-                const words = el.querySelectorAll('p');
-                words.forEach(p => {
-                    const chars = p.innerText.split(' ');
-                    p.innerHTML = chars.map(c => `<span class="word">${c}&nbsp;</span>`).join('');
-                });
-                gsap.fromTo(el.querySelectorAll('.word'), 
-                    { y: '100%', opacity: 0 },
-                    { y: '0%', opacity: 1, duration: 0.5, ease: 'power3.out', stagger: 0.02,
-                    scrollTrigger: { trigger: el, start: 'top 80%' }
-                });
-            });
-            
-            gsap.utils.toArray('.parallax-image').forEach(img => {
+            gsap.utils.toArray('img').forEach(img => {
                 gsap.to(img, {
-                    y: '-20%',
+                    y: '-10%',
                     ease: 'none',
                     scrollTrigger: {
                         trigger: img.parentElement,
@@ -541,26 +570,17 @@
                 }
             });
 
-            // Friendly Nav visibility
-            ScrollTrigger.create({
-                start: 'top top-=-100',
-                onEnter: () => friendlyNav.classList.add('visible'),
-                onLeaveBack: () => friendlyNav.classList.remove('visible')
-            });
-
             // Nav link smooth scroll and active state
-            gsap.utils.toArray('.content-section').forEach((section, i) => {
+            gsap.utils.toArray('.content-section').forEach((section) => {
                 ScrollTrigger.create({
                     trigger: section,
-                    start: 'top center',
-                    end: 'bottom center',
+                    start: 'top center+=100',
+                    end: 'bottom center-=100',
                     onToggle: self => {
                         if (self.isActive) {
                             const sectionId = section.getAttribute('id');
-                            document.querySelectorAll('.nav-link, .header-nav-link').forEach(l => l.classList.remove('active'));
-                            document.querySelectorAll(`.nav-link[href="#${sectionId}"], .header-nav-link[href="#${sectionId}"]`).forEach(link => {
-                                link.classList.add('active');
-                            });
+                            document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
+                            document.querySelector(`.menu-link[href="#${sectionId}"]`).classList.add('active');
                         }
                     }
                 });
@@ -569,12 +589,12 @@
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
-                    lenis.scrollTo(this.getAttribute('href'));
+                    if(!isMenuOpen) lenis.scrollTo(this.getAttribute('href'));
                 });
             });
         }
         
-        // --- SMARTER MEHFOOZBOT LOGIC ---
+        // --- MEHFOOZBOT LOGIC ---
         const chatLog = document.getElementById('chat-log');
         const chatForm = document.getElementById('chat-form');
         const chatInput = document.getElementById('chat-input');
@@ -585,7 +605,7 @@
             "default": "That's a lovely question. While my abilities here are a demonstration, the full MehfoozBot can share stories and guidance on that. Every question is a step toward clarity.",
             "misinformation": "To spot misinformation, it's helpful to pause and check the source, look for evidence, and notice if the story tries to make you feel strong emotions. A calm mind is a clear mind.",
             "safety": "To stay safe online, it's wise to use strong, unique passwords and be cautious about sharing personal information. Think of your data as something precious you wouldn't leave unattended.",
-            "story": "Our story began with conversations in teahouses, listening to the hopes and worries of the community. You can read more in the 'From Our Journal' section above.",
+            "story": "Our story began with conversations in teahouses, listening to the hopes and worries of the community. You can read more in the 'Our Journal' section above.",
             "ulema": "We partner with trusted local Ulema (religious leaders). They act as digital literacy ambassadors, bridging traditional knowledge with modern skills to create unprecedented community acceptance."
         };
         const promptQuestions = {
@@ -610,7 +630,7 @@
                 chatInput.value = '';
                 chatInput.disabled = true;
                 setTimeout(() => {
-                    const response = botResponses[promptQuestions[input]] || getBotResponse(input);
+                    const response = botResponses[promptQuestions[input]] || botResponses.default;
                     addMessage(response, 'bot');
                     chatInput.disabled = false;
                     chatInput.focus();
@@ -625,7 +645,7 @@
         
         Object.keys(promptQuestions).forEach(question => {
             const button = document.createElement('button');
-            button.className = "text-sm bg-warm-dark/50 border border-medium-text/30 rounded-full py-2 px-3 text-medium-text hover:bg-teal hover:text-white transition-colors text-left";
+            button.className = "font-body text-sm bg-warm-dark/50 border border-medium-text/30 rounded-full py-2 px-3 text-medium-text hover:bg-teal hover:text-white transition-colors text-left";
             button.textContent = question;
             button.onclick = () => {
                 handleUserInput(question);
