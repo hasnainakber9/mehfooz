@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
 
@@ -63,25 +64,21 @@
         }
         
         /* Game Styles */
-        .whisper-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
-            cursor: none;
+        #tangle-game {
+            touch-action: none;
         }
-        .whisper-card:hover {
-            transform: translateY(-10px);
-            background: rgba(218, 165, 32, 0.1);
-            border-color: var(--gold);
+        .node {
+            transition: r 0.3s ease, fill 0.3s ease;
         }
-        .whisper-card.correct {
-            border-color: var(--teal);
-            transform: translateY(-5px);
-            box-shadow: 0 0 15px rgba(0, 128, 128, 0.5);
+        .node:hover, .node.dragging {
+            r: 12;
+            fill: var(--gold);
         }
-        .whisper-card.incorrect {
-            opacity: 0.4;
-            filter: grayscale(80%);
+        .line {
+            transition: stroke 0.3s ease;
+        }
+        .line.solved {
+            stroke: var(--teal);
         }
 
         /* Animate-in styles */
@@ -115,19 +112,18 @@
     <div id="cursor-light"></div>
 
     <div id="game-screen" class="fixed inset-0 bg-warm-dark z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
-        <div class="text-center w-full max-w-4xl">
-             <div id="game-intro">
-                 <h2 class="font-script text-gold text-4xl md:text-6xl mb-2">Whispers & Truth</h2>
-                 <p class="text-medium-text text-lg mb-8">A quick game of digital intuition. Which sounds more true?</p>
-             </div>
-             <div id="game-question-container" class="mt-8 grid md:grid-cols-2 gap-8">
-                 </div>
-             <div id="game-feedback" class="mt-8 text-lg max-w-2xl mx-auto min-h-[6rem]"></div>
-             <div id="game-end" class="hidden">
-                 <h3 class="font-script text-teal text-4xl mb-4">A thoughtful start.</h3>
-                 <p class="text-xl text-medium-text mb-8">Navigating the digital world requires a calm mind and a careful heart. You're ready to begin the journey.</p>
-                 <button id="enter-site-btn" class="bg-gold text-warm-dark font-bold py-3 px-8 rounded-lg text-xl hover:bg-opacity-80 transition-colors">Enter Mehfooz</button>
-             </div>
+        <div class="text-center w-full max-w-lg">
+            <div id="game-intro">
+                <h2 class="font-script text-gold text-4xl md:text-6xl mb-2">Finding Clarity</h2>
+                <p class="text-medium-text text-lg mb-8">Gently untangle the threads to find a clear path.</p>
+            </div>
+            <div id="tangle-container" class="relative w-full aspect-square max-w-md mx-auto">
+                <svg id="tangle-game" class="w-full h-full" viewBox="0 0 400 400"></svg>
+            </div>
+            <div id="game-end" class="absolute bottom-10 left-1/2 -translate-x-1/2 w-full px-4">
+                <p id="game-feedback" class="text-teal text-xl mb-4 opacity-0"></p>
+                <button id="enter-site-btn" class="bg-gold text-warm-dark font-bold py-3 px-8 rounded-lg text-xl hover:bg-opacity-80 transition-all opacity-0 scale-90 pointer-events-none">Begin Journey</button>
+            </div>
         </div>
     </div>
     
@@ -164,8 +160,8 @@
                      </div>
                      <div class="w-full md:w-1/2">
                          <h2 class="font-script text-gold text-5xl md:text-6xl mb-4 reveal-up">From Our Journal</h2>
-                         <p class="text-lg text-medium-text leading-relaxed mb-6 reveal-up">Mehfooz began not with a line of code, but with a conversation. In a small Hunza teahouse, over cups of warm chai, we listened. We heard stories of connection and confusion, of hope and fear in a new digital world.</p>
-                         <p class="text-lg text-medium-text leading-relaxed reveal-up">We learned that the need wasn't for more technology, but for more understanding. For a bridge between timeless wisdom and modern tools. Mehfooz is our promise to help build that bridge, together.</p>
+                         <p class="text-lg text-medium-text leading-relaxed mb-6 reveal-up">Our journey started in a small teahouse in Skardu, sharing cups of warm chai and listening. We heard stories from our community—stories of hope and confusion in this new digital age.</p>
+                         <p class="text-lg text-medium-text leading-relaxed reveal-up">We realized the answer wasn't more tech, but more trust. A way to connect timeless local wisdom with modern tools. Mehfooz is our promise to build that bridge, together.</p>
                      </div>
                  </div>
              </div>
@@ -201,8 +197,8 @@
                  <div class="mt-16 reveal-up">
                      <h3 class="font-script text-teal text-4xl mb-6 text-center">Voices from the Valley</h3>
                      <div class="space-y-8">
-                         <blockquote class="border-l-4 border-gold pl-6 italic text-lg text-medium-text">"For the first time, I felt I could ask a 'silly' question about my phone without feeling embarrassed. MehfoozBot helped me understand."<cite class="block not-italic mt-2 text-warm-text">- A student from Gilgit</cite></blockquote>
-                         <blockquote class="border-l-4 border-gold pl-6 italic text-lg text-medium-text text-right">"They didn’t come to teach; they came to learn with us. That is why we trust them."<cite class="block not-italic mt-2 text-warm-text">- An elder from Hunza</cite></blockquote>
+                         <blockquote class="border-l-4 border-gold pl-6 italic text-lg text-medium-text">"I'm excited to finally have a safe place to ask questions. I can't wait to use MehfoozBot to learn about my phone without feeling shy."<cite class="block not-italic mt-2 text-warm-text">- A student from Gilgit</cite></blockquote>
+                         <blockquote class="border-l-4 border-gold pl-6 italic text-lg text-medium-text text-right">"To have something that respects our traditions while teaching our children about the future... this is a blessing we are all looking forward to."<cite class="block not-italic mt-2 text-warm-text">- An elder from Ghanche</cite></blockquote>
                      </div>
                  </div>
             </div>
@@ -327,7 +323,7 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        gsap.registerPlugin(ScrollTrigger);
+        gsap.registerPlugin(ScrollTrigger, Draggable);
         
         const mainContent = document.getElementById('main-content');
         const cursorLight = document.getElementById('cursor-light');
@@ -345,75 +341,114 @@
         }
         requestAnimationFrame(raf);
 
-        // --- "WHISPERS & TRUTH" GAME ---
+        // --- "FINDING CLARITY" GAME ---
         const gameScreen = document.getElementById('game-screen');
-        const gameQuestions = [
-            {
-                whispers: [
-                    { text: "Secret cure for everything found! Click NOW!", truth: false },
-                    { text: "New study shows promise, but needs more research.", truth: true }
-                ],
-                feedback: "Well spotted! Truth often speaks calmly, while misinformation uses urgency."
-            },
-            {
-                whispers: [
-                    { text: "This is the WORST thing ever! They're hiding it all!", truth: false },
-                    { text: "Official reports are conflicting as the situation develops.", truth: true }
-                ],
-                feedback: "Exactly. Misinformation uses simple, alarming language. The truth is often more complex."
+        const svg = document.getElementById('tangle-game');
+        const enterBtn = document.getElementById('enter-site-btn');
+        const feedbackEl = document.getElementById('game-feedback');
+        const ns = "http://www.w3.org/2000/svg";
+        
+        const numNodes = 6;
+        const radius = 150;
+        const center = { x: 200, y: 200 };
+        let nodes = [];
+        let lines = [];
+        let draggables = [];
+
+        for (let i = 0; i < numNodes; i++) {
+            const angle = (i / numNodes) * 2 * Math.PI;
+            nodes.push({
+                x: center.x + Math.sin(angle) * radius * (0.6 + Math.random() * 0.4),
+                y: center.y + Math.cos(angle) * radius * (0.6 + Math.random() * 0.4),
+                isDraggable: i % 2 === 0,
+            });
+        }
+
+        for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+                if (Math.random() > 0.6) {
+                    const line = document.createElementNS(ns, 'line');
+                    line.setAttribute('stroke', 'var(--medium-text)');
+                    line.setAttribute('stroke-width', 2);
+                    line.classList.add('line');
+                    svg.appendChild(line);
+                    lines.push({ element: line, p1: nodes[i], p2: nodes[j] });
+                }
             }
-        ];
-        let gameStep = 0;
-        const gameContainer = document.getElementById('game-question-container');
-        const gameFeedbackEl = document.getElementById('game-feedback');
+        }
 
-        function loadGameStep() {
-            gameContainer.innerHTML = '';
-            gameFeedbackEl.textContent = '';
-            const step = gameQuestions[gameStep];
-            const whispers = [...step.whispers].sort(() => Math.random() - 0.5);
+        nodes.forEach((p, i) => {
+            const circle = document.createElementNS(ns, 'circle');
+            circle.setAttribute('r', p.isDraggable ? 10 : 6);
+            circle.setAttribute('fill', p.isDraggable ? 'var(--warm-text)' : 'var(--medium-text)');
+            circle.classList.add('node');
+            svg.appendChild(circle);
+            p.element = circle;
 
-            whispers.forEach(whisper => {
-                const card = document.createElement('div');
-                card.className = 'whisper-card rounded-lg p-6 text-lg';
-                card.textContent = whisper.text;
-                card.dataset.truth = whisper.truth;
-                card.onclick = () => handleChoice(whisper.truth, step.feedback, card);
-                gameContainer.appendChild(card);
+            if (p.isDraggable) {
+                draggables.push(Draggable.create(circle, {
+                    bounds: svg,
+                    onDrag: function() {
+                        p.x = this.x;
+                        p.y = this.y;
+                        updateLines();
+                        checkSolution();
+                    },
+                    onPress: function() { this.target.classList.add('dragging'); },
+                    onRelease: function() { this.target.classList.remove('dragging'); }
+                })[0]);
+            }
+        });
+
+        function updateLines() {
+            lines.forEach(l => {
+                l.element.setAttribute('x1', l.p1.x);
+                l.element.setAttribute('y1', l.p1.y);
+                l.element.setAttribute('x2', l.p2.x);
+                l.element.setAttribute('y2', l.p2.y);
+                gsap.set(l.p1.element, { attr: { cx: l.p1.x, cy: l.p1.y } });
+                gsap.set(l.p2.element, { attr: { cx: l.p2.x, cy: l.p2.y } });
             });
         }
         
-        function handleChoice(isTruth, feedback, clickedCard) {
-            gameFeedbackEl.textContent = feedback;
-            gsap.fromTo(gameFeedbackEl, {opacity: 0, y: 10}, {opacity: 1, y: 0, duration: 0.5});
-            
-            const cards = gameContainer.querySelectorAll('.whisper-card');
-            cards.forEach(card => {
-                card.style.pointerEvents = 'none';
-                if (card.dataset.truth === 'true') {
-                    card.classList.add('correct');
-                } else {
-                    card.classList.add('incorrect');
+        let solved = false;
+        function checkSolution() {
+            if (solved) return;
+            let intersections = 0;
+            for (let i = 0; i < lines.length; i++) {
+                for (let j = i + 1; j < lines.length; j++) {
+                    if (doIntersect(lines[i].p1, lines[i].p2, lines[j].p1, lines[j].p2)) {
+                        intersections++;
+                    }
                 }
-            });
-            
-            setTimeout(() => {
-                gameStep++;
-                if (gameStep < gameQuestions.length) {
-                    loadGameStep();
-                } else {
-                    endGame();
-                }
-            }, 3000);
+            }
+            if (intersections === 0) {
+                solved = true;
+                onSolved();
+            }
         }
 
-        function endGame() {
-            gsap.to([gameContainer, document.getElementById('game-intro'), gameFeedbackEl], {opacity: 0, duration: 0.5});
-            document.getElementById('game-end').classList.remove('hidden');
-            gsap.from(document.getElementById('game-end'), {opacity: 0, y: 20, duration: 1, delay: 0.5});
+        function onSolved() {
+            draggables.forEach(d => d.disable());
+            document.querySelectorAll('.line').forEach(l => l.classList.add('solved'));
+            feedbackEl.textContent = "Clarity found.";
+            gsap.to(feedbackEl, { opacity: 1, duration: 1 });
+            gsap.to(enterBtn, { opacity: 1, scale: 1, pointerEvents: 'auto', duration: 0.5, delay: 0.5 });
+        }
+        
+        // Helper function for line intersection
+        function onSegment(p, q, r) { return (q.x <= Math.max(p.x, r.x) && q.x >= Math.min(p.x, r.x) && q.y <= Math.max(p.y, r.y) && q.y >= Math.min(p.y, r.y)); }
+        function orientation(p, q, r) { const val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y); if (val == 0) return 0; return (val > 0) ? 1 : 2; }
+        function doIntersect(p1, q1, p2, q2) {
+            if (p1 === p2 || p1 === q2 || q1 === p2 || q1 === q2) return false;
+            const o1 = orientation(p1, q1, p2); const o2 = orientation(p1, q1, q2); const o3 = orientation(p2, q2, p1); const o4 = orientation(p2, q2, q1);
+            if (o1 != o2 && o3 != o4) return true;
+            return false;
         }
 
-        document.getElementById('enter-site-btn').addEventListener('click', () => {
+        updateLines();
+
+        enterBtn.addEventListener('click', () => {
              gsap.to(gameScreen, { 
                  opacity: 0, 
                  duration: 1, 
@@ -425,8 +460,6 @@
                  }
              });
         });
-
-        loadGameStep();
 
         // --- THREE.JS BACKGROUND ---
         const scene = new THREE.Scene();
