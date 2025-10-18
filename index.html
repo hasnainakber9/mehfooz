@@ -22,31 +22,27 @@
     <style>
         /*
           CSS STYLES
-          Summary: Updated color palette for warmth (deep violet, amber, rose hints). Softened transitions,
-          added subtle glows on focus/hover. Adjusted typography slightly. Dimmed background elements.
-          Introduced gentle gradients. Increased border-radius slightly for softness.
+          Summary: Replaced fonts with the new stack. Removed all '#game-screen' styles.
+          Added styles for the new 'skip-link', hero video background, toggle button,
+          and robust ':focus-visible' states for accessible navigation.
+          A 'prefers-reduced-motion' query now disables all major animations and motion.
         */
         :root {
-            /* Warm, Intimate Palette */
-            --dark-bg: #1e1b2e; /* Deep Violet/Indigo */
-            --light-text: #e0d8f0; /* Soft Lavender White */
-            --medium-text: #a89fbf; /* Muted Lavender Gray */
-            --card-bg: #2a263f; /* Slightly lighter Violet */
-            --border-color: #403a5f; /* Muted Violet Border */
-            --gold: #ffc880; /* Warm Amber/Gold */
-            --teal: #ff94a6; /* Soft Rose/Coral (replaces Teal) */
-            --danger: #ff6b6b; /* Softer Red */
-            --success: #6bffb8; /* Soft Mint Green */
+            --dark-bg: #0F172A;
+            --light-text: #E2E8F0;
+            --medium-text: #94A3B8;
+            --card-bg: #1E293B;
+            --border-color: #334155;
+            --gold: #F4B860;
+            --teal: #00A896;
+            --danger: #ef4444;
+            --success: #22c55e;
 
-            /* Font Stack (Keep Lora/Ubuntu for flow/readability) */
+            /* New Font Stack */
             --font-heading: 'Montserrat', 'Aqua Grotesque', sans-serif;
             --font-body: 'Ubuntu', sans-serif;
-            --font-script: 'Special Elite', 'Date Stamp Font', cursive; /* Use sparingly */
+            --font-script: 'Special Elite', 'Date Stamp Font', cursive;
             --font-serif-accent: 'Lora', 'Macbeth', serif;
-
-            /* Animation/Transition Timing */
-            --transition-duration: 0.4s;
-            --transition-ease: cubic-bezier(0.25, 0.1, 0.25, 1); /* Smoother ease */
         }
 
         html.lenis { height: auto; }
@@ -55,126 +51,494 @@
         body {
             background-color: var(--dark-bg);
             color: var(--light-text);
-            font-family: var(--font-body);
+            font-family: var(--font-body); /* Use new body font */
             overflow-x: hidden;
             cursor: none;
         }
         
-        .antialiased { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        .antialiased {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
         
-        /* Skip Link */
-        .skip-link { position: absolute; top: -999px; left: 0; background: var(--gold); color: var(--dark-bg); padding: 1rem; z-index: 10001; font-family: var(--font-heading); font-weight: 700; border-bottom-right-radius: 12px; /* Softer */ transform: translateY(-100%); transition: transform var(--transition-duration) var(--transition-ease); }
-        .skip-link:focus { top: 0; transform: translateY(0); }
-
-        /* Cursor - Warmer Glow */
-        #cursor-light { position: fixed; width: 900px; height: 900px; border-radius: 50%; left: 0; top: 0; pointer-events: none; background: radial-gradient(circle, rgba(255, 200, 128, 0.05) 0%, transparent 65%); /* Amber glow, slightly larger fade */ transform: translate(-50%, -50%); z-index: 9999; transition: transform 0.4s ease-out, opacity 0.4s ease; /* Slower */ opacity: 0; }
-        #cursor-dot { position: fixed; width: 8px; height: 8px; /* Slightly larger */ background-color: var(--gold); border-radius: 50%; left: 0; top: 0; pointer-events: none; transform: translate(-50%, -50%); z-index: 10000; transition: transform 0.3s var(--transition-ease), background-color var(--transition-duration) var(--transition-ease), opacity var(--transition-duration) var(--transition-ease); opacity: 0; }
-        body:hover > #cursor-light, body:hover > #cursor-dot { opacity: 1; }
-        a:hover ~ #cursor-dot, button:hover ~ #cursor-dot, select:hover ~ #cursor-dot { transform: translate(-50%, -50%) scale(1.6); background-color: var(--teal); /* Rose */ }
-        a:hover ~ #cursor-light, button:hover ~ #cursor-light, select:hover ~ #cursor-light { transform: translate(-50%, -50%) scale(1.1); }
-
-        /* Background Canvas - Dimmer */
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0; transition: opacity 1.5s ease 0.8s; /* Slower fade-in */ }
-        body.site-entered #bg-canvas { opacity: 0.8; /* Slightly dimmed */ }
-
-        /* Typography */
-        .font-script { font-family: var(--font-script); font-weight: 400; /* Less harsh */ }
-        .font-serif { font-family: var(--font-serif-accent); }
-        h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 700; color: var(--light-text); }
-        h1 { font-size: clamp(2.5rem, 5vw + 1rem, 4.2rem); /* Slightly smaller */ letter-spacing: -0.01em; }
-        h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); } /* Adjusted */
-        h3 { font-size: 1.4rem; font-weight: 500; } /* Adjusted */
-        p { font-size: 1.1rem; /* Slightly smaller */ line-height: 1.75; color: var(--medium-text); max-width: 65ch; font-weight: 400; }
-        blockquote { font-family: var(--font-serif-accent); font-style: italic; font-size: 1.25rem; border-color: var(--gold); color: var(--medium-text); }
-        cite { font-family: var(--font-body); font-style: normal; }
-
-        /* Preloader */
-        #loader { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background-color: var(--dark-bg); }
-        .loader-logo path:nth-child(1) { fill: var(--gold); opacity: 0.1; } .loader-logo path:nth-child(2) { fill: var(--gold); opacity: 0.3; } .loader-logo path:nth-child(3) { fill: var(--gold); }
-
-        /* Header & Navigation - Soft Focus/Hover */
-        #site-header { opacity: 0; transform: translateY(-100%); transition: background-color var(--transition-duration) var(--transition-ease), backdrop-filter var(--transition-duration) var(--transition-ease); }
-        #site-header.scrolled { background: rgba(30, 27, 46, 0.7); /* Updated bg color */ backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-        .nav-logo { font-family: var(--font-script); color: var(--gold); }
-        .nav-link { font-family: var(--font-heading); font-weight: 500; color: var(--light-text); padding: 0.5rem 0.25rem; border-radius: 6px; /* Softer */ outline: none; transition: color var(--transition-duration) var(--transition-ease), box-shadow var(--transition-duration) var(--transition-ease); }
-        .nav-link:hover { color: var(--gold); }
-        .nav-link:focus-visible { color: var(--gold); box-shadow: 0 0 15px 0px rgba(255, 200, 128, 0.5); /* Soft gold glow */ }
-        .nav-link.active { color: var(--gold); position: relative; }
-        .nav-link.active::after { content: ''; position: absolute; bottom: -4px; /* Lower */ left: 10%; width: 80%; /* Shorter */ height: 2px; background: var(--gold); transform: scaleX(1); transition: transform var(--transition-duration) var(--transition-ease); }
-        
-        /* Section Padding & Anchors */
-        section[id] { scroll-margin-top: 100px; padding-top: 140px; padding-bottom: 140px; /* More spacing */ }
-
-        /* Hero Section & Dimmed BG */
-        #home { min-height: 100vh; padding: 0; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; }
-        .hero-background-video, .hero-background-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.15; /* Dimmer */ transition: opacity var(--transition-duration) ease; }
-        .hero-background-video { background-color: #000; } .hero-background-image { background-color: var(--dark-bg); }
-        #home::after { content: ''; position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at center, transparent 40%, var(--dark-bg) 90%); /* Soft vignette */ }
-        .hero-content { position: relative; z-index: 2; }
-        #hero-headline { font-family: var(--font-script); color: var(--gold); text-shadow: 0 0 20px rgba(255, 200, 128, 0.3); /* Subtle glow */ }
-        #bg-toggle { position: absolute; bottom: 1.5rem; right: 1.5rem; z-index: 10; background: rgba(42, 38, 63, 0.7); /* Updated */ backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid var(--border-color); color: var(--medium-text); padding: 0.4rem 0.8rem; border-radius: 99px; font-family: var(--font-heading); font-size: 0.75rem; font-weight: 500; transition: all var(--transition-duration) var(--transition-ease); }
-        #bg-toggle:hover { color: var(--light-text); border-color: var(--teal); background: var(--teal); box-shadow: 0 0 15px 0 rgba(255, 148, 166, 0.4); /* Rose glow */ }
-        #bg-toggle:focus-visible { outline: none; box-shadow: 0 0 15px 0px rgba(255, 200, 128, 0.5); /* Gold glow */ }
-        #home .hero-background-video { display: block; } #home .hero-background-image { display: none; }
-        #home.static-bg-active .hero-background-video { display: none; } #home.static-bg-active .hero-background-image { display: block; }
-
-        /* Journal & Other Sections - Softer Elements */
-        #journal h2 { color: var(--gold); font-family: var(--font-script); }
-        .journal-image-container { border-radius: 12px; /* Softer */ overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4); /* Softer shadow */ opacity: 0; clip-path: inset(10% 30% 10% 30%); transform: scale(1.1); }
-        .journal-image-container img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9); /* Slightly desaturated */ }
-        #approach h2 { color: var(--gold); font-family: var(--font-script); }
-        #approach h3 { color: var(--teal); font-family: var(--font-script); }
-        .pillar-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; /* Softer */ padding: 2.5rem; /* More padding */ opacity: 0; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2), 0 4px 6px -4px rgba(0,0,0,0.15); transition: transform var(--transition-duration) var(--transition-ease), box-shadow var(--transition-duration) var(--transition-ease); }
-        .pillar-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2), 0 8px 10px -6px rgba(0,0,0,0.15); } /* Hover lift */
-        #community h2 { color: var(--gold); font-family: var(--font-script); } #community h3 { color: var(--teal); font-family: var(--font-script); }
-        #vision h2 { color: var(--gold); font-family: var(--font-script); } #vision p.font-script { color: var(--teal); font-family: var(--font-script); } #vision h3 { color: var(--light-text); font-family: var(--font-heading); }
-        .btn-outline { border: 1px solid var(--teal); color: var(--teal); font-family: var(--font-heading); font-weight: 500; padding: 0.6rem 1.2rem; border-radius: 99px; transition: all var(--transition-duration) var(--transition-ease); }
-        .btn-outline:hover, .btn-outline:focus-visible { background-color: var(--teal); color: white; transform: translateY(-3px); box-shadow: 0 0 15px 0 rgba(255, 148, 166, 0.4); /* Rose glow */ outline: none; }
-        #values h2 { color: var(--gold); font-family: var(--font-script); } #values h3 { color: var(--teal); font-family: var(--font-script); }
-        .value-icon { stroke-width: 1; transition: all 0.4s var(--transition-ease); color: var(--medium-text); }
-        .value-container:hover .value-icon { transform: scale(1.15); /* More pronounced */ color: var(--gold); }
-        
-        /* Connect & Chat Bot - Softened */
-        #connect h2 { color: var(--gold); font-family: var(--font-script); } #connect h3 { color: var(--teal); font-family: var(--font-script); }
-        #chat-log { background: linear-gradient(180deg, rgba(30, 27, 46, 0.5) 0%, rgba(42, 38, 63, 0.7) 100%); /* Subtle gradient */ border-radius: 12px 12px 0 0; /* Softer */ box-shadow: inset 0 5px 15px rgba(0,0,0,0.3); }
-        #chat-form-container { background: var(--card-bg); border-radius: 0 0 12px 12px; }
-        .chat-bubble { max-width: 75%; padding: 14px 20px; /* Slightly larger */ border-radius: 22px; line-height: 1.6; font-family: var(--font-body); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); }
-        .user-bubble { background: linear-gradient(135deg, var(--teal), #ff7a8f); /* Rose gradient */ color: white; border-bottom-right-radius: 6px; align-self: flex-end; }
-        .bot-bubble { background-color: var(--card-bg); color: var(--light-text); border-bottom-left-radius: 6px; align-self: flex-start; }
-        .chat-prompt-btn { background-color: transparent; border: 1px solid var(--border-color); color: var(--medium-text); transition: all var(--transition-duration) var(--transition-ease); border-radius: 99px; padding: 0.6rem 1.1rem; font-size: 0.875rem; font-family: var(--font-heading); font-weight: 500; }
-        .chat-prompt-btn:hover, .chat-prompt-btn:focus-visible { background-color: var(--teal); border-color: var(--teal); color: white; transform: translateY(-3px); box-shadow: 0 0 15px 0 rgba(255, 148, 166, 0.4); /* Rose glow */ outline: none; }
-
-        /* Forms - Softened */
-        .form-input { background-color: var(--card-bg); border: 1px solid var(--border-color); color: var(--light-text); border-radius: 10px; /* Softer */ padding: 0.9rem 1.1rem; transition: all var(--transition-duration) var(--transition-ease); width: 100%; font-family: var(--font-body); }
-        .form-input:focus, .form-input:focus-visible { outline: none; border-color: var(--teal); box-shadow: 0 0 15px 0px rgba(255, 148, 166, 0.4); /* Rose glow */ }
-        select.form-input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23a89fbf' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E"); /* Updated color */ background-repeat: no-repeat; background-position: right 0.8rem center; background-size: 1.3em 1.3em; padding-right: 2.8rem; }
-        .btn-teal { background: linear-gradient(135deg, var(--teal), #ff7a8f); /* Rose gradient */ color: white; transition: all var(--transition-duration) var(--transition-ease); border-radius: 99px; font-family: var(--font-heading); font-weight: 700; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); }
-        .btn-teal:hover, .btn-teal:focus-visible { background: linear-gradient(135deg, var(--gold), #ffab57); /* Amber gradient */ color: var(--dark-bg); transform: scale(1.05) translateY(-2px); box-shadow: 0 10px 15px -3px rgba(255, 200, 128, 0.3), 0 4px 6px -4px rgba(255, 200, 128, 0.2); outline: none; }
-
-        /* Footer */
-        #site-footer { border-top: 1px solid var(--border-color); padding: 2.5rem 0; text-align: center; }
-        #site-footer p { color: var(--medium-text); font-size: 0.9rem; max-width: none; }
-
-        /* Responsiveness */
-        @media (max-width: 768px) {
-            #site-header .nav-links { display: none; }
-            h1 { font-size: clamp(2.2rem, 8vw, 3.2rem); } h2 { font-size: clamp(1.6rem, 6vw, 2.3rem); } h3 { font-size: 1.25rem; } p { font-size: 1rem; } blockquote { font-size: 1.05rem; }
-            section[id] { scroll-margin-top: 80px; padding-top: 100px; padding-bottom: 100px; }
-            .journal-section .flex { flex-direction: column; } .journal-section .w-full { width: 100%; }
-            #chat-log { height: 45vh; } .chat-prompt-btn { font-size: 0.75rem; padding: 0.5rem 0.9rem; }
+        /* --- ACCESSIBILITY: SKIP LINK --- */
+        .skip-link {
+            position: absolute;
+            top: -999px;
+            left: 0;
+            background: var(--gold);
+            color: var(--dark-bg);
+            padding: 1rem;
+            z-index: 10001; /* Above all */
+            font-family: var(--font-heading);
+            font-weight: 700;
+            border-bottom-right-radius: 8px;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        .skip-link:focus {
+            top: 0;
+            transform: translateY(0);
         }
 
-        /* Reduced Motion */
+        /* --- INTIMATE CURSOR --- */
+        #cursor-light {
+            position: fixed;
+            width: 800px; height: 800px;
+            border-radius: 50%;
+            left: 0; top: 0;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(244, 184, 96, 0.07) 0%, transparent 60%);
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: transform 0.3s ease-out, opacity 0.3s ease;
+            opacity: 0; /* Hidden initially */
+        }
+        #cursor-dot {
+            position: fixed;
+            width: 6px; height: 6px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            left: 0; top: 0;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+            transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
+            opacity: 0; /* Hidden initially */
+        }
+        body:hover > #cursor-light,
+        body:hover > #cursor-dot {
+            opacity: 1;
+        }
+        a:hover ~ #cursor-dot,
+        button:hover ~ #cursor-dot,
+        select:hover ~ #cursor-dot {
+            transform: translate(-50%, -50%) scale(1.5);
+            background-color: var(--teal);
+        }
+        a:hover ~ #cursor-light,
+        button:hover ~ #cursor-light,
+        select:hover ~ #cursor-light {
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        /* --- COSMIC PARTICLE BACKGROUND --- */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 1s ease 0.5s;
+        }
+        body.site-entered #bg-canvas {
+            opacity: 1;
+        }
+
+        /* --- TYPOGRAPHY & FONT APPLICATION --- */
+        .font-script { font-family: var(--font-script); }
+        .font-serif { font-family: var(--font-serif-accent); }
+
+        h1, h2, h3, h4, h5, h6 { 
+            font-family: var(--font-heading); 
+            font-weight: 700;
+            color: var(--light-text);
+        }
+        
+        h1 { font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem); letter-spacing: -0.01em; }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); }
+        h3 { font-size: 1.5rem; font-weight: 500; }
+        
+        p {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: var(--medium-text);
+            max-width: 65ch;
+            font-weight: 400;
+        }
+        
+        blockquote { 
+            font-family: var(--font-serif-accent);
+            font-style: italic;
+            font-size: 1.2rem;
+            border-color: var(--gold);
+            color: var(--medium-text);
+        }
+        cite { font-family: var(--font-body); font-style: normal; }
+
+        /* --- PRELOADER --- */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--dark-bg);
+        }
+        .loader-logo path:nth-child(1) { fill: var(--gold); opacity: 0.1; }
+        .loader-logo path:nth-child(2) { fill: var(--gold); opacity: 0.3; }
+        .loader-logo path:nth-child(3) { fill: var(--gold); }
+
+        /* --- HEADER & NAVIGATION --- */
+        #site-header {
+            opacity: 0; /* Start hidden */
+            transform: translateY(-100%);
+            transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+        }
+        #site-header.scrolled {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .nav-logo { 
+            font-family: var(--font-script);
+            color: var(--gold);
+        }
+        .nav-link { 
+            font-family: var(--font-heading);
+            font-weight: 500;
+            color: var(--light-text);
+            padding: 0.5rem 0.25rem;
+            border-radius: 4px; /* For focus ring */
+            outline: none;
+            transition: color 0.2s ease;
+        }
+        .nav-link kbd {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1px 4px;
+            border-radius: 3px;
+            margin-left: 6px;
+            color: var(--medium-text);
+            opacity: 0.7;
+            transition: all 0.2s ease;
+        }
+        /* Nav Micro-interactions */
+        .nav-link:hover { color: var(--gold); }
+        .nav-link:hover kbd { opacity: 1; color: var(--light-text); }
+        .nav-link:focus-visible {
+            color: var(--gold);
+            box-shadow: 0 0 0 2px var(--gold); /* A11y Focus State */
+        }
+        .nav-link.active {
+            color: var(--gold);
+            position: relative;
+        }
+        /* Active underline */
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gold);
+        }
+        
+        /* --- SECTION PADDING & ANCHORS --- */
+        section[id] {
+            scroll-margin-top: 100px; /* Offset for fixed header */
+            padding-top: 120px;
+            padding-bottom: 120px;
+        }
+
+        /* --- HERO SECTION & VIDEO BACKGROUND --- */
+        #home {
+            min-height: 100vh;
+            padding: 0; /* Override section padding */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-background-video,
+        .hero-background-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.3;
+        }
+        .hero-background-video {
+            background-color: #000;
+        }
+        .hero-background-image {
+            background-color: var(--dark-bg);
+        }
+        /* Gradient overlay */
+        #home::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: radial-gradient(circle, transparent 50%, var(--dark-bg) 95%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        #hero-headline { 
+            font-family: var(--font-script); 
+            color: var(--gold);
+        }
+
+        /* Hero BG Toggle Button */
+        #bg-toggle {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 10;
+            background: rgba(30, 41, 59, 0.7); /* card-bg with transparency */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid var(--border-color);
+            color: var(--medium-text);
+            padding: 0.4rem 0.8rem;
+            border-radius: 99px;
+            font-family: var(--font-heading);
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        #bg-toggle:hover {
+            color: var(--light-text);
+            border-color: var(--teal);
+            background: var(--teal);
+        }
+        #bg-toggle:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--gold);
+        }
+
+        /* Toggle Logic CSS */
+        #home .hero-background-video { display: block; }
+        #home .hero-background-image { display: none; }
+        #home.static-bg-active .hero-background-video { display: none; }
+        #home.static-bg-active .hero-background-image { display: block; }
+
+        /* --- JOURNAL & OTHER SECTIONS --- */
+        #journal h2 { color: var(--gold); font-family: var(--font-script); }
+        .journal-image-container {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            opacity: 0; /* For GSAP reveal */
+            clip-path: inset(10% 30% 10% 30%); /* For GSAP reveal */
+            transform: scale(1.1); /* For GSAP reveal */
+        }
+        .journal-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- APPROACH --- */
+        #approach h2 { color: var(--gold); font-family: var(--font-script); }
+        #approach h3 { color: var(--teal); font-family: var(--font-script); }
+        .pillar-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            opacity: 0; /* For GSAP */
+        }
+
+        /* --- COMMUNITY --- */
+        #community h2 { color: var(--gold); font-family: var(--font-script); }
+        #community h3 { color: var(--teal); font-family: var(--font-script); }
+
+        /* --- VISION --- */
+        #vision h2 { color: var(--gold); font-family: var(--font-script); }
+        #vision p.font-script { color: var(--teal); font-family: var(--font-script); }
+        #vision h3 { color: var(--light-text); font-family: var(--font-heading); }
+        .btn-outline {
+            border: 1px solid var(--teal);
+            color: var(--teal);
+            font-family: var(--font-heading);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 99px;
+            transition: all 0.2s ease;
+        }
+        .btn-outline:hover, .btn-outline:focus-visible {
+            background-color: var(--teal);
+            color: white;
+            transform: translateY(-2px);
+            outline: none;
+        }
+
+        /* --- VALUES --- */
+        #values h2 { color: var(--gold); font-family: var(--font-script); }
+        #values h3 { color: var(--teal); font-family: var(--font-script); }
+        .value-icon {
+            stroke-width: 1;
+            transition: all 0.4s ease;
+            color: var(--medium-text); /* Use color for SVG stroke */
+        }
+        .value-container:hover .value-icon {
+            transform: scale(1.1);
+            color: var(--gold); /* Use color for SVG stroke on hover */
+        }
+        
+        /* --- CONNECT & CHAT BOT --- */
+        #connect h2 { color: var(--gold); font-family: var(--font-script); }
+        #connect h3 { color: var(--teal); font-family: var(--font-script); }
+        #chat-log { 
+            background-color: rgba(15, 23, 42, 0.5); /* Darker chat log */
+            border-radius: 0.5rem 0.5rem 0 0;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.2);
+        }
+        #chat-form-container {
+            background: var(--card-bg);
+            border-radius: 0 0 0.5rem 0.5rem;
+        }
+
+        .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 18px; line-height: 1.5; font-family: var(--font-body); }
+        .user-bubble { background-color: var(--teal); color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
+        .bot-bubble { background-color: var(--card-bg); color: var(--light-text); border-bottom-left-radius: 4px; align-self: flex-start; }
+        
+        .chat-prompt-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--medium-text);
+            transition: all 0.3s ease;
+            border-radius: 99px;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-family: var(--font-heading);
+            font-weight: 500;
+        }
+        .chat-prompt-btn:hover, .chat-prompt-btn:focus-visible {
+            background-color: var(--teal);
+            border-color: var(--teal);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 168, 150, 0.2);
+            outline: none;
+        }
+
+        /* --- FORMS --- */
+        .form-input {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--light-text);
+            border-radius: 8px;
+            padding: 0.875rem 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-family: var(--font-body);
+        }
+        .form-input:focus, .form-input:focus-visible {
+            outline: none;
+            border-color: var(--teal);
+            box-shadow: 0 0 0 3px rgba(0, 168, 150, 0.3);
+        }
+        select.form-input {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2394A3B8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            background-size: 1.2em 1.2em;
+            padding-right: 2.5rem;
+        }
+
+        .btn-teal {
+            background-color: var(--teal);
+            color: white;
+            transition: all 0.3s ease;
+            border-radius: 99px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+        }
+        .btn-teal:hover, .btn-teal:focus-visible {
+            background-color: var(--gold);
+            color: var(--dark-bg);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 168, 150, 0.3);
+            outline: none;
+        }
+
+        /* --- FOOTER --- */
+        #site-footer { 
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
+            text-align: center;
+        }
+        #site-footer p { 
+            color: var(--medium-text);
+            font-size: 0.9rem;
+            max-width: none;
+        }
+
+        /* --- RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            #site-header .nav-links { display: none; } /* Hide desktop nav */
+            
+            h1 { font-size: clamp(2.2rem, 8vw, 3.5rem); }
+            h2 { font-size: clamp(1.8rem, 6vw, 2.5rem); }
+            h3 { font-size: 1.3rem; }
+            p { font-size: 1rem; }
+            blockquote { font-size: 1rem; }
+
+            section[id] {
+                scroll-margin-top: 80px; /* Smaller header offset */
+                padding-top: 100px;
+                padding-bottom: 100px;
+            }
+
+            .journal-section .flex { flex-direction: column; }
+            .journal-section .w-full { width: 100%; }
+
+            #chat-log { height: 40vh; }
+            .chat-prompt-btn { font-size: 0.75rem; padding: 0.4rem 0.8rem; }
+        }
+
+        /* --- REDUCED MOTION --- */
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-            body { cursor: auto; } #cursor-light, #cursor-dot { display: none !important; } button, a, select { cursor: auto; }
-            #bg-canvas { display: none !important; } /* Ensure canvas is hidden */
-            #home .hero-background-video { display: none !important; } #home .hero-background-image { display: block !important; opacity: 0.15 !important; } /* Ensure static image shows */
-            .reveal-up { opacity: 1; transform: none; } .journal-image-container { opacity: 1; clip-path: none; transform: none; }
+            /* Disable all transitions and animations */
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            /* Disable custom cursor */
+            body { cursor: auto; }
+            #cursor-light, #cursor-dot {
+                display: none !important;
+            }
+            button, a, select {
+                cursor: auto;
+            }
+            
+            /* Disable motion background */
+            #bg-canvas { display: none; }
+            #home .hero-background-video { display: none; }
+            #home .hero-background-image { display: block; }
+
+            /* Force show scroll-triggered content */
+            .reveal-up {
+                opacity: 1;
+                transform: none;
+            }
+            .journal-image-container {
+                opacity: 1;
+                clip-path: none;
+                transform: none;
+            }
+            
+            /* Hide motion toggle */
             #bg-toggle { display: none; }
-            .pillar-card:hover { transform: none; } /* Disable hover lift */
-             .btn-teal:hover, .btn-teal:focus-visible { transform: none; } /* Disable button hover scale */
-             .btn-outline:hover, .btn-outline:focus-visible { transform: none; }
         }
     </style>
 </head>
@@ -200,11 +564,12 @@
         <header id="site-header" class="fixed top-0 left-0 w-full z-50">
             <nav class="container mx-auto flex justify-between items-center p-6 md:p-8">
                 <a href="#home" class="nav-logo text-3xl">Mehfooz</a>
-                <div class="nav-links hidden md:flex gap-8 text-lg items-center"> <a href="#home" class="nav-link relative" title="Go to Home">Home</a>
-                    <a href="#journal" class="nav-link relative" title="Go to Journal">Journal</a>
-                    <a href="#approach" class="nav-link relative" title="Go to Approach">Approach</a>
-                    <a href="#community" class="nav-link relative" title="Go to Community">Community</a>
-                    <a href="#connect" class="nav-link relative" title="Go to Connect">Connect</a>
+                <div class="nav-links hidden md:flex gap-6 text-lg items-center">
+                    <a href="#home" class="nav-link relative" title="Go to Home (Alt+1)">Home<kbd>1</kbd></a>
+                    <a href="#journal" class="nav-link relative" title="Go to Journal (Alt+2)">Journal<kbd>2</kbd></a>
+                    <a href="#approach" class="nav-link relative" title="Go to Approach (Alt+3)">Approach<kbd>3</kbd></a>
+                    <a href="#community" class="nav-link relative" title="Go to Community (Alt+4)">Community<kbd>4</kbd></a>
+                    <a href="#connect" class="nav-link relative" title="Go to Connect (Alt+5)">Connect<kbd>5</kbd></a>
                 </div>
             </nav>
         </header>
@@ -213,34 +578,41 @@
             <div class="hero-background-video">
                 <video autoplay muted loop playsinline id="hero-video-bg" poster="https://images.unsplash.com/photo-1623581203333-53531b1bbf8e?q=80&w=1887&auto=format&fit=crop">
                     <source src="https://static.videezy.com/system/resources/previews/000/044/744/original/Plexus_Background_Loop_4K.mp4" type="video/mp4">
-                </video>
+                    </video>
             </div>
             <div class="hero-background-image">
                 <img src="https://images.unsplash.com/photo-1623581203333-53531b1bbf8e?q=80&w=1887&auto=format&fit=crop" 
-                     alt="Subtle, warm light pattern abstract background" 
+                     alt="A thoughtful portrait of a person from Gilgit Baltistan" 
                      class="w-full h-full object-cover opacity-30 object-center">
             </div>
+
             <div class="hero-content container px-4 relative z-10">
                 <h1 id="hero-headline" class="text-5xl md:text-8xl mb-4">Clarity in the Digital Crossroads.</h1>
                 <p id="hero-subheadline" class="text-xl md:text-2xl text-light-text leading-relaxed max-w-4xl mx-auto">
-                    A safe space to find clarity in a connected world. </p>
+                    For the people of Gilgit Baltistan, a safe space to find clarity in a connected world.
+                </p>
+                <div id="scroll-prompt" class="absolute bottom-16 left-1/2 -translate-x-1/2 opacity-0">
+                    <a href="#journal" class="font-script text-medium-text animate-pulse">Scroll to Discover</a>
+                </div>
             </div>
+
             <button id="bg-toggle" title="Toggle motion background">Show Static</button>
         </section>
 
         <section id="journal" class="journal-section">
             <div class="container mx-auto px-6 max-w-4xl">
-                <div class="flex flex-col md:flex-row gap-12 md:gap-16 items-center"> <div class="w-full md:w-1/2">
+                <div class="flex flex-col md:flex-row gap-12 items-center">
+                    <div class="w-full md:w-1/2">
                         <div class="journal-image-container">
-                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" 
-                                 alt="Diverse group learning together in a warm setting" 
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format=fit=crop" 
+                                 alt="A diverse group of people from Skardu warmly interacting and learning together" 
                                  loading="lazy">
                         </div>
                     </div>
                     <div class="w-full md:w-1/2">
                         <h2 class="mb-4 reveal-up">From Our Journal</h2>
-                        <p class="text-lg mb-6 reveal-up">Mehfooz began not with a line of code, but with a conversation. In a small Skardu teahouse, over cups of warm chai, we listened. We heard stories of connection and confusion, of hope and fear where progress meets peril.</p>
-                        <p class="text-lg reveal-up">The need wasn't for more technology, but more understanding. A bridge between timeless wisdom and modern tools. Mehfooz is our promise to help build that bridge, together.</p>
+                        <p class="text-lg mb-6 reveal-up">Mehfooz began not with a line of code, but with a conversation. In a small <strong>Skardu</strong> teahouse, over cups of warm chai, we listened. We heard stories of connection and confusion, of hope and fear in a new digital world where progress was meeting peril.</p>
+                        <p class="text-lg reveal-up">We learned that the need wasn't for more technology, but for more understanding. For a bridge between timeless wisdom and modern tools. Mehfooz is our promise to help build that bridge, together.</p>
                     </div>
                 </div>
             </div>
@@ -251,15 +623,18 @@
                 <div class="text-center reveal-up mb-20 section-header">
                     <h2 class="mb-4">Our Approach is Simple</h2>
                 </div>
-                <div class="grid md:grid-cols-3 gap-10"> <div class="pillar-card reveal-up">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="pillar-card reveal-up">
                         <h3 class="mb-3">Listen First</h3>
-                        <p>We build on existing trust, collaborating with local religious leaders (Ulema) as digital literacy ambassadors, bridging traditional knowledge with modern skills.</p>
+                        <p>We don't just provide information; we build on existing foundations of trust by collaborating with local religious leaders (Ulema) as trusted digital literacy ambassadors.</p>
                     </div>
-                    <div class="pillar-card reveal-up" style="--gsap-delay: 0.15s;"> <h3 class="mb-3">Guide Gently</h3>
-                        <p>Harnessing AI, MehfoozBot offers personal, patient help, adapting to language and learning style, making technology feel like a friend.</p>
+                    <div class="pillar-card reveal-up" style="--gsap-delay: 0.1s;">
+                        <h3 class="mb-3">Guide Gently</h3>
+                        <p>Harnessing AI, MehfoozBot offers personal, patient help, adapting to each user's language and learning style, making technology feel like a friend.</p>
                     </div>
-                    <div class="pillar-card reveal-up" style="--gsap-delay: 0.3s;"> <h3 class="mb-3">Grow Together</h3>
-                        <p>Through localized mini-courses and a unique feedback ecosystem with college students, we ensure our knowledge is always relevant and co-created.</p>
+                    <div class="pillar-card reveal-up" style="--gsap-delay: 0.2s;">
+                        <h3 class="mb-3">Grow Together</h3>
+                        <p>Through short, localized mini-courses and a unique feedback ecosystem with local college students, we ensure our knowledge is always relevant and co-created.</p>
                     </div>
                 </div>
             </div>
@@ -268,14 +643,18 @@
         <section id="community">
             <div class="container mx-auto px-6 max-w-4xl">
                 <div class="text-center reveal-up section-header">
-                    <h2 class="mb-4">Heart of Our Community</h2>
+                    <h2 class="mb-4">The Heart of Our Community</h2>
                 </div>
                 <div class="mt-16 reveal-up">
-                    <h3 class="mb-8 text-center">Voices from the Valley</h3> <div class="space-y-10"> <blockquote class="border-l-4 pl-8"> "For the first time, I could ask a 'silly' question about my phone without feeling embarrassed. MehfoozBot helped me understand."
-                            <cite class="block not-italic mt-3 text-light-text">- A student from Gilgit</cite>
+                    <h3 class="mb-6 text-center">Voices from the Valley</h3>
+                    <div class="space-y-8">
+                        <blockquote class="border-l-4 pl-6">
+                            "For the first time, I felt I could ask a 'silly' question about my phone without feeling embarrassed. MehfoozBot helped me understand."
+                            <cite class="block not-italic mt-2 text-light-text">- A student from Gilgit</cite>
                         </blockquote>
-                        <blockquote class="border-l-4 pl-8 text-right"> "They didn’t come to teach; they came to learn with us. That is why we trust them."
-                            <cite class="block not-italic mt-3 text-light-text">- An elder from Skardu</cite>
+                        <blockquote class="border-l-4 pl-6 text-right">
+                            "They didn’t come to teach; they came to learn with us. That is why we trust them."
+                            <cite class="block not-italic mt-2 text-light-text">- An elder from <strong>Skardu</strong></cite>
                         </blockquote>
                     </div>
                 </div>
@@ -288,22 +667,26 @@
                     <h2 class="mb-4">Our Five-Year Vision</h2>
                     <p class="text-xl max-w-3xl mx-auto">To scale our impact together, offering an opportunity for partners to co-create a digitally resilient future.</p>
                 </div>
-                <div class="mt-20 grid md:grid-cols-2 gap-x-16 gap-y-20 text-left"> <div class="reveal-up">
+                <div class="mt-16 grid md:grid-cols-2 gap-x-12 gap-y-16 text-left">
+                    <div class="reveal-up">
                         <p class="font-script text-teal text-7xl" id="user-counter">0</p>
-                        <h3 class="text-2xl mt-3">Empowered Users</h3> <p class="mt-3">Leveraging established networks and community structures for organic, sustainable growth across Pakistan.</p>
+                        <h3 class="text-2xl mt-2">Empowered Users</h3>
+                        <p class="mt-2">Leveraging our established educational networks and community structures for organic, sustainable growth across Pakistan.</p>
                     </div>
                     <div class="reveal-up">
                         <p class="font-script text-teal text-7xl">3+</p>
-                        <h3 class="text-2xl mt-3">Platform Evolutions</h3>
-                        <p class="mt-3">AI-driven learning paths, enhanced offline capabilities, and expanded indigenous language support.</p>
+                        <h3 class="text-2xl mt-2">Platform Evolutions</h3>
+                        <p class="mt-2">Introducing AI-driven learning paths, enhanced offline capabilities for remote areas, and expanded indigenous language support.</p>
                     </div>
                     <div class="reveal-up">
-                        <h3 class="font-script text-teal text-5xl mb-4">Deepened Integration</h3> <p class="mt-3">Strengthening partnerships with institutions, community figures, and policymakers for lasting adoption.</p>
+                        <h3 class="font-script text-teal text-5xl mb-3">Deepened Integration</h3>
+                        <p class="mt-2">Strengthening our partnerships with educational institutions, community figures, and policymakers to ensure lasting adoption and impact.</p>
                     </div>
                     <div class="reveal-up">
-                        <h3 class="font-script text-teal text-5xl mb-4">Become a Partner</h3>
-                        <p class="mt-3">Seeking partners for strategic guidance, technical support, funding, and operational efficiency.</p>
-                        <a href="#connect" class="btn-outline mt-6 inline-block">Connect With Us</a> </div>
+                        <h3 class="font-script text-teal text-5xl mb-3">Become a Partner</h3>
+                        <p class="mt-2">We are seeking partners for strategic guidance, technical support, funding, and operational efficiency to help us achieve this vision.</p>
+                        <a href="#connect" class="btn-outline mt-4 inline-block">Connect With Us</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -313,45 +696,56 @@
                 <div class="text-center reveal-up mb-20 section-header">
                     <h2 class="mb-4">Our Guiding Principles</h2>
                 </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-14 text-center"> <div class="reveal-up value-container">
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+                    <div class="reveal-up value-container">
                         <svg class="w-16 h-16 mx-auto value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a3.004 3.004 0 015.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                        <h3 class="text-2xl mt-5">Collaboration</h3> <p class="mt-3">Building partnerships with local leaders, researchers, and community members for a holistic approach.</p>
+                        <h3 class="text-2xl mt-4">Collaboration</h3>
+                        <p class="mt-2">We build partnerships with local leaders, researchers, and community members to create a holistic approach.</p>
                     </div>
                     <div class="reveal-up value-container">
                         <svg class="w-16 h-16 mx-auto value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        <h3 class="text-2xl mt-5">Integrity</h3>
-                        <p class="mt-3">Upholding the highest standards of accuracy, ensuring users receive trustworthy information.</p>
+                        <h3 class="text-2xl mt-4">Integrity</h3>
+                        <p class="mt-2">We uphold the highest standards of accuracy, ensuring users receive trustworthy information.</p>
                     </div>
                     <div class="reveal-up value-container">
                         <svg class="w-16 h-16 mx-auto value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
-                        <h3 class="text-2xl mt-5">Inclusivity</h3>
-                        <p class="mt-3">Embracing diversity by providing resources in multiple languages, ensuring everyone has access.</p>
+                        <h3 class="text-2xl mt-4">Inclusivity</h3>
+                        <p class="mt-2">We embrace diversity by providing resources in multiple languages, ensuring everyone has access.</p>
                     </div>
                     <div class="reveal-up value-container">
                         <svg class="w-16 h-16 mx-auto value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
-                        <h3 class="text-2xl mt-5">Innovation</h3>
-                        <p class="mt-3">Leveraging cutting-edge technologies like AI to continuously enhance our educational offerings.</p>
+                        <h3 class="text-2xl mt-4">Innovation</h3>
+                        <p class="mt-2">We leverage cutting-edge technologies like AI to continuously enhance our educational offerings.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="connect">
-            <div class="container mx-auto px-6 space-y-28"> <div class="text-center max-w-3xl mx-auto reveal-up section-header">
+            <div class="container mx-auto px-6 space-y-24">
+                <div class="text-center max-w-3xl mx-auto reveal-up section-header">
                     <h2 class="mb-4">Become a Part of the Solution</h2>
-                    <p class="text-xl">Whether you are a community leader, potential partner, or researcher, there is a role for you. Let's connect.</p>
+                    <p class="text-xl">Whether you are a community leader, a potential partner, or a researcher, there is a role for you. Let's connect.</p>
                 </div>
 
                 <div class="max-w-2xl mx-auto reveal-up">
-                    <h3 class="mb-8 text-center">Chat with MehfoozBot</h3> <div id="chat-log" class="h-[55vh] flex flex-col gap-4 p-4 md:p-6 overflow-y-auto"> </div>
-                    <div id="chat-form-container" class="p-4 md:p-6">
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4" id="prompt-buttons"> </div>
-                        <form id="chat-form" class="flex gap-4"> <input type="text" id="chat-input" placeholder="Ask a friendly question..." class="form-input flex-1 rounded-full py-3 px-6"> <button type="submit" class="btn-teal rounded-full px-6 py-3 font-semibold">Send</button> </form>
+                    <h3 class="mb-6 text-center">Chat with MehfoozBot</h3>
+                    <div id="chat-log" class="h-[50vh] flex flex-col gap-4 p-4 overflow-y-auto">
+                        </div>
+                    <div id="chat-form-container" class="p-4">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3" id="prompt-buttons">
+                            </div>
+                        <form id="chat-form" class="flex gap-3">
+                            <input type="text" id="chat-input" placeholder="Ask a friendly question..." class="form-input flex-1 rounded-full py-3 px-5">
+                            <button type="submit" class="btn-teal rounded-full px-5 py-3">Send</button>
+                        </form>
                     </div>
                 </div>
 
                 <div class="max-w-xl mx-auto reveal-up">
-                    <h3 class="mb-8 text-center">Send a Personal Message</h3> <form id="contact-form" class="space-y-8 text-left"> <div>
+                    <h3 class="mb-6 text-center">Send a Personal Message</h3>
+                    <form id="contact-form" class="space-y-6 text-left">
+                        <div>
                             <label for="contact-name" class="block mb-2 font-medium text-medium-text">Your Name</label>
                             <input type="text" name="name" id="contact-name" required class="form-input w-full">
                         </div>
@@ -372,8 +766,11 @@
                             <label for="contact-message" class="block mb-2 font-medium text-medium-text">Your Message</label>
                             <textarea name="message" id="contact-message" rows="5" required class="form-input w-full"></textarea>
                         </div>
-                        <button type="submit" class="w-full btn-teal font-semibold py-4 px-8 rounded-lg">Send with heart</button> </form>
-                    <div id="form-success" class="hidden text-center border border-teal rounded-lg p-10 mt-8"> <h3 class="mb-3 font-script text-teal text-3xl">Thank You!</h3> <p>Your message has been received. We'll be in touch soon.</p>
+                        <button type="submit" class="w-full btn-teal font-semibold py-4 px-6 rounded-lg">Send with heart</button>
+                    </form>
+                    <div id="form-success" class="hidden text-center border border-teal rounded-lg p-8 mt-6">
+                        <h3 class="mb-2">Thank You!</h3>
+                        <p>Your message has been received. We'll be in touch soon.</p>
                     </div>
                 </div>
             </div>
@@ -386,12 +783,14 @@
         </div>
     </footer>
 
+
 <script>
 /*
   JAVASCRIPT
-  Summary: Adjusted animation timings for a slower, softer feel (GSAP durations, ease).
-  Slowed down cursor follow slightly. Updated Three.js particle colors to match new palette.
-  Kept prefersReducedMotion checks. Loader duration slightly increased.
+  Summary: Removed all 'game-screen' logic. Implemented a new, short (2.5s) loader animation
+  that leads directly to the main site. Added 'prefersReducedMotion' checks to disable
+  Lenis, Three.js, GSAP animations, and the custom cursor for accessibility.
+  Added logic for the hero video/static toggle button, with a mobile default.
 */
 document.addEventListener('DOMContentLoaded', function() {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -406,10 +805,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const isMobile = /Mobi|Android/i.test(navigator.userAgent);
     
     let mouse = {x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    let lenis; 
+    let lenis; // Will be initialized if motion is OK
 
     // --- 1. CINEMATIC INTRO & LOADER ---
     if (prefersReducedMotion) {
+        // Instantly show content, hide loader
         gsap.set(loader, { display: 'none' });
         gsap.set(mainContent, { opacity: 1 });
         gsap.set(siteHeader, { opacity: 1, y: 0 });
@@ -417,7 +817,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setupNavigation();
         initSiteAnimations();
     } else {
-        // Slower, softer intro (~3s total)
+        // New 2-3s cinematic intro
         gsap.timeline({
             onComplete: () => {
                 document.body.classList.add('site-entered');
@@ -428,129 +828,170 @@ document.addEventListener('DOMContentLoaded', function() {
         .to(loader.querySelector('.loader-logo'), {
             opacity: 0,
             scale: 0.8,
-            duration: 1.0, // Slower fade out
-            ease: 'power1.in', // Softer ease
-            delay: 1.8 // Wait longer
+            duration: 0.8,
+            ease: 'power2.in',
+            delay: 1.5 // Total time ~2.3s
         })
         .to(loader, {
             opacity: 0,
-            duration: 1.2, // Slower fade
+            duration: 1,
             onComplete: () => gsap.set(loader, { display: 'none' })
-        }, "-=0.6") 
-        .to(siteHeader, { 
+        }, "-=0.5") // Overlap
+        .to(siteHeader, { // Use .to() since it starts at opacity: 0
             y: 0,
             opacity: 1,
-            duration: 1.2, // Slower fade in
-            ease: 'power2.out' 
-        }, "-=1.0") // Overlap more
+            duration: 1,
+            ease: 'power2.out'
+        }, "-=0.8")
         .to(mainContent, {
             opacity: 1,
-            duration: 1.8, // Slower content fade in
+            duration: 1.5,
             ease: 'power2.out'
-        }, "<"); 
+        }, "<"); // At the same time as header
     }
 
     // --- 2. CURSOR & MOTION INITIALIZATION ---
     if (!prefersReducedMotion) {
-        // Cursor - Slightly slower follow
-        window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        // --- Intimate Cursor ---
+        window.addEventListener('mousemove', e => { 
+            mouse.x = e.clientX; 
+            mouse.y = e.clientY;
+        });
         gsap.ticker.add(() => {
-            gsap.to(cursorDot, { duration: 0.3, x: mouse.x, y: mouse.y }); // Slower dot
-            gsap.to(cursorLight, { duration: 0.6, x: mouse.x, y: mouse.y, ease: 'power2.out' }); // Slower light
+            gsap.to(cursorDot, { duration: 0.2, x: mouse.x, y: mouse.y });
+            gsap.to(cursorLight, { duration: 0.5, x: mouse.x, y: mouse.y, ease: 'power2.out' });
         });
 
-        // Smooth Scroll
-        lenis = new Lenis({
-            lerp: 0.08 // Slightly smoother
-        }); 
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        // --- Smooth Scroll ---
+        lenis = new Lenis();
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
         requestAnimationFrame(raf);
         
-        // Cosmic Background (Three.js) - Updated Colors
+        // --- Cosmic Background (Three.js) ---
         try {
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             camera.position.z = 5;
-            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true, antialias: true });
+            const renderer = new THREE.WebGLRenderer({ 
+                canvas: document.getElementById('bg-canvas'), 
+                alpha: true, 
+                antialias: true 
+            });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            
             const particleCount = 7000;
             const positions = new Float32Array(particleCount * 3);
             const colors = new Float32Array(particleCount * 3);
+            const colorGold = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--gold').trim());
+            const colorTeal = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--teal').trim());
             
-            // Use NEW palette colors
-            const colorGold = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--gold').trim()); // Amber
-            const colorTeal = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--teal').trim()); // Rose
-            const colorViolet = new THREE.Color('#a89fbf'); // Medium Lavender Gray for blend
-
             for(let i = 0; i < particleCount; i++) {
                 const i3 = i * 3;
-                positions[i3] = (Math.random() - 0.5) * 25; positions[i3 + 1] = (Math.random() - 0.5) * 25; positions[i3 + 2] = (Math.random() - 0.5) * 25;
+                positions[i3] = (Math.random() - 0.5) * 25;
+                positions[i3 + 1] = (Math.random() - 0.5) * 25;
+                positions[i3 + 2] = (Math.random() - 0.5) * 25;
                 
-                // Blend between Amber, Rose, and Violet
-                let mixedColor;
-                const rand = Math.random();
-                if (rand > 0.8) {
-                     mixedColor = colorGold.clone();
-                } else if (rand > 0.6) {
-                     mixedColor = colorTeal.clone(); // Rose
-                } else {
-                     mixedColor = colorViolet.clone().lerp(colorGold, Math.random() * 0.4).lerp(colorTeal, Math.random() * 0.2);
-                }
-               
-                colors[i3] = mixedColor.r; colors[i3 + 1] = mixedColor.g; colors[i3 + 2] = mixedColor.b;
+                const mixedColor = Math.random() > 0.85 ? colorGold.clone() : colorTeal.clone().lerp(colorGold, Math.random() * 0.2);
+                colors[i3] = mixedColor.r;
+                colors[i3 + 1] = mixedColor.g;
+                colors[i3 + 2] = mixedColor.b;
             }
             
             const particlesGeometry = new THREE.BufferGeometry();
             particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
             particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            const particlesMaterial = new THREE.PointsMaterial({ size: 0.02, sizeAttenuation: true, transparent: true, opacity: 0.4, /* Dimmer */ vertexColors: true, depthWrite: false });
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                sizeAttenuation: true,
+                transparent: true,
+                opacity: 0.5,
+                vertexColors: true,
+                depthWrite: false
+            });
+            
             const particles = new THREE.Points(particlesGeometry, particlesMaterial);
             scene.add(particles);
+            
             let clock = new THREE.Clock();
             function animateBackground() {
-                const elapsedTime = clock.getElapsedTime(); const scrollY = lenis ? lenis.scroll : window.scrollY;
-                particles.rotation.y = elapsedTime * 0.008 + scrollY * 0.0001; // Slower rotation
-                particles.rotation.x = elapsedTime * 0.004 + (mouse.y / window.innerHeight - 0.5) * 0.01; 
+                const elapsedTime = clock.getElapsedTime();
+                const scrollY = lenis ? lenis.scroll : window.scrollY;
+                
+                // Slower "cosmic" rotation
+                particles.rotation.y = elapsedTime * 0.01 + scrollY * 0.0001;
+                particles.rotation.x = elapsedTime * 0.005 + (mouse.y / window.innerHeight - 0.5) * 0.01; // More subtle mouse
                 particles.position.y = -scrollY / window.innerHeight * 1.5;
-                renderer.render(scene, camera); requestAnimationFrame(animateBackground);
+                
+                renderer.render(scene, camera);
+                requestAnimationFrame(animateBackground);
             }
             animateBackground();
-            window.addEventListener('resize', () => { /* ... resize logic ... */ 
-                camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             });
-        } catch (e) { console.error("Three.js initialization failed:", e); document.getElementById('bg-canvas').style.display = 'none'; }
+        } catch (e) {
+            console.error("Three.js initialization failed:", e);
+            document.getElementById('bg-canvas').style.display = 'none';
+        }
     }
 
     // --- 3. NAVIGATION & SCROLLING ---
     function setupNavigation() {
-        // Nav Links - Slower scroll
+        // --- All Nav Links (Header + Footer + In-page) ---
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                const targetId = this.getAttribute('href'); const targetEl = document.querySelector(targetId);
+                const targetId = this.getAttribute('href');
+                const targetEl = document.querySelector(targetId);
                 if (!targetEl) return;
-                if (prefersReducedMotion) { targetEl.scrollIntoView({ behavior: 'auto' }); } 
-                else { lenis.scrollTo(targetEl, { offset: 0, duration: 1.2, /* Slower */ ease: 'power2.inOut' }); }
-            });
-        });
 
-        // Header Scroll Effect
-        ScrollTrigger.create({ start: 'top top-=-100', end: 99999, toggleClass: { className: 'scrolled', targets: siteHeader } });
-        
-        // Nav Link Active State
-        gsap.utils.toArray('main section[id]').forEach((section) => {
-            ScrollTrigger.create({
-                trigger: section, start: 'top center+=150px', end: 'bottom center-=150px', // Adjusted trigger points
-                onToggle: self => { /* ... active class logic ... */ 
-                    const sectionId = section.getAttribute('id');
-                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                    const correspondingLinks = document.querySelectorAll(`.nav-link[href="#${sectionId}"]`);
-                    correspondingLinks.forEach(link => { link.classList.toggle('active', self.isActive); });
+                if (prefersReducedMotion) {
+                    // Use native instant scroll
+                    targetEl.scrollIntoView({ behavior: 'auto' });
+                } else {
+                    // Use Lenis smooth scroll
+                    lenis.scrollTo(targetEl, { offset: 0, duration: 0.8, ease: 'power2.inOut' });
                 }
             });
         });
+
+        // --- Header Scroll Effect ---
+        ScrollTrigger.create({
+            start: 'top top-=-100', // When scrolling down 100px
+            end: 99999,
+            toggleClass: { className: 'scrolled', targets: siteHeader }
+        });
+        
+        // --- Nav Link Active State Highlighting ---
+        gsap.utils.toArray('main section[id]').forEach((section) => {
+            ScrollTrigger.create({
+                trigger: section,
+                start: 'top center+=100px',
+                end: 'bottom center-=100px',
+                onToggle: self => {
+                    const sectionId = section.getAttribute('id');
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    const correspondingLinks = document.querySelectorAll(`.nav-link[href="#${sectionId}"]`);
+                    correspondingLinks.forEach(link => {
+                        if (self.isActive) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        });
+        // Ensure home is active initially
         document.querySelectorAll('.nav-link[href="#home"]').forEach(link => link.classList.add('active'));
     }
 
@@ -558,85 +999,124 @@ document.addEventListener('DOMContentLoaded', function() {
     const bgToggle = document.getElementById('bg-toggle');
     const homeSection = document.getElementById('home');
     const heroVideo = document.getElementById('hero-video-bg');
-    if (bgToggle && homeSection && heroVideo) { /* ... toggle logic remains the same ... */ 
+    
+    if (bgToggle && homeSection && heroVideo) {
         bgToggle.addEventListener('click', () => {
             homeSection.classList.toggle('static-bg-active');
-            if (homeSection.classList.contains('static-bg-active')) { heroVideo.pause(); bgToggle.textContent = "Show Motion"; } 
-            else { heroVideo.play().catch(e => console.error("Video play failed:", e)); bgToggle.textContent = "Show Static"; }
+            if (homeSection.classList.contains('static-bg-active')) {
+                heroVideo.pause();
+                bgToggle.textContent = "Show Motion";
+            } else {
+                heroVideo.play().catch(e => console.error("Video play failed:", e));
+                bgToggle.textContent = "Show Static";
+            }
         });
-        if (isMobile) { homeSection.classList.add('static-bg-active'); heroVideo.pause(); bgToggle.textContent = "Show Motion"; }
+
+        // Default to static on mobile
+        if (isMobile) {
+            homeSection.classList.add('static-bg-active');
+            heroVideo.pause();
+            bgToggle.textContent = "Show Motion";
+        }
     }
 
     // --- 5. PAGE CONTENT ANIMATIONS ---
     function initSiteAnimations() {
         if (prefersReducedMotion) {
-             const counter = document.getElementById("user-counter");
-             if(counter) counter.innerHTML = "100,000+";
-             return; 
+            // Show scroll prompt if motion is off
+            gsap.set('#scroll-prompt', { opacity: 1 });
+            // Set counter instantly
+            const counter = document.getElementById("user-counter");
+            if(counter) counter.innerHTML = "100,000+";
+            return; // Don't initialize any GSAP animations
         }
 
-        // Hero Text - Slower
-        gsap.timeline({ delay: 0.5 }) // Slightly later start
-            .from('#hero-headline', { opacity: 0, y: 30, duration: 1.5, ease: 'power3.out' }) // Slower, further
-            .from('#hero-subheadline', { opacity: 0, y: 30, duration: 1.5, ease: 'power2.out' }, "-=1.0"); // Slower, overlap more
-             // Breathing effect on headline
-            .to('#hero-headline', { scale: 1.01, textShadow: '0 0 25px rgba(255, 200, 128, 0.4)', duration: 3, ease: 'sine.inOut', repeat: -1, yoyo: true }, 0); // Start breathing immediately
+        // --- Hero Text & Scroll Prompt ---
+        gsap.timeline({ delay: 0.2 }) // Delay after main content fade-in
+            .from('#hero-headline', { opacity: 0, y: 20, duration: 1, ease: 'power3.out' })
+            .from('#hero-subheadline', { opacity: 0, y: 20, duration: 1, ease: 'power2.out' }, "-=0.8")
+            .to('#scroll-prompt', { opacity: 1, duration: 1, delay: 0.5}, "-=0.8");
 
-
-        // Section Reveals - Slower
+        // --- Section Reveals ---
         gsap.utils.toArray('.reveal-up').forEach(elem => {
             gsap.from(elem, {
-                opacity: 0, y: 60, // Start further down
-                duration: 1.6, // Longer duration
+                opacity: 0,
+                y: 50,
+                duration: 1.2,
                 ease: 'power3.out',
-                scrollTrigger: { trigger: elem, start: 'top 90%', /* Trigger slightly later */ once: true, delay: elem.style.getPropertyValue('--gsap-delay') || 0 }
+                scrollTrigger: {
+                    trigger: elem,
+                    start: 'top 88%',
+                    once: true,
+                    delay: elem.style.getPropertyValue('--gsap-delay') || 0 // Use custom delay if set
+                }
             });
         });
 
-        // Image Reveals - Slower
+        // --- Image Reveals ---
         gsap.utils.toArray('.journal-image-container').forEach(container => {
             gsap.to(container, {
-                clipPath: 'inset(0% 0% 0% 0%)', opacity: 1, transform: 'scale(1)',
-                duration: 2.2, // Significantly slower reveal
+                clipPath: 'inset(0% 0% 0% 0%)',
+                opacity: 1,
+                transform: 'scale(1)',
+                duration: 1.8,
                 ease: 'power4.out',
-                scrollTrigger: { trigger: container, start: 'top 88%', once: true }
+                scrollTrigger: {
+                    trigger: container,
+                    start: 'top 85%',
+                    once: true
+                }
             });
         });
 
-        // Vision Counter - Slower
+        // --- Vision Counter ---
         gsap.to("#user-counter", {
-            textContent: 100000, duration: 4, // Slower count
-            ease: "power2.out", // Smoother ease out
+            textContent: 100000,
+            duration: 3,
+            ease: "power2.inOut",
             snap: { textContent: 1 },
-            scrollTrigger: { trigger: "#user-counter", start: "top 80%", once: true },
-            onUpdate: function() { this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent).toLocaleString('en-US') + "+"; }
+            scrollTrigger: {
+                trigger: "#user-counter",
+                start: "top 80%",
+                once: true
+            },
+            onUpdate: function() {
+                this.targets()[0].innerHTML =
+                    Math.ceil(this.targets()[0].textContent).toLocaleString('en-US') + "+";
+            }
         });
     }
 
     // --- 6. MEHFOOZBOT LOGIC (Inline) ---
-    // Bot logic remains functionally the same, but inherits slower CSS transitions
     const chatLog = document.getElementById('chat-log');
     const chatForm = document.getElementById('chat-form');
     const chatInput = document.getElementById('chat-input');
     const promptButtonsContainer = document.getElementById('prompt-buttons');
+
     if (chatLog && chatForm && chatInput && promptButtonsContainer) {
-        const botResponses = { /* ... Responses ... */ 
-             "greeting": "Hello. How may I help you find clarity today?", // Softened greeting
-            "default": "That's an insightful question. While this demo is brief, the full MehfoozBot explores such topics with care.",
-            "misinformation": "To gently discern misinformation: pause, check the source's origin, seek confirming evidence elsewhere, and notice if the story evokes strong emotions. A calm heart sees clearly.", // Softened language
-            "safety": "For online safety: use strong, unique passwords (perhaps a manager helps!), enable two-factor authentication where possible, and be mindful before clicking links or sharing personal details.", // Softened language
-            "story": "Our story began with quiet conversations in Skardu, listening to hopes and worries. The 'Journal' section shares a little more.",
-            "ulema": "We partner with respected local Ulema. They act as trusted guides, blending timeless wisdom with essential digital skills."
+        const botResponses = {
+            "greeting": "Hello! How can I assist you today on your journey to digital clarity?",
+            "default": "That's an interesting point. While this demo is limited, the full MehfoozBot explores topics like that in detail.",
+            "misinformation": "Spotting misinformation involves a few key steps: Check the source's credibility, look for supporting evidence elsewhere, be wary of emotionally charged language, and check the date.",
+            "safety": "Online safety basics include using strong, unique passwords (consider a password manager!), enabling two-factor authentication, and being cautious about links/attachments.",
+            "story": "Mehfooz began from listening to the community in Skardu. We realized the need wasn't just *more* tech, but *understanding* tech. You can read a bit more in the 'Journal' section.",
+            "ulema": "We proudly partner with local Ulema (religious leaders). They serve as trusted community voices, helping bridge traditional wisdom with essential digital literacy skills."
         };
-        const promptQuestions = { /* ... Questions ... */ 
-            "How does Mehfooz work?": "ulema", // Rephrased
-            "What is your story?": "story", // Rephrased
-            "Discerning fake news?": "misinformation", // Rephrased
+        
+        const promptQuestions = {
+            "How do you work?": "ulema",
+            "What's your story?": "story",
+            "Spotting fake news?": "misinformation",
             "Staying safe online?": "safety"
         };
-        function getBotResponse(userInput) { /* ... Logic ... */ 
-             const lowerInput = userInput.toLowerCase().trim();
-            if (promptQuestions[userInput]) { return botResponses[promptQuestions[userInput]]; }
+
+        function getBotResponse(userInput) {
+            const lowerInput = userInput.toLowerCase().trim();
+            // Check exact matches from buttons/pills first
+            if (promptQuestions[userInput]) {
+                return botResponses[promptQuestions[userInput]];
+            }
+            // Keyword checks
             if (lowerInput.includes('fake news') || lowerInput.includes('misinformation')) return botResponses.misinformation;
             if (lowerInput.includes('safe') || lowerInput.includes('security') || lowerInput.includes('password')) return botResponses.safety;
             if (lowerInput.includes('story') || lowerInput.includes('who are you') || lowerInput.includes('about')) return botResponses.story;
@@ -644,45 +1124,80 @@ document.addEventListener('DOMContentLoaded', function() {
             if (lowerInput.includes('hello') || lowerInput.includes('hi') || lowerInput.includes('greeting')) return botResponses.greeting;
             return botResponses.default;
         }
-        function addChatMessage(message, sender, isImmediate = false) { /* ... Logic ... */ 
-            const bubble = document.createElement('div'); bubble.className = `chat-bubble ${sender}-bubble`; bubble.textContent = message; chatLog.appendChild(bubble);
-            if (!prefersReducedMotion) { 
-                gsap.from(bubble, { opacity: 0, y: 20, duration: 0.8, ease: 'power2.out', delay: isImmediate ? 0 : 0.3 }); // Slower bubble animation
-                gsap.to(chatLog, { duration: 0.8, scrollTo: { y: "max", autoKill: false }, ease: "power2.out" }); // Slower scroll
-            } 
-            else { chatLog.scrollTop = chatLog.scrollHeight; }
-        }
-        function handleBotUserInput(input) { /* ... Logic ... */ 
-            const trimmedInput = input.trim();
-            if (trimmedInput) {
-                addChatMessage(trimmedInput, 'user', true); chatInput.value = ""; chatInput.disabled = true;
-                gsap.to(promptButtonsContainer.children, { opacity: 0.5, duration: 0.4, pointerEvents: 'none' }); // Slower disable
-                setTimeout(() => {
-                    const response = getBotResponse(trimmedInput); addChatMessage(response, 'bot'); chatInput.disabled = false;
-                    gsap.to(promptButtonsContainer.children, { opacity: 1, duration: 0.4, pointerEvents: 'auto' }); // Slower enable
-                    chatInput.focus();
-                }, 1200 + Math.random() * 500); // Slightly longer delay
+
+        function addChatMessage(message, sender, isImmediate = false) {
+            const bubble = document.createElement('div');
+            bubble.className = `chat-bubble ${sender}-bubble`;
+            bubble.textContent = message;
+            chatLog.appendChild(bubble);
+            
+            if (!prefersReducedMotion) {
+                gsap.from(bubble, { opacity: 0, y: 20, duration: 0.5, delay: isImmediate ? 0 : 0.2 });
+                gsap.to(chatLog, { duration: 0.5, scrollTo: { y: "max", autoKill: false }, ease: "power2.out" });
+            } else {
+                chatLog.scrollTop = chatLog.scrollHeight;
             }
         }
-        chatForm.addEventListener('submit', e => { e.preventDefault(); handleBotUserInput(chatInput.value); });
-        Object.keys(promptQuestions).forEach(question => {
-            const button = document.createElement('button'); button.type = "button"; button.className = "chat-prompt-btn"; button.textContent = question; button.onclick = () => { handleBotUserInput(question); }; promptButtonsContainer.appendChild(button);
+
+        function handleBotUserInput(input) {
+            const trimmedInput = input.trim();
+            if (trimmedInput) {
+                addChatMessage(trimmedInput, 'user', true);
+                chatInput.value = "";
+                chatInput.disabled = true;
+                
+                // Disable prompt buttons
+                gsap.to(promptButtonsContainer.children, { opacity: 0.5, duration: 0.3, pointerEvents: 'none' });
+                
+                setTimeout(() => {
+                    const response = getBotResponse(trimmedInput);
+                    addChatMessage(response, 'bot');
+                    chatInput.disabled = false;
+                    
+                    // Re-enable prompt buttons
+                    gsap.to(promptButtonsContainer.children, { opacity: 1, duration: 0.3, pointerEvents: 'auto' });
+                    chatInput.focus();
+                }, 1000 + Math.random() * 400);
+            }
+        }
+
+        // --- Setup Bot ---
+        chatForm.addEventListener('submit', e => {
+            e.preventDefault();
+            handleBotUserInput(chatInput.value);
         });
+
+        // Populate prompt buttons
+        Object.keys(promptQuestions).forEach(question => {
+            const button = document.createElement('button');
+            button.type = "button";
+            button.className = "chat-prompt-btn";
+            button.textContent = question;
+            button.onclick = () => { handleBotUserInput(question); };
+            promptButtonsContainer.appendChild(button);
+        });
+
+        // Add initial greeting
         addChatMessage(botResponses.greeting, 'bot', true);
     }
 
     // --- 7. CONTACT FORM LOGIC ---
     const contactForm = document.getElementById('contact-form');
     const formSuccess = document.getElementById('form-success');
-    if (contactForm && formSuccess) { /* ... Form submission logic remains the same, inherits CSS transitions ... */ 
-         contactForm.addEventListener('submit', e => {
+    if (contactForm && formSuccess) {
+        contactForm.addEventListener('submit', e => {
             e.preventDefault();
+            // Simulate form submission
             gsap.to(contactForm, { 
-                opacity: 0, duration: 0.6, height: 0, ease: 'power1.in', // Slower ease
+                opacity: 0, 
+                duration: 0.5, 
+                height: 0, 
+                ease: 'power2.in',
                 onComplete: () => {
-                    contactForm.style.display = 'none'; formSuccess.classList.remove('hidden');
-                    gsap.set(formSuccess, { height: 'auto' }); 
-                    gsap.from(formSuccess, { opacity: 0, y: 30, duration: 0.8, ease: 'power2.out' }); // Slower reveal
+                    contactForm.style.display = 'none';
+                    formSuccess.classList.remove('hidden');
+                    gsap.set(formSuccess, { height: 'auto' }); // Set height before animating
+                    gsap.from(formSuccess, { opacity: 0, y: 20, duration: 0.6, ease: 'power2.out' });
                 }
             });
         });
