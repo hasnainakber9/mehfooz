@@ -9,8 +9,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
+     {/* */}
+
 
     <style>
         :root {
@@ -19,6 +20,7 @@
             --text-medium: #7A726A;
             --accent-gold: #D4AF37; /* Softer, richer gold */
             --accent-teal: #48A9A6; /* Muted teal */
+            --warm-text: #EAE0D5; /* Re-added for potential use */
         }
 
         /* Switched fonts for a warmer, more modern/GenZ feel */
@@ -50,42 +52,46 @@
             font-family: 'Poppins', sans-serif; /* Friendly but modern heading */
             font-weight: 600;
         }
-
+        
         /* --- Custom Cursor --- */
         #cursor-dot, #cursor-circle {
             position: fixed;
             top: 0; left: 0;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 10003;
-            mix-blend-mode: exclusion; /* Softer blend */
+            z-index: 10003; /* Ensure it's above other fixed elements like header */
+            mix-blend-mode: difference; /* Softer blend */
             will-change: transform, width, height, background-color, border-color;
         }
         #cursor-dot {
             width: 8px; height: 8px;
-            background-color: var(--accent-gold);
+            background-color: var(--accent-gold); /* Gold dot */
+            transform: translate(-50%, -50%);
         }
         #cursor-circle {
             width: 40px; height: 40px;
-            border: 1px solid var(--accent-gold);
+            border: 1px solid var(--accent-gold); /* Gold circle */
+            transform: translate(-50%, -50%);
             transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1), 
                         width 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
                         height 0.4s cubic-bezier(0.19, 1, 0.22, 1),
-                        border-color 0.4s ease;
+                        border-color 0.4s ease,
+                        background-color 0.4s ease;
         }
         body.link-hover #cursor-circle { 
-            transform: scale(1.6); 
+            transform: translate(-50%, -50%) scale(1.6); /* Centered scale */
             border-color: var(--accent-teal);
-            width: 60px; /* Magnetic effect */
-            height: 60px;
+            background-color: rgba(72, 169, 166, 0.2); /* Teal background on hover */
+            width: 50px; /* Slightly increase size */
+            height: 50px;
         }
         body.link-hover #cursor-dot {
              background-color: var(--accent-teal);
         }
 
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0.15; /* Make particles more subtle */}
+        /* Removed #bg-canvas styles */
 
-        .content-section { position: relative; z-index: 1; padding: 15vh 0; /* Reduced padding slightly */ }
+        .content-section { position: relative; z-index: 1; padding: 15vh 0; }
         
         /* --- Seed Game --- */
         #seed-container { cursor: pointer; }
@@ -94,20 +100,20 @@
         #seed-container:hover .seed { transform: scale(1.2); } /* Slightly bigger hover */
 
         /* --- Animation Styles --- */
-        .reveal-up { opacity: 0; transform: translateY(60px); /* Slightly increased distance */ }
-        .line-parent { overflow: hidden; display: block; /* Ensure it takes block space */ }
+        .reveal-up { opacity: 0; transform: translateY(60px); }
+        .line-parent { overflow: hidden; display: block; }
         .line-child { display: inline-block; transform: translateY(110%); }
-        .char { display: inline-block; transform: translateY(110%); opacity: 0;} /* For character anims */
 
         /* --- Chat & Form --- */
-        .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 20px; /* Rounder bubbles */ line-height: 1.6; font-size: 1rem; }
+        .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 20px; line-height: 1.6; font-size: 1rem; }
         .user-bubble { background-color: var(--accent-teal); color: var(--warm-dark); border-bottom-right-radius: 4px; align-self: flex-end; font-weight: 500;}
-        .bot-bubble { background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); color: var(--light-text); border: 1px solid rgba(var(--warm-text-rgb), 0.1); border-bottom-left-radius: 4px; align-self: flex-start; }
+        .bot-bubble { background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); color: var(--light-text); border: 1px solid rgba(234, 224, 213, 0.1); border-bottom-left-radius: 4px; align-self: flex-start; } /* Using warm-text rgba */
         input, select, textarea { 
             color: var(--text-dark); 
             background-color: rgba(255,255,255,0.1);
             border: 1px solid var(--medium-text);
             transition: border-color 0.3s, box-shadow 0.3s;
+             color: var(--warm-text); /* Ensure text color contrasts with dark bg */
         }
         input::placeholder, textarea::placeholder { color: var(--medium-text); opacity: 0.8; }
         input:focus, select:focus, textarea:focus {
@@ -116,30 +122,31 @@
             box-shadow: 0 0 0 2px rgba(218, 165, 32, 0.3);
         }
         select {
-           background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%237A726A' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-           background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1em 1em; padding-right: 2.5rem; -webkit-appearance: none; appearance: none; color: var(--text-dark);
+           background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23A8A29A' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+           background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1em 1em; padding-right: 2.5rem; -webkit-appearance: none; appearance: none; color: var(--warm-text); /* Changed text color */
         }
-        select option { background-color: var(--bg-soft); color: var(--text-dark); }
+        select option { background-color: var(--warm-dark); color: var(--warm-text); } /* Changed colors */
         button { transition: transform 0.2s ease, box-shadow 0.3s ease; }
         button:hover { transform: scale(1.03); }
         button:active { transform: scale(0.98); }
 
 
         /* --- Navigation --- */
-        header { backdrop-filter: blur(10px); background-color: rgba(26, 18, 11, 0.5); /* Slightly darker, blurred header */ }
+        header { backdrop-filter: blur(10px); background-color: rgba(26, 18, 11, 0.5); }
         #menu-toggle { z-index: 10001; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         #menu-toggle:hover { transform: scale(1.1) rotate(90deg); }
         #menu-toggle span { background-color: var(--warm-text); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s; }
-        #menu-toggle.open span:nth-child(1) { transform: translateY(3.5px) rotate(45deg); background-color: var(--gold); } /* Adjusted y translate */
-        #menu-toggle.open span:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); background-color: var(--gold); } /* Adjusted y translate */
-        #menu-overlay { clip-path: circle(0% at calc(100% - 40px) 48px); background-color: rgba(26, 18, 11, 0.95); backdrop-filter: blur(15px); } /* Darker overlay */
+        #menu-toggle.open span { background-color: var(--gold);} /* Use gold for open state */
+        #menu-toggle.open span:nth-child(1) { transform: translateY(3.5px) rotate(45deg); } 
+        #menu-toggle.open span:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
+        #menu-overlay { clip-path: circle(0% at calc(100% - 40px) 48px); background-color: rgba(26, 18, 11, 0.97); backdrop-filter: blur(15px); } /* Darker overlay */
         #menu-overlay.open { clip-path: circle(150% at calc(100% - 40px) 48px); }
-        .menu-link { transform: translateY(50px); opacity: 0; font-family: 'Poppins', sans-serif; font-weight: 500; letter-spacing: 1px; } /* Use Poppins for menu links */
-        .menu-link:hover { color: var(--gold); transform: translateY(50px) translateX(10px); } /* Shift right on hover */
+        .menu-link { transform: translateY(50px); opacity: 0; font-family: 'Poppins', sans-serif; font-weight: 500; letter-spacing: 1px; color: var(--warm-text); } /* Poppins for menu links */
+        .menu-link:hover { color: var(--gold); transform: translateY(50px) translateX(10px); }
 
         /* Added glow to buttons */
         #enter-site-btn:hover, #chat-form button:hover, #contact-form button:hover {
-             box-shadow: 0 0 15px rgba(218, 165, 32, 0.4);
+             box-shadow: 0 0 15px rgba(218, 165, 32, 0.4); /* Gold glow */
         }
         
     </style>
@@ -154,24 +161,31 @@
     <div id="game-screen" class="fixed inset-0 bg-warm-dark z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
         <div class="text-center w-full max-w-lg">
             <div id="game-intro">
-                <h2 class="font-heading text-gold text-4xl md:text-6xl mb-2">A Seed of Trust</h2>
+                <h2 class="font-heading text-gold text-4xl md:text-6xl mb-2" style="text-shadow: 0 0 8px rgba(218, 165, 32, 0.4);">A Seed of Trust</h2>
                 <p class="font-body text-medium-text text-xl mb-8">Click and hold to begin.</p>
             </div>
             <div id="seed-container" class="relative w-full aspect-square max-w-[250px] mx-auto">
                 <svg id="seed-svg" class="w-full h-full" viewBox="0 0 200 200">
                     <defs>
-                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                        <filter id="glow-teal" x="-50%" y="-50%" width="200%" height="200%">
                           <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
                           <feMerge>
                             <feMergeNode in="coloredBlur"/>
                             <feMergeNode in="SourceGraphic"/>
                           </feMerge>
                         </filter>
+                         <filter id="glow-gold" x="-50%" y="-50%" width="200%" height="200%">
+                          <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                          <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                          </feMerge>
+                        </filter>
                     </defs>
-                    <path class="plant-path" d="M100 180 C 100 140, 70 140, 70 100 C 70 60, 100 60, 100 20" stroke="var(--teal)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow)"/>
-                    <path class="plant-path" d="M70 100 C 40 100, 40 70, 70 70" stroke="var(--teal)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow)"/>
-                    <path class="plant-path" d="M100 140 C 130 140, 130 110, 100 110" stroke="var(--teal)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow)"/>
-                    <circle class="seed" cx="100" cy="180" r="10" fill="var(--gold)" filter="url(#glow)"/>
+                    <path class="plant-path" d="M100 180 C 100 140, 70 140, 70 100 C 70 60, 100 60, 100 20" stroke="var(--teal)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow-teal)"/>
+                    <path class="plant-path" d="M70 100 C 40 100, 40 70, 70 70" stroke="var(--teal)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow-teal)"/>
+                    <path class="plant-path" d="M100 140 C 130 140, 130 110, 100 110" stroke="var(--teal)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow-teal)"/>
+                    <circle class="seed" cx="100" cy="180" r="10" fill="var(--gold)" filter="url(#glow-gold)"/>
                 </svg>
             </div>
             <div id="game-end" class="absolute bottom-10 left-1/2 -translate-x-1/2 w-full px-4">
@@ -206,7 +220,7 @@
 
         <section id="home" class="content-section h-screen flex items-center justify-center text-center">
             <div class="px-4">
-                <h1 class="font-heading text-gold text-5xl md:text-8xl mb-4 char-anim" style="text-shadow: 0 0 10px rgba(218, 165, 32, 0.4);">A digital sanctuary.</h1>
+                <h1 class="font-heading text-gold text-5xl md:text-8xl mb-4" style="text-shadow: 0 0 10px rgba(218, 165, 32, 0.4);">A digital sanctuary.</h1>
                 <p class="font-body text-xl md:text-2xl text-warm-text leading-relaxed max-w-4xl line-parent mt-4">
                     <span class="line-child">Empowering the communities of Gilgit Baltistan to navigate the digital world with confidence.</span>
                 </p>
@@ -218,14 +232,14 @@
                  <div class="flex flex-col md:flex-row gap-12 items-center">
                      <div class="w-full md:w-1/2">
                          <div class="rounded-lg shadow-2xl shadow-black/30 parallax-container">
-                             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format=fit=crop" alt="A group of diverse people working together warmly" class="parallax-image rounded-lg">
+                             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto-format=fit=crop" alt="A group of diverse people working together warmly" class="parallax-image rounded-lg">
                          </div>
                      </div>
                      <div class="w-full md:w-1/2">
                          <h2 class="font-heading text-gold text-5xl md:text-6xl mb-6 line-parent"><span class="line-child">Our Story</span></h2>
                          <div class="font-body text-lg text-medium-text leading-relaxed space-y-6">
                             <p class="reveal-up">Our journey started simply, in a small teahouse in Skardu, sharing cups of warm chai and listening. We heard stories from our community – tales of wonder and worry about this fast-changing digital world.</p>
-                            <p class="reveal-up">It became clear the need wasn't just for new tools, but for understanding and trust. We needed a bridge between timeless wisdom and modern technology. Mehfooz is our promise to help build that bridge, hand-in-hand.</p>
+                            <p class="reveal-up">It became clear the need wasn't just for new tools, but for understanding and trust. We needed a bridge between timeless local wisdom and modern technology. Mehfooz is our promise to help build that bridge, hand-in-hand.</p>
                          </div>
                      </div>
                  </div>
@@ -235,20 +249,20 @@
         <section id="approach" class="content-section py-20 md:py-40">
             <div class="container mx-auto px-6 max-w-5xl">
                 <div class="text-center mb-20 line-parent">
-                    <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4 line-child">Our Approach is Simple</h2>
+                    <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4 line-child">Our Approach</h2>
                 </div>
-                <div class="grid md:grid-cols-3 gap-12 text-center">
-                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03]">
+                <div class="grid md:grid-cols-3 gap-12 text-left md:text-center">
+                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5">
                         <p class="font-heading text-teal text-4xl mb-3">1.</p>
                         <h3 class="font-heading text-2xl mb-3">Listen First</h3>
                         <p class="font-body text-medium-text leading-relaxed">We partner with local elders and Ulema, honoring their wisdom as the foundation of our work. Trust is built through understanding.</p>
                     </div>
-                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03]">
+                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5">
                         <p class="font-heading text-teal text-4xl mb-3">2.</p>
                         <h3 class="font-heading text-2xl mb-3">Guide Gently</h3>
                         <p class="font-body text-medium-text leading-relaxed">Our tools, like MehfoozBot, offer personal, patient help in local languages, making technology feel like a friendly companion.</p>
                     </div>
-                     <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03]">
+                     <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5">
                         <p class="font-heading text-teal text-4xl mb-3">3.</p>
                         <h3 class="font-heading text-2xl mb-3">Grow Together</h3>
                         <p class="font-body text-medium-text leading-relaxed">Through mini-courses and feedback from local students, we ensure our knowledge is always relevant and co-created with the community.</p>
@@ -264,7 +278,7 @@
                  </div>
                  <div class="mt-16 reveal-up">
                      <h3 class="font-heading text-teal text-4xl mb-6 text-center">Voices from the Valley</h3>
-                     <div class="space-y-12"> {/* Increased spacing */}
+                     <div class="space-y-12">
                          <blockquote class="border-l-4 border-gold pl-6 italic font-body text-xl text-medium-text transition-transform duration-300 hover:scale-[1.02]">
                             "I'm excited to finally have a safe place to ask questions. I can't wait to use MehfoozBot to learn about my phone without feeling shy. It feels like someone is finally listening."
                             <cite class="block not-italic mt-2 text-warm-text font-sans text-base">- A student from Gilgit</cite>
@@ -284,7 +298,7 @@
                       <h2 class="font-heading text-gold text-5xl md:text-6xl mb-4">Our Five-Year Vision</h2>
                       <p class="font-body text-xl text-medium-text max-w-3xl mx-auto">To scale our impact together, empowering communities across Pakistan.</p>
                   </div>
-                  <div class="mt-16 grid md:grid-cols-2 gap-x-12 gap-y-16 text-left items-center">
+                  <div class="mt-16 grid md:grid-cols-2 gap-12 text-left items-center">
                       <div class="reveal-up">
                           <p class="font-heading text-teal text-7xl" id="user-counter">0+</p>
                           <h3 class="text-2xl mt-2 font-heading">User Base Expansion</h3>
@@ -421,30 +435,32 @@
         });
 
         gsap.ticker.add(() => {
-            gsap.to(cursorDot, { duration: 0.15, x: mouse.x - 4, y: mouse.y - 4, ease: 'power2.out' });
+            // Dot follows instantly
+            gsap.set(cursorDot, { x: mouse.x - 4, y: mouse.y - 4 }); 
             
+            // Circle interpolates
             const dx = mouse.x - circlePos.x;
             const dy = mouse.y - circlePos.y;
-            circlePos.x += dx * 0.2; // Adjust speed (lower = smoother/more lag)
-            circlePos.y += dy * 0.2;
+            circlePos.x += dx * 0.18; // Smoother interpolation
+            circlePos.y += dy * 0.18;
             gsap.to(cursorCircle, { 
-                duration: 0.4, // Slightly slower transition
+                duration: 0.5, // Smooth out transition
                 x: circlePos.x - 20, 
                 y: circlePos.y - 20, 
                 scale: circleScale,
-                opacity: isHovering ? 0.6 : 1, // Fade slightly on hover
-                ease: 'expo.out' // Smoother ease
+                opacity: isHovering ? 0.4 : 1, // Softer hover opacity
+                ease: 'expo.out' 
             });
         });
         
         document.querySelectorAll('a, button, input, select, textarea, #seed-container, .value-container').forEach(el => {
-            el.addEventListener('mouseenter', () => { circleScale = 1.6; isHovering = true; }); // Slightly larger scale
+            el.addEventListener('mouseenter', () => { circleScale = 1.4; isHovering = true; }); // Slightly smaller, gentler scale
             el.addEventListener('mouseleave', () => { circleScale = 1; isHovering = false; });
         });
 
 
         // --- SMOOTH SCROLL ---
-        const lenis = new Lenis({ lerp: 0.08 }); // Controls smoothness (0.1 is default)
+        const lenis = new Lenis({ lerp: 0.09 }); // Slightly adjusted smoothness
         function raf(time) {
             lenis.raf(time);
             requestAnimationFrame(raf);
@@ -458,36 +474,53 @@
         const toggleSpans = menuToggle.querySelectorAll('span');
         let isMenuOpen = false;
 
+        // More fluid ease for menu animation
+        const menuEase = 'expo.inOut'; 
+        const menuDuration = 0.9;
+
         const menuTimeline = gsap.timeline({ paused: true })
-            .to(menuOverlay, { duration: 0.8, ease: 'expo.inOut' }) // Smoother ease
-            .to(menuLinks, { y: 0, opacity: 1, duration: 0.8, stagger: 0.05, ease: 'expo.out' }, "-=0.6");
+            .to(menuOverlay, { 
+                clipPath: 'circle(150% at calc(100% - 40px) 48px)', 
+                duration: menuDuration, 
+                ease: menuEase 
+            }, 0)
+            .to(menuLinks, { 
+                y: 0, 
+                opacity: 1, 
+                duration: 0.8, // Slightly adjusted duration
+                stagger: 0.06, // Slightly adjusted stagger
+                ease: 'expo.out' 
+            }, 0.2); // Start link animation slightly after overlay starts opening
 
         menuToggle.addEventListener('click', () => {
             isMenuOpen = !isMenuOpen;
             menuToggle.classList.toggle('open');
-            menuOverlay.classList.toggle('open');
+            // menuOverlay.classList.toggle('open'); // GSAP handles the visual change via clip-path
             if(isMenuOpen) {
-                menuTimeline.play();
+                menuTimeline.timeScale(1).play();
                 gsap.to(toggleSpans[0], { y: 3.5, rotate: 45, duration: 0.4, ease: 'expo.out' });
                 gsap.to(toggleSpans[1], { y: -3.5, rotate: -45, duration: 0.4, ease: 'expo.out' });
                 lenis.stop();
             } else {
-                menuTimeline.reverse();
+                menuTimeline.timeScale(1.5).reverse(); // Reverse slightly faster
                 gsap.to(toggleSpans[0], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
                 gsap.to(toggleSpans[1], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
                 lenis.start();
             }
         });
+        
         menuLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const target = link.getAttribute('href');
                 isMenuOpen = false;
                 menuToggle.classList.remove('open');
-                menuOverlay.classList.remove('open');
-                menuTimeline.reverse().then(() => {
+                menuTimeline.reverse().then(() => { // Ensure menu is closed before scrolling
                     lenis.start();
-                    lenis.scrollTo(target, { duration: 2, ease: 'power2.inOut' }); // Slightly longer scroll
+                    lenis.scrollTo(target, { 
+                        duration: 1.8, // Smooth scroll duration
+                        easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) // Expo out ease
+                    });
                 });
                 gsap.to(toggleSpans[0], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
                 gsap.to(toggleSpans[1], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
@@ -513,16 +546,16 @@
             growthAnimation = gsap.timeline({ paused: true, onComplete: onSolved });
             growthAnimation.to(plantPaths, {
                 strokeDashoffset: 0,
-                duration: 0.6, // Quick growth
+                duration: 0.6, // Quick growth remains
                 ease: "power1.out",
-                stagger: 0.05 // Quick stagger
+                stagger: 0.05 // Quick stagger remains
             });
         }
         
         function onSolved() {
             if(solved) return;
             solved = true;
-            seedContainer.style.pointerEvents = 'none'; // Disable further interaction after solved
+            seedContainer.style.pointerEvents = 'none'; // Disable further interaction
             feedbackEl.textContent = "Trust takes root.";
             gsap.to(feedbackEl, { opacity: 1, duration: 0.5 });
             gsap.to(enterBtn, { opacity: 1, scale: 1, pointerEvents: 'auto', duration: 0.5, delay: 0 }); // Show button immediately
@@ -535,15 +568,14 @@
         
         seedContainer.addEventListener('mousedown', startGrowth);
         seedContainer.addEventListener('touchstart', startGrowth, {passive: true});
-        // Prevent continuous triggering if already solved
-        seedContainer.addEventListener('mouseup', () => { if(solved) return; });
-        seedContainer.addEventListener('touchend', () => { if(solved) return; });
+        // Keep it simple: once held, it grows and stays grown
+        // No mouseup/touchend needed to reverse
 
 
         enterBtn.addEventListener('click', () => {
              gsap.to(gameScreen, { 
                  opacity: 0, 
-                 duration: 1.0, // Smoother fade out
+                 duration: 1.0, 
                  ease: 'power1.inOut',
                  onComplete: () => {
                      gameScreen.style.display = 'none';
@@ -560,35 +592,33 @@
         // --- THREE.JS BACKGROUND ---
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 2.5; // Adjusted camera position
+        camera.position.z = 2.5; 
         const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        const particleCount = 10000; // Adjusted for performance vs density
+        const particleCount = 12000; // Increased density slightly
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
-        const colorGold = new THREE.Color(0xDAA520); // Using var(--gold)
-        const colorTeal = new THREE.Color(0x008080); // Using var(--teal)
-        const colorOffWhite = new THREE.Color(0xEAE0D5); // Using var(--warm-text)
+        const colorGold = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--gold').trim());
+        const colorTeal = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--teal').trim());
+        const colorWarmText = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--warm-text').trim());
 
         for(let i = 0; i < particleCount; i++) {
             const i3 = i * 3;
-            // Distribute more evenly in a sphere
-            const radius = 5 + Math.random() * 10;
+            const radius = 6 + Math.random() * 8; // Adjust range for depth
             const phi = Math.acos(-1 + (2 * Math.random()));
-            const theta = Math.sqrt(particleCount * Math.PI) * phi;
+            const theta = Math.sqrt(particleCount * Math.PI) * phi * (Math.random() - 0.5) * 2; // Add randomness
             
             positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
             positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
             positions[i3 + 2] = radius * Math.cos(phi);
             
-            // Mix colors - mostly warm text, some gold, less teal
             const randColor = Math.random();
             let mixedColor;
-            if (randColor < 0.7) mixedColor = colorOffWhite.clone().lerp(colorGold, Math.random() * 0.2); // Mostly off-white with hint of gold
-            else if (randColor < 0.9) mixedColor = colorGold.clone();
-            else mixedColor = colorTeal.clone();
+            if (randColor < 0.6) mixedColor = colorWarmText.clone().lerp(colorGold, Math.random() * 0.3); // More soft white/gold
+            else if (randColor < 0.85) mixedColor = colorGold.clone();
+            else mixedColor = colorTeal.clone().lerp(colorWhite, 0.5); // Teal mixed with white for softness
             
             colors[i3] = mixedColor.r; colors[i3 + 1] = mixedColor.g; colors[i3 + 2] = mixedColor.b;
         }
@@ -597,8 +627,8 @@
         particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         
         const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.02, // Slightly smaller
-            sizeAttenuation: true, transparent: true, opacity: 0.7, // Slightly more opaque
+            size: 0.018, // Slightly larger particles
+            sizeAttenuation: true, transparent: true, opacity: 0.7, 
             vertexColors: true, blending: THREE.AdditiveBlending, depthWrite: false
         });
         const particles = new THREE.Points(particlesGeometry, particlesMaterial);
@@ -609,14 +639,13 @@
             const elapsedTime = clock.getElapsedTime();
             const scrollY = lenis.scroll;
             
-            // Slow, subtle rotation independent of scroll for a calmer feel
-            particles.rotation.y = elapsedTime * 0.02; 
-            particles.rotation.x = elapsedTime * 0.01;
+            // Slower, more atmospheric rotation
+            particles.rotation.y = elapsedTime * 0.01; 
+            particles.rotation.x = elapsedTime * 0.005;
             
-            // Mouse influence made much gentler
-            particles.rotation.z += ((-mouse.x / window.innerWidth * 0.05 + 0.025) - particles.rotation.z) * 0.02;
-            camera.position.x += ((mouse.x / window.innerWidth - 0.5) * 0.1 - camera.position.x) * 0.02;
-            camera.position.y += (-(mouse.y / window.innerHeight - 0.5) * 0.1 - camera.position.y) * 0.02;
+            // Subtle mouse parallax effect on the camera
+            camera.position.x += ((mouse.x / window.innerWidth - 0.5) * 0.05 - camera.position.x) * 0.02;
+            camera.position.y += (-(mouse.y / window.innerHeight - 0.5) * 0.05 - camera.position.y) * 0.02;
             camera.lookAt(scene.position);
 
 
@@ -634,33 +663,69 @@
 
         // --- MAIN ANIMATIONS ---
         function initAnimations() {
-             gsap.utils.toArray('.line-child').forEach(el => {
-                gsap.fromTo(el, { y: '110%' }, { 
-                    y: '0%', 
-                    duration: 1.5, // Slower, more graceful
-                    ease: 'expo.out', // Smoother ease
+             // Hero text animation (character reveal)
+            const heroHeadline = document.querySelector('#home h1');
+            const heroSubheadline = document.querySelector('#home p .line-child');
+            
+            // Split text using basic JS for simplicity without extra library
+             function splitTextIntoSpans(selector) {
+                const element = document.querySelector(selector);
+                if (!element) return;
+                const text = element.textContent.trim();
+                element.innerHTML = ''; // Clear existing content
+                text.split('').forEach(char => {
+                    const span = document.createElement('span');
+                    span.textContent = char === ' ' ? '\u00A0' : char; // Use non-breaking space for spaces
+                    span.style.display = 'inline-block';
+                    span.style.transform = 'translateY(100%)';
+                    span.style.opacity = '0';
+                    element.appendChild(span);
+                });
+                return element.querySelectorAll('span');
+             }
+
+            const heroChars = splitTextIntoSpans('#home h1');
+            const sublineChild = document.querySelector('#home p .line-child');
+
+             // Animate Hero Section after site entry
+             gsap.timeline({ delay: 0.5 }) // Delay after fade-in
+                .to(heroChars, {
+                    y: '0%',
+                    opacity: 1,
+                    duration: 0.8,
+                    stagger: 0.03,
+                    ease: 'expo.out'
+                })
+                .to(sublineChild, {
+                    y: '0%',
+                    duration: 1.2,
+                    ease: 'expo.out'
+                }, "-=0.6"); // Overlap slightly
+
+
+            // General reveal-up for sections and elements
+            gsap.utils.toArray('.reveal-up').forEach(elem => {
+                gsap.fromTo(elem, { opacity: 0, y: 70 }, { // Increased distance
+                    opacity: 1, y: 0, duration: 1.6, ease: 'expo.out', // Smoother, longer duration
+                    scrollTrigger: { trigger: elem, start: 'top 88%' } // Start slightly earlier
+                });
+            });
+            
+            // Parallax Images
+            gsap.utils.toArray('.parallax-image').forEach(img => {
+                gsap.to(img, {
+                    yPercent: -10, // Parallax effect relative to container height
+                    ease: 'none',
                     scrollTrigger: {
-                        trigger: el.parentElement,
-                        start: 'top 90%' // Start a bit earlier
+                        trigger: img.closest('.parallax-container'), 
+                        start: 'top bottom', // Start when container enters viewport bottom
+                        end: 'bottom top', // End when container leaves viewport top
+                        scrub: 1 // Smooth scrubbing effect
                     }
                 });
             });
             
-            gsap.utils.toArray('.reveal-up').forEach(elem => {
-                gsap.fromTo(elem, { opacity: 0, y: 80 }, { // Increased y offset slightly more
-                    opacity: 1, y: 0, duration: 1.8, ease: 'expo.out', // Slower, smoother
-                    scrollTrigger: { trigger: elem, start: 'top 90%' } // Start slightly earlier
-                });
-            });
-            
-            gsap.utils.toArray('.parallax-image').forEach(img => {
-                gsap.to(img, {
-                    y: '-10%', // Reduced parallax for calmness
-                    ease: 'none',
-                    scrollTrigger: { trigger: img.closest('.parallax-container'), scrub: 2 } // Slower scrub
-                });
-            });
-            
+            // Counter Animation
             const userCounter = document.getElementById('user-counter');
             if (userCounter) {
                 gsap.from(userCounter, {
@@ -674,6 +739,7 @@
                  });
             }
 
+            // Timeline Path Animation
             const timelinePath = document.querySelector('.timeline-path');
             if(timelinePath) {
                 const length = timelinePath.getTotalLength();
@@ -684,17 +750,17 @@
                 });
             }
 
-            // Fixed navigation scroll for all links (menu, logo, footer)
+            // Ensure all anchor links scroll smoothly
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
+                    if (this.classList.contains('menu-link')) return; // Let the menu handler manage its links
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
                         lenis.scrollTo(targetElement, { 
-                            duration: 2, // Slower, smoother scroll
-                            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Ease Out Expo
-                            offset: -80 // Adjust offset if header is fixed and covers content
+                            duration: 2, 
+                            easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) 
                         });
                     }
                 });
@@ -708,11 +774,11 @@
         const promptButtonsContainer = document.getElementById('prompt-buttons');
 
         const botResponses = {
-            "greeting": "Salaam! Welcome to Mehfooz. I'm here to help guide you. Feel free to ask anything, or try one of the prompts below.", // Friendlier greeting
-            "default": "That's an interesting question. While this is just a demo, the full Mehfooz experience helps with digital safety and finding truth online. Maybe ask about our story or how we work with Ulema?", // More helpful default
-            "misinformation": "Spotting misinformation is key! Look closely at the source - is it trustworthy? Does it use strong, emotional language? Does it offer proof? Real news is often calmer and shows evidence. We have mini-courses on this!", // Mention courses
-            "safety": "Staying safe online is like protecting your home. Use strong, different passwords. Be careful what personal details you share, especially in messages or public posts. Think before you click links! Our resources cover this in detail.", // Mention resources
-            "story": "Mehfooz began with conversations in Skardu, listening to the community's hopes and worries about the digital world. We aim to build a bridge between traditional wisdom and modern tools. You can feel our story in the 'Our Story' section.", // Matched section name
+            "greeting": "Salaam! Welcome to Mehfooz. I'm here to help guide you. Feel free to ask anything, or try one of the prompts below.",
+            "default": "That's an interesting question! While I'm still learning, the full Mehfooz platform offers resources on many topics. Maybe ask about our story, safety, or spotting fake news?",
+            "misinformation": "Spotting misinformation is key! Look closely at the source - is it trustworthy? Does it use strong, emotional language? Does it offer proof? Real news is often calmer and shows evidence. We have mini-courses on this!",
+            "safety": "Staying safe online is like protecting your home. Use strong, different passwords. Be careful what personal details you share, especially in messages or public posts. Think before you click links! Our resources cover this in detail.",
+            "story": "Mehfooz began with conversations in Skardu, listening to the community's hopes and worries about the digital world. We aim to build a bridge between traditional wisdom and modern tools. You can feel our story in the 'Our Story' section.",
             "ulema": "We proudly partner with respected local Ulema. They are trusted voices who help us share digital literacy in a way that resonates deeply within the community, blending faith and knowledge."
         };
         const promptQuestions = {
@@ -738,19 +804,33 @@
                 chatInput.disabled = true;
                 promptButtonsContainer.style.pointerEvents = 'none';
                 gsap.to(promptButtonsContainer.querySelectorAll('button'), { opacity: 0.5, duration: 0.3 });
-                addMessage("Thinking...", 'bot', true); // More engaging thinking message
+                addMessage("Thinking...", 'bot', true); 
                 const thinkingBubble = chatLog.lastChild;
 
                 setTimeout(() => {
                     gsap.to(thinkingBubble, {opacity: 0, duration: 0.3, onComplete: () => thinkingBubble.remove()});
-                    const responseKey = Object.keys(promptQuestions).find(key => input.toLowerCase().includes(key.toLowerCase().split(' ')[2])) || 'default';
-                    const response = botResponses[promptQuestions[input] || responseKey];
+                    // Try exact match first, then basic keyword
+                    let responseKey = 'default';
+                    if (promptQuestions[input]) {
+                        responseKey = promptQuestions[input];
+                    } else {
+                       const inputLower = input.toLowerCase();
+                       for (const key in promptQuestions) {
+                          // Check if keywords from the prompt question exist in the input
+                          const keywords = key.toLowerCase().split(' ').filter(word => !['what\'s', 'how', 'do', 'you', 'can', 'i', 'is', 'a', 'the', 'for', 'with'].includes(word));
+                          if (keywords.some(keyword => inputLower.includes(keyword))) {
+                             responseKey = promptQuestions[key];
+                             break;
+                          }
+                       }
+                    }
+                    const response = botResponses[responseKey];
                     addMessage(response, 'bot');
                     chatInput.disabled = false;
                     chatInput.focus();
                     promptButtonsContainer.style.pointerEvents = 'auto';
                     gsap.to(promptButtonsContainer.querySelectorAll('button'), { opacity: 1, duration: 0.3 });
-                }, 900 + Math.random() * 600); // Slightly adjusted delay
+                }, 900 + Math.random() * 600);
              }
         }
 
