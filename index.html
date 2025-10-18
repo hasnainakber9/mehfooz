@@ -22,10 +22,8 @@
     <style>
         /*
           CSS STYLES
-          Summary: Replaced fonts with the new stack. Removed all '#game-screen' styles.
-          Added styles for the new 'skip-link', hero video background, toggle button,
-          and robust ':focus-visible' states for accessible navigation.
-          A 'prefers-reduced-motion' query now disables all major animations and motion.
+          Summary: No significant changes needed for these requests, focus is on HTML structure.
+          Fonts, skip-link, hero video, toggle button, focus states, and reduced motion query remain.
         */
         :root {
             --dark-bg: #0F172A;
@@ -38,7 +36,7 @@
             --danger: #ef4444;
             --success: #22c55e;
 
-            /* New Font Stack */
+            /* Font Stack */
             --font-heading: 'Montserrat', 'Aqua Grotesque', sans-serif;
             --font-body: 'Ubuntu', sans-serif;
             --font-script: 'Special Elite', 'Date Stamp Font', cursive;
@@ -51,7 +49,7 @@
         body {
             background-color: var(--dark-bg);
             color: var(--light-text);
-            font-family: var(--font-body); /* Use new body font */
+            font-family: var(--font-body);
             overflow-x: hidden;
             cursor: none;
         }
@@ -61,7 +59,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
         
-        /* --- ACCESSIBILITY: SKIP LINK --- */
+        /* Skip Link */
         .skip-link {
             position: absolute;
             top: -999px;
@@ -69,7 +67,7 @@
             background: var(--gold);
             color: var(--dark-bg);
             padding: 1rem;
-            z-index: 10001; /* Above all */
+            z-index: 10001;
             font-family: var(--font-heading);
             font-weight: 700;
             border-bottom-right-radius: 8px;
@@ -81,463 +79,142 @@
             transform: translateY(0);
         }
 
-        /* --- INTIMATE CURSOR --- */
+        /* Cursor */
         #cursor-light {
-            position: fixed;
-            width: 800px; height: 800px;
-            border-radius: 50%;
-            left: 0; top: 0;
+            position: fixed; width: 800px; height: 800px;
+            border-radius: 50%; left: 0; top: 0;
             pointer-events: none;
             background: radial-gradient(circle, rgba(244, 184, 96, 0.07) 0%, transparent 60%);
-            transform: translate(-50%, -50%);
-            z-index: 9999;
+            transform: translate(-50%, -50%); z-index: 9999;
             transition: transform 0.3s ease-out, opacity 0.3s ease;
-            opacity: 0; /* Hidden initially */
+            opacity: 0;
         }
         #cursor-dot {
-            position: fixed;
-            width: 6px; height: 6px;
-            background-color: var(--gold);
-            border-radius: 50%;
-            left: 0; top: 0;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 10000;
+            position: fixed; width: 6px; height: 6px;
+            background-color: var(--gold); border-radius: 50%;
+            left: 0; top: 0; pointer-events: none;
+            transform: translate(-50%, -50%); z-index: 10000;
             transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
-            opacity: 0; /* Hidden initially */
+            opacity: 0;
         }
-        body:hover > #cursor-light,
-        body:hover > #cursor-dot {
-            opacity: 1;
+        body:hover > #cursor-light, body:hover > #cursor-dot { opacity: 1; }
+        a:hover ~ #cursor-dot, button:hover ~ #cursor-dot, select:hover ~ #cursor-dot {
+            transform: translate(-50%, -50%) scale(1.5); background-color: var(--teal);
         }
-        a:hover ~ #cursor-dot,
-        button:hover ~ #cursor-dot,
-        select:hover ~ #cursor-dot {
-            transform: translate(-50%, -50%) scale(1.5);
-            background-color: var(--teal);
-        }
-        a:hover ~ #cursor-light,
-        button:hover ~ #cursor-light,
-        select:hover ~ #cursor-light {
+        a:hover ~ #cursor-light, button:hover ~ #cursor-light, select:hover ~ #cursor-light {
             transform: translate(-50%, -50%) scale(1.2);
         }
 
-        /* --- COSMIC PARTICLE BACKGROUND --- */
+        /* Background Canvas */
         #bg-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100vh;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 1s ease 0.5s;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100vh; z-index: -1;
+            opacity: 0; transition: opacity 1s ease 0.5s;
         }
-        body.site-entered #bg-canvas {
-            opacity: 1;
-        }
+        body.site-entered #bg-canvas { opacity: 1; }
 
-        /* --- TYPOGRAPHY & FONT APPLICATION --- */
+        /* Typography */
         .font-script { font-family: var(--font-script); }
         .font-serif { font-family: var(--font-serif-accent); }
-
-        h1, h2, h3, h4, h5, h6 { 
-            font-family: var(--font-heading); 
-            font-weight: 700;
-            color: var(--light-text);
-        }
-        
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 700; color: var(--light-text); }
         h1 { font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem); letter-spacing: -0.01em; }
         h2 { font-size: clamp(2rem, 4vw, 3rem); }
         h3 { font-size: 1.5rem; font-weight: 500; }
-        
-        p {
-            font-size: 1.125rem;
-            line-height: 1.7;
-            color: var(--medium-text);
-            max-width: 65ch;
-            font-weight: 400;
-        }
-        
-        blockquote { 
-            font-family: var(--font-serif-accent);
-            font-style: italic;
-            font-size: 1.2rem;
-            border-color: var(--gold);
-            color: var(--medium-text);
-        }
+        p { font-size: 1.125rem; line-height: 1.7; color: var(--medium-text); max-width: 65ch; font-weight: 400; }
+        blockquote { font-family: var(--font-serif-accent); font-style: italic; font-size: 1.2rem; border-color: var(--gold); color: var(--medium-text); }
         cite { font-family: var(--font-body); font-style: normal; }
 
-        /* --- PRELOADER --- */
-        #loader {
-            position: fixed;
-            inset: 0;
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--dark-bg);
-        }
+        /* Preloader */
+        #loader { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background-color: var(--dark-bg); }
         .loader-logo path:nth-child(1) { fill: var(--gold); opacity: 0.1; }
         .loader-logo path:nth-child(2) { fill: var(--gold); opacity: 0.3; }
         .loader-logo path:nth-child(3) { fill: var(--gold); }
 
-        /* --- HEADER & NAVIGATION --- */
-        #site-header {
-            opacity: 0; /* Start hidden */
-            transform: translateY(-100%);
-            transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-        }
-        #site-header.scrolled {
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        .nav-logo { 
-            font-family: var(--font-script);
-            color: var(--gold);
-        }
-        .nav-link { 
-            font-family: var(--font-heading);
-            font-weight: 500;
-            color: var(--light-text);
-            padding: 0.5rem 0.25rem;
-            border-radius: 4px; /* For focus ring */
-            outline: none;
-            transition: color 0.2s ease;
-        }
-        .nav-link kbd {
-            font-family: var(--font-body);
-            font-size: 0.7rem;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 1px 4px;
-            border-radius: 3px;
-            margin-left: 6px;
-            color: var(--medium-text);
-            opacity: 0.7;
-            transition: all 0.2s ease;
-        }
-        /* Nav Micro-interactions */
+        /* Header & Navigation */
+        #site-header { opacity: 0; transform: translateY(-100%); transition: background-color 0.3s ease, backdrop-filter 0.3s ease; }
+        #site-header.scrolled { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        .nav-logo { font-family: var(--font-script); color: var(--gold); }
+        .nav-link { font-family: var(--font-heading); font-weight: 500; color: var(--light-text); padding: 0.5rem 0.25rem; border-radius: 4px; outline: none; transition: color 0.2s ease; }
         .nav-link:hover { color: var(--gold); }
-        .nav-link:hover kbd { opacity: 1; color: var(--light-text); }
-        .nav-link:focus-visible {
-            color: var(--gold);
-            box-shadow: 0 0 0 2px var(--gold); /* A11y Focus State */
-        }
-        .nav-link.active {
-            color: var(--gold);
-            position: relative;
-        }
-        /* Active underline */
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--gold);
-        }
+        .nav-link:focus-visible { color: var(--gold); box-shadow: 0 0 0 2px var(--gold); } /* A11y Focus */
+        .nav-link.active { color: var(--gold); position: relative; }
+        .nav-link.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px; background: var(--gold); }
         
-        /* --- SECTION PADDING & ANCHORS --- */
-        section[id] {
-            scroll-margin-top: 100px; /* Offset for fixed header */
-            padding-top: 120px;
-            padding-bottom: 120px;
-        }
+        /* Section Padding & Anchors */
+        section[id] { scroll-margin-top: 100px; padding-top: 120px; padding-bottom: 120px; }
 
-        /* --- HERO SECTION & VIDEO BACKGROUND --- */
-        #home {
-            min-height: 100vh;
-            padding: 0; /* Override section padding */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-background-video,
-        .hero-background-image {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            opacity: 0.3;
-        }
-        .hero-background-video {
-            background-color: #000;
-        }
-        .hero-background-image {
-            background-color: var(--dark-bg);
-        }
-        /* Gradient overlay */
-        #home::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            background: radial-gradient(circle, transparent 50%, var(--dark-bg) 95%);
-        }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-        #hero-headline { 
-            font-family: var(--font-script); 
-            color: var(--gold);
-        }
-
-        /* Hero BG Toggle Button */
-        #bg-toggle {
-            position: absolute;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            z-index: 10;
-            background: rgba(30, 41, 59, 0.7); /* card-bg with transparency */
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 1px solid var(--border-color);
-            color: var(--medium-text);
-            padding: 0.4rem 0.8rem;
-            border-radius: 99px;
-            font-family: var(--font-heading);
-            font-size: 0.75rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-        #bg-toggle:hover {
-            color: var(--light-text);
-            border-color: var(--teal);
-            background: var(--teal);
-        }
-        #bg-toggle:focus-visible {
-            outline: none;
-            box-shadow: 0 0 0 2px var(--gold);
-        }
-
-        /* Toggle Logic CSS */
+        /* Hero Section & Video Background */
+        #home { min-height: 100vh; padding: 0; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; }
+        .hero-background-video, .hero-background-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.3; }
+        .hero-background-video { background-color: #000; }
+        .hero-background-image { background-color: var(--dark-bg); }
+        #home::after { content: ''; position: absolute; inset: 0; z-index: 1; background: radial-gradient(circle, transparent 50%, var(--dark-bg) 95%); }
+        .hero-content { position: relative; z-index: 2; }
+        #hero-headline { font-family: var(--font-script); color: var(--gold); }
+        #bg-toggle { position: absolute; bottom: 1.5rem; right: 1.5rem; z-index: 10; background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); border: 1px solid var(--border-color); color: var(--medium-text); padding: 0.4rem 0.8rem; border-radius: 99px; font-family: var(--font-heading); font-size: 0.75rem; font-weight: 500; transition: all 0.2s ease; }
+        #bg-toggle:hover { color: var(--light-text); border-color: var(--teal); background: var(--teal); }
+        #bg-toggle:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--gold); }
         #home .hero-background-video { display: block; }
         #home .hero-background-image { display: none; }
         #home.static-bg-active .hero-background-video { display: none; }
         #home.static-bg-active .hero-background-image { display: block; }
 
-        /* --- JOURNAL & OTHER SECTIONS --- */
+        /* Journal & Other Sections */
         #journal h2 { color: var(--gold); font-family: var(--font-script); }
-        .journal-image-container {
-            border-radius: 0.5rem;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            opacity: 0; /* For GSAP reveal */
-            clip-path: inset(10% 30% 10% 30%); /* For GSAP reveal */
-            transform: scale(1.1); /* For GSAP reveal */
-        }
-        .journal-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* --- APPROACH --- */
+        .journal-image-container { border-radius: 0.5rem; overflow: hidden; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); opacity: 0; clip-path: inset(10% 30% 10% 30%); transform: scale(1.1); }
+        .journal-image-container img { width: 100%; height: 100%; object-fit: cover; }
         #approach h2 { color: var(--gold); font-family: var(--font-script); }
         #approach h3 { color: var(--teal); font-family: var(--font-script); }
-        .pillar-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 0.75rem;
-            padding: 2rem;
-            opacity: 0; /* For GSAP */
-        }
-
-        /* --- COMMUNITY --- */
+        .pillar-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 2rem; opacity: 0; }
         #community h2 { color: var(--gold); font-family: var(--font-script); }
         #community h3 { color: var(--teal); font-family: var(--font-script); }
-
-        /* --- VISION --- */
         #vision h2 { color: var(--gold); font-family: var(--font-script); }
         #vision p.font-script { color: var(--teal); font-family: var(--font-script); }
         #vision h3 { color: var(--light-text); font-family: var(--font-heading); }
-        .btn-outline {
-            border: 1px solid var(--teal);
-            color: var(--teal);
-            font-family: var(--font-heading);
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 99px;
-            transition: all 0.2s ease;
-        }
-        .btn-outline:hover, .btn-outline:focus-visible {
-            background-color: var(--teal);
-            color: white;
-            transform: translateY(-2px);
-            outline: none;
-        }
-
-        /* --- VALUES --- */
+        .btn-outline { border: 1px solid var(--teal); color: var(--teal); font-family: var(--font-heading); font-weight: 500; padding: 0.5rem 1rem; border-radius: 99px; transition: all 0.2s ease; }
+        .btn-outline:hover, .btn-outline:focus-visible { background-color: var(--teal); color: white; transform: translateY(-2px); outline: none; }
         #values h2 { color: var(--gold); font-family: var(--font-script); }
         #values h3 { color: var(--teal); font-family: var(--font-script); }
-        .value-icon {
-            stroke-width: 1;
-            transition: all 0.4s ease;
-            color: var(--medium-text); /* Use color for SVG stroke */
-        }
-        .value-container:hover .value-icon {
-            transform: scale(1.1);
-            color: var(--gold); /* Use color for SVG stroke on hover */
-        }
+        .value-icon { stroke-width: 1; transition: all 0.4s ease; color: var(--medium-text); }
+        .value-container:hover .value-icon { transform: scale(1.1); color: var(--gold); }
         
-        /* --- CONNECT & CHAT BOT --- */
+        /* Connect & Chat Bot */
         #connect h2 { color: var(--gold); font-family: var(--font-script); }
         #connect h3 { color: var(--teal); font-family: var(--font-script); }
-        #chat-log { 
-            background-color: rgba(15, 23, 42, 0.5); /* Darker chat log */
-            border-radius: 0.5rem 0.5rem 0 0;
-            box-shadow: inset 0 4px 10px rgba(0,0,0,0.2);
-        }
-        #chat-form-container {
-            background: var(--card-bg);
-            border-radius: 0 0 0.5rem 0.5rem;
-        }
-
+        #chat-log { background-color: rgba(15, 23, 42, 0.5); border-radius: 0.5rem 0.5rem 0 0; box-shadow: inset 0 4px 10px rgba(0,0,0,0.2); }
+        #chat-form-container { background: var(--card-bg); border-radius: 0 0 0.5rem 0.5rem; }
         .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 18px; line-height: 1.5; font-family: var(--font-body); }
         .user-bubble { background-color: var(--teal); color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
         .bot-bubble { background-color: var(--card-bg); color: var(--light-text); border-bottom-left-radius: 4px; align-self: flex-start; }
-        
-        .chat-prompt-btn {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--medium-text);
-            transition: all 0.3s ease;
-            border-radius: 99px;
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-            font-family: var(--font-heading);
-            font-weight: 500;
-        }
-        .chat-prompt-btn:hover, .chat-prompt-btn:focus-visible {
-            background-color: var(--teal);
-            border-color: var(--teal);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 168, 150, 0.2);
-            outline: none;
-        }
+        .chat-prompt-btn { background-color: var(--card-bg); border: 1px solid var(--border-color); color: var(--medium-text); transition: all 0.3s ease; border-radius: 99px; padding: 0.5rem 1rem; font-size: 0.875rem; font-family: var(--font-heading); font-weight: 500; }
+        .chat-prompt-btn:hover, .chat-prompt-btn:focus-visible { background-color: var(--teal); border-color: var(--teal); color: white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 168, 150, 0.2); outline: none; }
 
-        /* --- FORMS --- */
-        .form-input {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--light-text);
-            border-radius: 8px;
-            padding: 0.875rem 1rem;
-            transition: all 0.3s ease;
-            width: 100%;
-            font-family: var(--font-body);
-        }
-        .form-input:focus, .form-input:focus-visible {
-            outline: none;
-            border-color: var(--teal);
-            box-shadow: 0 0 0 3px rgba(0, 168, 150, 0.3);
-        }
-        select.form-input {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2394A3B8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 0.7rem center;
-            background-size: 1.2em 1.2em;
-            padding-right: 2.5rem;
-        }
+        /* Forms */
+        .form-input { background-color: var(--card-bg); border: 1px solid var(--border-color); color: var(--light-text); border-radius: 8px; padding: 0.875rem 1rem; transition: all 0.3s ease; width: 100%; font-family: var(--font-body); }
+        .form-input:focus, .form-input:focus-visible { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0, 168, 150, 0.3); }
+        select.form-input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2394A3B8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.7rem center; background-size: 1.2em 1.2em; padding-right: 2.5rem; }
+        .btn-teal { background-color: var(--teal); color: white; transition: all 0.3s ease; border-radius: 99px; font-family: var(--font-heading); font-weight: 700; }
+        .btn-teal:hover, .btn-teal:focus-visible { background-color: var(--gold); color: var(--dark-bg); transform: scale(1.05); box-shadow: 0 5px 15px rgba(0, 168, 150, 0.3); outline: none; }
 
-        .btn-teal {
-            background-color: var(--teal);
-            color: white;
-            transition: all 0.3s ease;
-            border-radius: 99px;
-            font-family: var(--font-heading);
-            font-weight: 700;
-        }
-        .btn-teal:hover, .btn-teal:focus-visible {
-            background-color: var(--gold);
-            color: var(--dark-bg);
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0, 168, 150, 0.3);
-            outline: none;
-        }
+        /* Footer */
+        #site-footer { border-top: 1px solid var(--border-color); padding: 2rem 0; text-align: center; }
+        #site-footer p { color: var(--medium-text); font-size: 0.9rem; max-width: none; }
 
-        /* --- FOOTER --- */
-        #site-footer { 
-            border-top: 1px solid var(--border-color);
-            padding: 2rem 0;
-            text-align: center;
-        }
-        #site-footer p { 
-            color: var(--medium-text);
-            font-size: 0.9rem;
-            max-width: none;
-        }
-
-        /* --- RESPONSIVENESS --- */
+        /* Responsiveness */
         @media (max-width: 768px) {
-            #site-header .nav-links { display: none; } /* Hide desktop nav */
-            
-            h1 { font-size: clamp(2.2rem, 8vw, 3.5rem); }
-            h2 { font-size: clamp(1.8rem, 6vw, 2.5rem); }
-            h3 { font-size: 1.3rem; }
-            p { font-size: 1rem; }
-            blockquote { font-size: 1rem; }
-
-            section[id] {
-                scroll-margin-top: 80px; /* Smaller header offset */
-                padding-top: 100px;
-                padding-bottom: 100px;
-            }
-
-            .journal-section .flex { flex-direction: column; }
-            .journal-section .w-full { width: 100%; }
-
-            #chat-log { height: 40vh; }
-            .chat-prompt-btn { font-size: 0.75rem; padding: 0.4rem 0.8rem; }
+            #site-header .nav-links { display: none; }
+            h1 { font-size: clamp(2.2rem, 8vw, 3.5rem); } h2 { font-size: clamp(1.8rem, 6vw, 2.5rem); } h3 { font-size: 1.3rem; } p { font-size: 1rem; } blockquote { font-size: 1rem; }
+            section[id] { scroll-margin-top: 80px; padding-top: 100px; padding-bottom: 100px; }
+            .journal-section .flex { flex-direction: column; } .journal-section .w-full { width: 100%; }
+            #chat-log { height: 40vh; } .chat-prompt-btn { font-size: 0.75rem; padding: 0.4rem 0.8rem; }
         }
 
-        /* --- REDUCED MOTION --- */
+        /* Reduced Motion */
         @media (prefers-reduced-motion: reduce) {
-            /* Disable all transitions and animations */
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-
-            /* Disable custom cursor */
-            body { cursor: auto; }
-            #cursor-light, #cursor-dot {
-                display: none !important;
-            }
-            button, a, select {
-                cursor: auto;
-            }
-            
-            /* Disable motion background */
-            #bg-canvas { display: none; }
-            #home .hero-background-video { display: none; }
-            #home .hero-background-image { display: block; }
-
-            /* Force show scroll-triggered content */
-            .reveal-up {
-                opacity: 1;
-                transform: none;
-            }
-            .journal-image-container {
-                opacity: 1;
-                clip-path: none;
-                transform: none;
-            }
-            
-            /* Hide motion toggle */
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+            body { cursor: auto; } #cursor-light, #cursor-dot { display: none !important; } button, a, select { cursor: auto; }
+            #bg-canvas { display: none; } #home .hero-background-video { display: none; } #home .hero-background-image { display: block; }
+            .reveal-up { opacity: 1; transform: none; } .journal-image-container { opacity: 1; clip-path: none; transform: none; }
             #bg-toggle { display: none; }
         }
     </style>
@@ -565,11 +242,11 @@
             <nav class="container mx-auto flex justify-between items-center p-6 md:p-8">
                 <a href="#home" class="nav-logo text-3xl">Mehfooz</a>
                 <div class="nav-links hidden md:flex gap-6 text-lg items-center">
-                    <a href="#home" class="nav-link relative" title="Go to Home (Alt+1)">Home<kbd>1</kbd></a>
-                    <a href="#journal" class="nav-link relative" title="Go to Journal (Alt+2)">Journal<kbd>2</kbd></a>
-                    <a href="#approach" class="nav-link relative" title="Go to Approach (Alt+3)">Approach<kbd>3</kbd></a>
-                    <a href="#community" class="nav-link relative" title="Go to Community (Alt+4)">Community<kbd>4</kbd></a>
-                    <a href="#connect" class="nav-link relative" title="Go to Connect (Alt+5)">Connect<kbd>5</kbd></a>
+                    <a href="#home" class="nav-link relative" title="Go to Home">Home</a>
+                    <a href="#journal" class="nav-link relative" title="Go to Journal">Journal</a>
+                    <a href="#approach" class="nav-link relative" title="Go to Approach">Approach</a>
+                    <a href="#community" class="nav-link relative" title="Go to Community">Community</a>
+                    <a href="#connect" class="nav-link relative" title="Go to Connect">Connect</a>
                 </div>
             </nav>
         </header>
@@ -591,10 +268,7 @@
                 <p id="hero-subheadline" class="text-xl md:text-2xl text-light-text leading-relaxed max-w-4xl mx-auto">
                     For the people of Gilgit Baltistan, a safe space to find clarity in a connected world.
                 </p>
-                <div id="scroll-prompt" class="absolute bottom-16 left-1/2 -translate-x-1/2 opacity-0">
-                    <a href="#journal" class="font-script text-medium-text animate-pulse">Scroll to Discover</a>
                 </div>
-            </div>
 
             <button id="bg-toggle" title="Toggle motion background">Show Static</button>
         </section>
@@ -787,10 +461,9 @@
 <script>
 /*
   JAVASCRIPT
-  Summary: Removed all 'game-screen' logic. Implemented a new, short (2.5s) loader animation
-  that leads directly to the main site. Added 'prefersReducedMotion' checks to disable
-  Lenis, Three.js, GSAP animations, and the custom cursor for accessibility.
-  Added logic for the hero video/static toggle button, with a mobile default.
+  Summary: Kept loader animation. Removed scroll-prompt logic.
+  Removed kbd tag logic. Ensured 'prefersReducedMotion' checks remain.
+  Ensured '#approach' animations target existing content.
 */
 document.addEventListener('DOMContentLoaded', function() {
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -809,7 +482,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- 1. CINEMATIC INTRO & LOADER ---
     if (prefersReducedMotion) {
-        // Instantly show content, hide loader
         gsap.set(loader, { display: 'none' });
         gsap.set(mainContent, { opacity: 1 });
         gsap.set(siteHeader, { opacity: 1, y: 0 });
@@ -817,7 +489,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setupNavigation();
         initSiteAnimations();
     } else {
-        // New 2-3s cinematic intro
         gsap.timeline({
             onComplete: () => {
                 document.body.classList.add('site-entered');
@@ -826,172 +497,102 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .to(loader.querySelector('.loader-logo'), {
-            opacity: 0,
-            scale: 0.8,
-            duration: 0.8,
-            ease: 'power2.in',
-            delay: 1.5 // Total time ~2.3s
+            opacity: 0, scale: 0.8, duration: 0.8, ease: 'power2.in', delay: 1.5 
         })
         .to(loader, {
-            opacity: 0,
-            duration: 1,
-            onComplete: () => gsap.set(loader, { display: 'none' })
-        }, "-=0.5") // Overlap
-        .to(siteHeader, { // Use .to() since it starts at opacity: 0
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            ease: 'power2.out'
+            opacity: 0, duration: 1, onComplete: () => gsap.set(loader, { display: 'none' })
+        }, "-=0.5") 
+        .to(siteHeader, { 
+            y: 0, opacity: 1, duration: 1, ease: 'power2.out' 
         }, "-=0.8")
         .to(mainContent, {
-            opacity: 1,
-            duration: 1.5,
-            ease: 'power2.out'
-        }, "<"); // At the same time as header
+            opacity: 1, duration: 1.5, ease: 'power2.out'
+        }, "<"); 
     }
 
     // --- 2. CURSOR & MOTION INITIALIZATION ---
     if (!prefersReducedMotion) {
-        // --- Intimate Cursor ---
-        window.addEventListener('mousemove', e => { 
-            mouse.x = e.clientX; 
-            mouse.y = e.clientY;
-        });
+        // Cursor
+        window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
         gsap.ticker.add(() => {
             gsap.to(cursorDot, { duration: 0.2, x: mouse.x, y: mouse.y });
             gsap.to(cursorLight, { duration: 0.5, x: mouse.x, y: mouse.y, ease: 'power2.out' });
         });
 
-        // --- Smooth Scroll ---
+        // Smooth Scroll
         lenis = new Lenis();
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
         
-        // --- Cosmic Background (Three.js) ---
+        // Cosmic Background (Three.js)
         try {
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             camera.position.z = 5;
-            const renderer = new THREE.WebGLRenderer({ 
-                canvas: document.getElementById('bg-canvas'), 
-                alpha: true, 
-                antialias: true 
-            });
+            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true, antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            
             const particleCount = 7000;
             const positions = new Float32Array(particleCount * 3);
             const colors = new Float32Array(particleCount * 3);
             const colorGold = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--gold').trim());
             const colorTeal = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--teal').trim());
-            
             for(let i = 0; i < particleCount; i++) {
                 const i3 = i * 3;
-                positions[i3] = (Math.random() - 0.5) * 25;
-                positions[i3 + 1] = (Math.random() - 0.5) * 25;
-                positions[i3 + 2] = (Math.random() - 0.5) * 25;
-                
+                positions[i3] = (Math.random() - 0.5) * 25; positions[i3 + 1] = (Math.random() - 0.5) * 25; positions[i3 + 2] = (Math.random() - 0.5) * 25;
                 const mixedColor = Math.random() > 0.85 ? colorGold.clone() : colorTeal.clone().lerp(colorGold, Math.random() * 0.2);
-                colors[i3] = mixedColor.r;
-                colors[i3 + 1] = mixedColor.g;
-                colors[i3 + 2] = mixedColor.b;
+                colors[i3] = mixedColor.r; colors[i3 + 1] = mixedColor.g; colors[i3 + 2] = mixedColor.b;
             }
-            
             const particlesGeometry = new THREE.BufferGeometry();
             particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
             particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            
-            const particlesMaterial = new THREE.PointsMaterial({
-                size: 0.02,
-                sizeAttenuation: true,
-                transparent: true,
-                opacity: 0.5,
-                vertexColors: true,
-                depthWrite: false
-            });
-            
+            const particlesMaterial = new THREE.PointsMaterial({ size: 0.02, sizeAttenuation: true, transparent: true, opacity: 0.5, vertexColors: true, depthWrite: false });
             const particles = new THREE.Points(particlesGeometry, particlesMaterial);
             scene.add(particles);
-            
             let clock = new THREE.Clock();
             function animateBackground() {
-                const elapsedTime = clock.getElapsedTime();
-                const scrollY = lenis ? lenis.scroll : window.scrollY;
-                
-                // Slower "cosmic" rotation
+                const elapsedTime = clock.getElapsedTime(); const scrollY = lenis ? lenis.scroll : window.scrollY;
                 particles.rotation.y = elapsedTime * 0.01 + scrollY * 0.0001;
-                particles.rotation.x = elapsedTime * 0.005 + (mouse.y / window.innerHeight - 0.5) * 0.01; // More subtle mouse
+                particles.rotation.x = elapsedTime * 0.005 + (mouse.y / window.innerHeight - 0.5) * 0.01;
                 particles.position.y = -scrollY / window.innerHeight * 1.5;
-                
-                renderer.render(scene, camera);
-                requestAnimationFrame(animateBackground);
+                renderer.render(scene, camera); requestAnimationFrame(animateBackground);
             }
             animateBackground();
-            
             window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             });
-        } catch (e) {
-            console.error("Three.js initialization failed:", e);
-            document.getElementById('bg-canvas').style.display = 'none';
-        }
+        } catch (e) { console.error("Three.js initialization failed:", e); document.getElementById('bg-canvas').style.display = 'none'; }
     }
 
     // --- 3. NAVIGATION & SCROLLING ---
     function setupNavigation() {
-        // --- All Nav Links (Header + Footer + In-page) ---
+        // Nav Links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetEl = document.querySelector(targetId);
+                const targetId = this.getAttribute('href'); const targetEl = document.querySelector(targetId);
                 if (!targetEl) return;
-
-                if (prefersReducedMotion) {
-                    // Use native instant scroll
-                    targetEl.scrollIntoView({ behavior: 'auto' });
-                } else {
-                    // Use Lenis smooth scroll
-                    lenis.scrollTo(targetEl, { offset: 0, duration: 0.8, ease: 'power2.inOut' });
-                }
+                if (prefersReducedMotion) { targetEl.scrollIntoView({ behavior: 'auto' }); } 
+                else { lenis.scrollTo(targetEl, { offset: 0, duration: 0.8, ease: 'power2.inOut' }); }
             });
         });
 
-        // --- Header Scroll Effect ---
-        ScrollTrigger.create({
-            start: 'top top-=-100', // When scrolling down 100px
-            end: 99999,
-            toggleClass: { className: 'scrolled', targets: siteHeader }
-        });
+        // Header Scroll Effect
+        ScrollTrigger.create({ start: 'top top-=-100', end: 99999, toggleClass: { className: 'scrolled', targets: siteHeader } });
         
-        // --- Nav Link Active State Highlighting ---
+        // Nav Link Active State
         gsap.utils.toArray('main section[id]').forEach((section) => {
             ScrollTrigger.create({
-                trigger: section,
-                start: 'top center+=100px',
-                end: 'bottom center-=100px',
+                trigger: section, start: 'top center+=100px', end: 'bottom center-=100px',
                 onToggle: self => {
                     const sectionId = section.getAttribute('id');
                     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
                     const correspondingLinks = document.querySelectorAll(`.nav-link[href="#${sectionId}"]`);
-                    correspondingLinks.forEach(link => {
-                        if (self.isActive) {
-                            link.classList.add('active');
-                        } else {
-                            link.classList.remove('active');
-                        }
-                    });
+                    correspondingLinks.forEach(link => { link.classList.toggle('active', self.isActive); });
                 }
             });
         });
-        // Ensure home is active initially
         document.querySelectorAll('.nav-link[href="#home"]').forEach(link => link.classList.add('active'));
     }
 
@@ -999,91 +600,50 @@ document.addEventListener('DOMContentLoaded', function() {
     const bgToggle = document.getElementById('bg-toggle');
     const homeSection = document.getElementById('home');
     const heroVideo = document.getElementById('hero-video-bg');
-    
     if (bgToggle && homeSection && heroVideo) {
         bgToggle.addEventListener('click', () => {
             homeSection.classList.toggle('static-bg-active');
-            if (homeSection.classList.contains('static-bg-active')) {
-                heroVideo.pause();
-                bgToggle.textContent = "Show Motion";
-            } else {
-                heroVideo.play().catch(e => console.error("Video play failed:", e));
-                bgToggle.textContent = "Show Static";
-            }
+            if (homeSection.classList.contains('static-bg-active')) { heroVideo.pause(); bgToggle.textContent = "Show Motion"; } 
+            else { heroVideo.play().catch(e => console.error("Video play failed:", e)); bgToggle.textContent = "Show Static"; }
         });
-
-        // Default to static on mobile
-        if (isMobile) {
-            homeSection.classList.add('static-bg-active');
-            heroVideo.pause();
-            bgToggle.textContent = "Show Motion";
-        }
+        if (isMobile) { homeSection.classList.add('static-bg-active'); heroVideo.pause(); bgToggle.textContent = "Show Motion"; }
     }
 
     // --- 5. PAGE CONTENT ANIMATIONS ---
     function initSiteAnimations() {
         if (prefersReducedMotion) {
-            // Show scroll prompt if motion is off
-            gsap.set('#scroll-prompt', { opacity: 1 });
-            // Set counter instantly
-            const counter = document.getElementById("user-counter");
-            if(counter) counter.innerHTML = "100,000+";
-            return; // Don't initialize any GSAP animations
+             const counter = document.getElementById("user-counter");
+             if(counter) counter.innerHTML = "100,000+";
+             return; 
         }
 
-        // --- Hero Text & Scroll Prompt ---
-        gsap.timeline({ delay: 0.2 }) // Delay after main content fade-in
+        // Hero Text (Scroll Prompt removed)
+        gsap.timeline({ delay: 0.2 }) 
             .from('#hero-headline', { opacity: 0, y: 20, duration: 1, ease: 'power3.out' })
-            .from('#hero-subheadline', { opacity: 0, y: 20, duration: 1, ease: 'power2.out' }, "-=0.8")
-            .to('#scroll-prompt', { opacity: 1, duration: 1, delay: 0.5}, "-=0.8");
+            .from('#hero-subheadline', { opacity: 0, y: 20, duration: 1, ease: 'power2.out' }, "-=0.8");
 
-        // --- Section Reveals ---
+        // Section Reveals (includes #approach .pillar-card)
         gsap.utils.toArray('.reveal-up').forEach(elem => {
             gsap.from(elem, {
-                opacity: 0,
-                y: 50,
-                duration: 1.2,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: elem,
-                    start: 'top 88%',
-                    once: true,
-                    delay: elem.style.getPropertyValue('--gsap-delay') || 0 // Use custom delay if set
-                }
+                opacity: 0, y: 50, duration: 1.2, ease: 'power3.out',
+                scrollTrigger: { trigger: elem, start: 'top 88%', once: true, delay: elem.style.getPropertyValue('--gsap-delay') || 0 }
             });
         });
 
-        // --- Image Reveals ---
+        // Image Reveals
         gsap.utils.toArray('.journal-image-container').forEach(container => {
             gsap.to(container, {
-                clipPath: 'inset(0% 0% 0% 0%)',
-                opacity: 1,
-                transform: 'scale(1)',
-                duration: 1.8,
-                ease: 'power4.out',
-                scrollTrigger: {
-                    trigger: container,
-                    start: 'top 85%',
-                    once: true
-                }
+                clipPath: 'inset(0% 0% 0% 0%)', opacity: 1, transform: 'scale(1)',
+                duration: 1.8, ease: 'power4.out',
+                scrollTrigger: { trigger: container, start: 'top 85%', once: true }
             });
         });
 
-        // --- Vision Counter ---
+        // Vision Counter
         gsap.to("#user-counter", {
-            textContent: 100000,
-            duration: 3,
-            ease: "power2.inOut",
-            snap: { textContent: 1 },
-            scrollTrigger: {
-                trigger: "#user-counter",
-                start: "top 80%",
-                once: true
-            },
-            onUpdate: function() {
-                this.targets()[0].innerHTML =
-                    Math.ceil(this.targets()[0].textContent).toLocaleString('en-US') + "+";
-            }
+            textContent: 100000, duration: 3, ease: "power2.inOut", snap: { textContent: 1 },
+            scrollTrigger: { trigger: "#user-counter", start: "top 80%", once: true },
+            onUpdate: function() { this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent).toLocaleString('en-US') + "+"; }
         });
     }
 
@@ -1092,31 +652,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatForm = document.getElementById('chat-form');
     const chatInput = document.getElementById('chat-input');
     const promptButtonsContainer = document.getElementById('prompt-buttons');
-
     if (chatLog && chatForm && chatInput && promptButtonsContainer) {
-        const botResponses = {
-            "greeting": "Hello! How can I assist you today on your journey to digital clarity?",
+        const botResponses = { /* ... Responses remain the same ... */ 
+             "greeting": "Hello! How can I assist you today on your journey to digital clarity?",
             "default": "That's an interesting point. While this demo is limited, the full MehfoozBot explores topics like that in detail.",
             "misinformation": "Spotting misinformation involves a few key steps: Check the source's credibility, look for supporting evidence elsewhere, be wary of emotionally charged language, and check the date.",
             "safety": "Online safety basics include using strong, unique passwords (consider a password manager!), enabling two-factor authentication, and being cautious about links/attachments.",
             "story": "Mehfooz began from listening to the community in Skardu. We realized the need wasn't just *more* tech, but *understanding* tech. You can read a bit more in the 'Journal' section.",
             "ulema": "We proudly partner with local Ulema (religious leaders). They serve as trusted community voices, helping bridge traditional wisdom with essential digital literacy skills."
         };
-        
-        const promptQuestions = {
+        const promptQuestions = { /* ... Questions remain the same ... */ 
             "How do you work?": "ulema",
             "What's your story?": "story",
             "Spotting fake news?": "misinformation",
             "Staying safe online?": "safety"
         };
-
-        function getBotResponse(userInput) {
+        function getBotResponse(userInput) { /* ... Logic remains the same ... */ 
             const lowerInput = userInput.toLowerCase().trim();
-            // Check exact matches from buttons/pills first
-            if (promptQuestions[userInput]) {
-                return botResponses[promptQuestions[userInput]];
-            }
-            // Keyword checks
+            if (promptQuestions[userInput]) { return botResponses[promptQuestions[userInput]]; }
             if (lowerInput.includes('fake news') || lowerInput.includes('misinformation')) return botResponses.misinformation;
             if (lowerInput.includes('safe') || lowerInput.includes('security') || lowerInput.includes('password')) return botResponses.safety;
             if (lowerInput.includes('story') || lowerInput.includes('who are you') || lowerInput.includes('about')) return botResponses.story;
@@ -1124,60 +677,26 @@ document.addEventListener('DOMContentLoaded', function() {
             if (lowerInput.includes('hello') || lowerInput.includes('hi') || lowerInput.includes('greeting')) return botResponses.greeting;
             return botResponses.default;
         }
-
-        function addChatMessage(message, sender, isImmediate = false) {
-            const bubble = document.createElement('div');
-            bubble.className = `chat-bubble ${sender}-bubble`;
-            bubble.textContent = message;
-            chatLog.appendChild(bubble);
-            
-            if (!prefersReducedMotion) {
-                gsap.from(bubble, { opacity: 0, y: 20, duration: 0.5, delay: isImmediate ? 0 : 0.2 });
-                gsap.to(chatLog, { duration: 0.5, scrollTo: { y: "max", autoKill: false }, ease: "power2.out" });
-            } else {
-                chatLog.scrollTop = chatLog.scrollHeight;
-            }
+        function addChatMessage(message, sender, isImmediate = false) { /* ... Logic remains the same ... */ 
+            const bubble = document.createElement('div'); bubble.className = `chat-bubble ${sender}-bubble`; bubble.textContent = message; chatLog.appendChild(bubble);
+            if (!prefersReducedMotion) { gsap.from(bubble, { opacity: 0, y: 20, duration: 0.5, delay: isImmediate ? 0 : 0.2 }); gsap.to(chatLog, { duration: 0.5, scrollTo: { y: "max", autoKill: false }, ease: "power2.out" }); } 
+            else { chatLog.scrollTop = chatLog.scrollHeight; }
         }
-
-        function handleBotUserInput(input) {
-            const trimmedInput = input.trim();
+        function handleBotUserInput(input) { /* ... Logic remains the same ... */ 
+             const trimmedInput = input.trim();
             if (trimmedInput) {
-                addChatMessage(trimmedInput, 'user', true);
-                chatInput.value = "";
-                chatInput.disabled = true;
-                
-                // Disable prompt buttons
+                addChatMessage(trimmedInput, 'user', true); chatInput.value = ""; chatInput.disabled = true;
                 gsap.to(promptButtonsContainer.children, { opacity: 0.5, duration: 0.3, pointerEvents: 'none' });
-                
                 setTimeout(() => {
-                    const response = getBotResponse(trimmedInput);
-                    addChatMessage(response, 'bot');
-                    chatInput.disabled = false;
-                    
-                    // Re-enable prompt buttons
-                    gsap.to(promptButtonsContainer.children, { opacity: 1, duration: 0.3, pointerEvents: 'auto' });
-                    chatInput.focus();
+                    const response = getBotResponse(trimmedInput); addChatMessage(response, 'bot'); chatInput.disabled = false;
+                    gsap.to(promptButtonsContainer.children, { opacity: 1, duration: 0.3, pointerEvents: 'auto' }); chatInput.focus();
                 }, 1000 + Math.random() * 400);
             }
         }
-
-        // --- Setup Bot ---
-        chatForm.addEventListener('submit', e => {
-            e.preventDefault();
-            handleBotUserInput(chatInput.value);
-        });
-
-        // Populate prompt buttons
+        chatForm.addEventListener('submit', e => { e.preventDefault(); handleBotUserInput(chatInput.value); });
         Object.keys(promptQuestions).forEach(question => {
-            const button = document.createElement('button');
-            button.type = "button";
-            button.className = "chat-prompt-btn";
-            button.textContent = question;
-            button.onclick = () => { handleBotUserInput(question); };
-            promptButtonsContainer.appendChild(button);
+            const button = document.createElement('button'); button.type = "button"; button.className = "chat-prompt-btn"; button.textContent = question; button.onclick = () => { handleBotUserInput(question); }; promptButtonsContainer.appendChild(button);
         });
-
-        // Add initial greeting
         addChatMessage(botResponses.greeting, 'bot', true);
     }
 
@@ -1187,16 +706,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (contactForm && formSuccess) {
         contactForm.addEventListener('submit', e => {
             e.preventDefault();
-            // Simulate form submission
             gsap.to(contactForm, { 
-                opacity: 0, 
-                duration: 0.5, 
-                height: 0, 
-                ease: 'power2.in',
+                opacity: 0, duration: 0.5, height: 0, ease: 'power2.in',
                 onComplete: () => {
-                    contactForm.style.display = 'none';
-                    formSuccess.classList.remove('hidden');
-                    gsap.set(formSuccess, { height: 'auto' }); // Set height before animating
+                    contactForm.style.display = 'none'; formSuccess.classList.remove('hidden');
+                    gsap.set(formSuccess, { height: 'auto' }); 
                     gsap.from(formSuccess, { opacity: 0, y: 20, duration: 0.6, ease: 'power2.out' });
                 }
             });
