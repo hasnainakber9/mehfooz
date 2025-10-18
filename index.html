@@ -7,13 +7,8 @@
     
     <script src="https://cdn.tailwindcss.com"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
-    <script src="https://unpkg.com/split-type"></script> <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Special+Elite&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
-
-
-    <style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/split-type"></script> <style>
         /* ---
         SOPHISTICATED THEME (NAVY/TEAL/GOLD) - REAPPLIED
         ---
@@ -29,13 +24,13 @@
             --danger: #ef4444;
             --success: #22c55e;
 
-            /* *** UPDATED FONT VARIABLES *** */
-            --font-sans: 'Ubuntu', sans-serif; /* Ubuntu for body */
-            --font-heading: 'Poppins', sans-serif; /* Poppins for headings */
-            --font-script: 'Special Elite', cursive; /* Special Elite for script */
+            --font-sans: 'Inter', sans-serif;
+            --font-heading: 'Poppins', sans-serif; /* Using Poppins from previous req */
+            --font-script: 'Special Elite', cursive; /* Using Special Elite from previous req */
         }
 
-        /* Removed previous font import */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Special+Elite&family=Ubuntu:wght@400;500;700&display=swap');
+
 
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto; }
@@ -43,8 +38,7 @@
         body {
             background-color: var(--dark-bg);
             color: var(--light-text);
-            /* *** APPLY UBUNTU TO BODY *** */
-            font-family: var(--font-sans);
+            font-family: var(--font-sans); /* Ubuntu for body */
             overflow-x: hidden;
             cursor: none;
         }
@@ -277,6 +271,9 @@
         blockquote p { /* Ensure blockquotes use body font */
              font-family: var(--font-sans);
         }
+        blockquote { font-style: normal; } /* Remove default italic from blockquote */
+        blockquote > p { font-style: italic; } /* Apply italic to p inside blockquote */
+
 
         /* --- Apply Poppins to specific buttons/nav items for consistency --- */
          .btn, .nav-link, #friendly-nav .nav-link, .chat-prompt-btn, .question-pill {
@@ -457,9 +454,9 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
-        .nav-logo { color: var(--gold); }
+        .nav-logo { color: var(--gold); font-family: var(--font-script); } /* Apply script font */
          /* Adjust desktop nav link style */
-        #site-header .nav-link { color: var(--light-text); }
+        #site-header .nav-link { color: var(--light-text); font-family: var(--font-heading); } /* Poppins */
         #site-header .nav-link:hover { color: var(--gold); }
          #site-header .nav-link.btn-outline { border-color: var(--teal); color: var(--teal); }
          #site-header .nav-link.btn-outline:hover { background-color: var(--teal); color: white; }
@@ -468,7 +465,7 @@
         HERO STYLES (MATCH THEME)
         ---
         */
-        /* #hero-headline { color: var(--gold); } Already handled by .font-script */
+        #hero-headline { color: var(--gold); font-family: var(--font-script); } /* Script font */
         #hero-subheadline { color: var(--light-text); }
          #scroll-prompt span { font-family: var(--font-heading); font-weight: 500;} /* Poppins for prompt */
          .mouse { border-color: var(--medium-text);}
@@ -507,7 +504,10 @@
         #community h2 { color: var(--gold); font-family: var(--font-script); } /* Script font */
         #community h3 { color: var(--teal); font-family: var(--font-script); } /* Script font */
         #community blockquote { border-color: var(--gold); color: var(--medium-text); }
-        #community cite { color: var(--light-text); }
+        #community cite { color: var(--light-text); font-style: normal; } /* Ensure cite is not italic */
+         /* Make blockquote text italic using p */
+        #community blockquote > p { font-style: italic; font-family: var(--font-sans); }
+
 
         /* ---
         VISION STYLES (MATCH THEME)
@@ -517,7 +517,7 @@
         #vision p.text-medium-text { color: var(--medium-text); }
         #vision .font-script.text-teal { color: var(--teal); font-family: var(--font-script); } /* Ensure script font */
         #vision h3 { color: var(--light-text); font-family: var(--font-heading); } /* Poppins for subheads */
-        #vision .btn-outline { border-color: var(--teal); color: var(--teal); }
+        #vision .btn-outline { border-color: var(--teal); color: var(--teal); font-family: var(--font-heading); }
         #vision .btn-outline:hover { background-color: var(--teal); color: white; }
 
 
@@ -552,9 +552,9 @@
         #close-bot-demo { color: var(--medium-text); }
         #close-bot-demo:hover { color: var(--light-text); }
         #bot-modal #chat-log { background-color: var(--card-bg); } /* Specific if in modal */
-        #question-pills-container .question-pill { /* Style pills if used */
+        .question-pill { /* Style pills if used */
              border-color: var(--medium-text); color: var(--medium-text); font-family: var(--font-heading); font-size: 0.875rem;}
-         #question-pills-container .question-pill:hover {
+         .question-pill:hover {
             background-color: var(--teal); border-color: var(--teal); color: white; }
         #bot-modal #chat-form input { /* Specific if in modal */ font-family: var(--font-sans); }
         #bot-modal #chat-form button { /* Specific if in modal */ font-family: var(--font-heading); }
@@ -567,12 +567,38 @@
         #site-footer { border-color: var(--border-color); }
         #site-footer p { color: var(--medium-text); }
 
+         /* ---
+         RESPONSIVE ADJUSTMENTS
+         ---
+         */
+          @media (max-width: 768px) {
+              #site-header .nav-links { display: none; } /* Hide desktop nav */
+              /* Adjust friendly nav for mobile if needed */
+              #friendly-nav { gap: 0.5rem; padding: 0.5rem; }
+              #friendly-nav .nav-link { font-size: 0.875rem; padding: 0.5rem 0.8rem; }
+              
+              h1 { font-size: clamp(2.2rem, 8vw, 3.5rem); }
+              h2 { font-size: clamp(1.8rem, 6vw, 2.5rem); }
+              h3 { font-size: 1.3rem; }
+              p { font-size: 1rem; }
+              blockquote { padding-left: 1rem; font-size: 1rem; }
+
+              .game-card { padding: 1.5rem; }
+              .game-statement-card { min-height: 8rem; font-size: 1rem; padding: 1rem;}
+              .game-btn { font-size: 0.875rem; padding: 0.6rem 1rem; }
+              #enter-site-btn { font-size: 1rem; padding: 0.7rem 1.5rem; }
+
+              #chat-log { height: 40vh; }
+              .chat-prompt-btn { font-size: 0.75rem; padding: 0.4rem 0.8rem; }
+              
+              .journal-section .flex { flex-direction: column; }
+              .journal-section .w-full { width: 100%; }
+          }
+
 
     </style>
 </head>
-<body class="antialiased">
-
-    <div id="loader">
+<body class="antialiased"> <div id="loader">
         <svg class="loader-logo" width="80" height="93" viewBox="0 0 80 93" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M40 0L79.0526 23.25V69.75L40 93L0.947441 69.75V23.25L40 0Z"/>
             <path d="M40 9.3L71.0526 27.9V65.1L40 83.7L8.94744 65.1V27.9L40 9.3Z"/>
@@ -635,7 +661,7 @@
                 </h1>
                 <p id="hero-subheadline" class="text-xl md:text-2xl text-light-text leading-relaxed max-w-4xl mx-auto"> For the people of Gilgit Baltistan, a safe space to find clarity in a connected world.
                 </p>
-                 <div id="scroll-prompt" class="absolute bottom-16 left-1/2 -translate-x-1/2 opacity-0"> <div class="mouse w-6 h-10 border-2 border-medium-text rounded-full relative"> <div class="w-1 h-2 bg-medium-text rounded-full absolute left-1/2 transform -translate-x-1/2 animate-scroll-wheel"></div> <style> @keyframes scroll-wheel { 0% { top: 6px; opacity: 1; } 100% { top: 20px; opacity: 0; } } .animate-scroll-wheel { animation: scroll-wheel 1.5s infinite; } </style>
+                 <div id="scroll-prompt" class="absolute bottom-16 left-1/2 -translate-x-1/2 opacity-0"> <div class="mouse w-6 h-10 border-2 border-medium-text rounded-full relative"> <div class="w-1 h-2 bg-medium-text rounded-full absolute left-1/2 transform -translate-x-1/2 animate-scroll-wheel" style="top: 6px;"></div> <style> @keyframes scroll-wheel { 0% { top: 6px; opacity: 1; } 100% { top: 20px; opacity: 0; } } .animate-scroll-wheel { animation: scroll-wheel 1.5s infinite; } </style>
                      </div>
                     <span class="mt-2 text-medium-text animate-pulse">Scroll to Discover</span> </div>
             </div>
@@ -691,8 +717,14 @@
                  <div class="mt-16 reveal-up">
                      <h3 class="font-script text-teal text-4xl mb-6 text-center">Voices from the Valley</h3>
                      <div class="space-y-8">
-                         <blockquote class="border-l-4 border-gold pl-6 italic text-lg text-medium-text">"For the first time, I felt I could ask a 'silly' question about my phone without feeling embarrassed. MehfoozBot helped me understand."<cite class="block not-italic mt-2 text-light-text">- A student from Gilgit</cite></blockquote>
-                         <blockquote class="border-l-4 border-gold pl-6 italic text-lg text-medium-text text-right">"They didn’t come to teach; they came to learn with us. That is why we trust them."<cite class="block not-italic mt-2 text-light-text">- An elder from <strong>Skardu</strong></cite></blockquote>
+                         <blockquote class="border-l-4 border-gold pl-6 text-lg text-medium-text">
+                             <p>"For the first time, I felt I could ask a 'silly' question about my phone without feeling embarrassed. MehfoozBot helped me understand."</p>
+                             <cite class="block not-italic mt-2 text-light-text">- A student from Gilgit</cite>
+                         </blockquote>
+                         <blockquote class="border-l-4 border-gold pl-6 text-lg text-medium-text text-right">
+                              <p>"They didn’t come to teach; they came to learn with us. That is why we trust them."</p>
+                             <cite class="block not-italic mt-2 text-light-text">- An elder from <strong>Skardu</strong></cite>
+                        </blockquote>
                      </div>
                  </div>
             </div>
@@ -821,14 +853,13 @@
 
 
     <footer id="site-footer">
-        <div class="container">
-            <p>&copy; 2025 Mehfooz Internet. A digital sanctuary for all.</p>
+        <div class="container mx-auto px-6"> <p>&copy; 2025 Mehfooz Internet. A digital sanctuary for all.</p>
         </div>
     </footer>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        gsap.registerPlugin(ScrollTrigger);
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin); // *** ADDED ScrollToPlugin ***
         
         const mainContent = document.getElementById('main-content');
         const cursorDot = document.getElementById('cursor-dot');
@@ -846,7 +877,10 @@
 
 
         // --- SMOOTH SCROLL ---
-        const lenis = new Lenis();
+        const lenis = new Lenis({
+            // duration: 1.2, // Default: 1.2
+             // lerp: 0.08 // Default: 0.1 - Lower is smoother but potentially more 'floaty'
+        });
         function raf(time) {
             lenis.raf(time);
             requestAnimationFrame(raf);
@@ -857,17 +891,25 @@
         // Setup navigation AFTER the site is entered
         function setupNavigation() {
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                // Remove existing listeners first to prevent duplicates
-                // anchor.removeEventListener('click', handleNavClick); // Need a named function
-                 const handleNavClick = function(e) { // Define named function
+                 // Clone and replace to remove old listeners reliably
+                 const old_element = anchor;
+                 const new_element = old_element.cloneNode(true);
+                 old_element.parentNode.replaceChild(new_element, old_element);
+
+                 new_element.addEventListener('click', function(e) { // Define named function
                      e.preventDefault();
                      const targetId = this.getAttribute('href');
-                     lenis.scrollTo(targetId, { offset: -80 }); // Adjust offset if header height changes
-                 };
-                 anchor.addEventListener('click', handleNavClick);
+                      // *** FASTER SCROLL DURATION ***
+                     lenis.scrollTo(targetId, { offset: -80, duration: 0.8, ease: 'power2.inOut' });
+                 });
             });
 
              // Header scroll effect (only after site entered)
+              ScrollTrigger.getAll().forEach(trigger => { // Kill old triggers first
+                  if (trigger.vars.toggleClass && trigger.vars.toggleClass.targets === siteHeader) {
+                      trigger.kill();
+                  }
+              });
              ScrollTrigger.create({
                  start: 'top top-=-100', // When scrolling down 100px
                  end: 99999,
@@ -875,13 +917,13 @@
              });
 
             // Nav link active state highlighting
+             // Kill old triggers first
+             ScrollTrigger.getAll().forEach(trigger => {
+                 if (trigger.vars.onToggle && trigger.vars.trigger && trigger.vars.trigger.tagName === 'SECTION') {
+                     trigger.kill();
+                 }
+             });
             gsap.utils.toArray('main section[id]').forEach((section) => {
-                 // Kill existing triggers for this section before creating new ones
-                 ScrollTrigger.getAll().forEach(trigger => {
-                     if (trigger.vars.trigger === section && trigger.vars.onToggle) {
-                         trigger.kill();
-                     }
-                 });
                 ScrollTrigger.create({
                     trigger: section,
                     start: 'top center+=100px', // Adjust start/end slightly
@@ -1072,6 +1114,10 @@
                       gameScreen.style.display = 'none';
                       document.body.classList.add('site-entered'); // Add class to body
                       
+                      // *** SCROLL TO TOP - HOMEPAGE FIRST ***
+                      window.scrollTo(0, 0);
+                      lenis.scrollTo(0, { immediate: true }); // Force lenis to top immediately
+                      
                       // Initialize site elements (start hidden, then fade in)
                       gsap.set(mainContent, { opacity: 0 });
                       gsap.set(siteHeader, { opacity: 0, y: '-100%' }); // Ensure header is hidden
@@ -1087,29 +1133,25 @@
          });
         
         // --- THREE.JS BACKGROUND (Keep if desired) ---
-        // (Assuming Three.js library is loaded via CDN)
         try {
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             camera.position.z = 5;
-            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
+            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true, antialias: true }); // Added antialias
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
             const particleCount = 7000;
             const positions = new Float32Array(particleCount * 3);
             const colors = new Float32Array(particleCount * 3);
-            // Get colors from CSS Variables
             const colorGold = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--gold').trim());
             const colorTeal = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--teal').trim());
 
             for(let i = 0; i < particleCount; i++) {
                 const i3 = i * 3;
-                positions[i3] = (Math.random() - 0.5) * 25; // Spread particles wider
+                positions[i3] = (Math.random() - 0.5) * 25;
                 positions[i3 + 1] = (Math.random() - 0.5) * 25;
                 positions[i3 + 2] = (Math.random() - 0.5) * 25;
-                
-                // Mix colors - More teal overall with gold highlights
                 const mixedColor = Math.random() > 0.85 ? colorGold.clone() : colorTeal.clone().lerp(colorGold, Math.random() * 0.2);
                 colors[i3] = mixedColor.r;
                 colors[i3 + 1] = mixedColor.g;
@@ -1120,31 +1162,27 @@
             particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
             
             const particlesMaterial = new THREE.PointsMaterial({
-                size: 0.02, // Smaller particles
+                size: 0.02,
                 sizeAttenuation: true,
                 transparent: true,
-                opacity: 0.5, // Slightly less opaque
+                opacity: 0.5,
                 vertexColors: true,
-                depthWrite: false // Helps with transparency blending
+                depthWrite: false
             });
             const particles = new THREE.Points(particlesGeometry, particlesMaterial);
             scene.add(particles);
 
-             // Subtle Animation Loop
              let clock = new THREE.Clock();
-             function animateBackground() { // Renamed to avoid conflict
+             function animateBackground() {
                  const elapsedTime = clock.getElapsedTime();
                  const scrollY = lenis.scroll;
-
-                 // Slow rotation + mouse movement + scroll effect
                  particles.rotation.y = elapsedTime * 0.02 + scrollY * 0.0001;
-                 particles.rotation.x = elapsedTime * 0.01 + (mouse.y / window.innerHeight - 0.5) * 0.05; // Mouse affects X rotation
-                 particles.position.y = -scrollY / window.innerHeight * 1.5; // Adjust scroll effect intensity
-
+                 particles.rotation.x = elapsedTime * 0.01 + (mouse.y / window.innerHeight - 0.5) * 0.05;
+                 particles.position.y = -scrollY / window.innerHeight * 1.5;
                  renderer.render(scene, camera);
                  requestAnimationFrame(animateBackground);
              }
-            animateBackground(); // Start the background animation loop
+            animateBackground();
 
             window.addEventListener('resize', () => {
                 camera.aspect = window.innerWidth / window.innerHeight;
@@ -1154,7 +1192,6 @@
             });
         } catch (e) {
             console.error("Three.js initialization failed:", e);
-             // Hide canvas if it fails
              document.getElementById('bg-canvas').style.display = 'none';
         }
 
@@ -1163,30 +1200,36 @@
         function initSiteAnimations() { // Renamed function
             console.log("Initializing main site animations..."); // Debug log
 
-            // Hero Text & Scroll Prompt (Re-run if needed, ensure visibility)
-            // Splitting needs to happen if not already done, but should be fine
-             const existingHeroHeadline = SplitType.revert('#hero-headline'); // Revert if exists
-             const heroHeadlineSplit = new SplitType('#hero-headline', { types: 'lines' });
-             gsap.set(heroHeadlineSplit.lines, { y: '110%' }); // Ensure starting pos
-             gsap.set('#hero-headline .line', { 'clip-path': 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' }); // Ensure clip
+            // Hero Text & Scroll Prompt
+            // Use existing SplitType instance if available, otherwise create new
+             let heroHeadlineSplit = SplitType.targets('#hero-headline')[0];
+             if (!heroHeadlineSplit) {
+                 heroHeadlineSplit = new SplitType('#hero-headline', { types: 'lines' });
+             } else {
+                // If it exists, ensure lines are split correctly
+                heroHeadlineSplit.split();
+             }
+             gsap.set(heroHeadlineSplit.lines, { y: '110%' });
+             gsap.set('#hero-headline .line', { 'clip-path': 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)' });
 
-             gsap.timeline({ delay: 0.2 }) // Slight delay after site appears
+             gsap.timeline({ delay: 0.2 })
                  .to(heroHeadlineSplit.lines, { y: '0%', stagger: 0.1, duration: 1.2, ease: 'power3.out' })
-                 .to('#hero-headline', { opacity: 1 }, '<') // Ensure opacity during animation
+                 .to('#hero-headline', { opacity: 1 }, '<')
                  .fromTo('#hero-subheadline', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1, ease: 'power2.out' }, '-=0.8')
                  .to('#scroll-prompt', { opacity: 1, duration: 1, delay: 0.5 }, '-=0.8');
 
 
             // Section reveal animations (Headers, Forms)
-            gsap.utils.toArray('.section-header, #contact-form').forEach(elem => { // Include form here
+            gsap.utils.toArray('.section-header, #contact-form').forEach(elem => {
                 gsap.fromTo(elem, { opacity: 0, y: 50 }, {
                     opacity: 1,
                     y: 0,
-                    duration: 1.2, // Slightly longer duration
+                    duration: 1.2,
                     ease: 'power3.out',
                     scrollTrigger: {
                         trigger: elem,
-                        start: 'top 88%', // Trigger slightly later
+                        start: 'top 88%',
+                         once: true // Play animation only once
                     }
                 });
             });
@@ -1194,52 +1237,50 @@
              // Staggered Card Reveals (Pillars, Insights, Values)
              gsap.utils.toArray('.pillar-card, .insight-card, .value-container').forEach((card, i) => {
                   gsap.fromTo(card,
-                     { opacity: 0, y: 60, scale: 0.98 }, // Start slightly scaled down
+                     { opacity: 0, y: 60, scale: 0.98 },
                      {
                          opacity: 1,
                          y: 0,
                          scale: 1,
-                         duration: 1.0, // Slightly faster
+                         duration: 1.0,
                          ease: 'power3.out',
-                         delay: (i % 3) * 0.1, // Reduced stagger delay
+                         delay: (i % 3) * 0.1,
                          scrollTrigger: {
-                             trigger: card.parentElement.closest('section, div.grid'), // Trigger on parent grid or section
-                             start: 'top 85%', // Adjust trigger point
+                             trigger: card.parentElement.closest('section, div.grid'),
+                             start: 'top 85%',
                              // markers: true,
-                             toggleActions: 'play none none none' // Only play once
+                             toggleActions: 'play none none none'
                          }
                      }
                  );
              });
             
             // Image parallax/reveal
-             // Ensure this targets the correct containers now
              gsap.utils.toArray('.journal-image-container').forEach(container => {
                   const img = container.querySelector('img');
                  if (img) {
-                      // Reveal Animation
                      gsap.fromTo(container,
                          { clipPath: 'inset(10% 30% 10% 30%)', opacity: 0 },
                          {
                              clipPath: 'inset(0% 0% 0% 0%)',
                              opacity: 1,
-                             duration: 1.8, // Slower reveal
+                             duration: 1.8,
                              ease: 'power4.out',
                              scrollTrigger: {
                                  trigger: container,
-                                 start: 'top 85%'
+                                 start: 'top 85%',
+                                  once: true
                              }
                      });
-                     // Parallax
                      gsap.to(img, {
-                         yPercent: -10, // Parallax effect
-                         scale: 1, // Ensure scale returns to 1 if it started differently
+                         yPercent: -10,
+                         scale: 1,
                          ease: 'none',
                          scrollTrigger: {
-                             trigger: container.closest('section'), // Trigger based on section scroll
+                             trigger: container.closest('section'),
                              scrub: true,
-                             start: 'top bottom', // Start parallax when section enters viewport
-                             end: 'bottom top'   // End parallax when section leaves
+                             start: 'top bottom',
+                             end: 'bottom top'
                          }
                      });
                  }
@@ -1247,16 +1288,21 @@
 
 
             // Vision Counter Animation
+             ScrollTrigger.getAll().forEach(trigger => { // Kill old counter trigger
+                 if (trigger.vars.trigger === "#user-counter") {
+                     trigger.kill();
+                 }
+             });
             gsap.to("#user-counter", {
                 textContent: 100000,
                 duration: 3,
-                ease: "power2.inOut", // Smoother ease
+                ease: "power2.inOut",
                 snap: { textContent: 1 },
                 scrollTrigger: {
                     trigger: "#user-counter",
                     start: "top 80%",
+                     once: true // Run counter only once
                 },
-                // Use .toLocaleString for commas
                 onUpdate: function() {
                     this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent).toLocaleString('en-US') + "+";
                 }
@@ -1266,197 +1312,204 @@
              gsap.utils.toArray('blockquote').forEach((quote, i) => {
                  gsap.from(quote, {
                      opacity: 0,
-                     x: i % 2 === 0 ? -50 : 50, // Alternate entry direction
+                     x: i % 2 === 0 ? -50 : 50,
                      duration: 1,
                      ease: 'power3.out',
                      scrollTrigger: {
                          trigger: quote,
-                         start: 'top 85%'
+                         start: 'top 85%',
+                          once: true
                      }
                  });
              });
 
         } // End initSiteAnimations function
         
-        // --- SMARTER MEHFOOZBOT LOGIC ---
+       // --- SMARTER MEHFOOZBOT LOGIC ---
         const chatLog = document.getElementById('chat-log');
         const chatForm = document.getElementById('chat-form');
         const chatInput = document.getElementById('chat-input');
         const promptButtonsContainer = document.getElementById('prompt-buttons');
-         // Also handle modal bot elements if they exist
-         const modalBotDemoButton = document.getElementById('open-bot-demo-approach'); // Example button ID
-         const modalChatLog = document.getElementById('modal-chat-log');
-         const modalChatForm = document.getElementById('modal-chat-form');
-         const modalChatInput = document.getElementById('modal-chat-input');
-         const modalPillContainer = document.getElementById('modal-question-pills');
-         const botModal = document.getElementById('bot-modal');
-         const closeBotBtn = document.getElementById('close-bot-demo');
-
+        // Modal elements
+        const modalBotDemoButton = document.getElementById('open-bot-demo-approach');
+        const modalChatLog = document.getElementById('modal-chat-log');
+        const modalChatForm = document.getElementById('modal-chat-form');
+        const modalChatInput = document.getElementById('modal-chat-input');
+        const modalPillContainer = document.getElementById('modal-question-pills');
+        const botModal = document.getElementById('bot-modal');
+        const closeBotBtn = document.getElementById('close-bot-demo');
 
         const botResponses = {
-            "greeting": "Hello, friend. It's wonderful to connect with you. How can I help you find clarity today?",
-            "default": "That's a lovely question. While my abilities here are a demonstration, the full MehfoozBot can share stories and guidance on that. Every question is a step toward clarity.",
-            "misinformation": "To spot misinformation, it's helpful to pause and check the source, look for evidence, and notice if the story tries to make you feel strong emotions. A calm mind is a clear mind.",
-            "safety": "To stay safe online, it's wise to use strong, unique passwords and be cautious about sharing personal information. Think of your data as something precious you wouldn't leave unattended.",
-            "story": "Our story began with conversations in teahouses, listening to the hopes and worries of the community. You can read more in the 'From Our Journal' section above.",
-            "ulema": "We partner with trusted local Ulema (religious leaders). They act as digital literacy ambassadors, bridging traditional knowledge with modern skills to create unprecedented community acceptance."
+            "greeting": "Hello! How can I assist you today on your journey to digital clarity?", // Slightly different greeting
+            "default": "That's an interesting point. While this demo is limited, the full MehfoozBot explores topics like that in detail.",
+            "misinformation": "Spotting misinformation involves a few key steps: Check the source's credibility, look for supporting evidence elsewhere, be wary of emotionally charged language, and check the date.",
+            "safety": "Online safety basics include using strong, unique passwords (consider a password manager!), enabling two-factor authentication, being cautious about links/attachments, and regularly updating software.",
+            "story": "Mehfooz began from listening to the community in Skardu. We realized the need wasn't just *more* tech, but *understanding* tech. You can read a bit more in the 'Journal' section.",
+            "ulema": "We proudly partner with local Ulema (religious leaders). They serve as trusted community voices, helping bridge traditional wisdom with essential digital literacy skills."
         };
-        const promptQuestions = { // Used for buttons
+        const promptQuestions = { // For inline buttons
             "How do you work?": "ulema",
             "What's your story?": "story",
-            "Spotting fake news?": "misinformation", // Shorter text
-            "Staying safe online?": "safety" // Shorter text
+            "Spotting fake news?": "misinformation",
+            "Staying safe online?": "safety"
         };
-         const modalQuestions = [ // Questions for modal pills (if used)
-             "How can I spot fake news?",
-             "Is my WhatsApp safe?",
-             "What is misinformation?"
-         ];
-
+        const modalQuestions = [ // For modal pills
+            "How can I spot fake news?",
+            "Is my WhatsApp safe?", // More specific
+            "What is misinformation?"
+        ];
 
         function getBotResponse(userInput) {
             const lowerInput = userInput.toLowerCase();
-             // Match based on shorter prompt text keys first
-             for (const [prompt, key] of Object.entries(promptQuestions)) {
-                 if (userInput === prompt) return botResponses[key];
-             }
-              // Match based on modal pill questions
-              if (modalQuestions.includes(userInput)) {
-                  if (userInput.includes('fake news') || userInput.includes('misinformation')) return botResponses.misinformation;
-                  if (userInput.includes('WhatsApp') || userInput.includes('safe')) return botResponses.safety;
+            // Check exact matches from buttons/pills first
+            for (const [prompt, key] of Object.entries(promptQuestions)) {
+                if (userInput.toLowerCase() === prompt.toLowerCase()) return botResponses[key];
+            }
+             if (modalQuestions.includes(userInput)) { // Check modal questions too
+                  if (userInput.toLowerCase().includes('fake news') || userInput.toLowerCase().includes('misinformation')) return botResponses.misinformation;
+                  if (userInput.toLowerCase().includes('whatsapp') || userInput.toLowerCase().includes('safe')) return botResponses.safety; // Use safety response
               }
-             // Then check keywords
+
+            // Keyword checks
             if (lowerInput.includes('fake news') || lowerInput.includes('misinformation')) return botResponses.misinformation;
-            if (lowerInput.includes('safe') || lowerInput.includes('whatsapp') || lowerInput.includes('security')) return botResponses.safety;
-            if (lowerInput.includes('story') || lowerInput.includes('who are you') || lowerInput.includes('why')) return botResponses.story;
+            if (lowerInput.includes('safe') || lowerInput.includes('whatsapp') || lowerInput.includes('security') || lowerInput.includes('password')) return botResponses.safety;
+            if (lowerInput.includes('story') || lowerInput.includes('who are you') || lowerInput.includes('why') || lowerInput.includes('about')) return botResponses.story;
             if (lowerInput.includes('ulema') || lowerInput.includes('leaders') || lowerInput.includes('work')) return botResponses.ulema;
-            if (lowerInput.includes('hello') || lowerInput.includes('hi')) return botResponses.greeting;
+            if (lowerInput.includes('hello') || lowerInput.includes('hi') || lowerInput.includes('greeting')) return botResponses.greeting;
             return botResponses.default;
         }
 
-         // Generic function to add message to a specific chat log
-         function addChatMessage(message, sender, targetLog, isImmediate = false) {
-             if (!targetLog) return; // Add check if targetLog exists
-             const bubble = document.createElement('div');
-             bubble.className = `chat-bubble ${sender}-bubble`;
-             bubble.textContent = message;
-             targetLog.appendChild(bubble);
-             gsap.from(bubble, { opacity: 0, y: 20, duration: 0.5, delay: isImmediate ? 0 : 0.2 });
-             // Check if scrollTo plugin is available or use native scroll
-              gsap.to(targetLog, { duration: 0.5, scrollTo: { y: "max", autoKill: false }, ease: "power2.out" });
-         }
+        function addChatMessage(message, sender, targetLog, isImmediate = false) {
+            if (!targetLog) { console.error("Target chat log not found"); return; }
+            const bubble = document.createElement('div');
+            bubble.className = `chat-bubble ${sender}-bubble`;
+            bubble.textContent = message;
+            targetLog.appendChild(bubble);
+            gsap.from(bubble, { opacity: 0, y: 20, duration: 0.5, delay: isImmediate ? 0 : 0.2 });
+            // Scroll smoothly
+            gsap.to(targetLog, { duration: 0.5, scrollTo: { y: "max", autoKill: false }, ease: "power2.out" });
+        }
 
-        // Generic function to handle user input for a specific chat instance
-         function handleBotUserInput(input, targetLog, targetInput, targetPromptsContainer) {
-             if (!targetLog || !targetInput) return; // Add checks
-             if(input.trim()){
-                 addChatMessage(input, 'user', targetLog, true);
-                 targetInput.value = '';
-                 targetInput.disabled = true;
-                  if (targetPromptsContainer) { // Disable prompt buttons if they exist
-                      targetPromptsContainer.style.pointerEvents = 'none';
-                      gsap.to(targetPromptsContainer.children, { opacity: 0.5, duration: 0.3 });
-                  }
+        function handleBotUserInput(input, targetLog, targetInput, targetPromptsContainer) {
+            if (!targetLog || !targetInput) { console.error("Target log or input not found for bot"); return; }
+            const trimmedInput = input.trim();
+            if (trimmedInput) {
+                addChatMessage(trimmedInput, 'user', targetLog, true);
+                targetInput.value = '';
+                targetInput.disabled = true;
+                if (targetPromptsContainer) {
+                    targetPromptsContainer.style.pointerEvents = 'none';
+                    gsap.to(targetPromptsContainer.children, { opacity: 0.5, duration: 0.3 });
+                }
 
-                 // Simulate thinking (typing indicator could be added here)
-                 setTimeout(() => {
-                     const response = getBotResponse(input);
-                     addChatMessage(response, 'bot', targetLog);
-                     targetInput.disabled = false;
-                      if (targetPromptsContainer) { // Re-enable prompt buttons
-                          targetPromptsContainer.style.pointerEvents = 'auto';
-                          gsap.to(targetPromptsContainer.children, { opacity: 1, duration: 0.3 });
-                      }
-                     targetInput.focus();
-                 }, 1000 + Math.random() * 400); // Slightly faster bot response
+                // Simulate thinking (Typing indicator could be added here)
+                // const typingIndicator = addTypingIndicator(targetLog); // Assuming you have this function
+
+                setTimeout(() => {
+                    // if (typingIndicator) typingIndicator.remove(); // Remove typing indicator
+                    const response = getBotResponse(trimmedInput);
+                    addChatMessage(response, 'bot', targetLog);
+                    targetInput.disabled = false;
+                    if (targetPromptsContainer) {
+                        targetPromptsContainer.style.pointerEvents = 'auto';
+                        gsap.to(targetPromptsContainer.children, { opacity: 1, duration: 0.3 });
+                    }
+                    targetInput.focus();
+                }, 1000 + Math.random() * 400);
+            }
+        }
+
+        // Setup for Inline Bot
+        if (chatLog && chatForm && chatInput && promptButtonsContainer) {
+            chatForm.addEventListener('submit', e => {
+                e.preventDefault();
+                handleBotUserInput(chatInput.value, chatLog, chatInput, promptButtonsContainer);
+            });
+            Object.keys(promptQuestions).forEach(question => {
+                const button = document.createElement('button');
+                button.type = "button";
+                button.className = "chat-prompt-btn text-sm rounded-full py-2 px-3";
+                button.textContent = question;
+                button.onclick = () => { handleBotUserInput(question, chatLog, chatInput, promptButtonsContainer); };
+                promptButtonsContainer.appendChild(button);
+            });
+            addChatMessage(botResponses.greeting, 'bot', chatLog, true);
+        } else {
+             console.error("Inline chat elements not found");
+        }
+
+        // Setup for Modal Bot
+        if (botModal && modalChatLog && modalChatForm && modalChatInput && modalPillContainer && closeBotBtn && modalBotDemoButton) {
+            modalChatForm.addEventListener('submit', e => {
+                e.preventDefault();
+                handleBotUserInput(modalChatInput.value, modalChatLog, modalChatInput, modalPillContainer);
+            });
+
+             // Clear existing pills before adding new ones
+             modalPillContainer.innerHTML = '';
+            modalQuestions.forEach(q => {
+                const pill = document.createElement('div');
+                 // Updated pill style to match inline button
+                 pill.className = 'chat-prompt-btn text-sm rounded-full py-1 px-3 cursor-pointer'; // Use same class + cursor
+                pill.textContent = q;
+                pill.dataset.question = q;
+                pill.onclick = () => { handleBotUserInput(q, modalChatLog, modalChatInput, modalPillContainer); };
+                modalPillContainer.appendChild(pill);
+            });
+
+            // Handle multiple open buttons if needed
+            const openModalButtons = document.querySelectorAll('#open-bot-demo-approach'); // Use specific ID
+             openModalButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    botModal.classList.remove('hidden');
+                     if (modalChatLog.children.length === 0) { // Add message only if empty
+                          addChatMessage("Hello! Ask a question or click a topic.", 'bot', modalChatLog, true);
+                     }
+                    gsap.fromTo(botModal, {opacity: 0}, {opacity: 1, duration: 0.3});
+                    gsap.fromTo(botModal.querySelector('.bot-modal-content'), {scale: 0.9, opacity: 0}, {scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out'});
+                });
+            });
+
+            closeBotBtn.addEventListener('click', () => {
+                 gsap.to(botModal.querySelector('.bot-modal-content'), {scale: 0.9, opacity: 0, duration: 0.3, ease: 'power2.in', onComplete: () => {
+                     gsap.to(botModal, {opacity: 0, duration: 0.2, onComplete: () => {
+                           botModal.classList.add('hidden');
+                     }});
+                 }});
+            });
+        } else {
+             console.error("Modal bot elements not found or button ID mismatch");
+             // Disable the button if modal can't be opened
+             const openBtn = document.getElementById('open-bot-demo-approach');
+             if(openBtn) {
+                 openBtn.disabled = true;
+                 openBtn.style.opacity = 0.5;
+                 openBtn.textContent = "Demo Unavailable";
              }
-         }
-
-         // Setup for Inline Bot
-         if (chatLog && chatForm && chatInput && promptButtonsContainer) {
-             chatForm.addEventListener('submit', e => {
-                  e.preventDefault();
-                  handleBotUserInput(chatInput.value, chatLog, chatInput, promptButtonsContainer);
-             });
-             // Add prompt buttons to inline chat
-             Object.keys(promptQuestions).forEach(question => {
-                 const button = document.createElement('button');
-                 button.type = "button"; // Prevent form submission
-                 button.className = "chat-prompt-btn text-sm rounded-full py-2 px-3";
-                 button.textContent = question;
-                 button.onclick = () => { handleBotUserInput(question, chatLog, chatInput, promptButtonsContainer); } // Pass correct args
-                 promptButtonsContainer.appendChild(button);
-             });
-             // Initial inline bot message
-             addChatMessage(botResponses.greeting, 'bot', chatLog, true);
-         }
-
-
-         // Setup for Modal Bot (if elements exist)
-         if (botModal && modalChatLog && modalChatForm && modalChatInput && modalPillContainer && closeBotBtn) {
-              modalChatForm.addEventListener('submit', e => {
-                   e.preventDefault();
-                   handleBotUserInput(modalChatInput.value, modalChatLog, modalChatInput, modalPillContainer);
-              });
-
-              // Add pills to modal
-              modalQuestions.forEach(q => {
-                  const pill = document.createElement('div');
-                  pill.className = 'question-pill cursor-pointer border border-medium-text text-medium-text hover:bg-teal hover:border-teal hover:text-white transition-colors rounded-full px-3 py-1 text-sm'; // Added styles
-                  pill.textContent = q;
-                  pill.dataset.question = q;
-                   pill.onclick = () => { handleBotUserInput(q, modalChatLog, modalChatInput, modalPillContainer); };
-                  modalPillContainer.appendChild(pill);
-              });
-
-              // Open Modal Button(s)
-              const openModalButtons = document.querySelectorAll('#open-bot-demo-approach'); // Add more selectors if needed
-              openModalButtons.forEach(btn => {
-                  btn.addEventListener('click', () => {
-                      botModal.classList.remove('hidden');
-                      // Optional: Add initial message if log is empty
-                       if (modalChatLog.children.length === 0) {
-                           addChatMessage("Hello! Ask a question or click a topic.", 'bot', modalChatLog, true);
-                       }
-                      gsap.fromTo(botModal, {opacity: 0}, {opacity: 1, duration: 0.3}); // Animate modal itself
-                      gsap.fromTo(botModal.querySelector('.bot-modal-content'), {scale: 0.9, opacity: 0}, {scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out'});
-                  });
-              });
-
-              // Close Modal Button
-              closeBotBtn.addEventListener('click', () => {
-                   gsap.to(botModal.querySelector('.bot-modal-content'), {scale: 0.9, opacity: 0, duration: 0.3, ease: 'power2.in', onComplete: () => {
-                       gsap.to(botModal, {opacity: 0, duration: 0.2, onComplete: () => {
-                             botModal.classList.add('hidden');
-                       }});
-                   }});
-              });
-         }
-
+        }
 
         // --- CONTACT FORM LOGIC ---
         const contactForm = document.getElementById('contact-form');
         const formSuccess = document.getElementById('form-success');
-        if (contactForm && formSuccess) { // Check if form exists
+        if (contactForm && formSuccess) {
             contactForm.addEventListener('submit', e => {
-                 e.preventDefault();
-                 // Add subtle animation before hiding
-                 gsap.to(contactForm, { height: contactForm.offsetHeight, duration: 0.5, ease: 'power2.inOut', onComplete: () => {
-                     gsap.to(contactForm, { opacity: 0, duration: 0.3, onComplete: () => {
-                         contactForm.style.display = 'none';
-                         formSuccess.classList.remove('hidden');
-                         gsap.set(formSuccess, { height: 'auto' }); // Set height before animating
-                         gsap.from(formSuccess, { opacity: 0, height: 0, duration: 0.6, ease: 'power2.out' });
-                     }});
-                 }});
+                e.preventDefault();
+                gsap.to(contactForm, {
+                    opacity: 0, duration: 0.5, height: 0, ease: 'power2.in', onComplete: () => { // Animate height too
+                    contactForm.style.display = 'none';
+                    formSuccess.classList.remove('hidden');
+                    gsap.set(formSuccess, { height: 'auto', opacity: 0 }); // Prepare success message
+                    gsap.from(formSuccess, { opacity: 0, y: 20, duration: 0.6, ease: 'power2.out' });
+                }});
             });
+        } else {
+             console.error("Contact form elements not found");
         }
 
-         // --- Initial Setup ---
-         // Ensure main content is hidden until game ends
-         gsap.set(mainContent, { opacity: 0 });
-         // Hide floating nav initially
-         gsap.set(friendlyNav, { y: '200%' }); // Start further down
+        // --- Initial Setup ---
+        gsap.set(mainContent, { opacity: 0 });
+        gsap.set(friendlyNav, { y: '200%' });
+        gsap.set(siteHeader, { y: '-100%', opacity: 0 }); // Ensure header starts hidden
 
 
     }); // End DOMContentLoaded
