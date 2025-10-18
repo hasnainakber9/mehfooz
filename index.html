@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehfooz - Finding Clarity</title>
+    <title>Mehfooz - A Living Journal</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -13,15 +13,15 @@
 
     <style>
         :root {
-            --space-dark: #0a051d; /* Deep space blue/purple */
-            --light-text: #f0f0f0; /* Soft white/light grey */
-            --medium-text: #a0a0c0; /* Muted lavender grey */
-            --cyan-glow: #00f0ff; 
-            --soft-gold: #f0e68c;
+            --space-dark: #121212; /* A softer, charcoal black */
+            --light-text: #EAE0D5;
+            --medium-text: #A8A29A;
+            --soft-gold: #DAA520; /* Primary accent */
+            --teal-accent: #008080; /* Secondary accent for specific elements */
         }
 
-        /* Using Poppins for modern headings/UI and Cormorant Garamond for elegant body */
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Poppins:wght@500;600;700&display=swap');
+        /* Swapped to more intimate and classic fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto; }
@@ -29,17 +29,17 @@
         body {
             background-color: var(--space-dark);
             color: var(--light-text);
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Lora', serif; /* Softer body font */
             overflow-x: hidden;
             cursor: none;
         }
         /* Film Grain Overlay */
         body::before {
             content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXVדהVlZWV/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f38AAAD/v//+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+v//+vf/+vf/+vf/+vf/+vf/+vf/+vf/+/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/+v//+v//+v//+/v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a--a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a--a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a--a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a--a-tika/v//v/v/v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v-v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v-v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v-v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v');
-            opacity: 0.1; /* Adjust for desired grain intensity */
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXVדהVlZWV/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f38AAAD/v//+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+v//+vf/+vf/+vf/+vf/+vf/+vf/+vf/+/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/+v//+v//+v//+/v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//v-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a--a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-_');
+            opacity: 0.08; /* Adjust for desired grain intensity */
             pointer-events: none;
-            z-index: 10002;
+            z-index: 999;
             animation: grain 7s steps(10) infinite;
         }
         @keyframes grain {
@@ -49,7 +49,7 @@
         .font-heading {
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            text-shadow: 0 0 12px var(--cyan-glow), 0 0 20px var(--cyan-glow);
+            text-shadow: 0 0 10px var(--cyan-glow); /* Subtle glow */
         }
         .font-body {
             font-family: 'Cormorant Garamond', serif;
@@ -64,16 +64,18 @@
         #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
         .content-section { position: relative; z-index: 1; padding: 20vh 0; }
         
+        /* Game Styles */
         #seed-container { cursor: pointer; }
         #seed-svg .plant-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; filter: drop-shadow(0 0 5px var(--cyan-glow)); }
         #seed-svg .seed { transition: all 0.5s ease; transform-origin: center; filter: drop-shadow(0 0 8px var(--soft-gold)); }
         #seed-container:hover .seed { transform: scale(1.1); }
 
+        /* Animate-in styles */
+        .reveal-up { opacity: 0; transform: translateY(50px); }
         .line-parent { overflow: hidden; }
         .line-child { display: inline-block; transform: translateY(110%); }
-        .char-anim { clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); }
-        .char { transform: translateY(110%); }
-
+        
+        /* Chat & Form styles */
         .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 15px; line-height: 1.5; font-size: 1.1rem; }
         .user-bubble { background-color: var(--cyan-glow); color: var(--space-dark); border-bottom-right-radius: 3px; align-self: flex-end; font-weight: 500;}
         .bot-bubble { background-color: rgba(160, 160, 192, 0.1); backdrop-filter: blur(8px); color: var(--light-text); border: 1px solid rgba(160, 160, 192, 0.2); border-bottom-left-radius: 3px; align-self: flex-start; }
@@ -86,6 +88,7 @@
         select option { background-color: var(--space-dark); color: var(--light-text); }
 
 
+        /* Navigation Styles */
         #menu-toggle { z-index: 10001; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         #menu-toggle:hover { transform: scale(1.1) rotate(90deg); }
         #menu-toggle span { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s; }
@@ -383,10 +386,11 @@
             });
         });
         
-        document.querySelectorAll('a, button, input, select, textarea, [role="button"]').forEach(el => {
+        document.querySelectorAll('a, button, input, select, textarea, #seed-container').forEach(el => {
             el.addEventListener('mouseenter', () => circleScale = 1.5);
             el.addEventListener('mouseleave', () => circleScale = 1);
         });
+
 
         // --- SMOOTH SCROLL ---
         const lenis = new Lenis({ lerp: 0.08 });
@@ -409,6 +413,7 @@
 
         menuToggle.addEventListener('click', () => {
             isMenuOpen = !isMenuOpen;
+            menuToggle.classList.toggle('open');
             menuOverlay.classList.toggle('open');
             if(isMenuOpen) {
                 menuTimeline.play();
@@ -425,15 +430,15 @@
         menuLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
+                const target = link.getAttribute('href');
                 isMenuOpen = false;
                 menuOverlay.classList.remove('open');
-                menuTimeline.reverse();
+                menuTimeline.reverse().then(() => {
+                    lenis.start();
+                    lenis.scrollTo(target, { duration: 1.5, ease: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) });
+                });
                 gsap.to(toggleSpans[0], { y: 0, rotate: 0, duration: 0.3, ease: 'power2.out' });
                 gsap.to(toggleSpans[1], { y: 0, rotate: 0, duration: 0.3, ease: 'power2.out' });
-                lenis.start();
-                gsap.delayedCall(0.5, () => {
-                    lenis.scrollTo(link.getAttribute('href'), {duration: 1.5, ease: 'power2.inOut'});
-                });
             });
         });
 
@@ -457,7 +462,7 @@
             growthAnimation.to(plantPaths, {
                 strokeDashoffset: 0,
                 duration: 0.8,
-                ease: "power1.out",
+                ease: "power2.out",
                 stagger: 0.1
             });
         }
@@ -465,6 +470,7 @@
         function onSolved() {
             if(solved) return;
             solved = true;
+            seedContainer.style.pointerEvents = 'none'; // Disable further interaction
             feedbackEl.textContent = "Trust takes root.";
             gsap.to(feedbackEl, { opacity: 1, duration: 0.5 });
             gsap.to(enterBtn, { opacity: 1, scale: 1, pointerEvents: 'auto', duration: 0.5, delay: 0.2 });
@@ -494,21 +500,21 @@
 
         setupGrowthAnimation();
 
+
         // --- THREE.JS BACKGROUND ---
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 2.5;
+        camera.position.z = 2;
         const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        const particleCount = 15000;
+        const particleCount = 20000;
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
         const colorCyan = new THREE.Color(0x00f0ff);
         const colorGold = new THREE.Color(0xf0e68c);
-        const colorWhite = new THREE.Color(0xffffff);
-        const colorDeepBlue = new THREE.Color(0x3a2d80);
+        const colorDeepBlue = new THREE.Color(0x4c33ff);
 
         for(let i = 0; i < particleCount; i++) {
             const i3 = i * 3;
@@ -517,28 +523,17 @@
             positions[i3 + 2] = (Math.random() - 0.5) * 20;
             
             const randColor = Math.random();
-            let mixedColor;
-            if (randColor < 0.5) mixedColor = colorWhite.clone();
-            else if (randColor < 0.8) mixedColor = colorCyan.clone();
-            else if (randColor < 0.95) mixedColor = colorGold.clone();
-            else mixedColor = colorDeepBlue.clone();
+            let mixedColor = (randColor < 0.7) ? colorCyan.clone() : (randColor < 0.9) ? colorGold.clone() : colorDeepBlue.clone();
             
-            colors[i3] = mixedColor.r;
-            colors[i3 + 1] = mixedColor.g;
-            colors[i3 + 2] = mixedColor.b;
+            colors[i3] = mixedColor.r; colors[i3 + 1] = mixedColor.g; colors[i3 + 2] = mixedColor.b;
         }
         const particlesGeometry = new THREE.BufferGeometry();
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
         particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         
         const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.015,
-            sizeAttenuation: true,
-            transparent: true,
-            opacity: 0.8,
-            vertexColors: true,
-            blending: THREE.AdditiveBlending,
-            depthWrite: false
+            size: 0.012, sizeAttenuation: true, transparent: true, opacity: 0.6, vertexColors: true,
+            blending: THREE.AdditiveBlending, depthWrite: false
         });
         const particles = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particles);
@@ -548,7 +543,7 @@
             const elapsedTime = clock.getElapsedTime();
             const scrollY = lenis.scroll;
             
-            particles.rotation.y = elapsedTime * 0.015 + scrollY * 0.0001;
+            particles.rotation.y = elapsedTime * 0.01 + scrollY * 0.0001;
             particles.rotation.x = mouse.y / window.innerHeight * 0.1 - 0.05;
             particles.rotation.z = -mouse.x / window.innerWidth * 0.1 + 0.05;
 
@@ -568,16 +563,11 @@
         function initAnimations() {
             gsap.utils.toArray('.line-child').forEach(el => {
                 gsap.fromTo(el, { y: '110%' }, { 
-                    y: '0%', 
-                    duration: 1.5, 
-                    ease: 'power4.out',
-                    scrollTrigger: {
-                        trigger: el.parentElement,
-                        start: 'top 90%'
-                    }
+                    y: '0%', duration: 1.5, ease: 'power4.out',
+                    scrollTrigger: { trigger: el.parentElement, start: 'top 90%' }
                 });
             });
-
+            
             gsap.utils.toArray('.reveal-up').forEach(elem => {
                 gsap.fromTo(elem, { opacity: 0, y: 60 }, {
                     opacity: 1, y: 0, duration: 1.5, ease: 'power4.out',
@@ -588,10 +578,7 @@
             const userCounter = document.getElementById('user-counter');
             if (userCounter) {
                 gsap.from(userCounter, {
-                    textContent: 0,
-                    duration: 2.5,
-                    ease: "power2.out",
-                    snap: { textContent: 1 },
+                    textContent: 0, duration: 2.5, ease: "power2.out", snap: { textContent: 1 },
                     scrollTrigger: { trigger: userCounter, start: "top 85%" },
                     onUpdate: function() { this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent).toLocaleString() + "+"; }
                 });
@@ -612,12 +599,12 @@
             }
 
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    if(!isMenuOpen) { 
+                if (!anchor.classList.contains('menu-link')) {
+                    anchor.addEventListener('click', function(e) {
                         e.preventDefault();
                         lenis.scrollTo(this.getAttribute('href'), {duration: 2, ease: 'power2.inOut'});
-                    }
-                });
+                    });
+                }
             });
         }
         
