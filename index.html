@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehfooz - A Living Journal</title>
+    <title>Mehfooz - Finding Clarity</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -21,8 +21,10 @@
             --warm-dark: #1A120B; /* Cozy dark background */
             --warm-text: #EAE0D5; /* Off-white text */
             --medium-text: #A8A29A; /* Muted text */
-            --gold: #DAA520;      /* Primary accent - warmer */
-            --teal: #48A9A6;       /* Secondary accent - soft */
+            --gold: #DAA520;      /* Primary accent - warmer gold */
+            --teal: #48A9A6;       /* Secondary accent - soft teal */
+            --font-heading: 'Poppins', sans-serif; /* Clean Sans for Headings/UI */
+            --font-body: 'Lora', serif; /* Readable Serif for Body */
         }
 
         html.lenis { height: auto; }
@@ -31,34 +33,35 @@
         body {
             background-color: var(--warm-dark);
             color: var(--warm-text);
-            font-family: 'Lora', serif; /* Body font */
+            font-family: var(--font-body); /* Default to Lora */
             font-size: 17px; 
             line-height: 1.7;
             overflow-x: hidden;
             cursor: none;
             position: relative; 
         }
-        /* Film Grain Overlay */
+        /* Film Grain Overlay - Subtle */
         body::before {
-            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; /* Changed size */
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACRQTFRFNTU1MzMzNDQ0Nzc3NjY2Ojo6Nzc3NjY2Ozs7Ojo6NDQ0Ozs75xQuFAAAAAt0Uk5TABAQIDBAUGBwgKCw66pUAAAAk0lEQVQoz2NgoBjAALjU9DAwMIAIxkBgMAoAtzAwMDCQMzAwsCBgZmBgZmBg4GZgYEBhvGfABGf///8/AxMjAzMDAyMfA4MTI4MHA5Ojo5OjiT8PMyMzMxMzMyOHASMDExNxiQEJgcsdwszMzMTIzMzMwMgABgZCzMTEzMjAwMADwYyZmRkYmRmZGRgYmBkbMDAwAECAAQCkMgXj9nMsWQAAAABJRU5ErkJggg==');
-            opacity: 0.06;
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXVדהVlZWV/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f39/f38AAAD/v//+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+vf/+v//+vf/+vf/+vf/+vf/+vf/+vf/+vf/+/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/9/f/+v//+v//+v//+/v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//+v//v-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a-a.');
+            opacity: 0.07; /* Softer grain */
             pointer-events: none;
             z-index: 10002;
-            animation: grain 7s steps(10) infinite;
+            animation: grain 8s steps(10) infinite;
         }
         @keyframes grain {
-          0%, 100% { transform: translate(0, 0); } 10% { transform: translate(-2%, -4%); } 20% { transform: translate(-6%, 2%); } 30% { transform: translate(3%, -10%); } 40% { transform: translate(-2%, 10%); } 50% { transform: translate(-6%, 4%); } 60% { transform: translate(6%, 0%); } 70% { transform: translate(0%, 6%); } 80% { transform: translate(1%, 14%); } 90% { transform: translate(-4%, 4%); }
+            0%, 100% { transform: translate(0, 0); } 10% { transform: translate(-2%, -4%); } 20% { transform: translate(-6%, 2%); } 30% { transform: translate(3%, -10%); } 40% { transform: translate(-2%, 10%); } 50% { transform: translate(-6%, 4%); } 60% { transform: translate(6%, 0%); } 70% { transform: translate(0%, 6%); } 80% { transform: translate(1%, 14%); } 90% { transform: translate(-4%, 4%); }
         }
-
 
         .font-heading {
             font-family: 'Poppins', sans-serif; /* Friendly but modern heading */
             font-weight: 600;
-             text-shadow: 0 0 8px rgba(218, 165, 32, 0.2); /* Reduced glow */
+             /* Removed the strong text-shadow for a cleaner look */
         }
         .font-body {
             font-family: 'Lora', serif;
+            font-size: 1.1rem; /* Slightly smaller body font */
         }
         
         /* --- Custom Cursor --- */
@@ -68,19 +71,19 @@
             border-radius: 50%;
             pointer-events: none;
             z-index: 10003;
-            mix-blend-mode: difference; /* Use difference for better visibility on varied backgrounds */
+            mix-blend-mode: difference; /* Retain difference for subtle contrast */
             will-change: transform, width, height, background-color, border-color, opacity;
         }
         #cursor-dot {
             width: 8px; height: 8px;
-            background-color: var(--gold); /* Gold dot */
+            background-color: var(--gold);
             transform: translate(-50%, -50%);
         }
         #cursor-circle {
-            width: 40px; height: 40px;
-            border: 1px solid var(--gold); /* Gold circle */
+            width: 35px; height: 35px; /* Slightly smaller circle */
+            border: 1px solid var(--gold);
             transform: translate(-50%, -50%);
-            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
                         width 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
                         height 0.4s cubic-bezier(0.19, 1, 0.22, 1),
                         border-color 0.4s ease,
@@ -88,24 +91,23 @@
                         opacity 0.4s ease;
         }
         body.link-hover #cursor-circle { 
-            transform: translate(-50%, -50%) scale(1.4); /* Slightly smaller hover scale */
-            border-color: var(--teal);
-            background-color: rgba(72, 169, 166, 0.15); /* Subtle teal background */
+            transform: translate(-50%, -50%) scale(0.5); /* Shrink circle instead of expanding */
+            background-color: rgba(72, 169, 166, 0.3); /* Teal subtle background */
+            border-color: transparent;
         }
         body.link-hover #cursor-dot {
-             background-color: var(--teal);
-             transform: translate(-50%, -50%) scale(0.6); /* Shrink dot slightly */
+             transform: translate(-50%, -50%) scale(1.8); /* Grow dot slightly */
+             background-color: var(--teal); 
         }
 
-
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0.2; /* Subtler particles */ }
-        .content-section { position: relative; z-index: 1; padding: 15vh 0; }
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; opacity: 0.15; }
+        .content-section { position: relative; z-index: 1; padding: 18vh 0; } /* Adjusted padding */
         
         /* --- Seed Game --- */
         #seed-container { cursor: pointer; }
         #seed-svg .plant-path { stroke-dasharray: 1000; stroke-dashoffset: 1000; filter: drop-shadow(0 0 3px var(--teal)); }
         #seed-svg .seed { transition: all 0.5s ease; transform-origin: center; filter: drop-shadow(0 0 6px var(--gold)); }
-        #seed-container:hover .seed { transform: scale(1.15); }
+        #seed-container:active .seed { transform: scale(0.9); } /* Add a subtle press effect */
 
         /* --- Animation Styles --- */
         .reveal-up { opacity: 0; transform: translateY(50px); }
@@ -113,7 +115,7 @@
         .line-child { display: inline-block; transform: translateY(110%); }
 
         /* --- Chat & Form --- */
-        .chat-bubble { max-width: 75%; padding: 12px 18px; border-radius: 20px; line-height: 1.6; font-size: 1rem; }
+        .chat-bubble { max-width: 70%; padding: 10px 16px; border-radius: 18px; line-height: 1.6; font-size: 1rem; }
         .user-bubble { background-color: var(--teal); color: var(--warm-dark); border-bottom-right-radius: 4px; align-self: flex-end; font-weight: 500;}
         .bot-bubble { background-color: rgba(234, 224, 213, 0.08); backdrop-filter: blur(5px); color: var(--warm-text); border: 1px solid rgba(234, 224, 213, 0.1); border-bottom-left-radius: 4px; align-self: flex-start; }
         input, select, textarea { 
@@ -122,41 +124,42 @@
             border: 1px solid var(--medium-text);
             transition: border-color 0.3s, box-shadow 0.3s;
             border-radius: 8px; 
+            padding: 10px 15px; /* Consistent padding */
         }
-        input::placeholder, textarea::placeholder { color: var(--medium-text); opacity: 0.8; }
+        input::placeholder, textarea::placeholder { color: var(--medium-text); opacity: 0.7; }
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--gold);
-            box-shadow: 0 0 0 2px rgba(218, 165, 32, 0.3);
+            box-shadow: 0 0 0 2px rgba(218, 165, 32, 0.2); /* Softer focus shadow */
         }
         select {
            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23A8A29A' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
            background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1em 1em; padding-right: 2.5rem; -webkit-appearance: none; appearance: none; color: var(--warm-text);
         }
         select option { background-color: var(--warm-dark); color: var(--warm-text); }
-        button { transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background-color 0.3s ease; } /* Added background-color transition */
-        button:hover { transform: scale(1.05); } 
-        button:active { transform: scale(0.97); }
+        button { transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background-color 0.3s ease; } 
+        button:hover { transform: scale(1.03); } 
+        button:active { transform: scale(0.98); }
 
 
         /* --- Navigation --- */
         header { 
             backdrop-filter: blur(8px); 
-            background-color: rgba(26, 18, 11, 0.7); /* Slightly more opaque for readability */
+            background-color: rgba(26, 18, 11, 0.6); 
             transition: background-color 0.3s ease;
         }
         #menu-toggle { 
             z-index: 10001; 
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease; 
-            background-color: transparent; /* Start transparent */
-            border: 1px solid var(--warm-text); /* Visible border */
+            background-color: transparent; 
+            border: 1px solid var(--warm-text);
             border-radius: 50%;
-            width: 44px; /* Slightly larger */
+            width: 44px;
             height: 44px;
         }
          #menu-toggle:hover { 
              transform: scale(1.1) rotate(90deg); 
-             background-color: rgba(218, 165, 32, 0.1); /* Gold hover */
+             background-color: rgba(218, 165, 32, 0.1); 
              border-color: var(--gold);
          }
         #menu-toggle span { 
@@ -167,38 +170,40 @@
         #menu-toggle.open span:nth-child(1) { transform: translateY(3.5px) rotate(45deg); } 
         #menu-toggle.open span:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
         #menu-overlay { 
-            clip-path: circle(0% at calc(100% - 44px) 44px); /* Adjusted origin based on button size */
-            background-color: rgba(26, 18, 11, 0.98); /* Almost opaque */
+            clip-path: circle(0% at calc(100% - 44px) 48px); /* Adjusted origin slightly */
+            background-color: rgba(26, 18, 11, 0.97); /* Almost opaque warm dark */
             backdrop-filter: blur(15px); 
+            transition: clip-path 0.8s cubic-bezier(0.76, 0, 0.24, 1); /* Smoother transition */
         } 
-        #menu-overlay.open { clip-path: circle(150% at calc(100% - 44px) 44px); } /* Adjusted origin */
+        #menu-overlay.open { clip-path: circle(150% at calc(100% - 44px) 48px); }
         .menu-link { 
             transform: translateY(50px); 
             opacity: 0; 
-            font-family: 'Poppins', sans-serif; 
+            font-family: 'Poppins', sans-serif; /* Keep Poppins for menu clarity */
             font-weight: 500; 
             letter-spacing: 0.5px;
-            text-shadow: none; /* Remove default heading shadow */
-            transition: color 0.3s ease, transform 0.3s ease; /* Smooth hover */
+            color: var(--warm-text); 
+            transition: color 0.3s ease, transform 0.3s ease; 
          } 
         .menu-link:hover { 
             color: var(--gold); 
-            transform: translateY(50px) translateX(8px); /* Subtle shift */
+            transform: translateY(50px) translateX(5px); /* Subtle shift */
         }
          /* Active link style */
         .menu-link.active {
             color: var(--gold);
         }
 
-
-        /* Added glow to buttons */
-        #enter-site-btn:hover, #chat-form button:hover, #contact-form button:hover {
-             box-shadow: 0 0 15px 3px rgba(218, 165, 32, 0.3); /* Softer gold glow */
+        /* Subtle glow for buttons on hover */
+        #enter-site-btn:hover, 
+        #chat-form button:hover, 
+        #contact-form button:hover {
+             box-shadow: 0 0 12px 2px rgba(218, 165, 32, 0.3); /* Softer gold glow */
              transform: scale(1.05); /* Ensure hover scale applies */
         }
         .prompt-button:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(72, 169, 166, 0.3); /* Teal glow for prompts */
+            box-shadow: 0 0 8px rgba(72, 169, 166, 0.3); /* Subtle Teal glow for prompts */
         }
         
     </style>
@@ -213,21 +218,21 @@
     <div id="game-screen" class="fixed inset-0 bg-warm-dark z-[101] flex items-center justify-center p-4 transition-opacity duration-500">
         <div class="text-center w-full max-w-lg">
             <div id="game-intro">
-                <h2 class="font-heading text-gold text-4xl md:text-6xl mb-2" style="text-shadow: 0 0 8px rgba(218, 165, 32, 0.4);">A Seed of Trust</h2>
+                <h2 class="font-heading text-gold text-4xl md:text-6xl mb-2" style="text-shadow: 0 0 6px rgba(218, 165, 32, 0.3);">A Seed of Trust</h2>
                 <p class="font-body text-medium-text text-xl mb-8">Click and hold to begin.</p>
             </div>
-            <div id="seed-container" class="relative w-full aspect-square max-w-[200px] mx-auto"> {/* Smaller seed */}
+            <div id="seed-container" class="relative w-full aspect-square max-w-[200px] mx-auto" role="button" aria-label="Grow the seed">
                 <svg id="seed-svg" class="w-full h-full" viewBox="0 0 200 200">
                     <defs>
                         <filter id="glow-teal" x="-50%" y="-50%" width="200%" height="200%">
-                          <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/> {/* Softer glow */}
+                          <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
                           <feMerge>
                             <feMergeNode in="coloredBlur"/>
                             <feMergeNode in="SourceGraphic"/>
                           </feMerge>
                         </filter>
                          <filter id="glow-gold" x="-50%" y="-50%" width="200%" height="200%">
-                          <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/> {/* Softer glow */}
+                          <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
                           <feMerge>
                             <feMergeNode in="coloredBlur"/>
                             <feMergeNode in="SourceGraphic"/>
@@ -237,7 +242,7 @@
                     <path class="plant-path" d="M100 180 C 100 140, 70 140, 70 100 C 70 60, 100 60, 100 20" stroke="var(--teal)" stroke-width="2.5" fill="none" stroke-linecap="round" />
                     <path class="plant-path" d="M70 100 C 40 100, 40 70, 70 70" stroke="var(--teal)" stroke-width="2.5" fill="none" stroke-linecap="round" />
                     <path class="plant-path" d="M100 140 C 130 140, 130 110, 100 110" stroke="var(--teal)" stroke-width="2.5" fill="none" stroke-linecap="round" />
-                    <circle class="seed" cx="100" cy="180" r="8" fill="var(--gold)" filter="url(#glow-gold)"/> {/* Smaller seed */}
+                    <circle class="seed" cx="100" cy="180" r="8" fill="var(--gold)" filter="url(#glow-gold)"/> 
                 </svg>
             </div>
             <div id="game-end" class="absolute bottom-10 left-1/2 -translate-x-1/2 w-full px-4">
@@ -251,15 +256,15 @@
         <nav class="container mx-auto flex justify-between items-center px-6 py-4 md:px-8 md:py-6">
             <a href="#home" class="font-heading text-3xl text-gold z-[10002]" style="text-shadow: 0 0 5px rgba(218, 165, 32, 0.4);">Mehfooz</a>
              {/* Adjusted menu button position and size */}
-            <button id="menu-toggle" class="fixed top-6 right-6 md:top-8 md:right-8 w-10 h-10 flex flex-col justify-center items-center gap-1.5 rounded-full bg-warm-text/5 backdrop-blur-sm border border-warm-text/10 hover:border-gold transition-colors">
-                <span class="w-5 h-0.5 bg-warm-text block transition-transform duration-300"></span>
-                <span class="w-5 h-0.5 bg-warm-text block transition-transform duration-300"></span>
+            <button id="menu-toggle" aria-label="Toggle Menu" aria-expanded="false" class="fixed top-6 right-6 md:top-8 md:right-8 w-10 h-10 flex flex-col justify-center items-center gap-1.5 rounded-full bg-warm-text/5 backdrop-blur-sm border border-warm-text/10 hover:border-gold transition-colors">
+                <span class="w-5 h-0.5 bg-warm-text block transition-transform duration-300 origin-center"></span>
+                <span class="w-5 h-0.5 bg-warm-text block transition-transform duration-300 origin-center"></span>
             </button>
         </nav>
     </header>
     
-    <div id="menu-overlay" class="fixed inset-0 bg-warm-dark/95 backdrop-blur-xl z-[10000] flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]">
-        <div class="text-center space-y-2"> {/* Added spacing between links */}
+    <div id="menu-overlay" class="fixed inset-0 bg-warm-dark/95 backdrop-blur-lg z-[10000] flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.76,0,0.24,1)]">
+        <div class="text-center space-y-2">
             <a href="#home" class="menu-link block font-heading text-5xl md:text-7xl text-warm-text hover:text-gold transition-colors duration-300">Home</a>
             <a href="#journal" class="menu-link block font-heading text-5xl md:text-7xl text-warm-text hover:text-gold transition-colors duration-300">Our Story</a>
             <a href="#approach" class="menu-link block font-heading text-5xl md:text-7xl text-warm-text hover:text-gold transition-colors duration-300">Approach</a>
@@ -271,15 +276,18 @@
 
     <main id="main-content" class="opacity-0">
 
-        <section id="home" class="content-section h-screen flex items-center justify-center text-center">
+        <section id="home" class="content-section h-screen flex flex-col items-center justify-center text-center">
             <div class="px-4">
                 <h1 class="font-heading text-gold text-5xl md:text-7xl lg:text-8xl mb-4" style="text-shadow: 0 0 8px rgba(218, 165, 32, 0.3);">A digital sanctuary.</h1>
                 <p class="font-body text-xl md:text-2xl text-warm-text leading-relaxed max-w-3xl mx-auto line-parent mt-4">
                     <span class="line-child">Empowering the communities of Gilgit Baltistan to navigate the digital world safely and confidently.</span>
                 </p>
-                 <div class="absolute bottom-16 left-1/2 -translate-x-1/2 reveal-up">
-                    <a href="#journal" class="font-body text-medium-text animate-pulse">Scroll to Discover</a>
-                </div>
+            </div>
+             <div class="absolute bottom-10 left-1/2 -translate-x-1/2 reveal-up" style="--delay: 1s;"> {/* Delay scroll prompt slightly */}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto animate-bounce text-medium-text">
+                <path d="M12 5V19M12 19L19 12M12 19L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="font-body text-medium-text text-sm block mt-1">Scroll to discover</span>
             </div>
         </section>
 
@@ -306,6 +314,7 @@
             <div class="container mx-auto px-6 max-w-5xl">
                 <div class="text-center mb-16 md:mb-20 line-parent">
                     <h2 class="font-heading text-gold text-4xl md:text-5xl mb-4 line-child">Our Approach</h2>
+                    <p class="font-body text-lg text-medium-text max-w-2xl mx-auto reveal-up">Rooted in respect, guided by community.</p>
                 </div>
                 <div class="grid md:grid-cols-3 gap-10">
                     <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5">
@@ -313,12 +322,12 @@
                         <h3 class="font-heading text-2xl mb-3">Listen First</h3>
                         <p class="font-body text-medium-text leading-relaxed">We partner with local elders and Ulema, honoring their wisdom as the foundation of our work. Trust is built through understanding.</p>
                     </div>
-                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5" style="transition-delay: 0.1s;"> {/* Added delay */}
+                    <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5" style="--animation-delay: 0.1s;"> {/* Added delay via style */}
                         <p class="font-heading text-teal text-5xl mb-3">2.</p>
                         <h3 class="font-heading text-2xl mb-3">Guide Gently</h3>
                         <p class="font-body text-medium-text leading-relaxed">Our tools, like MehfoozBot, offer personal, patient help in local languages, making technology feel like a friendly companion.</p>
                     </div>
-                     <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5" style="transition-delay: 0.2s;"> {/* Added delay */}
+                     <div class="reveal-up p-6 rounded-lg transition-transform duration-300 hover:scale-[1.03] hover:bg-white/5" style="--animation-delay: 0.2s;"> {/* Added delay via style */}
                         <p class="font-heading text-teal text-5xl mb-3">3.</p>
                         <h3 class="font-heading text-2xl mb-3">Grow Together</h3>
                         <p class="font-body text-medium-text leading-relaxed">Through mini-courses and feedback from local students, we ensure our knowledge is always relevant and co-created with the community.</p>
@@ -339,7 +348,7 @@
                             "I'm excited to finally have a safe place to ask questions. I can't wait to use MehfoozBot to learn about my phone without feeling shy. It feels like someone is finally listening."
                             <cite class="block not-italic mt-2 text-warm-text font-sans text-base">- A student from Gilgit</cite>
                          </blockquote>
-                         <blockquote class="border-l-4 border-gold pl-6 italic font-body text-xl text-medium-text text-right transition-transform duration-300 hover:scale-[1.02] max-w-2xl mx-auto reveal-up" style="transition-delay: 0.1s;">
+                         <blockquote class="border-l-4 border-gold pl-6 italic font-body text-xl text-medium-text text-right transition-transform duration-300 hover:scale-[1.02] max-w-2xl mx-auto reveal-up" style="--animation-delay: 0.1s;">
                             "To have something that respects our traditions while teaching our children about the future... this is a blessing we are all looking forward to. It will help us connect better."
                             <cite class="block not-italic mt-2 text-warm-text font-sans text-base">- An elder from Ghanche</cite>
                          </blockquote>
@@ -382,15 +391,15 @@
                          <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a3.004 3.004 0 015.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                          <h3 class="text-2xl mt-4 font-heading">Collaboration</h3>
                      </div>
-                      <div class="reveal-up value-container p-4">
+                      <div class="reveal-up value-container p-4" style="--animation-delay: 0.1s;">
                          <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                          <h3 class="text-2xl mt-4 font-heading">Integrity</h3>
                      </div>
-                      <div class="reveal-up value-container p-4">
+                      <div class="reveal-up value-container p-4" style="--animation-delay: 0.2s;">
                          <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
                          <h3 class="text-2xl mt-4 font-heading">Inclusivity</h3>
                      </div>
-                      <div class="reveal-up value-container p-4">
+                      <div class="reveal-up value-container p-4" style="--animation-delay: 0.3s;">
                          <svg class="w-16 h-16 mx-auto text-medium-text value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
                          <h3 class="text-2xl mt-4 font-heading">Innovation</h3>
                      </div>
@@ -406,10 +415,11 @@
                    </div>
                    <div class="max-w-2xl mx-auto reveal-up">
                      <h3 class="font-heading text-teal text-4xl mb-6 text-center">Chat with MehfoozBot</h3>
-                     <div id="chat-log" class="bg-black/10 rounded-t-lg shadow-inner h-[50vh] flex flex-col gap-4 p-4 overflow-y-auto font-body"></div>
+                     <div id="chat-log" class="bg-black/10 rounded-t-lg shadow-inner h-[50vh] flex flex-col gap-4 p-4 overflow-y-auto font-body text-base"></div> {/* Explicitly font-body */}
                      <div class="bg-black/10 rounded-b-lg p-4">
-                        <div class="grid grid-cols-2 md:grid-cols-2 gap-2 mb-3" id="prompt-buttons">
-                           </div>
+                        <div class="grid grid-cols-2 gap-2 mb-3" id="prompt-buttons"> {/* Adjusted grid for 2 columns */}
+                           {/* Prompt buttons will be injected here */}
+                        </div>
                          <form id="chat-form" class="flex gap-3">
                              <input type="text" id="chat-input" placeholder="Ask a friendly question..." class="font-body flex-1 bg-warm-dark/50 border border-medium-text/30 rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-gold text-light-text placeholder-medium-text/80">
                              <button type="submit" class="font-heading bg-teal text-warm-dark rounded-full px-5 py-3 font-semibold hover:bg-opacity-80 transition-all duration-300 hover:shadow-lg hover:shadow-teal/30">Send</button>
@@ -456,17 +466,18 @@
         <div class="container mx-auto px-6 text-center text-medium-text">
             <a href="#home" class="font-heading text-3xl text-gold mb-4 inline-block">Mehfooz</a>
             <div class="flex justify-center gap-6 mb-6">
-                <a href="#" class="hover:text-gold transition-colors" title="Facebook">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"/></svg>
+                 {/* Replace # with actual social media links */}
+                <a href="#" class="hover:text-gold transition-colors duration-300" title="Facebook">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
                 </a>
-                <a href="#" class="hover:text-gold transition-colors" title="WhatsApp">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.447-4.435-9.884-9.888-9.884-5.448 0-9.886 4.434-9.889 9.885.002 2.024.603 3.965 1.667 5.63l-1.117 4.066 4.159-1.087z"/></svg>
+                <a href="#" class="hover:text-gold transition-colors duration-300" title="WhatsApp">
+                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.413 5.587A9.927 9.927 0 0012.001 2C6.478 2 2.001 6.477 2.001 12c0 1.99.59 3.824 1.666 5.467L2.03 22l4.678-1.638A9.924 9.924 0 0012.001 22c5.523 0 10-4.477 10-10a9.928 9.928 0 00-3.588-6.413zM12.001 20.245c-1.803 0-3.51-.48-5.01-1.353l-.36-.213-3.725 1.036 1.055-3.642-.23-.377A8.194 8.194 0 013.756 12c0-4.54 3.704-8.244 8.245-8.244 4.54 0 8.244 3.704 8.244 8.244S16.541 20.245 12.001 20.245zM17.41 14.547c-.202-.101-1.18-.582-1.363-.65s-.315-.1-.448.1c-.134.202-.516.65-.632.782-.116.133-.232.15-.434.05s-.84-.31-1.6-1c-.59-.537-.987-.954-1.103-1.118-.116-.164-.012-.25.088-.352.09-.09.202-.232.303-.348.101-.116.134-.2.201-.334.067-.133.033-.25-.017-.35s-.448-1.077-.614-1.474c-.16-.388-.328-.335-.448-.341-.113-.006-.246-.006-.38-.006s-.348.05-.53.25c-.183.202-.699.683-.699 1.666s.716 1.932.817 2.065c.101.133 1.396 2.13 3.383 2.991.47.202.836.323 1.12.413.348.108.66.093.903-.016.278-.127 1.18-.483 1.346-.95.166-.467.166-.867.116-.95s-.083-.15-.184-.251z" clip-rule="evenodd" /></svg>
                 </a>
-                <a href="#" class="hover:text-gold transition-colors" title="YouTube">
-                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                <a href="#" class="hover:text-gold transition-colors duration-300" title="YouTube">
+                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zM9.999 15.198V8.802l5.541 3.198-5.541 3.198z" clip-rule="evenodd" /></svg>
                 </a>
             </div>
-            <p class="font-body">&copy; 2024 Mehfooz Internet. All rights reserved.</p> {/* Updated year */}
+            <p class="font-body">&copy; 2024 Mehfooz Internet. All rights reserved.</p> 
             <p class="font-body text-sm mt-2">Cultivating a digitally literate society in Gilgit Baltistan.</p>
         </div>
     </footer>
@@ -482,47 +493,41 @@
         const cursorCircle = document.getElementById('cursor-circle');
         let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
         let circlePos = { ...mouse };
-        let circleScale = 1;
-        let isHovering = false;
+        let targetScale = 1; // Target scale for the circle
 
         window.addEventListener('mousemove', e => {
             gsap.to(mouse, { duration: 0.3, x: e.clientX, y: e.clientY, ease: 'power2.out' });
         });
 
         gsap.ticker.add(() => {
-            const dt = 1.0 - Math.pow(1.0 - 0.2, gsap.ticker.deltaRatio()); // Slightly faster interpolation
+            const dt = 1.0 - Math.pow(1.0 - 0.2, gsap.ticker.deltaRatio()); 
             circlePos.x += (mouse.x - circlePos.x) * dt;
             circlePos.y += (mouse.y - circlePos.y) * dt;
 
             gsap.set(cursorDot, { x: mouse.x - 4, y: mouse.y - 4 }); 
             gsap.set(cursorCircle, { x: circlePos.x - 20, y: circlePos.y - 20 }); 
 
-             // Apply scale/opacity changes directly in the ticker for smoother visuals
-            gsap.to(cursorCircle, {
-                 duration: 0.3,
-                 scale: isHovering ? 1.4 : 1, // Adjusted scale
-                 opacity: isHovering ? 0.4 : 1,
-                 ease: 'power2.out'
-             });
-             gsap.to(cursorDot, {
-                 duration: 0.3,
-                 scale: isHovering ? 0.6 : 1, // Adjusted scale
-                 backgroundColor: isHovering ? 'var(--teal)' : 'var(--gold)',
-                 ease: 'power2.out'
+             gsap.to(cursorCircle, { duration: 0.4, scale: targetScale, ease: 'expo.out' });
+             gsap.to(cursorDot, { 
+                duration: 0.4, 
+                scale: targetScale > 1 ? 0.6 : 1, // Shrink dot when circle grows
+                backgroundColor: targetScale > 1 ? 'var(--teal)' : 'var(--gold)',
+                ease: 'expo.out' 
              });
         });
         
-        // Add/Remove hover class for easier targeting if needed
         document.addEventListener('mouseover', (e) => {
-            if (e.target.closest('a, button, input, select, textarea, #seed-container, .value-container')) {
-                isHovering = true;
-            }
-        });
+             if (e.target.closest('a, button, input, select, textarea, #seed-container, .value-container, .prompt-button')) {
+                 targetScale = 1.4;
+                 document.body.classList.add('link-hover'); // Add class for potential CSS adjustments
+             }
+         });
          document.addEventListener('mouseout', (e) => {
-            if (e.target.closest('a, button, input, select, textarea, #seed-container, .value-container')) {
-                 isHovering = false;
-            }
-        });
+             if (e.target.closest('a, button, input, select, textarea, #seed-container, .value-container, .prompt-button')) {
+                 targetScale = 1;
+                 document.body.classList.remove('link-hover');
+             }
+         });
 
 
         // --- SMOOTH SCROLL ---
@@ -544,14 +549,14 @@
         const menuDuration = 0.9;
 
         const menuTimeline = gsap.timeline({ paused: true, defaults: { duration: menuDuration, ease: menuEase } })
-            .to(menuOverlay, { clipPath: 'circle(150% at calc(100% - 40px) 48px)' }, 0)
+            .to(menuOverlay, { clipPath: 'circle(150% at calc(100% - 40px) 48px)' }, 0) // Target position based on button's position
             .to(menuLinks, { 
                 y: 0, 
                 opacity: 1, 
-                duration: menuDuration * 0.8, // Slightly faster link reveal 
-                stagger: 0.05, 
+                duration: menuDuration * 0.7, 
+                stagger: 0.06, 
                 ease: 'expo.out' 
-            }, 0.15); // Start links slightly after overlay starts
+            }, 0.2);
 
         menuToggle.addEventListener('click', () => {
             isMenuOpen = !isMenuOpen;
@@ -573,17 +578,19 @@
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const target = link.getAttribute('href');
+                if (!target || !document.querySelector(target)) return; // Ensure target exists
+
                 isMenuOpen = false;
                 menuToggle.classList.remove('open');
                 
+                // Reverse animation and then scroll
                 menuTimeline.timeScale(1.5).reverse().then(() => { 
                     lenis.start();
-                     if (target && document.querySelector(target)) {
-                         lenis.scrollTo(target, { 
-                            duration: 1.8, 
-                            easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) 
-                        });
-                     }
+                    lenis.scrollTo(target, { 
+                        duration: 1.8, 
+                        easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t), // Expo out ease
+                        offset: -80 // Adjust offset if header overlaps content
+                    });
                 });
                 gsap.to(toggleSpans[0], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
                 gsap.to(toggleSpans[1], { y: 0, rotate: 0, duration: 0.4, ease: 'expo.out' });
@@ -625,13 +632,13 @@
         }
         
         const startGrowth = (e) => { 
-            e.preventDefault();
+            e.preventDefault(); // Important for touch devices
             if (!solved) growthAnimation.play(); 
         };
         
-        seedContainer.addEventListener('pointerdown', startGrowth); // Use pointerdown for better touch support
-        
-        // Removed mouseup/touchend to keep it grown
+        // Use pointer events for better cross-device compatibility
+        seedContainer.addEventListener('pointerdown', startGrowth); 
+        // No need for pointerup/leave if we want it to complete on press
 
         enterBtn.addEventListener('click', () => {
              gsap.to(gameScreen, { 
@@ -641,7 +648,7 @@
                  onComplete: () => {
                      gameScreen.style.display = 'none';
                      gsap.to(mainContent, { opacity: 1, duration: 1, ease: 'power1.out' });
-                     initAnimations();
+                     initAnimations(); // Initialize scroll animations only after intro
                      lenis.scrollTo('#home', { immediate: true });
                  }
              });
@@ -651,56 +658,64 @@
 
 
         // --- THREE.JS BACKGROUND ---
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 4; // Adjusted camera further back slightly
-        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true, antialias: true }); 
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        let scene, camera, renderer, particles; // Define globally in this scope
 
-        const particleCount = 12000; // Adjusted particle count
-        const positions = new Float32Array(particleCount * 3);
-        const colors = new Float32Array(particleCount * 3);
-        // Using CSS variables converted to THREE.Color
-        const colorGoldThree = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--gold').trim());
-        const colorTealThree = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--teal').trim());
-        const colorWarmTextThree = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--warm-text').trim());
+        function initThreeJS() {
+            const canvas = document.getElementById('bg-canvas');
+            if (!canvas) return; // Exit if canvas not found
 
-        for(let i = 0; i < particleCount; i++) {
-            const i3 = i * 3;
-            const radius = 6 + Math.random() * 8; 
-            const phi = Math.acos(-1 + (2 * Math.random()));
-            const theta = Math.sqrt(particleCount * Math.PI) * phi * (Math.random() - 0.5) * 2; 
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 4;
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true }); 
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            const particleCount = 10000;
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            const colorGoldThree = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--gold').trim());
+            const colorTealThree = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--teal').trim());
+            const colorWarmTextThree = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--warm-text').trim());
+
+            for(let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+                const radius = 6 + Math.random() * 8; 
+                const phi = Math.acos(-1 + (2 * Math.random()));
+                const theta = Math.sqrt(particleCount * Math.PI) * phi * (Math.random() - 0.5) * 2; 
+                
+                positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+                positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+                positions[i3 + 2] = radius * Math.cos(phi) - 5; 
+                
+                const randColor = Math.random();
+                let mixedColor;
+                if (randColor < 0.65) mixedColor = colorWarmTextThree.clone().lerp(colorGoldThree, Math.random() * 0.4); 
+                else if (randColor < 0.9) mixedColor = colorGoldThree.clone();
+                else mixedColor = colorTealThree.clone().lerp(colorWarmTextThree, 0.7); 
+                
+                colors[i3] = mixedColor.r; colors[i3 + 1] = mixedColor.g; colors[i3 + 2] = mixedColor.b;
+            }
+            const particlesGeometry = new THREE.BufferGeometry();
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
             
-            positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
-            positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-            positions[i3 + 2] = radius * Math.cos(phi) - 5; 
-            
-            const randColor = Math.random();
-            let mixedColor;
-            // Adjusted color distribution for warmer feel
-            if (randColor < 0.7) mixedColor = colorWarmTextThree.clone().lerp(colorGoldThree, Math.random() * 0.4); 
-            else if (randColor < 0.9) mixedColor = colorGoldThree.clone();
-            else mixedColor = colorTealThree.clone().lerp(colorWarmTextThree, 0.7); // Teal blended more with warm text
-            
-            colors[i3] = mixedColor.r; colors[i3 + 1] = mixedColor.g; colors[i3 + 2] = mixedColor.b;
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.018, sizeAttenuation: true, transparent: true, opacity: 0.6, 
+                vertexColors: true, blending: THREE.AdditiveBlending, depthWrite: false
+            });
+            particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particles);
         }
-        const particlesGeometry = new THREE.BufferGeometry();
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-        
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.018, sizeAttenuation: true, transparent: true, opacity: 0.6, // Slightly less opaque
-            vertexColors: true, blending: THREE.AdditiveBlending, depthWrite: false
-        });
-        const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particles);
+
         const clock = new THREE.Clock();
 
         function animateBackground() {
+            if (!renderer || !scene || !camera || !particles) return; // Ensure Three.js is initialized
+
             const elapsedTime = clock.getElapsedTime();
             
-            // Slower, more atmospheric rotation
+            // Slow, constant rotation for a calm background drift
             particles.rotation.y = elapsedTime * 0.015; 
             particles.rotation.x = elapsedTime * 0.007;
             
@@ -712,16 +727,19 @@
             renderer.render(scene, camera);
             requestAnimationFrame(animateBackground);
         }
+        
+        initThreeJS(); // Initialize Three.js
         animateBackground(); // Start the background animation loop
 
         window.addEventListener('resize', () => {
+            if (!camera || !renderer) return;
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         });
 
-        // --- MAIN CONTENT ANIMATIONS ---
+        // --- MAIN CONTENT ANIMATIONS (Called after intro) ---
         function initAnimations() {
             // Animate lines in paragraphs and initial subtitle
             gsap.utils.toArray('.line-parent .line-child').forEach(el => {
@@ -736,35 +754,55 @@
                 });
             });
 
-            // Standard reveal-up for other elements
+            // Standard reveal-up for other elements like blockquotes, cards
             gsap.utils.toArray('.reveal-up').forEach(elem => {
                 gsap.fromTo(elem, { opacity: 0, y: 70 }, {
                     opacity: 1, y: 0, duration: 1.6, ease: 'expo.out',
-                    scrollTrigger: { trigger: elem, start: 'top 88%' }
+                    scrollTrigger: { 
+                        trigger: elem, 
+                        start: 'top 88%', // Start animation slightly before it's fully in view
+                        // markers: true // Uncomment for debugging scroll trigger positions
+                     }
                 });
             });
             
             // Parallax Images
             gsap.utils.toArray('.parallax-image').forEach(img => {
-                gsap.to(img, {
-                    yPercent: -8, 
+                 gsap.to(img, {
+                    yPercent: -10, // Adjust percentage for desired parallax intensity
                     ease: 'none',
-                    scrollTrigger: { trigger: img.closest('.parallax-container'), scrub: 2 } 
+                    scrollTrigger: {
+                        trigger: img.closest('.parallax-container'), // Use the container as trigger
+                        start: 'top bottom', // When the top of the container hits the bottom of the viewport
+                        end: 'bottom top', // When the bottom of the container leaves the top of the viewport
+                        scrub: 1.5 // Smooth scrubbing effect
+                    }
                 });
             });
             
             // Counter Animation
             const userCounter = document.getElementById('user-counter');
             if (userCounter) { 
-                gsap.from(userCounter, {
-                    textContent: 0, duration: 3, ease: "expo.out", snap: { textContent: 1 },
-                    scrollTrigger: { trigger: userCounter, start: "top 85%" },
-                    onUpdate: function() { this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent).toLocaleString() + "+"; }
+                ScrollTrigger.create({
+                   trigger: userCounter, 
+                   start: "top 85%",
+                   once: true, // Only run once
+                   onEnter: () => {
+                       gsap.fromTo(userCounter, 
+                           { textContent: 0 }, 
+                           { 
+                               textContent: 100000, 
+                               duration: 3, 
+                               ease: "expo.out", 
+                               snap: { textContent: 1 },
+                               onUpdate: function() {
+                                   const currentVal = Math.ceil(parseFloat(this.targets()[0].textContent));
+                                   userCounter.innerHTML = currentVal.toLocaleString() + "+";
+                               }
+                           }
+                       );
+                   }
                 });
-                 ScrollTrigger.create({
-                    trigger: userCounter, start: "top 85%",
-                    onEnter: () => gsap.to(userCounter, { textContent: "100000", duration: 3, ease: "expo.out", onUpdate: function() { this.targets()[0].innerHTML = Math.ceil(this.targets()[0].textContent).toLocaleString() + "+"; }})
-                 });
             }
 
             // Timeline Path Animation
@@ -778,17 +816,17 @@
                 });
             }
 
-            // Ensure all anchor links scroll smoothly (including logo and footer link)
-            document.querySelectorAll('a[href^="#"]:not(.menu-link)').forEach(anchor => { // Exclude menu links handled separately
+            // General Smooth Scroll Anchors (excluding menu links)
+            document.querySelectorAll('a[href^="#"]:not(.menu-link)').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
                         lenis.scrollTo(targetElement, { 
-                            duration: 2, // Smooth scroll duration
-                            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Expo out ease
-                            offset: -80 // Adjust if you have a fixed header taking space
+                            duration: 1.8, 
+                            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+                            offset: -80 // Adjust offset if header height changes
                         });
                     }
                 });
@@ -818,7 +856,7 @@
         
         function addMessage(message, sender, isImmediate = false) {
             const bubble = document.createElement('div');
-            bubble.className = `chat-bubble ${sender}-bubble font-body text-base`; // Ensure consistent font
+            bubble.className = `chat-bubble ${sender}-bubble font-body`;
             bubble.textContent = message;
             chatLog.appendChild(bubble);
             gsap.from(bubble, { opacity: 0, y: 20, duration: 0.6, delay: isImmediate ? 0 : 0.4, ease: 'expo.out' });
@@ -837,28 +875,27 @@
 
                 setTimeout(() => {
                     gsap.to(thinkingBubble, {opacity: 0, duration: 0.3, onComplete: () => thinkingBubble.remove()});
-                    // Try exact match first, then basic keyword
                     let responseKey = 'default';
+                    // Check for exact match first
                     if (promptQuestions[input]) {
                         responseKey = promptQuestions[input];
-                    } else {
+                    } else { // Then try basic keyword matching
                        const inputLower = input.toLowerCase();
                        for (const key in promptQuestions) {
-                          // Check if keywords from the prompt question exist in the input
-                          const keywords = key.toLowerCase().split(' ').filter(word => !['what\'s', 'how', 'do', 'you', 'can', 'i', 'is', 'a', 'the', 'for', 'with', 'tips'].includes(word));
+                          const keywords = key.toLowerCase().replace(/[^a-z0-9\s]/gi, '').split(' ').filter(word => !['what\'s', 'how', 'do', 'you', 'can', 'i', 'is', 'a', 'the', 'for', 'with', 'tips'].includes(word) && word.length > 2);
                           if (keywords.some(keyword => inputLower.includes(keyword))) {
                              responseKey = promptQuestions[key];
                              break;
                           }
                        }
                     }
-                    const response = botResponses[responseKey] || botResponses.default;
+                    const response = botResponses[responseKey];
                     addMessage(response, 'bot');
                     chatInput.disabled = false;
                     chatInput.focus();
                     promptButtonsContainer.style.pointerEvents = 'auto';
                     gsap.to(promptButtonsContainer.querySelectorAll('button'), { opacity: 1, duration: 0.3 });
-                }, 900 + Math.random() * 600); // Variable delay
+                }, 900 + Math.random() * 600);
              }
         }
 
@@ -870,7 +907,7 @@
         Object.keys(promptQuestions).forEach(question => {
             const button = document.createElement('button');
             button.setAttribute('role', 'button'); 
-            button.className = "prompt-button font-body text-sm bg-warm-dark/50 border border-medium-text/30 rounded-full py-2 px-3 text-medium-text hover:border-gold hover:text-gold transition-all duration-300 text-left hover:scale-105"; // Added class for cursor hover
+            button.className = "prompt-button font-body text-sm bg-warm-dark/50 border border-medium-text/30 rounded-full py-2 px-3 text-medium-text hover:border-gold hover:text-gold transition-colors text-left";
             button.textContent = question;
             button.onclick = () => { handleUserInput(question); }
             promptButtonsContainer.appendChild(button);
@@ -883,7 +920,7 @@
         const formSuccess = document.getElementById('form-success');
         contactForm.addEventListener('submit', e => {
              e.preventDefault();
-             // **Important:** Add actual form submission logic here (e.g., using fetch or AJAX)
+             // Simulate form submission
              gsap.to(contactForm, { opacity: 0, duration: 0.5, onComplete: () => {
                  contactForm.style.display = 'none';
                  formSuccess.classList.remove('hidden');
