@@ -7,11 +7,9 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Updated Font Import for "ambient" feel -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Nunito+Sans:wght@400;700;800&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Nunito+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     
-    <!-- Include Three.js for cosmic background -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous"></script>
 
     <style>
@@ -132,8 +130,8 @@
       .chat-header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-md); border-bottom: 1px solid var(--color-glass-border); background-color: rgba(0,0,0,0.1); }
       .chat-title-group { display: flex; align-items: center; gap: var(--space-md); }
       .chat-title-group svg { width: 28px; height: 28px; color: var(--color-text); }
-      .chat-title { font-family: var(--font-heading); font-weight: 700; font-size: 1.5rem; color: var(--color-accent-gold); line-height: 1; }
-      .chat-subtitle { font-family: var(--font-body); font-size: 0.9rem; color: var(--color-medium); }
+      .chat-title { font-family: var(--font-heading); font-weight: 700; font-size: 1.5rem; color: var(--color-accent-gold); line-height: 1; margin-bottom: 0; }
+      .chat-subtitle { font-family: var(--font-body); font-size: 0.9rem; color: var(--color-medium); margin-bottom: 0; }
       .chat-lang-toggle { display: flex; gap: var(--space-sm); }
       .chat-lang-toggle button {
           padding: 0.35rem 0.75rem; border-radius: var(--radius-full); transition: all var(--transition-normal);
@@ -178,7 +176,7 @@
       .modal-backdrop { position: fixed; inset: 0; z-index: var(--z-modal-backdrop); background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); opacity: 0; visibility: hidden; transition: all var(--transition-normal); } .modal-backdrop.is-visible { opacity: 1; visibility: visible; }
       .settings-modal-content { background: var(--color-primary); border: 1px solid var(--color-accent-gold); backdrop-filter: blur(15px); border-radius: var(--radius-xl); padding: 1.5rem; box-shadow: var(--shadow-lg); position: relative; }
       .bot-modal-content { background: var(--color-primary); border: 1px solid var(--color-accent-gold); backdrop-filter: blur(15px); border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); position: relative; padding: 0; /* Remove padding for new header */ overflow: hidden; } /* Modal content updated */
-      .settings-title { font-family: var(--font-heading); font-weight: 700; font-size: 1.75rem; color: var(--color-accent-gold); text-align: center; margin-bottom: 0.5rem; }
+      .settings-title { font-family: var(--font-heading); font-weight: 700; font-size: 1.75rem; color: var(--color-accent-gold); text-align: center; margin-bottom: 0.5rem; } .bot-modal-title { margin-bottom: 0; } /* Fix for modal title */
       .setting-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--color-glass-border); } .setting-item:last-of-type { border-bottom: none; } .setting-label { font-family: var(--font-body); font-weight: 700; color: var(--color-text); } .setting-note { font-size: 0.8rem; color: var(--color-medium); margin-left: 0.5rem; } #settings-close-btn { margin-top: 1.5rem; width: 100%; }
       .toggle-switch { appearance: none; width: 40px; height: 22px; background-color: var(--color-glass-border); border-radius: var(--radius-full); position: relative; cursor: none; transition: background-color var(--transition-normal); } .toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background-color: var(--color-light); border-radius: 50%; transition: transform var(--transition-normal); } .toggle-switch:checked { background-color: var(--color-accent-teal); } .toggle-switch:checked::after { transform: translateX(18px); }
       .keyboard-help-overlay { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) scale(0.95); z-index: var(--z-floating-ui); background: var(--color-glass); border: 1px solid var(--color-glass-border); backdrop-filter: blur(10px); border-radius: var(--radius-lg); padding: 1rem 1.5rem; box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); } .keyboard-help-overlay.is-visible { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); } .keyboard-help-title { font-family: var(--font-heading); font-weight: 700; color: var(--color-accent-gold); text-align: center; margin-bottom: 1rem; } .keyboard-help-list { list-style: none; display: flex; gap: 1.5rem; } .keyboard-help-list li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--color-medium); } .keyboard-help-list kbd { font-family: monospace; background: var(--color-dark); border: 1px solid var(--color-glass-border); border-radius: var(--radius-sm); padding: 0.1rem 0.4rem; font-size: 0.9rem; color: var(--color-text); }
@@ -202,7 +200,6 @@
     </style>
 </head>
 <body class="antialiased">
-    <!-- Elements are the same structure -->
     <div id="cursor-dot"></div>
     <div id="cursor-light"></div>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -224,7 +221,6 @@
             <section id="vision" class="content-section"> <div class="container mx-auto max-w-4xl text-center"> <div class="mb-16 section-header reveal-up"> <h2 class="section-title">Charting Our Future</h2> <p class="section-body max-w-3xl mx-auto">Our five-year vision is to scale our impact, offering an opportunity for partners to co-create a digitally resilient future for Pakistan and beyond.</p> </div> <div class="grid md:grid-cols-2 gap-x-12 gap-y-16 text-left"> <div class="reveal-up"> <p class="vision-counter-number" id="user-counter">0</p> <h3 class="vision-title">Empowered Users</h3> <p class="vision-body">Leveraging our established educational networks and community structures for organic, sustainable growth across Pakistan.</p> </div> <div class="reveal-up"> <p class="vision-counter-number" id="platform-counter">0+</p> <h3 class="vision-title">Platform Evolutions</h3> <p class="vision-body">Introducing AI-driven learning paths, enhanced offline capabilities, and expanded indigenous language support.</p> </div> </div> </div> </section>
             <section id="values" class="content-section"> <div class="container mx-auto max-w-5xl"> <div class="text-center mb-20 section-header reveal-up"> <h2 class="section-title">Our Guiding Principles</h2> </div> <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 text-center"> <div class="value-container reveal-up"> <div class="value-icon-wrapper"> <svg class="value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a3.004 3.004 0 015.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg> </div> <h3 class="value-title">Collaboration</h3> <p class="value-body">We build partnerships with local leaders, researchers, students and community members to create a holistic approach to combating misinformation.</p> </div> <div class="value-container reveal-up"> <div class="value-icon-wrapper"> <svg class="value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> </div> <h3 class="value-title">Integrity</h3> <p class="value-body">We uphold the highest standards of accuracy and reliability, ensuring users receive trustworthy information.</p> </div> <div class="value-container reveal-up"> <div class="value-icon-wrapper"> <svg class="value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg> </div> <h3 class="value-title">Inclusivity</h3> <p class="value-body">We embrace diversity by providing resources in multiple languages, ensuring everyone has access to digital literacy education.</p> </div> <div class="value-container reveal-up"> <div class="value-icon-wrapper"> <svg class="value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 11-7.072 0 .548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> </div> <h3 class="value-title">Innovation</h3> <p class="value-body">We leverage cutting-edge technologies like AI to continuously enhance our educational offerings and user experience.</p> </div> </div> </div> </section>
             <section id="connect" class="content-section"> <div class="container mx-auto space-y-24"> <div class="text-center max-w-3xl mx-auto section-header reveal-up"> <h2 class="section-title">Join The Movement</h2> <p class="section-body">Whether you are a community leader, a potential partner, or a researcher, there is a role for you. Let's connect and become a part of the solution together.</p> </div>
-                <!-- Chat Widget (Main Page) -->
                 <div class="max-w-2xl mx-auto reveal-up"> <h3 class="section-subtitle text-center">Chat with MehfoozBot</h3>
                     <div class="chat-widget">
                         <div class="chat-header">
@@ -253,10 +249,10 @@
     <div class="accessibility-controls"> <button id="settings-toggle-btn" class="settings-btn" aria-label="Open settings" aria-controls="settings-modal" aria-expanded="false"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.26.96c-1.29-.58-2.53.48-2.26 1.9c.09.48-.1.98-.48 1.35c-1.19.95-1.19 2.7.01 3.65c.38.37.58.87.48 1.35c-.27 1.42 1.01 2.48 2.26 1.9c.48-.22.99-.22 1.47 0c1.25.58 2.53-.48 2.26-1.9c-.09-.48.1-.98.48-1.35c1.19-.95 1.19-2.7-.01-3.65c-.38-.37-.58-.87-.48-1.35c.27-1.42-1.01-2.48-2.26-1.9a1.532 1.532 0 01-2.26-.96zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg> </button> <button id="help-toggle-btn" class="settings-btn" aria-label="Show keyboard shortcuts" aria-controls="keyboard-help" aria-expanded="false"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.06-1.061 3.5 3.5 0 014.668 4.668l-1.06 1.06a.75.75 0 01-1.06-1.06l1.06-1.06a1.99 1.99 0 00-2.828-2.828l-1.78 1.78zM9 13a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd" /></svg> </button> </div>
     <div id="settings-modal" class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title" hidden> <div class="settings-modal-content"> <h3 id="settings-title" class="settings-title">Settings</h3> <div class="setting-item"> <label for="motion-toggle" class="setting-label">Enable Ambient Motion</label> <input type="checkbox" id="motion-toggle" class="toggle-switch" role="switch"> </div> <div class="setting-item"> <label for="sound-toggle" class="setting-label">Enable Ambient Sound</label> <input type="checkbox" id="sound-toggle" class="toggle-switch" role="switch" disabled> <span class="setting-note">(Ambient sound not yet implemented)</span> </div> <button id="settings-close-btn" class="btn btn-secondary" aria-label="Close settings">Close</button> </div> </div>
     <div id="keyboard-help" class="keyboard-help-overlay" role="tooltip" hidden> <h4 class="keyboard-help-title">Keyboard Shortcuts</h4> <ul class="keyboard-help-list"> <li><kbd>H</kbd><span>Go to Home</span></li> <li><kbd>M</kbd><span>Open MehfoozBot</span></li> <li><kbd>S</kbd><span>Skip Intro / Content</span></li> <li><kbd>?</kbd><span>Toggle Help</span></li> <li><kbd>Esc</kbd><span>Close Modals</span></li> </ul> </div>
+    
     <div id="bot-modal" class="bot-modal" role="dialog" aria-modal="true" aria-labelledby="bot-modal-title" hidden> 
         <div class="bot-modal-content"> 
             <button id="close-bot-demo" class="modal-close-btn" aria-label="Close chat demo">&times;</button> 
-            <!-- Chat Header -->
             <div class="chat-header">
                 <div class="chat-title-group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></svg>
@@ -270,11 +266,8 @@
                     <button data-lang="ur">اردو</button>
                 </div>
             </div>
-            <!-- Chat Log -->
             <div id="modal-chat-log" class="chat-log modal-chat-log"></div>
-            <!-- Prompt Buttons -->
             <div class="chat-prompt-buttons" id="modal-question-pills"></div>
-            <!-- Input Form -->
             <form id="modal-chat-form" class="chat-form">
                 <input type="text" id="modal-chat-input" placeholder="Type your question here..." autocomplete="off" class="form-input">
                 <button type="submit" class="btn btn-primary chat-send-btn">
@@ -287,7 +280,6 @@
     </div>
     <div id="modal-backdrop" class="modal-backdrop" hidden></div>
 
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
@@ -379,8 +371,8 @@
         
         // --- CHATBOT LOGIC (NEW) ---
         function initChatbot() {
-            // Your new Hugging Face API Endpoint
-            const API_URL = "https://hasnainakb-mehfooz.hf.space/run/chat_interface";
+            // *** API URL UPDATED ***
+            const API_URL = "https://hasnainakb-mehfooz.hf.space/run/predict"; // Using /run/predict as it matches your example data structure
 
             // Prompt buttons for users to click
             const promptDefs = [
@@ -398,17 +390,16 @@
                         body: JSON.stringify({
                             data: [
                                 userMessage,
-                                chatHistory, // Pass the conversation history
+                                [] // *** FIX: Send an empty array for history as per your example ***
                             ]
                         })
                     });
                     if (!response.ok) throw new Error(`API Error: ${response.status}`);
                     const result = await response.json();
+                    
                     if (result.data && result.data.length > 0) {
-                        // The response from this type of API is often the full history
-                        const newHistory = result.data[0];
-                        // The latest bot response is the last item in the last sub-array
-                        return newHistory[newHistory.length - 1][1];
+                        // The Gradio /run/predict API returns the answer in result.data[0]
+                        return result.data[0]; 
                     } else {
                         throw new Error("Invalid API response structure.");
                     }
@@ -427,7 +418,6 @@
                 if (!trimmedInput || targetInput.disabled) return;
 
                 addChatMessage(trimmedInput, 'user', targetLog);
-                chatHistory.push([trimmedInput, null]); 
                 
                 targetInput.value = "";
                 targetInput.disabled = true;
@@ -440,11 +430,6 @@
                 thinkingBubble.classList.remove('chat-thinking-bubble');
                 thinkingBubble.innerHTML = '';
                 thinkingBubble.textContent = botReplyText;
-                
-                // Update history with the actual bot response
-                if (chatHistory.length > 0) {
-                    chatHistory[chatHistory.length - 1][1] = botReplyText;
-                }
                 
                 targetInput.disabled = false;
                 if(targetPrompts) { targetPrompts.style.pointerEvents = 'auto'; if(typeof gsap !== 'undefined') gsap.to(targetPrompts.children, { opacity: 1, duration: 0.3 }); }
@@ -480,7 +465,7 @@
                             btn.className = "chat-prompt-btn";
                             btn.textContent = prompt[lang];
                             btn.onclick = () => {
-                                const queryText = prompt.query; // Always send the more detailed English query
+                                const queryText = prompt.query; // Send the detailed English query
                                 if(container === els.mainPromptButtons) {
                                     handleBotUserInput(queryText, els.mainChatLog, els.mainChatInput, els.mainPromptButtons);
                                 } else {
@@ -510,7 +495,7 @@
             if(els.modalLangToggle) els.modalLangToggle.addEventListener('click', (e) => { if(e.target.dataset.lang) handleLanguageChange(e.target.dataset.lang); });
             handleLanguageChange(currentLanguage); // This also adds the initial prompts
         }
-
+        
         // --- Contact Form ---
         function initContactForm() {
             if (!els.contactForm || !els.formSuccess) return;
@@ -518,13 +503,11 @@
                 e.preventDefault();
                 const form = e.target;
                 const formData = new FormData(form);
-                
                 let isValid = true;
                 if (!formData.get('name').trim() || !formData.get('email').trim() || !formData.get('message').trim()) {
                      isValid = false;
                      alert("Please fill in all required fields.");
                 }
-
                 if (isValid) {
                     fetch(form.action, {
                         method: form.method,
@@ -561,7 +544,7 @@
         // --- Modals and Accessibility Toggles ---
         function toggleModal(modal, forceOpen) { if (!modal || !els.modalBackdrop) return; const show = forceOpen === undefined ? !modal.classList.contains('is-visible') : forceOpen; const relatedButton = document.querySelector(`[aria-controls="${modal.id}"]`); if (relatedButton) relatedButton.setAttribute('aria-expanded', show); if (show) { modal.removeAttribute('hidden'); els.modalBackdrop.removeAttribute('hidden'); gsap.to([modal, els.modalBackdrop], { opacity: 1, duration: 0.3, onStart: () => { modal.classList.add('is-visible'); els.modalBackdrop.classList.add('is-visible'); }}); gsap.fromTo(modal, {scale: 0.95}, { scale: 1, duration: 0.3, ease: 'back.out(1.7)' }); } else { gsap.to(modal, { scale: 0.95, opacity: 0, duration: 0.3, onComplete: () => { modal.classList.remove('is-visible'); modal.setAttribute('hidden', 'true'); }}); gsap.to(els.modalBackdrop, { opacity: 0, duration: 0.3, onComplete: () => { els.modalBackdrop.classList.remove('is-visible'); els.modalBackdrop.setAttribute('hidden', 'true'); }}); } }
         function toggleHelp(forceOpen) { if (!els.keyboardHelp) return; const show = forceOpen === undefined ? !els.keyboardHelp.classList.contains('is-visible') : forceOpen; els.helpToggleBtn?.setAttribute('aria-expanded', show); if (show) { els.keyboardHelp.removeAttribute('hidden'); gsap.fromTo(els.keyboardHelp, {opacity: 0, scale: 0.95}, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.7)', onStart: () => els.keyboardHelp.classList.add('is-visible') }); } else { gsap.to(els.keyboardHelp, { opacity: 0, scale: 0.95, duration: 0.3, onComplete: () => { els.keyboardHelp.classList.remove('is-visible'); els.keyboardHelp.setAttribute('hidden', 'true'); }}); } }
-        function initAccessibility() { if (els.settingsToggleBtn) els.settingsToggleBtn.addEventListener('click', () => toggleModal(els.settingsModal)); if (els.settingsCloseBtn) els.settingsCloseBtn.addEventListener('click', () => toggleModal(els.settingsModal, false)); if (els.helpToggleBtn) els.helpToggleBtn.addEventListener('click', () => toggleHelp()); if (els.openBotBtn) els.openBotBtn.addEventListener('click', () => toggleModal(els.botModal)); if (els.closeBotBtn) els.closeBotBtn.addEventListener('click', () => toggleModal(els.botModal, false)); if (els.modalBackdrop) els.modalBackdrop.addEventListener('click', () => { toggleModal(els.settingsModal, false); toggleModal(els.botModal, false); }); window.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (els.settingsModal?.classList.contains('is-visible')) toggleModal(els.settingsModal, false); if (els.botModal?.classList.contains('is-visible')) toggleModal(els.botModal, false); if (els.keyboardHelp?.classList.contains('is-visible')) toggleHelp(false); if (els.navLinksContainer?.classList.contains('is-visible')) els.mobileNavToggle?.click(); } if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || els.introGame?.classList.contains('active')) return; if (e.key === '?') { e.preventDefault(); toggleHelp(); } if (e.key.toLowerCase() === 'h') { e.preventDefault(); document.querySelector('a[href="#home"]')?.click(); } if (e.key.toLowerCase() === 'm') { e.preventDefault(); toggleModal(els.botModal, true); if (window.initModalChat) { window.initModalChat(); } setTimeout(() => els.modalChatInput?.focus(), 300); } if (e.key.toLowerCase() === 's') { e.preventDefault(); document.querySelector('.skip-link')?.focus(); } }); }
+        function initAccessibility() { if (els.settingsToggleBtn) els.settingsToggleBtn.addEventListener('click', () => toggleModal(els.settingsModal)); if (els.settingsCloseBtn) els.settingsCloseBtn.addEventListener('click', () => toggleModal(els.settingsModal, false)); if (els.helpToggleBtn) els.helpToggleBtn.addEventListener('click', () => toggleHelp()); if (els.openBotBtn) els.openBotBtn.addEventListener('click', () => { toggleModal(els.botModal); if (window.initModalChat) { window.initModalChat(); } setTimeout(() => els.modalChatInput?.focus(), 300); }); if (els.closeBotBtn) els.closeBotBtn.addEventListener('click', () => toggleModal(els.botModal, false)); if (els.modalBackdrop) els.modalBackdrop.addEventListener('click', () => { toggleModal(els.settingsModal, false); toggleModal(els.botModal, false); }); window.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (els.settingsModal?.classList.contains('is-visible')) toggleModal(els.settingsModal, false); if (els.botModal?.classList.contains('is-visible')) toggleModal(els.botModal, false); if (els.keyboardHelp?.classList.contains('is-visible')) toggleHelp(false); if (els.navLinksContainer?.classList.contains('is-visible')) els.mobileNavToggle?.click(); } if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || els.introGame?.classList.contains('active')) return; if (e.key === '?') { e.preventDefault(); toggleHelp(); } if (e.key.toLowerCase() === 'h') { e.preventDefault(); document.querySelector('a[href="#home"]')?.click(); } if (e.key.toLowerCase() === 'm') { e.preventDefault(); toggleModal(els.botModal, true); if (window.initModalChat) { window.initModalChat(); } setTimeout(() => els.modalChatInput?.focus(), 300); } if (e.key.toLowerCase() === 's') { e.preventDefault(); document.querySelector('.skip-link')?.focus(); } }); }
         // --- Floating Chat Bubble Interaction ---
         function initFloatingChatBubble() { if (els.chatBubble) { els.chatBubble.addEventListener('click', () => { toggleModal(els.botModal, true); if (window.initModalChat) { window.initModalChat(); } setTimeout(() => els.modalChatInput?.focus(), 300); }); } }
         // --- Page Visibility API ---
