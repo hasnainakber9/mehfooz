@@ -7,9 +7,11 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Updated Font Import for "ambient" feel -->
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Nunito+Sans:wght@400;700;800&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Nunito+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     
+    <!-- Include Three.js for cosmic background -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous"></script>
 
     <style>
@@ -181,7 +183,6 @@
       .toggle-switch { appearance: none; width: 40px; height: 22px; background-color: var(--color-glass-border); border-radius: var(--radius-full); position: relative; cursor: none; transition: background-color var(--transition-normal); } .toggle-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background-color: var(--color-light); border-radius: 50%; transition: transform var(--transition-normal); } .toggle-switch:checked { background-color: var(--color-accent-teal); } .toggle-switch:checked::after { transform: translateX(18px); }
       .keyboard-help-overlay { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) scale(0.95); z-index: var(--z-floating-ui); background: var(--color-glass); border: 1px solid var(--color-glass-border); backdrop-filter: blur(10px); border-radius: var(--radius-lg); padding: 1rem 1.5rem; box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); } .keyboard-help-overlay.is-visible { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); } .keyboard-help-title { font-family: var(--font-heading); font-weight: 700; color: var(--color-accent-gold); text-align: center; margin-bottom: 1rem; } .keyboard-help-list { list-style: none; display: flex; gap: 1.5rem; } .keyboard-help-list li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--color-medium); } .keyboard-help-list kbd { font-family: monospace; background: var(--color-dark); border: 1px solid var(--color-glass-border); border-radius: var(--radius-sm); padding: 0.1rem 0.4rem; font-size: 0.9rem; color: var(--color-text); }
       .bot-modal { max-width: 500px; } .modal-close-btn { position: absolute; top: 0.75rem; right: 1rem; background: none; border: none; font-size: 1.75rem; color: var(--color-medium); cursor: none; transition: color var(--transition-fast); z-index: 10; /* Ensure on top of header */ } .modal-close-btn:hover { color: var(--color-text); }
-      .modal-chat-log { height: 350px; background-color: rgba(13, 9, 7, 0.3); } .modal-pills { padding-bottom: 1rem; border-bottom: none; }
       
       /* --- 10. NEW FEATURED SECTION --- */
       .featured-section { padding: var(--space-3xl) 0; position: relative; z-index: var(--z-content); }
@@ -201,6 +202,7 @@
     </style>
 </head>
 <body class="antialiased">
+    <!-- Elements are the same structure -->
     <div id="cursor-dot"></div>
     <div id="cursor-light"></div>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -212,66 +214,32 @@
         <header id="site-header" class="site-header"> <nav class="container" aria-label="Main navigation"> <div class="header-left"> <a href="#home" class="nav-logo">Mehfooz</a> </div> <div class="header-right"> <div class="nav-links" id="nav-links"> <a href="#challenge" class="nav-link">The Calling</a> <a href="#story" class="nav-link">Our Story</a> <a href="#approach" class="nav-link">Approach</a> <a href="#difference" class="nav-link">Difference</a> <a href="#community" class="nav-link">Community</a> <a href="#insights" class="nav-link">Insights</a> <a href="#vision" class="nav-link">Vision</a> <a href="#connect" class="nav-link btn btn-outline">Join Us</a> </div> <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-controls="nav-links" aria-expanded="false"> <span class="sr-only">Menu</span> <span class="hamburger-bar"></span> <span class="hamburger-bar"></span> <span class="hamburger-bar"></span> </button> </div> </nav> </header>
         <main id="main-content">
             <section id="home" class="hero-section"> <div class="hero-content-container container"> <div class="hero-content"> <h1 id="hero-headline">Clarity in the Digital Crossroads.</h1> <p id="hero-subheadline">Empowering the communities of Gilgit Baltistan with the tools to navigate the digital world safely and confidently.</p> </div> </div> </section>
-
-            <section id="featured-in" class="featured-section">
-                <div class="container">
-                    <div class="featured-bar reveal-up">
-                        <div class="featured-title">
-                            Featured in
-                        </div>
-                        <div class="featured-logos">
-                            <img src="https://framerusercontent.com/images/ZWIiWrxAqLllrERBNLU2Ib1wY0U.png" alt="Edtech Pakistan Logo" title="Edtech Pakistan">
-                            <img src="https://images.squarespace-cdn.com/content/v1/650a374d936996258cfcbd33/99cae4e7-0ced-4c03-ae57-1fefbee86ee5/KXI_Logo_Website.png?format=1500w" alt="KXI Logo" title="KXI">
-                            <img src="https://framerusercontent.com/images/vZYsCyjlRXEua2Wj3mc2v0uufSk.svg" alt="Rhodes Trust Logo" title="Rhodes Trust">
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <section id="featured-in" class="featured-section"> <div class="container"> <div class="featured-bar reveal-up"> <div class="featured-title"> Featured in </div> <div class="featured-logos"> <img src="https://framerusercontent.com/images/ZWIiWrxAqLllrERBNLU2Ib1wY0U.png" alt="Edtech Pakistan Logo" title="Edtech Pakistan"> <img src="https://images.squarespace-cdn.com/content/v1/650a374d936996258cfcbd33/99cae4e7-0ced-4c03-ae57-1fefbee86ee5/KXI_Logo_Website.png?format=1500w" alt="KXI Logo" title="KXI"> <img src="https://framerusercontent.com/images/vZYsCyjlRXEua2Wj3mc2v0uufSk.svg" alt="Rhodes Trust Logo" title="Rhodes Trust"> </div> </div> </div> </section>
             <section id="challenge" class="content-section"> <canvas id="network-canvas"></canvas> <div class="container mx-auto max-w-4xl text-center"> <div class="section-header reveal-up"> <h2 class="section-title">The Challenge & The Calling</h2> <h3 class="section-subtitle">Where Progress Meets Peril</h3> <p class="section-body">In Gilgit Baltistan, rapid technological adoption is outpacing digital literacy. This creates a critical gap, leaving communities vulnerable to tech-enabled misinformation, inadequate online safety practices, and digital exclusion. We exist to bridge this gap.</p> </div> </div> </section>
-            <section id="story" class="content-section"> <div class="container mx-auto max-w-4xl"> <div class="flex flex-col md:flex-row gap-12 items-center"> <div class="w-full md:w-1/2">
-                <div class="journal-image-container reveal-up">
-                    <img src="https://framerusercontent.com/images/Fk9ZcXwxKKdy8uszFQl0yoC1V6I.png"
-                         alt="Stylized graphic representing digital connection and community in Gilgit Baltistan."
-                         loading="lazy">
-                </div>
-            </div> <div class="w-full md:w-1/2"> <h2 class="section-title reveal-up">From Our Journal</h2> <p class="section-body text-left reveal-up">Mehfooz began not with a line of code, but with a conversation. In a small <strong>Skardu</strong> teahouse, over cups of warm chai, we listened.</p> <p class="section-body text-left reveal-up">We heard stories of connection and confusion, of hope and fear in a new digital world. We learned that the need wasn't for more technology, but for more understanding. For a bridge between timeless wisdom and modern tools. Mehfooz is our promise to help build that bridge, together.</p> </div> </div> </div> </section>
+            <section id="story" class="content-section"> <div class="container mx-auto max-w-4xl"> <div class="flex flex-col md:flex-row gap-12 items-center"> <div class="w-full md:w-1/2"> <div class="journal-image-container reveal-up"> <img src="https://framerusercontent.com/images/Fk9ZcXwxKKdy8uszFQl0yoC1V6I.png" alt="Stylized graphic representing digital connection and community in Gilgit Baltistan." loading="lazy"> </div> </div> <div class="w-full md:w-1/2"> <h2 class="section-title reveal-up">From Our Journal</h2> <p class="section-body text-left reveal-up">Mehfooz began not with a line of code, but with a conversation. In a small <strong>Skardu</strong> teahouse, over cups of warm chai, we listened.</p> <p class="section-body text-left reveal-up">We heard stories of connection and confusion, of hope and fear in a new digital world. We learned that the need wasn't for more technology, but for more understanding. For a bridge between timeless wisdom and modern tools. Mehfooz is our promise to help build that bridge, together.</p> </div> </div> </div> </section>
             <section id="approach" class="content-section"> <div class="container mx-auto max-w-5xl"> <div class="text-center mb-20 section-header reveal-up"> <h2 class="section-title">An Ecosystem of Empowerment</h2> <p class="section-body">Our solution is a unique, three-pronged approach that integrates culture, technology, and community to create a sustainable cycle of learning and trust.</p> </div> <div class="grid md:grid-cols-3 gap-12 text-center"> <div class="pillar-card reveal-up"> <div class="pillar-card-content"> <h3 class="pillar-title">Wisdom, Amplified</h3> <p class="pillar-body">We don't just provide information; we build on existing foundations of trust by collaborating with local religious leaders (Ulema), empowering them as trusted digital literacy ambassadors within their communities.</p> </div> </div> <div class="pillar-card reveal-up"> <div class="pillar-card-content"> <h3 class="pillar-title">Personalized Guidance. Instantly.</h3> <p class="pillar-body">Harnessing AI, MehfoozBot offers personal, patient help, adapting to each user's language and learning style, making technology feel like a friend.</p> </div> <button id="open-bot-demo-approach" class="btn btn-secondary mt-6">See MehfoozBot in Action</button> </div> <div class="pillar-card reveal-up"> <div class="pillar-card-content"> <h3 class="pillar-title">Knowledge, Co-Created</h3> <p class="pillar-body">Through short, localized mini-courses and a unique feedback ecosystem with local college students, we ensure our knowledge is always relevant, effective, and built with the community, for the community.</p> </div> </div> </div> </div> </section>
-            <section id="difference" class="content-section"> <div class="container mx-auto max-w-5xl"> <div class="text-center mb-20 section-header reveal-up"> <h2 class="section-title">The Mehfooz Difference</h2> <p class="section-body">We are committed to revolutionizing digital literacy by integrating state-of-the-art technology with deep community engagement. Here's how we set ourselves apart.</p> </div> <div class="comparison-table-wrapper reveal-up"> <table class="comparison-table"> <thead> <tr> <th>Feature / Approach</th> <th class="our-column">Mehfooz Internet</th> <th>Digital Rights Foundation</th> <th>Soch Fact Check</th> <th>Media Matters</th> </tr> </thead> <tbody> <tr><td>AI-Powered Personalization</td><td class="check-mark our-column">✓</td><td></td><td></td><td></td></tr> <tr><td>Ulema Partnership Model</td><td class="check-mark our-column">✓</td><td></td><td></td><td></td></tr> <tr><td>Student Feedback Ecosystem</td><td class="check-mark our-column">✓</td><td></td><td></td><td></td></tr> <tr><td>Content in Indigenous Languages</td><td class="check-mark our-column">✓</td><td></td><td></td><td></td></tr> <tr><td>Singular Focus on Misinformation</td><td class="check-mark our-column">✓</td><td class="check-mark">✓</td><td class="check-mark">✓</td><td></td></tr> <tr><td>Multi-Platform Social Media Delivery</td><td class="check-mark our-column">✓</td><td class="check-mark">✓</td><td class="check-mark">✓</td><td classim="check-mark">✓</td></tr>
-            </tbody> </table> </div> </div> </section>
+            <section id="difference" class="content-section"> <div class="container mx-auto max-w-5xl"> <div class="text-center mb-20 section-header reveal-up"> <h2 class="section-title">The Mehfooz Difference</h2> <p class="section-body">We are committed to revolutionizing digital literacy by integrating state-of-the-art technology with deep community engagement. Here's how we set ourselves apart.</p> </div> <div class="comparison-table-wrapper reveal-up"> <table class="comparison-table"> <thead> <tr> <th>Feature / Approach</th> <th class="our-column">Mehfooz Internet</th> <th>Digital Rights Foundation</th> <th>Soch Fact Check</th> <th>Media Matters</th> </tr> </thead> <tbody> <tr><td>AI-Powered Personalization</td><td class="check-mark our-column">✓</td><td></td><td></td><td></td></tr> <tr><td>Ulema Partnership Model</td><td class="check-mark our-column">✓</td><td></td><td></td><td></td></tr> <tr><td>Student Feedback Ecosystem</td><td class="check-mark our-column">✓</td><td></td><td></td><td></td></tr> <tr><td>Content in Indigenous Languages</td><td class="check-mark our-column">✓</td><td></td><td></td><td></td></tr> <tr><td>Singular Focus on Misinformation</td><td class="check-mark our-column">✓</td><td class="check-mark">✓</td><td class="check-mark">✓</td><td></td></tr> <tr><td>Multi-Platform Social Media Delivery</td><td class="check-mark our-column">✓</td><td class="check-mark">✓</td><td class="check-mark">✓</td><td class="check-mark">✓</td></tr> </tbody> </table> </div> </div> </section>
             <section id="community" class="content-section"> <div class="container mx-auto max-w-4xl"> <div class="text-center mb-16 section-header reveal-up"> <h2 class="section-title">The Heart of Our Community</h2> <h3 class="section-subtitle">Voices from the Valley</h3> </div> <div class="space-y-8"> <blockquote class="custom-blockquote reveal-up"> <p>"For the first time, I felt I could ask a 'silly' question about my phone without feeling embarrassed. Mehfooz looks promising."</p> <cite>- A student from Gilgit</cite> </blockquote> <blockquote class="custom-blockquote text-right reveal-up"> <p>"They didn't come to teach; they came to learn with us. That is why we trust them."</p> <cite>- An elder from <strong>Skardu</strong></cite> </blockquote> </div> </div> </section>
             <section id="insights" class="content-section"> <div class="container mx-auto max-w-5xl"> <div class="text-center mb-20 section-header reveal-up"> <h2 class="section-title">Insights from the Digital Frontier</h2> <p class="section-body">Explore our latest research, field notes, and data on digital literacy, misinformation, and community resilience in Gilgit Baltistan.</p> </div> <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12"> <div class="insight-card reveal-up"> <img src="https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Data charts on a screen" class="insight-card-img"> <div class="insight-card-content"> <div class="insight-card-text"> <p class="insight-card-category">Report</p> <h3 class="insight-card-title">The Anatomy of a Viral Rumor in Skardu Valley</h3> <p class="insight-card-excerpt">Our deep-dive analysis tracks a single piece of misinformation from a WhatsApp group to widespread community belief, revealing critical intervention points.</p> </div> <a href="#" class="insight-card-link">Read More &rarr;</a> </div> </div> <div class="insight-card reveal-up"> <img src="https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="A person using a smartphone" class="insight-card-img"> <div class="insight-card-content"> <div class="insight-card-text"> <p class="insight-card-category">Field Note</p> <h3 class="insight-card-title">"I didn't know it was fake": First Impressions of MehfoozBot</h3> <p class="insight-card-excerpt">Early user testimonials highlight the power of non-judgmental, AI-powered guidance in building digital confidence and critical thinking skills.</p> </div> <a href="#" class="insight-card-link">Read More &rarr;</a> </div> </div> <div class="insight-card reveal-up"> <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="People collaborating around a table" class="insight-card-img"> <div class="insight-card-content"> <div class="insight-card-text"> <p class="insight-card-category">Data Point</p> <h3 class="insight-card-title">Language & Trust: Why Hyper-Localization is Non-Negotiable</h3> <p class="insight-card-excerpt">Our data shows a 300% increase in engagement when content is in indigenous languages like Shina and Balti, proving the vital link between language and trust.</p> </div> <a href="#" class="insight-card-link">Read More &rarr;</a> </div> </div> </div> </div> </section>
             <section id="vision" class="content-section"> <div class="container mx-auto max-w-4xl text-center"> <div class="mb-16 section-header reveal-up"> <h2 class="section-title">Charting Our Future</h2> <p class="section-body max-w-3xl mx-auto">Our five-year vision is to scale our impact, offering an opportunity for partners to co-create a digitally resilient future for Pakistan and beyond.</p> </div> <div class="grid md:grid-cols-2 gap-x-12 gap-y-16 text-left"> <div class="reveal-up"> <p class="vision-counter-number" id="user-counter">0</p> <h3 class="vision-title">Empowered Users</h3> <p class="vision-body">Leveraging our established educational networks and community structures for organic, sustainable growth across Pakistan.</p> </div> <div class="reveal-up"> <p class="vision-counter-number" id="platform-counter">0+</p> <h3 class="vision-title">Platform Evolutions</h3> <p class="vision-body">Introducing AI-driven learning paths, enhanced offline capabilities, and expanded indigenous language support.</p> </div> </div> </div> </section>
             <section id="values" class="content-section"> <div class="container mx-auto max-w-5xl"> <div class="text-center mb-20 section-header reveal-up"> <h2 class="section-title">Our Guiding Principles</h2> </div> <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 text-center"> <div class="value-container reveal-up"> <div class="value-icon-wrapper"> <svg class="value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a3.004 3.004 0 015.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg> </div> <h3 class="value-title">Collaboration</h3> <p class="value-body">We build partnerships with local leaders, researchers, students and community members to create a holistic approach to combating misinformation.</p> </div> <div class="value-container reveal-up"> <div class="value-icon-wrapper"> <svg class="value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> </div> <h3 class="value-title">Integrity</h3> <p class="value-body">We uphold the highest standards of accuracy and reliability, ensuring users receive trustworthy information.</p> </div> <div class="value-container reveal-up"> <div class="value-icon-wrapper"> <svg class="value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg> </div> <h3 class="value-title">Inclusivity</h3> <p class="value-body">We embrace diversity by providing resources in multiple languages, ensuring everyone has access to digital literacy education.</p> </div> <div class="value-container reveal-up"> <div class="value-icon-wrapper"> <svg class="value-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 11-7.072 0 .548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg> </div> <h3 class="value-title">Innovation</h3> <p class="value-body">We leverage cutting-edge technologies like AI to continuously enhance our educational offerings and user experience.</p> </div> </div> </div> </section>
             <section id="connect" class="content-section"> <div class="container mx-auto space-y-24"> <div class="text-center max-w-3xl mx-auto section-header reveal-up"> <h2 class="section-title">Join The Movement</h2> <p class="section-body">Whether you are a community leader, a potential partner, or a researcher, there is a role for you. Let's connect and become a part of the solution together.</p> </div>
-            
+                <!-- Chat Widget (Main Page) -->
                 <div class="max-w-2xl mx-auto reveal-up"> <h3 class="section-subtitle text-center">Chat with MehfoozBot</h3>
                     <div class="chat-widget">
                         <div class="chat-header">
                             <div class="chat-title-group">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></svg>
-                                <div>
-                                    <h3 class="chat-title">MehfoozBot</h3>
-                                    <p class="chat-subtitle">Digital Literacy Assistant</p>
-                                </div>
+                                <div><h3 class="chat-title">MehfoozBot</h3><p class="chat-subtitle">Digital Literacy Assistant</p></div>
                             </div>
-                            <div class="chat-lang-toggle" id="chat-lang-toggle-main">
-                                <button class="active" data-lang="en">English</button>
-                                <button data-lang="ur">اردو</button>
-                            </div>
+                            <div class="chat-lang-toggle" id="chat-lang-toggle-main"><button class="active" data-lang="en">English</button><button data-lang="ur">اردو</button></div>
                         </div>
                         <div id="chat-log" class="chat-log"></div>
                         <div class="chat-prompt-buttons" id="prompt-buttons"></div>
-                        <form id="chat-form" class="chat-form">
-                            <input type="text" id="chat-input" placeholder="Type your question here..." class="form-input" autocomplete="off">
-                            <button type="submit" class="btn btn-primary chat-send-btn">
-                                <span class="sr-only">Send</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-                            </button>
-                        </form>
+                        <form id="chat-form" class="chat-form"> <input type="text" id="chat-input" placeholder="Type your question here..." class="form-input" autocomplete="off"> <button type="submit" class="btn btn-primary chat-send-btn"> <span class="sr-only">Send</span> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg> </button> </form>
                         <p class="chat-footer">MehfoozBot is an AI assistant. Please verify important information.</p>
                     </div>
                 </div>
-
                 <div class="max-w-xl mx-auto reveal-up"> <h3 class="section-subtitle text-center">Send a Personal Message</h3>
                 <form id="contact-form" class="space-y-6 text-left" action="https://formspree.io/f/xnngrpzb" method="POST">
                     <div> <label for="contact-name" class="form-label">Your Name</label> <input type="text" name="name" id="contact-name" required class="form-input"> </div> <div> <label for="contact-email" class="form-label">Your Email</label> <input type="email" name="email" id="contact-email" required class="form-input"> </div> <div> <label for="contact-interest" class="form-label">I am a...</label> <select name="interest" id="contact-interest" class="form-input"> <option>Community Member</option> <option>Potential Partner / Investor</option> <option>Researcher / Institution</option> <option>Student</option> </select> </div> <div> <label for="contact-message" class="form-label">Your Message</label> <textarea name="message" id="contact-message" rows="5" required class="form-input"></textarea> </div>
@@ -285,10 +253,10 @@
     <div class="accessibility-controls"> <button id="settings-toggle-btn" class="settings-btn" aria-label="Open settings" aria-controls="settings-modal" aria-expanded="false"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.26.96c-1.29-.58-2.53.48-2.26 1.9c.09.48-.1.98-.48 1.35c-1.19.95-1.19 2.7.01 3.65c.38.37.58.87.48 1.35c-.27 1.42 1.01 2.48 2.26 1.9c.48-.22.99-.22 1.47 0c1.25.58 2.53-.48 2.26-1.9c-.09-.48.1-.98.48-1.35c1.19-.95 1.19-2.7-.01-3.65c-.38-.37-.58-.87-.48-1.35c.27-1.42-1.01-2.48-2.26-1.9a1.532 1.532 0 01-2.26-.96zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg> </button> <button id="help-toggle-btn" class="settings-btn" aria-label="Show keyboard shortcuts" aria-controls="keyboard-help" aria-expanded="false"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.06-1.061 3.5 3.5 0 014.668 4.668l-1.06 1.06a.75.75 0 01-1.06-1.06l1.06-1.06a1.99 1.99 0 00-2.828-2.828l-1.78 1.78zM9 13a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd" /></svg> </button> </div>
     <div id="settings-modal" class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title" hidden> <div class="settings-modal-content"> <h3 id="settings-title" class="settings-title">Settings</h3> <div class="setting-item"> <label for="motion-toggle" class="setting-label">Enable Ambient Motion</label> <input type="checkbox" id="motion-toggle" class="toggle-switch" role="switch"> </div> <div class="setting-item"> <label for="sound-toggle" class="setting-label">Enable Ambient Sound</label> <input type="checkbox" id="sound-toggle" class="toggle-switch" role="switch" disabled> <span class="setting-note">(Ambient sound not yet implemented)</span> </div> <button id="settings-close-btn" class="btn btn-secondary" aria-label="Close settings">Close</button> </div> </div>
     <div id="keyboard-help" class="keyboard-help-overlay" role="tooltip" hidden> <h4 class="keyboard-help-title">Keyboard Shortcuts</h4> <ul class="keyboard-help-list"> <li><kbd>H</kbd><span>Go to Home</span></li> <li><kbd>M</kbd><span>Open MehfoozBot</span></li> <li><kbd>S</kbd><span>Skip Intro / Content</span></li> <li><kbd>?</kbd><span>Toggle Help</span></li> <li><kbd>Esc</kbd><span>Close Modals</span></li> </ul> </div>
-    
     <div id="bot-modal" class="bot-modal" role="dialog" aria-modal="true" aria-labelledby="bot-modal-title" hidden> 
         <div class="bot-modal-content"> 
             <button id="close-bot-demo" class="modal-close-btn" aria-label="Close chat demo">&times;</button> 
+            <!-- Chat Header -->
             <div class="chat-header">
                 <div class="chat-title-group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /></svg>
@@ -302,8 +270,11 @@
                     <button data-lang="ur">اردو</button>
                 </div>
             </div>
+            <!-- Chat Log -->
             <div id="modal-chat-log" class="chat-log modal-chat-log"></div>
+            <!-- Prompt Buttons -->
             <div class="chat-prompt-buttons" id="modal-question-pills"></div>
+            <!-- Input Form -->
             <form id="modal-chat-form" class="chat-form">
                 <input type="text" id="modal-chat-input" placeholder="Type your question here..." autocomplete="off" class="form-input">
                 <button type="submit" class="btn btn-primary chat-send-btn">
@@ -316,6 +287,7 @@
     </div>
     <div id="modal-backdrop" class="modal-backdrop" hidden></div>
 
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
@@ -408,51 +380,16 @@
         // --- CHATBOT LOGIC (NEW) ---
         function initChatbot() {
             // Your new Hugging Face API Endpoint
-            const API_URL = "https://hasnainakb-mehfooz.hf.space/api/predict";
+            const API_URL = "https://hasnainakb-mehfooz.hf.space/run/chat_interface";
 
-            // Fallback responses from your React code
-            const fallbackResponses = {
-                urdu: {
-                    greetings: ['السلام علیکم', 'ہیلو', 'سلام', 'کیسے ہو'],
-                    greetingReply: 'وعلیکم السلام! میں آپ کی مدد کے لیے یہاں ہوں۔ کیا آپ ڈیجیٹل سیکیورٹی، آن لائن حفاظت، یا غلط معلومات کے بارے میں جاننا چاہتے ہیں؟',
-                    misinformation: ['غلط معلومات', 'جھوٹ', 'فیک نیوز', 'جھوٹی خبر'],
-                    misinformationReply: 'غلط معلومات سے بچنے کے لیے:\n1. ذرائع کی تصدیق کریں\n2. متعدد ذرائع سے معلومات لیں\n3. تصاویر کو ریورس سرچ کریں',
-                    password: ['پاس ورڈ', 'سیکیورٹی', 'محفوظ'],
-                    passwordReply: 'مضبوط پاس ورڈ بنانے کے لیے:\n1. 12+ حروف استعمال کریں\n2. بڑے اور چھوٹے حروف ملائیں\n3. نمبر اور علامات شامل کریں',
-                    phishing: ['فشنگ', 'دھوکہ', 'ای میل', 'لنک'],
-                    phishingReply: 'فشنگ حملوں سے بچیں:\n1. لنکس پر براہ راست کلک نہ کریں\n2. ذاتی معلومات کبھی شیئر نہ کریں\n3. غلط URL پتوں کو شک کریں',
-                    privacy: ['نجی', 'رازداری', 'ڈیٹا', 'معلومات'],
-                    privacyReply: 'اپنی رازداری محفوظ رکھیں:\n1. سوشل میڈیا کی ترتیبات چیک کریں\n2. ذاتی معلومات محدود کریں\n3. VPN استعمال کریں',
-                    default: 'معافی چاہتا ہوں، مجھے یہ سوال سمجھ نہیں آیا۔ براہ کرم ڈیجیٹل سیکیورٹی، آن لائن حفاظت، یا غلط معلومات کے بارے میں پوچھیں۔'
-                },
-                english: {
-                    greetings: ['hello', 'hi', 'hey', 'greetings', 'how are you'],
-                    greetingReply: 'Hello! I am here to help. Would you like to learn about digital security, online safety, or misinformation?',
-                    misinformation: ['misinformation', 'fake news', 'false', 'incorrect'],
-                    misinformationReply: 'To protect yourself from misinformation:\n1. Verify the source\n2. Check multiple sources\n3. Use reverse image search',
-                    password: ['password', 'secure', 'strong', 'protection'],
-                    passwordReply: 'To create a strong password:\n1. Use 12+ characters\n2. Mix uppercase and lowercase\n3. Include numbers and symbols',
-                    phishing: ['phishing', 'scam', 'email', 'link', 'suspicious'],
-                    phishingReply: 'Protect yourself from phishing:\n1. Be suspicious of poorly written emails\n2. Do not click links directly\n3. Never share personal information',
-                    privacy: ['privacy', 'personal', 'data', 'information', 'location'],
-                    privacyReply: 'Keep your privacy safe:\n1. Check social media settings\n2. Limit personal information\n3. Use a VPN',
-                    default: 'I did not understand that question. Please ask about digital security, online safety, or misinformation.'
-                }
-            };
+            // Prompt buttons for users to click
+            const promptDefs = [
+                { en: 'What is phishing?', ur: 'فشنگ کیا ہے؟', query: 'What is phishing and how can I avoid it?' },
+                { en: 'Strong Password?', ur: 'مضبوط پاس ورڈ؟', query: 'How do I create a strong password?' },
+                { en: 'Spot Fake News?', ur: 'جعلی خبریں؟', query: 'How can I spot fake news?' }
+            ];
             
-            // Function to find a fallback response
-            function findFallbackResponse(userMessage, lang) {
-                const msgLower = userMessage.toLowerCase();
-                const respObj = fallbackResponses[lang];
-                if (respObj.greetings.some(k => msgLower.includes(k.toLowerCase()))) return respObj.greetingReply;
-                if (respObj.misinformation.some(k => msgLower.includes(k.toLowerCase()))) return respObj.misinformationReply;
-                if (respObj.password.some(k => msgLower.includes(k.toLowerCase()))) return respObj.passwordReply;
-                if (respObj.phishing.some(k => msgLower.includes(k.toLowerCase()))) return respObj.phishingReply;
-                if (respObj.privacy.some(k => msgLower.includes(k.toLowerCase()))) return respObj.privacyReply;
-                return respObj.default;
-            }
-            
-            // Function to get response from AI (with fallback)
+            // Function to get response from AI
             async function getBotResponse(userMessage) {
                 try {
                     const response = await fetch(API_URL, {
@@ -461,63 +398,28 @@
                         body: JSON.stringify({
                             data: [
                                 userMessage,
-                                null, // history (optional)
-                                "You are MehfoozBot, a friendly and helpful assistant for the Mehfooz initiative. Your goal is to provide clear, simple, and encouraging advice about digital safety for communities in Gilgit-Baltistan. Your tone is ambient, wise, and professional. Respond in the language of the user's question (English or Urdu)."
+                                chatHistory, // Pass the conversation history
                             ]
                         })
                     });
-                    if (!response.ok) { throw new Error(`API Error: ${response.status}`); }
+                    if (!response.ok) throw new Error(`API Error: ${response.status}`);
                     const result = await response.json();
                     if (result.data && result.data.length > 0) {
-                        return result.data[0]; // The AI's text response
+                        // The response from this type of API is often the full history
+                        const newHistory = result.data[0];
+                        // The latest bot response is the last item in the last sub-array
+                        return newHistory[newHistory.length - 1][1];
                     } else {
                         throw new Error("Invalid API response structure.");
                     }
                 } catch (error) {
-                    console.warn("Live API failed, using local fallback:", error);
-                    // Fallback to local hard-coded responses
-                    return findFallbackResponse(userMessage, currentLanguage);
+                    console.error("Error fetching bot response:", error);
+                    return "I'm sorry, I'm having a little trouble connecting to my brain right now. Please try again in a moment.";
                 }
             }
 
             // Function to add a message to a specific chat log
-            function addChatMessage(text, sender, targetLog) {
-                if (!targetLog) return;
-                const wrapper = document.createElement('div');
-                wrapper.className = `message-wrapper ${sender}`;
-                
-                let messageContent = '';
-                if (sender === 'bot') {
-                    messageContent += `<div class="bot-avatar">M</div>`;
-                }
-                
-                const bubble = document.createElement('div');
-                bubble.className = `message-bubble ${sender}-bubble`;
-                
-                if (text === "...") {
-                    // Create thinking animation
-                    bubble.classList.add('chat-thinking-bubble');
-                    bubble.innerHTML = `<div class="dot"></div><div class="dot"></div><div class="dot"></div>`;
-                } else {
-                    bubble.textContent = text;
-                }
-                
-                wrapper.appendChild(bubble);
-                if (sender === 'bot') {
-                     // Insert avatar before bubble
-                     wrapper.insertAdjacentHTML('afterbegin', '<div class="bot-avatar">M</div>');
-                }
-                
-                targetLog.appendChild(wrapper);
-
-                if (typeof gsap !== 'undefined' && !document.body.classList.contains('reduced-motion')) {
-                    gsap.from(wrapper, { opacity: 0, y: 20, duration: 0.5 });
-                    gsap.to(targetLog, { duration: 0.5, scrollTo: { y: "max" }, ease: "power2.out" });
-                } else {
-                    targetLog.scrollTop = targetLog.scrollHeight;
-                }
-                return bubble; // Return the bubble element
-            }
+            function addChatMessage(text, sender, targetLog) { if (!targetLog) return; const wrapper = document.createElement('div'); wrapper.className = `message-wrapper ${sender}`; let messageContent = ''; if (sender === 'bot') { messageContent += `<div class="bot-avatar">M</div>`; } const bubble = document.createElement('div'); bubble.className = `message-bubble ${sender}-bubble`; if (text === "...") { bubble.classList.add('chat-thinking-bubble'); bubble.innerHTML = `<div class="dot"></div><div class="dot"></div><div class="dot"></div>`; } else { bubble.textContent = text; } wrapper.innerHTML = messageContent; wrapper.appendChild(bubble); targetLog.appendChild(wrapper); if (typeof gsap !== 'undefined' && !document.body.classList.contains('reduced-motion')) { gsap.from(wrapper, { opacity: 0, y: 20, duration: 0.5 }); gsap.to(targetLog, { duration: 0.5, scrollTo: { y: "max" }, ease: "power2.out" }); } else { targetLog.scrollTop = targetLog.scrollHeight; } return bubble; }
             
             // Function to handle user input
             async function handleBotUserInput(input, targetLog, targetInput, targetPrompts) {
@@ -525,25 +427,27 @@
                 if (!trimmedInput || targetInput.disabled) return;
 
                 addChatMessage(trimmedInput, 'user', targetLog);
-                chatHistory.push([trimmedInput, null]); // Add user message to history
+                chatHistory.push([trimmedInput, null]); 
                 
                 targetInput.value = "";
                 targetInput.disabled = true;
-                if(targetPrompts) targetPrompts.style.pointerEvents = 'none';
+                if(targetPrompts) { targetPrompts.style.pointerEvents = 'none'; if(typeof gsap !== 'undefined') gsap.to(targetPrompts.children, { opacity: 0.5, duration: 0.3 }); }
 
                 const thinkingBubble = addChatMessage("...", 'bot', targetLog);
 
                 const botReplyText = await getBotResponse(trimmedInput);
                 
-                // Update thinking bubble with real response
                 thinkingBubble.classList.remove('chat-thinking-bubble');
                 thinkingBubble.innerHTML = '';
                 thinkingBubble.textContent = botReplyText;
                 
-                chatHistory[chatHistory.length - 1][1] = botReplyText; // Add bot response to history
+                // Update history with the actual bot response
+                if (chatHistory.length > 0) {
+                    chatHistory[chatHistory.length - 1][1] = botReplyText;
+                }
                 
                 targetInput.disabled = false;
-                if(targetPrompts) targetPrompts.style.pointerEvents = 'auto';
+                if(targetPrompts) { targetPrompts.style.pointerEvents = 'auto'; if(typeof gsap !== 'undefined') gsap.to(targetPrompts.children, { opacity: 1, duration: 0.3 }); }
                 try { targetInput.focus(); } catch(e){}
             }
 
@@ -552,7 +456,6 @@
                 if (currentLanguage === lang) return;
                 currentLanguage = lang;
                 
-                // Update language toggles in both places
                 [els.mainLangToggle, els.modalLangToggle].forEach(toggle => {
                     if (toggle) {
                         toggle.querySelector('[data-lang="en"]').classList.toggle('active', lang === 'en');
@@ -560,35 +463,24 @@
                     }
                 });
 
-                // Update placeholders
                 const placeholder = lang === 'ur' ? 'اپنا سوال یہاں لکھیں...' : 'Type your question here...';
                 if(els.mainChatInput) els.mainChatInput.placeholder = placeholder;
                 if(els.modalChatInput) els.modalChatInput.placeholder = placeholder;
                 
-                // Add confirmation message to all logs
                 const welcomeMsg = (lang === 'ur') ? "السلام علیکم! میں اب اردو میں جواب دوں گا۔" : "Hello! I will now respond in English.";
                 [els.mainChatLog, els.modalChatLog].forEach(log => {
                     if(log) addChatMessage(welcomeMsg, 'bot', log);
                 });
 
-                // Update prompt buttons text
-                const promptDefs = [
-                    { en: 'What is phishing?', ur: 'فشنگ کیا ہے؟' },
-                    { en: 'Strong Password?', ur: 'مضبوط پاس ورڈ؟' },
-                    { en: 'Spot Fake News?', ur: 'جعلی خبریں؟' }
-                ];
-
                 [els.mainPromptButtons, els.modalPromptButtons].forEach(container => {
                     if (container) {
-                        container.innerHTML = ''; // Clear old prompts
+                        container.innerHTML = '';
                         promptDefs.forEach(prompt => {
                             const btn = document.createElement('button');
                             btn.className = "chat-prompt-btn";
                             btn.textContent = prompt[lang];
-                            // Add click listener that sends the *English* query to the bot (as LLMs handle EN better)
-                            // or the specific query text for that language
                             btn.onclick = () => {
-                                const queryText = (lang === 'ur') ? prompt.ur : prompt.en; // Use the text of the button
+                                const queryText = prompt.query; // Always send the more detailed English query
                                 if(container === els.mainPromptButtons) {
                                     handleBotUserInput(queryText, els.mainChatLog, els.mainChatInput, els.mainPromptButtons);
                                 } else {
@@ -602,35 +494,20 @@
             }
 
             // --- Initialise Both Chatbots ---
-            // 1. Main Page Chatbot
             if (els.mainChatForm) {
-                els.mainChatForm.addEventListener('submit', e => {
-                    e.preventDefault();
-                    handleBotUserInput(els.mainChatInput.value, els.mainChatLog, els.mainChatInput, els.mainPromptButtons);
-                });
-                addChatMessage(currentLanguage === 'en' ? "Hello! Ask me about digital safety." : "السلام علیکم! مجھ سے ڈیجیٹل سیفٹی کے بارے میں پوچھیں۔", 'bot', els.mainChatLog);
+                els.mainChatForm.addEventListener('submit', e => { e.preventDefault(); handleBotUserInput(els.mainChatInput.value, els.mainChatLog, els.mainChatInput, els.mainPromptButtons); });
+                addChatMessage("Hello! Ask me about digital safety, or select a topic.", 'bot', els.mainChatLog);
+            }
+            if (els.modalChatForm) {
+                els.modalChatForm.addEventListener('submit', e => { e.preventDefault(); handleBotUserInput(els.modalChatInput.value, els.modalChatLog, els.modalChatInput, els.modalPromptButtons); });
+                window.initModalChat = () => { if (els.modalChatLog.children.length === 0) { addChatMessage("Hello! Ask me about digital safety.", 'bot', els.modalChatLog); } };
+                if (els.openBotBtn) { els.openBotBtn.addEventListener('click', () => { window.initModalChat(); setTimeout(() => els.modalChatInput.focus(), 300); }); }
+                window.addEventListener('keydown', (e) => { if (e.key.toLowerCase() === 'm' && !e.ctrlKey && !e.metaKey && els.botModal && !els.botModal.classList.contains('is-visible')) { window.initModalChat(); setTimeout(() => els.modalChatInput.focus(), 300); } });
             }
             
-            // 2. Modal Chatbot
-            if (els.modalChatForm) {
-                els.modalChatForm.addEventListener('submit', e => {
-                    e.preventDefault();
-                    handleBotUserInput(els.modalChatInput.value, els.modalChatLog, els.modalChatInput, els.modalPromptButtons);
-                });
-                // Function to initialize modal chat (called when opening)
-                window.initModalChat = () => {
-                    if (els.modalChatLog.children.length === 0) {
-                         addChatMessage(currentLanguage === 'en' ? "Hello! Ask me about digital safety." : "السلام علیکم! مجھ سے ڈیجیٹل سیفٹی کے بارے میں پوچھیں۔", 'bot', els.modalChatLog);
-                    }
-                };
-                if (els.openBotBtn) { els.openBotBtn.addEventListener('click', () => { window.initModalChat(); setTimeout(() => els.modalChatInput.focus(), 300); }); }
-            }
-
-            // 3. Setup Language Toggles
+            // Setup language toggles and initial prompts
             if(els.mainLangToggle) els.mainLangToggle.addEventListener('click', (e) => { if(e.target.dataset.lang) handleLanguageChange(e.target.dataset.lang); });
             if(els.modalLangToggle) els.modalLangToggle.addEventListener('click', (e) => { if(e.target.dataset.lang) handleLanguageChange(e.target.dataset.lang); });
-
-            // Initial population of prompts
             handleLanguageChange(currentLanguage); // This also adds the initial prompts
         }
 
@@ -641,11 +518,13 @@
                 e.preventDefault();
                 const form = e.target;
                 const formData = new FormData(form);
+                
                 let isValid = true;
                 if (!formData.get('name').trim() || !formData.get('email').trim() || !formData.get('message').trim()) {
                      isValid = false;
                      alert("Please fill in all required fields.");
                 }
+
                 if (isValid) {
                     fetch(form.action, {
                         method: form.method,
@@ -682,7 +561,7 @@
         // --- Modals and Accessibility Toggles ---
         function toggleModal(modal, forceOpen) { if (!modal || !els.modalBackdrop) return; const show = forceOpen === undefined ? !modal.classList.contains('is-visible') : forceOpen; const relatedButton = document.querySelector(`[aria-controls="${modal.id}"]`); if (relatedButton) relatedButton.setAttribute('aria-expanded', show); if (show) { modal.removeAttribute('hidden'); els.modalBackdrop.removeAttribute('hidden'); gsap.to([modal, els.modalBackdrop], { opacity: 1, duration: 0.3, onStart: () => { modal.classList.add('is-visible'); els.modalBackdrop.classList.add('is-visible'); }}); gsap.fromTo(modal, {scale: 0.95}, { scale: 1, duration: 0.3, ease: 'back.out(1.7)' }); } else { gsap.to(modal, { scale: 0.95, opacity: 0, duration: 0.3, onComplete: () => { modal.classList.remove('is-visible'); modal.setAttribute('hidden', 'true'); }}); gsap.to(els.modalBackdrop, { opacity: 0, duration: 0.3, onComplete: () => { els.modalBackdrop.classList.remove('is-visible'); els.modalBackdrop.setAttribute('hidden', 'true'); }}); } }
         function toggleHelp(forceOpen) { if (!els.keyboardHelp) return; const show = forceOpen === undefined ? !els.keyboardHelp.classList.contains('is-visible') : forceOpen; els.helpToggleBtn?.setAttribute('aria-expanded', show); if (show) { els.keyboardHelp.removeAttribute('hidden'); gsap.fromTo(els.keyboardHelp, {opacity: 0, scale: 0.95}, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(1.7)', onStart: () => els.keyboardHelp.classList.add('is-visible') }); } else { gsap.to(els.keyboardHelp, { opacity: 0, scale: 0.95, duration: 0.3, onComplete: () => { els.keyboardHelp.classList.remove('is-visible'); els.keyboardHelp.setAttribute('hidden', 'true'); }}); } }
-        function initAccessibility() { if (els.settingsToggleBtn) els.settingsToggleBtn.addEventListener('click', () => toggleModal(els.settingsModal)); if (els.settingsCloseBtn) els.settingsCloseBtn.addEventListener('click', () => toggleModal(els.settingsModal, false)); if (els.helpToggleBtn) els.helpToggleBtn.addEventListener('click', () => toggleHelp()); if (els.openBotBtn) els.openBotBtn.addEventListener('click', () => { toggleModal(els.botModal); if (window.initModalChat) { window.initModalChat(); } setTimeout(() => els.modalChatInput?.focus(), 300); }); if (els.closeBotBtn) els.closeBotBtn.addEventListener('click', () => toggleModal(els.botModal, false)); if (els.modalBackdrop) els.modalBackdrop.addEventListener('click', () => { toggleModal(els.settingsModal, false); toggleModal(els.botModal, false); }); window.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (els.settingsModal?.classList.contains('is-visible')) toggleModal(els.settingsModal, false); if (els.botModal?.classList.contains('is-visible')) toggleModal(els.botModal, false); if (els.keyboardHelp?.classList.contains('is-visible')) toggleHelp(false); if (els.navLinksContainer?.classList.contains('is-visible')) els.mobileNavToggle?.click(); } if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || els.introGame?.classList.contains('active')) return; if (e.key === '?') { e.preventDefault(); toggleHelp(); } if (e.key.toLowerCase() === 'h') { e.preventDefault(); document.querySelector('a[href="#home"]')?.click(); } if (e.key.toLowerCase() === 'm') { e.preventDefault(); toggleModal(els.botModal, true); if (window.initModalChat) { window.initModalChat(); } setTimeout(() => els.modalChatInput?.focus(), 300); } if (e.key.toLowerCase() === 's') { e.preventDefault(); document.querySelector('.skip-link')?.focus(); } }); }
+        function initAccessibility() { if (els.settingsToggleBtn) els.settingsToggleBtn.addEventListener('click', () => toggleModal(els.settingsModal)); if (els.settingsCloseBtn) els.settingsCloseBtn.addEventListener('click', () => toggleModal(els.settingsModal, false)); if (els.helpToggleBtn) els.helpToggleBtn.addEventListener('click', () => toggleHelp()); if (els.openBotBtn) els.openBotBtn.addEventListener('click', () => toggleModal(els.botModal)); if (els.closeBotBtn) els.closeBotBtn.addEventListener('click', () => toggleModal(els.botModal, false)); if (els.modalBackdrop) els.modalBackdrop.addEventListener('click', () => { toggleModal(els.settingsModal, false); toggleModal(els.botModal, false); }); window.addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (els.settingsModal?.classList.contains('is-visible')) toggleModal(els.settingsModal, false); if (els.botModal?.classList.contains('is-visible')) toggleModal(els.botModal, false); if (els.keyboardHelp?.classList.contains('is-visible')) toggleHelp(false); if (els.navLinksContainer?.classList.contains('is-visible')) els.mobileNavToggle?.click(); } if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || els.introGame?.classList.contains('active')) return; if (e.key === '?') { e.preventDefault(); toggleHelp(); } if (e.key.toLowerCase() === 'h') { e.preventDefault(); document.querySelector('a[href="#home"]')?.click(); } if (e.key.toLowerCase() === 'm') { e.preventDefault(); toggleModal(els.botModal, true); if (window.initModalChat) { window.initModalChat(); } setTimeout(() => els.modalChatInput?.focus(), 300); } if (e.key.toLowerCase() === 's') { e.preventDefault(); document.querySelector('.skip-link')?.focus(); } }); }
         // --- Floating Chat Bubble Interaction ---
         function initFloatingChatBubble() { if (els.chatBubble) { els.chatBubble.addEventListener('click', () => { toggleModal(els.botModal, true); if (window.initModalChat) { window.initModalChat(); } setTimeout(() => els.modalChatInput?.focus(), 300); }); } }
         // --- Page Visibility API ---
