@@ -1,143 +1,150 @@
-/* --- 1. DESIGN TOKENS --- */
-:root {
-    /* Palette: Deep Void & Gold */
-    --c-bg: #0a0a0a;
-    --c-surface: #141414;
-    --c-text-main: #e0e0e0;
-    --c-text-muted: #858585;
-    --c-accent: #D4AF37; /* Metallic Gold */
-    --c-accent-glow: rgba(212, 175, 55, 0.3);
+document.addEventListener('DOMContentLoaded', () => {
     
-    /* Typography: Manrope (Tech) + Cormorant (Soul) */
-    --f-sans: 'Manrope', sans-serif;
-    --f-serif: 'Cormorant Garamond', serif;
+    // --- 1. INITIALIZE LENIS (Smooth Scroll) ---
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: 'vertical',
+        smooth: true
+    });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // --- 2. GSAP SCROLL TRIGGERS ---
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Text Reveal
+    const revealElements = document.querySelectorAll('.reveal-text');
+    revealElements.forEach(el => {
+        gsap.fromTo(el, 
+            { y: 100, opacity: 0 },
+            { 
+                y: 0, 
+                opacity: 1, 
+                duration: 1.5, 
+                ease: 'power4.out',
+                stagger: 0.1,
+                scrollTrigger: { trigger: el, start: 'top 90%' }
+            }
+        );
+    });
+
+    // Number Counter Animation
+    const numbers = document.querySelectorAll('.stat-number');
+    numbers.forEach(num => {
+        const target = +num.getAttribute('data-target');
+        gsap.to(num, {
+            innerText: target,
+            duration: 2,
+            snap: { innerText: 1 }, // Integers only
+            scrollTrigger: { trigger: num, start: 'top 80%' }
+        });
+    });
+
+    // --- 3. CUSTOM CURSOR & MAGNETIC BUTTONS ---
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorCircle = document.getElementById('cursor-circle');
+    const magneticBtns = document.querySelectorAll('.magnetic');
+
+    // Move Cursor
+    window.addEventListener('mousemove', (e) => {
+        gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.1 });
+        gsap.to(cursorCircle, { x: e.clientX, y: e.clientY, duration: 0.3 });
+    });
+
+    // Magnetic Effect
+    magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            document.body.classList.add('hovering');
+            const rect = btn.getBoundingClientRect();
+            const strength = btn.getAttribute('data-strength') || 20;
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            gsap.to(btn, { x: x / strength, y: y / strength, duration: 0.3 });
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            document.body.classList.remove('hovering');
+            gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
+        });
+    });
+
+    // --- 4. CANVAS ANIMATION (The "Net") ---
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
     
-    /* Fluid Type Scale (Clamp) */
-    --fs-hero: clamp(3rem, 8vw, 9rem);
-    --fs-h2: clamp(2rem, 5vw, 5rem);
-    --fs-body: clamp(1rem, 1.2vw, 1.25rem);
-    
-    /* Layout */
-    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-    --gutter: clamp(1rem, 5vw, 5rem);
-}
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-/* --- 2. RESET & BASE --- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.5;
+            this.vy = (Math.random() - 0.5) * 0.5;
+            this.size = Math.random() * 2;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+        draw() {
+            ctx.fillStyle = 'rgba(218, 165, 32, 0.5)'; // Gold
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
 
-body {
-    background-color: var(--c-bg);
-    color: var(--c-text-main);
-    font-family: var(--f-sans);
-    overflow-x: hidden;
-    cursor: none; /* Custom cursor */
-}
+    // Init Particles
+    for(let i=0; i<60; i++) particles.push(new Particle());
 
-/* Noise Texture Overlay */
-.noise-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.4;
-}
+    function animateCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw Particles & Connections
+        particles.forEach((p, index) => {
+            p.update();
+            p.draw();
+            
+            // Connect nearby particles
+            for (let j = index; j < particles.length; j++) {
+                const p2 = particles[j];
+                const dx = p.x - p2.x;
+                const dy = p.y - p2.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                
+                if (dist < 150) {
+                    ctx.strokeStyle = `rgba(218, 165, 32, ${1 - dist/150})`; // Fading gold lines
+                    ctx.lineWidth = 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        });
+        requestAnimationFrame(animateCanvas);
+    }
+    animateCanvas();
 
-/* --- 3. TYPOGRAPHY --- */
-h1, h2, h3 { font-family: var(--f-serif); font-weight: 300; line-height: 0.9; }
-.highlight-gold { color: var(--c-accent); font-style: italic; }
-.serif-italic { font-family: var(--f-serif); font-style: italic; font-weight: 400; }
-
-/* --- 4. NAVIGATION --- */
-.fixed-nav {
-    position: fixed;
-    top: 0; left: 0; width: 100%;
-    padding: 2rem var(--gutter);
-    display: flex; justify-content: space-between; align-items: center;
-    z-index: 100;
-    mix-blend-mode: exclusion; /* Cool overlay effect */
-}
-.nav-logo { font-family: var(--f-serif); font-size: 1.5rem; letter-spacing: 0.05em; font-weight: 700; }
-.nav-menu { display: flex; gap: 3rem; align-items: center; }
-.nav-link { text-decoration: none; color: inherit; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; position: relative; }
-
-/* --- 5. HERO SECTION --- */
-.hero-section {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    position: relative;
-    padding: 0 var(--gutter);
-}
-#hero-canvas {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1;
-    opacity: 0.6;
-}
-.hero-title { font-size: var(--fs-hero); text-transform: uppercase; }
-.hero-subtitle {
-    max-width: 40ch;
-    margin-top: 2rem;
-    font-size: var(--fs-body);
-    color: var(--c-text-muted);
-}
-
-/* --- 6. MARQUEE --- */
-.marquee-section {
-    padding: 4rem 0;
-    background: var(--c-surface);
-    overflow: hidden;
-    white-space: nowrap;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-.marquee-track {
-    display: inline-block;
-    font-family: var(--f-serif);
-    font-size: 3rem;
-    color: transparent;
-    -webkit-text-stroke: 1px var(--c-text-muted);
-    animation: marquee 20s linear infinite;
-}
-@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-/* --- 7. CARDS (Glassmorphism) --- */
-.cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 4rem;
-}
-.glass-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 3rem;
-    transition: transform 0.4s var(--ease-out), border-color 0.3s;
-}
-.glass-card:hover {
-    border-color: var(--c-accent);
-    transform: translateY(-10px);
-}
-
-/* --- 8. CUSTOM CURSOR --- */
-.cursor-dot, .cursor-circle {
-    position: fixed; top: 0; left: 0;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 10000;
-}
-.cursor-dot { width: 8px; height: 8px; background: var(--c-accent); }
-.cursor-circle {
-    width: 40px; height: 40px;
-    border: 1px solid rgba(255,255,255,0.3);
-    transition: width 0.3s, height 0.3s, background 0.3s;
-}
-body.hovering .cursor-circle { width: 80px; height: 80px; background: rgba(255,255,255,0.05); border-color: transparent; }
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .nav-menu { display: none; }
-    .hero-title { font-size: 15vw; }
-}
+    // --- 5. LOADER OUT ---
+    window.addEventListener('load', () => {
+        const tl = gsap.timeline();
+        tl.to('.loader-line', { width: '100%', duration: 1 })
+          .to('.loader-curtain', { y: '-100%', duration: 1, ease: 'power4.inOut' })
+          .set('body', { className: '-=is-loading' });
+    });
+});
