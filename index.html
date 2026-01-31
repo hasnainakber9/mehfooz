@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehfooz | The Digital Enlightenment</title>
+    <title>Mehfooz | Digital Enlightenment</title>
+    
+    <meta name="description" content="Empowering Gilgit Baltistan with digital literacy and safety.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,600&family=Manrope:wght@300;500;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Manrope:wght@300;500;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
 </head>
@@ -15,36 +17,35 @@
 
     <div class="noise-overlay"></div>
 
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-circle" id="cursor-circle"></div>
+    <div id="cursor-dot" class="cursor-dot"></div>
+    <div id="cursor-light" class="cursor-light"></div>
 
-    <div class="loader-curtain" id="loader">
+    <div id="loadingScreen" class="loader-curtain">
         <div class="loader-content">
             <h1 class="loader-logo">MEHFOOZ</h1>
-            <div class="loader-line"></div>
-            <p class="loader-status">Initializing Enlightenment...</p>
+            <div class="loading-bar-wrapper">
+                <div class="loading-bar"></div>
+            </div>
         </div>
     </div>
 
     <nav class="fixed-nav">
-        <div class="nav-logo">Mehfooz<span class="dot">.</span></div>
+        <div class="nav-logo">Mehfooz<span class="highlight-gold">.</span></div>
         <div class="nav-menu">
-            <a href="#mission" class="nav-link magnetic" data-strength="20"><span>Mission</span></a>
-            <a href="#impact" class="nav-link magnetic" data-strength="20"><span>Impact</span></a>
-            <a href="#tools" class="nav-link magnetic" data-strength="20"><span>Tools</span></a>
-            <button class="btn-primary magnetic" data-strength="30">Join Network</button>
+            <a href="#mission" class="nav-link magnetic" data-strength="20">Mission</a>
+            <a href="#impact" class="nav-link magnetic" data-strength="20">Impact</a>
+            <a href="#tools" class="nav-link magnetic" data-strength="20">Tools</a>
+            <button id="open-bot-demo-approach" class="btn-primary magnetic" data-strength="40">AI Assistant</button>
         </div>
-        <button class="menu-toggle magnetic" aria-label="Menu">
-            <span></span><span></span>
-        </button>
+        <button id="mobile-nav-toggle" class="menu-toggle magnetic"><span></span><span></span></button>
     </nav>
 
     <main id="main-content">
         
         <section class="hero-section">
-            <canvas id="hero-canvas"></canvas> <div class="container hero-container">
+            <canvas id="cosmicBackground"></canvas> <div class="hero-container">
                 <div class="hero-text-wrapper">
-                    <h1 class="hero-title">
+                    <h1 id="hero-headline" class="hero-title">
                         <span class="reveal-text">Navigating the</span><br>
                         <span class="reveal-text highlight-gold">Digital Void</span>
                     </h1>
@@ -52,20 +53,25 @@
                         Empowering Gilgit Baltistan with the light of digital literacy.
                         Safety. Truth. Inclusion.
                     </p>
+                    
+                    <div class="hero-stats reveal-text delay-2">
+                        <div class="stat-item">
+                            <span class="stat-number" id="user-counter">0</span>
+                            <span class="stat-label">Lives Touched</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="platform-counter">0</span>
+                            <span class="stat-label">Communities</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             
             <div class="scroll-indicator">
-                <span class="scroll-text">Explore</span>
-                <div class="scroll-line"></div>
+                <span>Explore</span>
+                <div class="line"></div>
             </div>
         </section>
-
-        <div class="marquee-section" data-speed="0.5">
-            <div class="marquee-track">
-                <span>Digital Safety — Verify Truth — Secure Data — Community First — Digital Safety — Verify Truth — Secure Data — Community First —</span>
-            </div>
-        </div>
 
         <section id="mission" class="split-section">
             <div class="container grid-2">
@@ -76,16 +82,7 @@
                     <p class="lead-text">
                         In an age of information overload, clarity is power. We build the infrastructure for critical thinking in underserved communities.
                     </p>
-                    <div class="stat-row">
-                        <div class="stat-item">
-                            <span class="stat-number" data-target="15000">0</span>
-                            <span class="stat-label">Lives Touched</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-number" data-target="45">0</span>
-                            <span class="stat-label">Communities</span>
-                        </div>
-                    </div>
+                    <a href="#" class="arrow-link magnetic">Read Our Manifesto &rarr;</a>
                 </div>
             </div>
         </section>
@@ -98,42 +95,52 @@
                         <div class="card-icon">🛡️</div>
                         <h3>Cyber Safety</h3>
                         <p>Workshops on securing digital identities against threats.</p>
-                        <a href="#" class="arrow-link">Learn More -></a>
                     </article>
                     <article class="glass-card magnetic-card">
                         <div class="card-icon">👁️</div>
                         <h3>Misinformation</h3>
                         <p>Tools to verify news and spot deepfakes instantly.</p>
-                        <a href="#" class="arrow-link">Learn More -></a>
                     </article>
                     <article class="glass-card magnetic-card">
                         <div class="card-icon">🤝</div>
                         <h3>Inclusion</h3>
                         <p>Bridging the connectivity gap for remote regions.</p>
-                        <a href="#" class="arrow-link">Learn More -></a>
                     </article>
                 </div>
             </div>
         </section>
 
         <footer class="main-footer">
-            <div class="container">
-                <h2 class="footer-cta">Ready to <span class="highlight-gold">Enlighten?</span></h2>
-                <div class="footer-grid">
-                    <div class="footer-col">
-                        <h4>Mehfooz</h4>
-                        <p>© 2026. All Rights Reserved.</p>
-                    </div>
-                    <div class="footer-col">
-                        <a href="#" class="magnetic">Instagram</a>
-                        <a href="#" class="magnetic">Twitter</a>
-                        <a href="#" class="magnetic">Email</a>
-                    </div>
+            <div class="container footer-flex">
+                <div class="footer-brand">
+                    <h4>Mehfooz</h4>
+                    <p>© 2026. All Rights Reserved.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#" class="magnetic">Instagram</a>
+                    <a href="#" class="magnetic">Twitter</a>
+                    <a href="#" class="magnetic">Email</a>
                 </div>
             </div>
         </footer>
 
     </main>
+
+    <div id="bot-modal" class="modal hidden">
+        <div class="modal-backdrop" id="modal-backdrop"></div>
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h3>Mehfooz Assistant</h3>
+                <button id="close-bot-demo" class="close-btn magnetic">×</button>
+            </div>
+            <div id="modal-chat-log" class="chat-log">
+                </div>
+            <form id="chat-form" class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask about digital safety..." autocomplete="off">
+                <button type="submit" class="send-btn magnetic">Send</button>
+            </form>
+        </div>
+    </div>
 
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
