@@ -1,150 +1,167 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. INITIALIZE LENIS (Smooth Scroll) ---
+    // --- 1. LUXURY INITIALIZATION (Lenis & GSAP) ---
     const lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        direction: 'vertical',
         smooth: true
     });
-
-    function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-    }
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
 
-    // --- 2. GSAP SCROLL TRIGGERS ---
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero Text Reveal
-    const revealElements = document.querySelectorAll('.reveal-text');
-    revealElements.forEach(el => {
-        gsap.fromTo(el, 
-            { y: 100, opacity: 0 },
-            { 
-                y: 0, 
-                opacity: 1, 
-                duration: 1.5, 
-                ease: 'power4.out',
-                stagger: 0.1,
-                scrollTrigger: { trigger: el, start: 'top 90%' }
-            }
-        );
-    });
+    // --- 2. PRELOADER SEQUENCE ---
+    const loader = document.querySelector('.loader-curtain');
+    const loadingBar = document.querySelector('.loading-bar');
+    
+    // Simulate loading (since we removed the game)
+    let progress = 0;
+    const loadInterval = setInterval(() => {
+        progress += Math.random() * 10;
+        if(progress > 100) progress = 100;
+        loadingBar.style.width = `${progress}%`;
+        
+        if(progress === 100) {
+            clearInterval(loadInterval);
+            revealSite();
+        }
+    }, 100);
 
-    // Number Counter Animation
-    const numbers = document.querySelectorAll('.stat-number');
-    numbers.forEach(num => {
-        const target = +num.getAttribute('data-target');
-        gsap.to(num, {
-            innerText: target,
-            duration: 2,
-            snap: { innerText: 1 }, // Integers only
-            scrollTrigger: { trigger: num, start: 'top 80%' }
-        });
-    });
+    function revealSite() {
+        const tl = gsap.timeline();
+        tl.to(loader, { y: '-100%', duration: 1.2, ease: 'power4.inOut' })
+          .from('.reveal-text', { 
+              y: 100, 
+              opacity: 0, 
+              duration: 1.5, 
+              stagger: 0.2, 
+              ease: 'power4.out' 
+          }, "-=0.5")
+          .from('.hero-stats', { opacity: 0, duration: 1 }, "-=1");
+        
+        // Start counters
+        animateCounters();
+    }
 
-    // --- 3. CUSTOM CURSOR & MAGNETIC BUTTONS ---
-    const cursorDot = document.getElementById('cursor-dot');
-    const cursorCircle = document.getElementById('cursor-circle');
-    const magneticBtns = document.querySelectorAll('.magnetic');
-
-    // Move Cursor
+    // --- 3. CUSTOM CURSOR & MAGNETIC ---
+    const cursor = document.getElementById('cursor-dot');
+    const light = document.getElementById('cursor-light');
+    
     window.addEventListener('mousemove', (e) => {
-        gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.1 });
-        gsap.to(cursorCircle, { x: e.clientX, y: e.clientY, duration: 0.3 });
+        gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+        gsap.to(light, { x: e.clientX, y: e.clientY, duration: 0.5 });
     });
 
-    // Magnetic Effect
-    magneticBtns.forEach(btn => {
+    document.querySelectorAll('.magnetic').forEach(btn => {
         btn.addEventListener('mousemove', (e) => {
-            document.body.classList.add('hovering');
             const rect = btn.getBoundingClientRect();
-            const strength = btn.getAttribute('data-strength') || 20;
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-
-            gsap.to(btn, { x: x / strength, y: y / strength, duration: 0.3 });
+            const strength = btn.getAttribute('data-strength') || 30;
+            gsap.to(btn, {
+                x: (e.clientX - rect.left - rect.width / 2) / strength * 10,
+                y: (e.clientY - rect.top - rect.height / 2) / strength * 10,
+                duration: 0.3
+            });
         });
-
         btn.addEventListener('mouseleave', () => {
-            document.body.classList.remove('hovering');
             gsap.to(btn, { x: 0, y: 0, duration: 0.3 });
         });
     });
 
-    // --- 4. CANVAS ANIMATION (The "Net") ---
-    const canvas = document.getElementById('hero-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    
-    function resizeCanvas() {
+    // --- 4. COSMIC BACKGROUND (Preserved) ---
+    const canvas = document.getElementById('cosmicBackground');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.5;
-            this.vy = (Math.random() - 0.5) * 0.5;
-            this.size = Math.random() * 2;
-        }
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-        }
-        draw() {
-            ctx.fillStyle = 'rgba(218, 165, 32, 0.5)'; // Gold
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    // Init Particles
-    for(let i=0; i<60; i++) particles.push(new Particle());
-
-    function animateCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        // Draw Particles & Connections
-        particles.forEach((p, index) => {
-            p.update();
-            p.draw();
-            
-            // Connect nearby particles
-            for (let j = index; j < particles.length; j++) {
-                const p2 = particles[j];
-                const dx = p.x - p2.x;
-                const dy = p.y - p2.y;
-                const dist = Math.sqrt(dx*dx + dy*dy);
-                
-                if (dist < 150) {
-                    ctx.strokeStyle = `rgba(218, 165, 32, ${1 - dist/150})`; // Fading gold lines
-                    ctx.lineWidth = 0.5;
-                    ctx.beginPath();
-                    ctx.moveTo(p.x, p.y);
-                    ctx.lineTo(p2.x, p2.y);
-                    ctx.stroke();
-                }
+        const stars = Array(150).fill().map(() => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2,
+            speed: Math.random() * 0.5
+        }));
+
+        function animateCosmos() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#DAA520'; // Gold
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI*2);
+                ctx.fill();
+                star.y -= star.speed;
+                if(star.y < 0) star.y = canvas.height;
+            });
+            requestAnimationFrame(animateCosmos);
+        }
+        animateCosmos();
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    }
+
+    // --- 5. COUNTERS (Preserved) ---
+    function animateCounters() {
+        const numbers = document.querySelectorAll('.stat-number');
+        numbers.forEach(num => {
+            // Hardcoded targets from your brief
+            const target = num.id === 'user-counter' ? 15000 : 45; 
+            gsap.to(num, {
+                innerText: target,
+                duration: 2.5,
+                snap: { innerText: 1 },
+                scrollTrigger: { trigger: num, start: "top 90%" }
+            });
+        });
+    }
+
+    // --- 6. CHAT BOT LOGIC (Preserved) ---
+    const botModal = document.getElementById('bot-modal');
+    const openBtn = document.getElementById('open-bot-demo-approach');
+    const closeBtn = document.getElementById('close-bot-demo');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatLog = document.getElementById('modal-chat-log');
+
+    if(openBtn) {
+        openBtn.addEventListener('click', () => {
+            botModal.classList.remove('hidden');
+            // Add greeting if empty
+            if(chatLog.children.length === 0) {
+                addMessage("bot", "Hello. I am the Mehfooz Assistant. How can I help you navigate the digital world safely?");
             }
         });
-        requestAnimationFrame(animateCanvas);
     }
-    animateCanvas();
+    
+    if(closeBtn) {
+        closeBtn.addEventListener('click', () => botModal.classList.add('hidden'));
+    }
 
-    // --- 5. LOADER OUT ---
-    window.addEventListener('load', () => {
-        const tl = gsap.timeline();
-        tl.to('.loader-line', { width: '100%', duration: 1 })
-          .to('.loader-curtain', { y: '-100%', duration: 1, ease: 'power4.inOut' })
-          .set('body', { className: '-=is-loading' });
-    });
+    if(chatForm) {
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if(!text) return;
+            
+            addMessage("user", text);
+            chatInput.value = '';
+            
+            // Simulating response
+            setTimeout(() => {
+                addMessage("bot", "Thank you for that query. Our team is working on specific modules for " + text + ".");
+            }, 1000);
+        });
+    }
+
+    function addMessage(sender, text) {
+        const msgDiv = document.createElement('div');
+        msgDiv.style.marginBottom = '10px';
+        msgDiv.style.textAlign = sender === 'user' ? 'right' : 'left';
+        msgDiv.style.color = sender === 'user' ? '#DAA520' : '#e0e0e0';
+        msgDiv.textContent = text;
+        chatLog.appendChild(msgDiv);
+        chatLog.scrollTop = chatLog.scrollHeight;
+    }
 });
