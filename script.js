@@ -16,29 +16,73 @@ document.addEventListener('DOMContentLoaded', () => {
     // =============================================================
     //  2. PRELOADER
     // =============================================================
-    const loader    = document.getElementById('loadingScreen');
-    const loadBar   = document.querySelector('.loading-bar');
-    const loadPct   = document.querySelector('.loader-percent');
+    const loader  = document.getElementById('loadingScreen');
+    const loadBar = document.querySelector('.loading-bar');
+    const loadPct = document.querySelector('.loader-percent');
 
-    let progress = 0;
+    // Safety: if loader element missing, skip straight to reveal
+    if (!loader) { revealSite(); }
+
+    let progress  = 0;
+    let done      = false;
+
     const loadInterval = setInterval(() => {
-        progress += Math.random() * 12 + 2;
-        if (progress >= 100) { progress = 100; clearInterval(loadInterval); revealSite(); }
-        loadBar.style.width = `${progress}%`;
-        if (loadPct) loadPct.textContent = `${Math.floor(progress)}%`;
-    }, 110);
+        if (done) return;
+        progress += Math.random() * 14 + 4;   // faster increments
+        if (progress >= 100) {
+            progress = 100;
+            done = true;
+            clearInterval(loadInterval);
+            // Update UI to 100% then reveal after brief pause
+            if (loadBar) loadBar.style.width = '100%';
+            if (loadPct) loadPct.textContent = '100%';
+            setTimeout(revealSite, 400);
+            return;
+        }
+        if (loadBar) loadBar.style.width = `${progress}%`;
+        if (loadPct) loadPct.textContent  = `${Math.floor(progress)}%`;
+    }, 100);
 
     function revealSite() {
-        const tl = gsap.timeline();
-        tl.to(loader, { y: '-100%', duration: 1.4, ease: 'power4.inOut', delay: 0.3 })
-          .set(loader, { display: 'none' })
-          .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.6')
-          .to('.hero-line-1',  { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, '-=0.75')
-          .to('.hero-line-2',  { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, '-=0.85')
-          .to('.hero-line-3',  { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, '-=0.85')
-          .to('.hero-subtitle', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.7')
-          .to('.hero-actions',  { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, '-=0.6')
-          .to('.hero-stats',    { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, '-=0.5');
+        // Ensure loader hides even if GSAP fails
+        if (loader) {
+            loader.style.transition = 'transform 1.2s cubic-bezier(0.19,1,0.22,1)';
+            loader.style.transform  = 'translateY(-100%)';
+            setTimeout(() => { loader.style.display = 'none'; }, 1300);
+        }
+
+        // Animate hero elements in — use class selector with fallback
+        const heroTargets = [
+            '.hero-eyebrow',
+            '.hero-line-1',
+            '.hero-line-2',
+            '.hero-line-3',
+            '.hero-subtitle',
+            '.hero-actions',
+            '.hero-stats'
+        ];
+
+        heroTargets.forEach((sel, i) => {
+            const el = document.querySelector(sel);
+            if (!el) return;
+            // CSS fallback: reset opacity/transform via style directly
+            el.style.transition = `opacity 0.9s ease ${0.3 + i * 0.12}s, transform 0.9s ease ${0.3 + i * 0.12}s`;
+            el.style.opacity    = '1';
+            el.style.transform  = 'translateY(0)';
+        });
+
+        // GSAP enhancement if available
+        if (typeof gsap !== 'undefined') {
+            gsap.to(heroTargets, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                stagger: 0.12,
+                ease: 'power3.out',
+                delay: 0.4,
+                clearProps: 'transform'
+            });
+        }
 
         animateCounters();
     }
