@@ -3,1856 +3,382 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehfooz Internet — Digital Enlightenment for Gilgit Baltistan</title>
-    <meta name="description" content="Pioneering responsible digital experiences. Mehfooz Internet empowers Gilgit Baltistan with digital literacy, safety, and truth.">
+    <title>Mehfooz | Digital Enlightenment</title>
+    <meta name="description" content="Empowering Gilgit Baltistan with digital literacy and safety.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&display=swap" rel="stylesheet">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-    <style>
-        /* ============================================
-           BAUHAUS DESIGN TOKENS
-        ============================================ */
-        :root {
-            --bg: #F0F0F0;
-            --fg: #121212;
-            --red: #D02020;
-            --blue: #1040C0;
-            --yellow: #F0C020;
-            --muted: #E0E0E0;
-            --white: #ffffff;
-            --border: #121212;
-            --f: 'Outfit', sans-serif;
-        }
-
-        /* ============================================
-           RESET & BASE
-        ============================================ */
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { font-size: 16px; scroll-behavior: smooth; }
-
-        body {
-            background: var(--bg);
-            color: var(--fg);
-            font-family: var(--f);
-            font-weight: 500;
-            overflow-x: hidden;
-            cursor: none;
-        }
-
-        a { text-decoration: none; color: inherit; }
-        img { display: block; max-width: 100%; }
-
-        /* ============================================
-           CUSTOM CURSOR
-        ============================================ */
-        .cursor-dot {
-            width: 8px; height: 8px;
-            background: var(--red);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-            transition: background 0.2s;
-        }
-        .cursor-ring {
-            width: 36px; height: 36px;
-            border: 2px solid var(--fg);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 99998;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, border-color 0.2s;
-        }
-        body:has(a:hover) .cursor-ring,
-        body:has(button:hover) .cursor-ring { width: 52px; height: 52px; border-color: var(--red); }
-
-        /* ============================================
-           LOADER
-        ============================================ */
-        #loader {
-            position: fixed; inset: 0;
-            background: var(--fg);
-            z-index: 99990;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-        }
-        .loader-logo-wrap {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .loader-logo-img { width: 56px; height: 56px; object-fit: contain; filter: invert(1); }
-        .loader-wordmark {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 900;
-            color: var(--white);
-            letter-spacing: -0.03em;
-            text-transform: uppercase;
-        }
-        .loader-wordmark span { color: var(--yellow); }
-        .loader-bar-wrap {
-            width: 300px; height: 3px;
-            background: rgba(255,255,255,0.15);
-        }
-        .loader-bar {
-            height: 100%;
-            background: var(--yellow);
-            width: 0%;
-            transition: width 0.15s ease-out;
-        }
-        .loader-shapes {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .loader-shape {
-            position: absolute;
-            opacity: 0.07;
-        }
-        .ls1 { width: 400px; height: 400px; border: 4px solid var(--red); border-radius: 50%; top: -100px; left: -100px; }
-        .ls2 { width: 300px; height: 300px; background: var(--blue); bottom: -80px; right: 10%; transform: rotate(45deg); }
-        .ls3 { width: 200px; height: 200px; background: var(--yellow); top: 20%; right: -50px; }
-
-        /* ============================================
-           NAV
-        ============================================ */
-        .nav {
-            position: fixed; top: 0; left: 0; right: 0;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1.25rem 2.5rem;
-            background: var(--bg);
-            border-bottom: 4px solid var(--fg);
-        }
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        .nav-logo-img { width: 40px; height: 40px; object-fit: contain; }
-        .nav-wordmark {
-            font-size: 1.3rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-        }
-        .nav-wordmark span { color: var(--red); }
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 2.5rem;
-            list-style: none;
-        }
-        .nav-links a {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover { color: var(--red); }
-        .nav-cta {
-            background: var(--red);
-            color: var(--white) !important;
-            border: 2px solid var(--fg);
-            padding: 0.6rem 1.5rem;
-            font-size: 0.75rem !important;
-            font-weight: 700 !important;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            cursor: pointer;
-            box-shadow: 4px 4px 0 var(--fg);
-            transition: box-shadow 0.15s, transform 0.15s;
-            display: inline-block;
-        }
-        .nav-cta:hover { box-shadow: 2px 2px 0 var(--fg); transform: translate(2px, 2px); }
-        .nav-cta:active { box-shadow: 0 0 0 var(--fg); transform: translate(4px, 4px); }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 4px;
-        }
-        .hamburger span {
-            display: block; width: 28px; height: 3px; background: var(--fg);
-            transition: transform 0.3s, opacity 0.3s;
-        }
-        .hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-        .hamburger.open span:nth-child(2) { opacity: 0; }
-        .hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-        .mobile-nav {
-            display: none;
-            position: fixed;
-            top: 73px; left: 0; right: 0;
-            background: var(--fg);
-            border-bottom: 4px solid var(--fg);
-            padding: 2rem;
-            z-index: 999;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        .mobile-nav.open { display: flex; }
-        .mobile-nav a {
-            color: var(--white);
-            font-size: 1.2rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 1rem;
-        }
-
-        /* ============================================
-           HERO
-        ============================================ */
-        .hero {
-            min-height: 100vh;
-            padding-top: 73px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            border-bottom: 4px solid var(--fg);
-            overflow: hidden;
-        }
-        .hero-left {
-            padding: 5rem 3rem 5rem 3rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border-right: 4px solid var(--fg);
-            position: relative;
-        }
-        .hero-tag {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--red);
-            border: 2px solid var(--red);
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            margin-bottom: 2rem;
-        }
-        .hero-title {
-            font-size: clamp(3rem, 6vw, 6.5rem);
-            font-weight: 900;
-            line-height: 0.92;
-            letter-spacing: -0.03em;
-            text-transform: uppercase;
-            margin-bottom: 2.5rem;
-        }
-        .hero-title .accent-red { color: var(--red); }
-        .hero-title .accent-blue { color: var(--blue); }
-        .hero-subtitle {
-            font-size: clamp(1rem, 1.2vw, 1.15rem);
-            font-weight: 500;
-            line-height: 1.65;
-            color: #444;
-            max-width: 480px;
-            margin-bottom: 3rem;
-        }
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 4rem;
-        }
-        .btn {
-            font-family: var(--f);
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            padding: 0.9rem 2.2rem;
-            border: 2px solid var(--fg);
-            cursor: pointer;
-            transition: box-shadow 0.15s, transform 0.15s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .btn-red { background: var(--red); color: var(--white); box-shadow: 4px 4px 0 var(--fg); }
-        .btn-red:hover { box-shadow: 2px 2px 0 var(--fg); transform: translate(2px,2px); }
-        .btn-red:active { box-shadow: 0 0; transform: translate(4px,4px); }
-        .btn-outline { background: var(--white); color: var(--fg); box-shadow: 4px 4px 0 var(--fg); }
-        .btn-outline:hover { box-shadow: 2px 2px 0 var(--fg); transform: translate(2px,2px); }
-        .btn-yellow { background: var(--yellow); color: var(--fg); box-shadow: 4px 4px 0 var(--fg); }
-        .btn-yellow:hover { box-shadow: 2px 2px 0 var(--fg); transform: translate(2px,2px); }
-        .btn-blue { background: var(--blue); color: var(--white); box-shadow: 4px 4px 0 var(--fg); }
-        .btn-blue:hover { box-shadow: 2px 2px 0 var(--fg); transform: translate(2px,2px); }
-
-        .hero-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            border-top: 2px solid var(--fg);
-        }
-        .stat {
-            padding: 1.5rem 0;
-            border-right: 2px solid var(--fg);
-        }
-        .stat:last-child { border-right: none; padding-left: 1.5rem; }
-        .stat-number {
-            font-size: clamp(2.5rem, 4vw, 3.5rem);
-            font-weight: 900;
-            color: var(--red);
-            line-height: 1;
-            display: block;
-        }
-        .stat-label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #666;
-            margin-top: 0.4rem;
-            display: block;
-        }
-
-        .hero-right {
-            background: var(--blue);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            min-height: 500px;
-        }
-        .hero-geo {
-            position: absolute;
-            inset: 0;
-        }
-        .geo-circle {
-            width: 65%;
-            padding-bottom: 65%;
-            border: 4px solid rgba(255,255,255,0.2);
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        .geo-square {
-            width: 45%;
-            padding-bottom: 45%;
-            background: rgba(255,255,255,0.08);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(45deg);
-        }
-        .geo-sq2 {
-            width: 30%;
-            padding-bottom: 30%;
-            border: 4px solid var(--yellow);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        .hero-center-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 2rem;
-        }
-        .hero-logo-big { width: 120px; height: 120px; object-fit: contain; filter: invert(1) brightness(2); margin: 0 auto 1.5rem; }
-        .hero-manifesto {
-            font-size: clamp(1.5rem, 2.5vw, 2.2rem);
-            font-weight: 900;
-            color: var(--white);
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-        }
-        .hero-manifesto .yl { color: var(--yellow); }
-        .hero-tag-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-top: 2rem;
-        }
-        .hero-tag-item {
-            background: rgba(255,255,255,0.1);
-            border: 2px solid rgba(255,255,255,0.25);
-            padding: 0.5rem 1.2rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--white);
-        }
-
-        /* ============================================
-           TICKER / MARQUEE
-        ============================================ */
-        .ticker {
-            background: var(--yellow);
-            border-bottom: 4px solid var(--fg);
-            padding: 0.8rem 0;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-        .ticker-inner {
-            display: inline-flex;
-            animation: ticker 25s linear infinite;
-        }
-        .ticker-item {
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            padding: 0 3rem;
-        }
-        .ticker-dot { color: var(--red); }
-        @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* ============================================
-           FEATURED / MEDIA
-        ============================================ */
-        .section {
-            border-bottom: 4px solid var(--fg);
-        }
-        .featured-bar {
-            padding: 2rem 3rem;
-            display: flex;
-            align-items: center;
-            gap: 4rem;
-            flex-wrap: wrap;
-        }
-        .featured-label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: #666;
-            white-space: nowrap;
-        }
-        .featured-logos {
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-            flex-wrap: wrap;
-        }
-        .featured-logos img {
-            height: 28px;
-            opacity: 0.4;
-            filter: grayscale(1);
-            transition: opacity 0.3s, filter 0.3s;
-        }
-        .featured-logos img:hover { opacity: 1; filter: none; }
-
-        /* ============================================
-           SECTION LABELS
-        ============================================ */
-        .section-label {
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.25em;
-            color: var(--red);
-            display: block;
-            margin-bottom: 1rem;
-        }
-        .section-title {
-            font-size: clamp(2rem, 4vw, 4rem);
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-            line-height: 0.95;
-        }
-
-        /* ============================================
-           PROGRAMS SECTION
-        ============================================ */
-        .programs-section {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-        }
-        .programs-left {
-            border-right: 4px solid var(--fg);
-            padding: 4rem 3rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            background: var(--fg);
-            color: var(--white);
-        }
-        .programs-left .section-label { color: var(--yellow); }
-        .programs-left .section-title { color: var(--white); }
-        .programs-left p {
-            margin-top: 2rem;
-            font-size: 1rem;
-            line-height: 1.65;
-            color: rgba(255,255,255,0.75);
-        }
-        .programs-right {
-            padding: 4rem 3rem;
-        }
-
-        /* Program Category */
-        .prog-category {
-            margin-bottom: 3rem;
-            border: 2px solid var(--fg);
-            box-shadow: 6px 6px 0 var(--fg);
-        }
-        .prog-cat-header {
-            padding: 1.25rem 1.5rem;
-            background: var(--red);
-            border-bottom: 2px solid var(--fg);
-        }
-        .prog-cat-header h3 {
-            font-size: 1rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--white);
-        }
-        .prog-cat-header p {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.8);
-            margin-top: 0.25rem;
-        }
-        .prog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            border-top: none;
-        }
-        .prog-card {
-            border-right: 2px solid var(--fg);
-            overflow: hidden;
-            transition: transform 0.2s ease-out;
-        }
-        .prog-card:last-child { border-right: none; }
-        .prog-card:hover { transform: translateY(-4px); }
-        .prog-card img {
-            width: 100%;
-            height: 130px;
-            object-fit: cover;
-            filter: grayscale(0.3);
-            transition: filter 0.3s;
-        }
-        .prog-card:hover img { filter: grayscale(0); }
-        .prog-card-body {
-            padding: 1rem 1.25rem;
-            border-top: 2px solid var(--fg);
-        }
-        .prog-card-body h4 {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* ============================================
-           WHY MEHFOOZ — BENEFITS
-        ============================================ */
-        .benefits-section {
-            background: var(--red);
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-        }
-        .benefit-col {
-            padding: 4rem 3rem;
-            border-right: 4px solid rgba(0,0,0,0.3);
-        }
-        .benefit-col:last-child { border-right: none; }
-        .benefit-num {
-            font-size: 6rem;
-            font-weight: 900;
-            color: rgba(0,0,0,0.15);
-            line-height: 1;
-            margin-bottom: 1rem;
-        }
-        .benefit-title {
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: var(--white);
-            text-transform: uppercase;
-            letter-spacing: -0.01em;
-            margin-bottom: 1rem;
-        }
-        .benefit-body {
-            font-size: 0.95rem;
-            line-height: 1.65;
-            color: rgba(255,255,255,0.85);
-        }
-
-        /* ============================================
-           STATS BAND
-        ============================================ */
-        .stats-band {
-            background: var(--yellow);
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-        }
-        .stats-item {
-            padding: 3rem 2rem;
-            border-right: 4px solid var(--fg);
-            text-align: center;
-        }
-        .stats-item:last-child { border-right: none; }
-        .stats-num {
-            font-size: clamp(2.5rem, 4vw, 4rem);
-            font-weight: 900;
-            color: var(--fg);
-            line-height: 1;
-            display: block;
-        }
-        .stats-lbl {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: rgba(0,0,0,0.6);
-            margin-top: 0.5rem;
-            display: block;
-        }
-
-        /* ============================================
-           TESTIMONIALS
-        ============================================ */
-        .testimonials-section {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-        }
-        .testimonials-left {
-            background: var(--blue);
-            padding: 4rem 2.5rem;
-            border-right: 4px solid var(--fg);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-        .testimonials-left .section-label { color: var(--yellow); }
-        .testimonials-left .section-title { color: var(--white); font-size: clamp(1.8rem, 3vw, 2.8rem); }
-
-        /* Big quote mark */
-        .quote-mark {
-            font-size: 10rem;
-            line-height: 0.7;
-            color: rgba(255,255,255,0.1);
-            font-weight: 900;
-            margin-bottom: auto;
-        }
-
-        .testimonials-right {
-            padding: 4rem 3rem;
-            overflow: hidden;
-        }
-        .testimonials-track {
-            display: flex;
-            gap: 1.5rem;
-            transition: transform 0.5s ease-out;
-        }
-        .testimonial-card {
-            min-width: 380px;
-            background: var(--white);
-            border: 2px solid var(--fg);
-            box-shadow: 6px 6px 0 var(--fg);
-            padding: 2rem;
-            position: relative;
-            flex-shrink: 0;
-        }
-        .testimonial-card::before {
-            content: '';
-            position: absolute;
-            top: 1.25rem; right: 1.25rem;
-            width: 12px; height: 12px;
-            border-radius: 50%;
-            background: var(--yellow);
-        }
-        .testimonial-text {
-            font-size: 1rem;
-            line-height: 1.65;
-            color: #333;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-        }
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            border-top: 2px solid var(--fg);
-            padding-top: 1rem;
-        }
-        .testimonial-author img {
-            width: 48px; height: 48px;
-            border-radius: 50%;
-            border: 2px solid var(--fg);
-            object-fit: cover;
-            filter: grayscale(0.4);
-        }
-        .author-name {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            display: block;
-        }
-        .author-role {
-            font-size: 0.7rem;
-            color: #777;
-            display: block;
-            margin-top: 0.2rem;
-            font-weight: 500;
-        }
-        .testimonials-nav {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: 2rem;
-        }
-        .testi-btn {
-            width: 44px; height: 44px;
-            border: 2px solid var(--fg);
-            background: var(--white);
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 3px 3px 0 var(--fg);
-            transition: transform 0.15s, box-shadow 0.15s;
-            font-weight: 700;
-        }
-        .testi-btn:hover { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--fg); }
-
-        /* ============================================
-           FAQ
-        ============================================ */
-        .faq-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-        }
-        .faq-left {
-            padding: 5rem 3rem;
-            border-right: 4px solid var(--fg);
-            background: var(--fg);
-            color: var(--white);
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-        .faq-left .section-label { color: var(--yellow); }
-        .faq-left .section-title { color: var(--white); }
-        .faq-geo {
-            width: 100%;
-            aspect-ratio: 1;
-            max-width: 250px;
-            position: relative;
-            margin-top: auto;
-        }
-        .faq-geo-circle {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            border: 4px solid var(--red);
-        }
-        .faq-geo-sq {
-            position: absolute;
-            width: 60%; height: 60%;
-            background: var(--yellow);
-            top: 20%; left: 20%;
-            transform: rotate(45deg);
-        }
-        .faq-geo-sq2 {
-            position: absolute;
-            width: 35%; height: 35%;
-            background: var(--blue);
-            top: 32.5%; left: 32.5%;
-        }
-
-        .faq-right {
-            padding: 5rem 3rem;
-        }
-        .faq-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .faq-item {
-            border: 2px solid var(--fg);
-            box-shadow: 4px 4px 0 var(--fg);
-            overflow: hidden;
-        }
-        .faq-question {
-            width: 100%;
-            background: var(--white);
-            border: none;
-            padding: 1.25rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-family: var(--f);
-            font-size: 0.95rem;
-            font-weight: 700;
-            text-align: left;
-            gap: 1rem;
-            transition: background 0.2s, color 0.2s;
-        }
-        .faq-item.open .faq-question {
-            background: var(--red);
-            color: var(--white);
-        }
-        .faq-chevron {
-            flex-shrink: 0;
-            transition: transform 0.3s;
-            font-size: 1.2rem;
-        }
-        .faq-item.open .faq-chevron { transform: rotate(180deg); }
-        .faq-answer {
-            display: none;
-            background: #FFF9C4;
-            padding: 1.25rem 1.5rem;
-            font-size: 0.9rem;
-            line-height: 1.65;
-            border-top: 2px solid var(--fg);
-        }
-        .faq-item.open .faq-answer { display: block; }
-
-        /* ============================================
-           BLOG
-        ============================================ */
-        .blog-section {
-            background: var(--blue);
-        }
-        .blog-header {
-            padding: 4rem 3rem 2rem;
-            border-bottom: 4px solid rgba(0,0,0,0.3);
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-        .blog-header .section-label { color: var(--yellow); }
-        .blog-header .section-title { color: var(--white); }
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            border-top: none;
-        }
-        .blog-card {
-            border-right: 4px solid rgba(0,0,0,0.3);
-            overflow: hidden;
-            transition: transform 0.2s ease-out;
-        }
-        .blog-card:last-child { border-right: none; }
-        .blog-card:hover { transform: translateY(-6px); }
-        .blog-card-img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            filter: grayscale(0.5);
-            transition: filter 0.3s;
-            display: block;
-        }
-        .blog-card:nth-child(2) .blog-card-img {
-            border-radius: 0;
-        }
-        .blog-card:hover .blog-card-img { filter: grayscale(0); }
-        .blog-card-body {
-            padding: 1.5rem;
-            border-top: 4px solid rgba(0,0,0,0.3);
-        }
-        .blog-cat {
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--yellow);
-            display: block;
-            margin-bottom: 0.6rem;
-        }
-        .blog-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--white);
-            line-height: 1.35;
-            text-transform: uppercase;
-            letter-spacing: -0.01em;
-        }
-
-        /* ============================================
-           CONTACT / CTA
-        ============================================ */
-        .cta-section {
-            background: var(--yellow);
-            border-bottom: 4px solid var(--fg);
-            padding: 6rem 3rem;
-            position: relative;
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-        .cta-geo-1 {
-            position: absolute;
-            width: 500px; height: 500px;
-            border-radius: 50%;
-            border: 4px solid rgba(0,0,0,0.08);
-            right: -150px; top: -150px;
-            pointer-events: none;
-        }
-        .cta-geo-2 {
-            position: absolute;
-            width: 300px; height: 300px;
-            background: rgba(0,0,0,0.05);
-            bottom: -80px; left: 30%;
-            transform: rotate(45deg);
-            pointer-events: none;
-        }
-        .cta-title {
-            font-size: clamp(2.5rem, 5vw, 5rem);
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -0.03em;
-            line-height: 0.92;
-        }
-        .cta-title .ln { display: block; }
-        .cta-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-        .cta-input {
-            background: var(--white);
-            border: 2px solid var(--fg);
-            padding: 1rem 1.25rem;
-            font-family: var(--f);
-            font-size: 0.9rem;
-            font-weight: 500;
-            box-shadow: 4px 4px 0 var(--fg);
-            outline: none;
-            transition: box-shadow 0.15s, transform 0.15s;
-        }
-        .cta-input:focus { box-shadow: 2px 2px 0 var(--fg); transform: translate(2px,2px); }
-        .cta-input::placeholder { color: #999; }
-
-        /* ============================================
-           FOOTER
-        ============================================ */
-        .footer {
-            background: var(--fg);
-            color: var(--white);
-            padding: 4rem 3rem 2rem;
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-            border-bottom: 2px solid rgba(255,255,255,0.1);
-            padding-bottom: 3rem;
-            margin-bottom: 2rem;
-        }
-        .footer-brand img { height: 44px; filter: invert(1) brightness(2); margin-bottom: 1rem; }
-        .footer-brand-name {
-            font-size: 1.2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-        .footer-brand-name span { color: var(--yellow); }
-        .footer-desc { font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.65; max-width: 280px; }
-
-        .footer-col h5 {
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--yellow);
-            margin-bottom: 1.5rem;
-        }
-        .footer-col a {
-            display: block;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 0.75rem;
-            transition: color 0.2s;
-        }
-        .footer-col a:hover { color: var(--white); }
-        .footer-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.4);
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .footer-bottom a { color: rgba(255,255,255,0.4); transition: color 0.2s; }
-        .footer-bottom a:hover { color: var(--white); }
-
-        /* ============================================
-           CHAT BOT MODAL
-        ============================================ */
-        .modal-overlay {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.75);
-            z-index: 9000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-overlay.open { display: flex; }
-        .chat-modal {
-            width: 90%;
-            max-width: 520px;
-            height: 70vh;
-            background: var(--bg);
-            border: 4px solid var(--fg);
-            box-shadow: 12px 12px 0 var(--fg);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .chat-modal-header {
-            background: var(--blue);
-            border-bottom: 4px solid var(--fg);
-            padding: 1.25rem 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .chat-modal-header h3 {
-            font-size: 1rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--white);
-        }
-        .chat-close {
-            background: none;
-            border: 2px solid rgba(255,255,255,0.4);
-            color: var(--white);
-            width: 36px; height: 36px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.2s;
-        }
-        .chat-close:hover { background: rgba(255,255,255,0.15); }
-        .chat-log {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .chat-msg {
-            max-width: 80%;
-            padding: 0.75rem 1rem;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-        .chat-msg.bot {
-            background: var(--white);
-            border: 2px solid var(--fg);
-            box-shadow: 3px 3px 0 var(--fg);
-            align-self: flex-start;
-        }
-        .chat-msg.user {
-            background: var(--blue);
-            color: var(--white);
-            border: 2px solid var(--fg);
-            box-shadow: 3px 3px 0 var(--fg);
-            align-self: flex-end;
-        }
-        .chat-form {
-            border-top: 4px solid var(--fg);
-            padding: 1rem;
-            display: flex;
-            gap: 0.75rem;
-        }
-        .chat-input {
-            flex: 1;
-            background: var(--white);
-            border: 2px solid var(--fg);
-            padding: 0.75rem 1rem;
-            font-family: var(--f);
-            font-size: 0.9rem;
-            outline: none;
-        }
-        .chat-send {
-            background: var(--red);
-            border: 2px solid var(--fg);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            font-family: var(--f);
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            box-shadow: 3px 3px 0 var(--fg);
-            transition: transform 0.15s, box-shadow 0.15s;
-        }
-        .chat-send:hover { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--fg); }
-
-        /* ============================================
-           RESPONSIVE
-        ============================================ */
-        @media (max-width: 1100px) {
-            .hero { grid-template-columns: 1fr; }
-            .hero-right { min-height: 400px; }
-            .programs-section { grid-template-columns: 1fr; }
-            .programs-left { border-right: none; border-bottom: 4px solid var(--fg); }
-            .benefits-section { grid-template-columns: 1fr; }
-            .benefit-col { border-right: none; border-bottom: 4px solid rgba(0,0,0,0.2); }
-            .stats-band { grid-template-columns: repeat(2, 1fr); }
-            .stats-item:nth-child(2) { border-right: none; }
-            .stats-item:nth-child(3) { border-top: 4px solid var(--fg); }
-            .testimonials-section { grid-template-columns: 1fr; }
-            .testimonials-left { border-right: none; border-bottom: 4px solid var(--fg); min-height: 250px; }
-            .faq-section { grid-template-columns: 1fr; }
-            .faq-left { border-right: none; border-bottom: 4px solid var(--fg); }
-            .blog-grid { grid-template-columns: 1fr; }
-            .blog-card { border-right: none; border-bottom: 4px solid rgba(0,0,0,0.3); }
-            .cta-section { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            .nav { padding: 1rem 1.25rem; }
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-            .hero-left { padding: 3rem 1.5rem; }
-            .hero-title { font-size: clamp(2.5rem, 10vw, 4rem); }
-            .programs-right { padding: 2.5rem 1.5rem; }
-            .programs-left { padding: 2.5rem 1.5rem; }
-            .faq-left { padding: 2.5rem 1.5rem; }
-            .faq-right { padding: 2.5rem 1.5rem; }
-            .cta-section { padding: 4rem 1.5rem; }
-            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .blog-header { padding: 2.5rem 1.5rem; }
-            .testimonials-right { padding: 2.5rem 1.5rem; }
-            .testimonial-card { min-width: 300px; }
-            .featured-bar { padding: 1.5rem; gap: 1.5rem; }
-            .stats-band { grid-template-columns: 1fr 1fr; }
-        }
-
-        /* Scroll fade animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Manrope:wght@300;500;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ======= CUSTOM CURSOR ======= -->
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+    <!-- Noise Overlay -->
+    <div class="noise-overlay"></div>
 
-<!-- ======= LOADER ======= -->
-<div id="loader">
-    <div class="loader-shapes">
-        <div class="loader-shape ls1"></div>
-        <div class="loader-shape ls2"></div>
-        <div class="loader-shape ls3"></div>
-    </div>
-    <div class="loader-logo-wrap">
-        <img src="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png" alt="Mehfooz Logo" class="loader-logo-img">
-        <div class="loader-wordmark">Mehfooz<span>.</span></div>
-    </div>
-    <div class="loader-bar-wrap">
-        <div class="loader-bar" id="loaderBar"></div>
-    </div>
-</div>
+    <!-- Custom Cursor -->
+    <div id="cursor-dot" class="cursor-dot"></div>
+    <div id="cursor-light" class="cursor-light"></div>
 
-<!-- ======= NAV ======= -->
-<nav class="nav" id="mainNav">
-    <a href="#" class="nav-brand">
-        <img src="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png" alt="Mehfooz" class="nav-logo-img">
-        <div class="nav-wordmark">Mehfooz<span> Internet</span></div>
-    </a>
-    <ul class="nav-links">
-        <li><a href="#mission">Mission</a></li>
-        <li><a href="#programs">Programs</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#blog">Blog</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><button class="nav-cta" id="openChatNav">AI Assistant</button></li>
-    </ul>
-    <button class="hamburger" id="hamburger">
-        <span></span><span></span><span></span>
-    </button>
-</nav>
-<div class="mobile-nav" id="mobileNav">
-    <a href="#mission" onclick="closeMobileNav()">Mission</a>
-    <a href="#programs" onclick="closeMobileNav()">Programs</a>
-    <a href="#faq" onclick="closeMobileNav()">FAQ</a>
-    <a href="#blog" onclick="closeMobileNav()">Blog</a>
-    <a href="#contact" onclick="closeMobileNav()">Contact</a>
-    <button class="btn btn-red" id="openChatMobile">AI Assistant</button>
-</div>
-
-<main>
-
-<!-- ======= HERO ======= -->
-<section class="hero section" id="hero">
-    <div class="hero-left">
-        <div>
-            <div class="hero-tag">Mehfooz Internet — Gilgit Baltistan</div>
-            <h1 class="hero-title">
-                Pioneering<br>
-                <span class="accent-red">Responsible</span><br>
-                <span class="accent-blue">Digital</span><br>
-                Experiences
-            </h1>
-            <p class="hero-subtitle">
-                Mehfooz Internet seeks to develop a culturally-tailored digital literacy platform that delivers high-quality educational content to the vulnerable communities in Gilgit Baltistan, combating misinformation.
-            </p>
-            <div class="hero-actions">
-                <a href="#programs" class="btn btn-red">Join a Program ↗</a>
-                <button class="btn btn-outline" id="openChatHero">AI Assistant</button>
+    <!-- Preloader -->
+    <div id="loadingScreen" class="loader-curtain">
+        <div class="loader-content">
+            <img src="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png" alt="Mehfooz" class="loader-logo-img">
+            <div class="loader-text">MEHFOOZ</div>
+            <div class="loading-bar-wrapper">
+                <div class="loading-bar"></div>
             </div>
-        </div>
-        <div class="hero-stats">
-            <div class="stat">
-                <span class="stat-number" id="counter1">0</span>
-                <span class="stat-label">Lives Touched</span>
-            </div>
-            <div class="stat">
-                <span class="stat-number" id="counter2">0</span>
-                <span class="stat-label">Communities</span>
-            </div>
+            <div class="loader-percent">0%</div>
         </div>
     </div>
-    <div class="hero-right">
-        <div class="hero-geo">
-            <div class="geo-circle"></div>
-            <div class="geo-square"></div>
-            <div class="geo-sq2"></div>
-        </div>
-        <div class="hero-center-content">
-            <img src="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png" alt="Mehfooz" class="hero-logo-big">
-            <div class="hero-manifesto">
-                Safety.<br>
-                <span class="yl">Truth.</span><br>
-                Inclusion.
-            </div>
-            <div class="hero-tag-list">
-                <div class="hero-tag-item">🛡 Digital Safety First</div>
-                <div class="hero-tag-item">🔍 Misinformation Combat</div>
-                <div class="hero-tag-item">🌐 Digital Inclusion</div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- ======= TICKER ======= -->
-<div class="ticker">
-    <div class="ticker-inner">
-        <span class="ticker-item">Digital Literacy <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">Gilgit Baltistan <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">MehfoozBot <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">Cyber Safety <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">Misinformation Combat <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">Community Empowerment <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">DigiSaheli <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">Ulema Training <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">Digital Literacy <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">Gilgit Baltistan <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">MehfoozBot <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">Cyber Safety <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">Misinformation Combat <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">Community Empowerment <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">DigiSaheli <span class="ticker-dot">◆</span></span>
-        <span class="ticker-item">Ulema Training <span class="ticker-dot">◆</span></span>
-    </div>
-</div>
-
-<!-- ======= FEATURED ======= -->
-<div class="featured-bar section" id="mission">
-    <span class="featured-label">Featured in</span>
-    <div class="featured-logos">
-        <img src="https://framerusercontent.com/images/ZWIiWrxAqLllrERBNLU2Ib1wY0U.png" alt="Media Partner">
-        <img src="https://framerusercontent.com/images/vZYsCyjlRXEua2Wj3mc2v0uufSk.svg" alt="Media Partner 2">
-        <img src="https://framerusercontent.com/images/ZWIiWrxAqLllrERBNLU2Ib1wY0U.png" alt="Media Partner 3">
-        <img src="https://framerusercontent.com/images/vZYsCyjlRXEua2Wj3mc2v0uufSk.svg" alt="Media Partner 4">
-    </div>
-</div>
-
-<!-- ======= PROGRAMS ======= -->
-<section class="programs-section section" id="programs">
-    <div class="programs-left">
-        <div>
-            <span class="section-label">Our Programs</span>
-            <h2 class="section-title">Built for<br>Learning,<br>Engagement,<br>& Innovation</h2>
-            <p>Two flagship program streams designed to meet communities where they are — online and on the ground across Gilgit Baltistan.</p>
-        </div>
-        <div class="hero-actions" style="margin-top:2.5rem; margin-bottom:0;">
-            <a href="#contact" class="btn btn-yellow">Get Involved ↗</a>
-        </div>
-    </div>
-    <div class="programs-right">
-        <!-- Category 1 -->
-        <div class="prog-category fade-in">
-            <div class="prog-cat-header">
-                <h3>Community Engagement Program</h3>
-                <p>Empowering local leaders and fostering grassroots initiatives across GB's diverse communities.</p>
-            </div>
-            <div class="prog-grid">
-                <div class="prog-card">
-                    <img src="https://framerusercontent.com/images/5pSHLvcUI8tiYiU9MtI9hfDmcB4.jpg" alt="Ulema Training">
-                    <div class="prog-card-body"><h4>Ulema Training</h4></div>
-                </div>
-                <div class="prog-card">
-                    <img src="https://framerusercontent.com/images/5pSHLvcUI8tiYiU9MtI9hfDmcB4.jpg" alt="Campus Program">
-                    <div class="prog-card-body"><h4>Campus Program</h4></div>
-                </div>
-                <div class="prog-card">
-                    <img src="https://framerusercontent.com/images/5pSHLvcUI8tiYiU9MtI9hfDmcB4.jpg" alt="Virtual Events">
-                    <div class="prog-card-body"><h4>Virtual Community Events</h4></div>
-                </div>
-                <div class="prog-card">
-                    <img src="https://framerusercontent.com/images/5pSHLvcUI8tiYiU9MtI9hfDmcB4.jpg" alt="DigiSaheli">
-                    <div class="prog-card-body"><h4>DigiSaheli</h4></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Category 2 -->
-        <div class="prog-category fade-in" style="--cat-color: var(--blue);">
-            <div class="prog-cat-header" style="background: var(--blue);">
-                <h3>Digital Learning Hub</h3>
-                <p>A comprehensive platform offering tailored courses, AI-assisted learning, and interactive tools.</p>
-            </div>
-            <div class="prog-grid">
-                <div class="prog-card">
-                    <img src="https://framerusercontent.com/images/5pSHLvcUI8tiYiU9MtI9hfDmcB4.jpg" alt="Mini-Courses">
-                    <div class="prog-card-body"><h4>Mini-Courses</h4></div>
-                </div>
-                <div class="prog-card">
-                    <img src="https://framerusercontent.com/images/5pSHLvcUI8tiYiU9MtI9hfDmcB4.jpg" alt="MehfoozBot">
-                    <div class="prog-card-body"><h4>MehfoozBot</h4></div>
-                </div>
-                <div class="prog-card">
-                    <img src="https://framerusercontent.com/images/5pSHLvcUI8tiYiU9MtI9hfDmcB4.jpg" alt="Resource Hub">
-                    <div class="prog-card-body"><h4>Digital Resource Hub</h4></div>
-                </div>
-                <div class="prog-card">
-                    <img src="https://framerusercontent.com/images/5pSHLvcUI8tiYiU9MtI9hfDmcB4.jpg" alt="E-Gov Navigator">
-                    <div class="prog-card-body"><h4>E-Gov Navigator</h4></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ======= BENEFITS ======= -->
-<section class="benefits-section section">
-    <div class="benefit-col fade-in">
-        <div class="benefit-num">01</div>
-        <div class="benefit-title">Innovative Technology Integration</div>
-        <p class="benefit-body">We utilize cutting-edge technologies such as AI-driven chatbots to provide dynamic, interactive learning experiences tailored to local needs.</p>
-    </div>
-    <div class="benefit-col fade-in">
-        <div class="benefit-num">02</div>
-        <div class="benefit-title">Community-Centric Approach</div>
-        <p class="benefit-body">Our platform is built on the principle of collective wisdom, pioneering a unique collaboration model with communal leaders across Gilgit Baltistan.</p>
-    </div>
-    <div class="benefit-col fade-in">
-        <div class="benefit-num">03</div>
-        <div class="benefit-title">Focus on Misinformation</div>
-        <p class="benefit-body">Unlike broad platforms, Mehfooz combines real-time data, contextual analysis, and user education to build a resilient, digitally-savvy community.</p>
-    </div>
-</section>
-
-<!-- ======= STATS ======= -->
-<div class="stats-band section">
-    <div class="stats-item">
-        <span class="stats-num" id="stat1">0</span>
-        <span class="stats-lbl">Lives Touched</span>
-    </div>
-    <div class="stats-item">
-        <span class="stats-num" id="stat2">0</span>
-        <span class="stats-lbl">Communities Served</span>
-    </div>
-    <div class="stats-item">
-        <span class="stats-num" id="stat3">0</span>
-        <span class="stats-lbl">Programs Running</span>
-    </div>
-    <div class="stats-item">
-        <span class="stats-num" id="stat4">0</span>
-        <span class="stats-lbl">Volunteers Engaged</span>
-    </div>
-</div>
-
-<!-- ======= TESTIMONIALS ======= -->
-<section class="testimonials-section section">
-    <div class="testimonials-left">
-        <div class="quote-mark">"</div>
-        <span class="section-label">User Stories</span>
-        <h2 class="section-title">How Users Feel Empowered</h2>
-    </div>
-    <div class="testimonials-right">
-        <div style="overflow:hidden;">
-            <div class="testimonials-track" id="testiTrack">
-
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"I am really excited to see how switching Mehfooz Internet's interface to Urdu and other local languages will revolutionize the digital landscape."</p>
-                    <div class="testimonial-author">
-                        <img src="https://framerusercontent.com/images/fDE857VQgeGDPGkxXjOxadvHgAU.jpg" alt="Shujaat Ali">
-                        <div>
-                            <span class="author-name">Shujaat Ali</span>
-                            <span class="author-role">Master's Student</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"I've always been curious about the internet, but also scared of the risks. Mehfooz Internet really sounds promising and makes me feel confident exploring the digital world safely."</p>
-                    <div class="testimonial-author">
-                        <img src="https://framerusercontent.com/images/9zMngbvGuKqzaU13qDFQ1Wok0w.png" alt="Zuhaib Khan">
-                        <div>
-                            <span class="author-name">Zuhaib Khan</span>
-                            <span class="author-role">Project Manager</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"I want to use Mehfooz Internet's fact-checking tools to verify information I see online so that I don't fall for misinformation."</p>
-                    <div class="testimonial-author">
-                        <img src="https://framerusercontent.com/images/bUVuSWjBJjgg4lFtAVhRUTD2Z9k.png" alt="Basharat Hussain">
-                        <div>
-                            <span class="author-name">Basharat Hussain</span>
-                            <span class="author-role">Brand Manager</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"I love my community, and I want to see Mehfooz Internet become the best it can be. It's building something truly meaningful for Gilgit Baltistan."</p>
-                    <div class="testimonial-author">
-                        <img src="https://framerusercontent.com/images/7CBmqP1K1vjlHl2338cotNRSo4Q.jpg" alt="Tehreem Batool">
-                        <div>
-                            <span class="author-name">Tehreem Batool</span>
-                            <span class="author-role">Master's Student</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"Can't wait to share Mehfooz Internet's resources with my network so that more people in my area can benefit from digital literacy education."</p>
-                    <div class="testimonial-author">
-                        <img src="https://framerusercontent.com/images/W3FBrI7O1zpIFMqVwJQVMfxRyGQ.png" alt="Aliha Musavi">
-                        <div>
-                            <span class="author-name">Aliha Musavi</span>
-                            <span class="author-role">Teacher</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <div class="testimonials-nav">
-            <button class="testi-btn" id="testiPrev">←</button>
-            <button class="testi-btn" id="testiNext">→</button>
-        </div>
-    </div>
-</section>
-
-<!-- ======= FAQ ======= -->
-<section class="faq-section section" id="faq">
-    <div class="faq-left">
-        <div>
-            <span class="section-label">FAQ</span>
-            <h2 class="section-title">Insights &<br>Clarifications</h2>
-        </div>
-        <div class="faq-geo">
-            <div class="faq-geo-circle"></div>
-            <div class="faq-geo-sq"></div>
-            <div class="faq-geo-sq2"></div>
-        </div>
-    </div>
-    <div class="faq-right">
-        <div class="faq-list">
-            <div class="faq-item open">
-                <button class="faq-question">
-                    How does Mehfooz Internet combat misinformation?
-                    <span class="faq-chevron">▼</span>
+    <!-- Navigation -->
+    <nav class="fixed-nav" id="main-nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo-wrap">
+                <img src="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png" alt="Mehfooz Logo" class="nav-logo-img">
+                <span class="nav-logo-text">Mehfooz<span class="dot-gold">.</span></span>
+            </a>
+            <div class="nav-menu">
+                <a href="#mission" class="nav-link">Mission</a>
+                <a href="#impact" class="nav-link">Impact</a>
+                <a href="#tools" class="nav-link">Tools</a>
+                <a href="#featured" class="nav-link">Press</a>
+                <button id="open-bot-demo-approach" class="btn-nav-cta">
+                    <span>AI Assistant</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
-                <div class="faq-answer">We work closely with the community offering specialized courses, fact-checking tools, and AI-assisted learning through MehfoozBot to help users identify, verify, and report false information circulating online.</div>
             </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    How does Mehfooz differ from other digital literacy initiatives?
-                    <span class="faq-chevron">▼</span>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#mission" class="mob-link">Mission</a>
+        <a href="#impact" class="mob-link">Impact</a>
+        <a href="#tools" class="mob-link">Tools</a>
+        <a href="#featured" class="mob-link">Press</a>
+        <button id="open-bot-mobile" class="btn-primary mt-2">AI Assistant</button>
+    </div>
+
+    <main>
+
+        <!-- ═══════════════════════════════════
+             HERO SECTION
+        ═══════════════════════════════════ -->
+        <section class="hero-section">
+            <canvas id="cosmicBackground"></canvas>
+
+            <!-- Geometric decorations -->
+            <div class="geo-circle geo-1"></div>
+            <div class="geo-square geo-2"></div>
+            <div class="geo-circle geo-3"></div>
+            <div class="geo-triangle geo-4"></div>
+
+            <div class="hero-container">
+                <div class="hero-badge reveal-text">
+                    <span class="badge-dot"></span>
+                    Empowering Gilgit Baltistan
+                </div>
+
+                <h1 class="hero-title">
+                    <span class="reveal-text hero-line-1">Navigating the</span>
+                    <span class="reveal-text hero-line-2">Digital <em>Void</em></span>
+                    <span class="reveal-text hero-line-3">Safely.</span>
+                </h1>
+
+                <p class="hero-subtitle reveal-text">
+                    Safety. Truth. Inclusion — bringing digital literacy<br>to the mountains of Gilgit Baltistan.
+                </p>
+
+                <div class="hero-ctas reveal-text">
+                    <button id="open-bot-hero" class="btn-hero-primary magnetic">
+                        <span>Try AI Assistant</span>
+                        <div class="btn-icon">→</div>
+                    </button>
+                    <a href="#mission" class="btn-hero-ghost magnetic">Our Mission</a>
+                </div>
+
+                <div class="hero-stats reveal-text" id="impact">
+                    <div class="stat-item">
+                        <span class="stat-number" id="user-counter">0</span>
+                        <span class="stat-label">Lives Touched</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="platform-counter">0</span>
+                        <span class="stat-label">Communities Reached</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Core Programs</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">
+                <div class="scroll-line"></div>
+                <span>Scroll</span>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════
+             MARQUEE / FEATURED IN
+        ═══════════════════════════════════ -->
+        <section class="marquee-section" id="featured">
+            <div class="marquee-label">Featured In</div>
+            <div class="marquee-track-wrapper">
+                <div class="marquee-track">
+                    <div class="marquee-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                        Dawn News
+                    </div>
+                    <div class="marquee-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20"/></svg>
+                        Geo TV
+                    </div>
+                    <div class="marquee-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 22,22 2,22"/></svg>
+                        Tribune
+                    </div>
+                    <div class="marquee-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                        Digital Pakistan
+                    </div>
+                    <div class="marquee-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="4"/></svg>
+                        Tech Valley
+                    </div>
+                    <div class="marquee-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 22,22 2,22"/></svg>
+                        GB Times
+                    </div>
+                    <div class="marquee-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                        Pamir Times
+                    </div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="marquee-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                        Dawn News
+                    </div>
+                    <div class="marquee-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20"/></svg>
+                        Geo TV
+                    </div>
+                    <div class="marquee-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 22,22 2,22"/></svg>
+                        Tribune
+                    </div>
+                    <div class="marquee-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                        Digital Pakistan
+                    </div>
+                    <div class="marquee-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="4"/></svg>
+                        Tech Valley
+                    </div>
+                    <div class="marquee-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 22,22 2,22"/></svg>
+                        GB Times
+                    </div>
+                    <div class="marquee-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                        Pamir Times
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════
+             MISSION SECTION
+        ═══════════════════════════════════ -->
+        <section id="mission" class="mission-section">
+            <div class="container">
+                <div class="mission-grid">
+                    <div class="mission-left">
+                        <div class="section-tag">Our Purpose</div>
+                        <h2 class="section-heading">
+                            The <em>Architecture</em><br>of Truth
+                        </h2>
+                        <div class="mission-geo-block">
+                            <div class="geo-block-circle"></div>
+                            <div class="geo-block-square"></div>
+                        </div>
+                    </div>
+                    <div class="mission-right">
+                        <p class="lead-text">
+                            In an age of information overload, clarity is power. We build the infrastructure for critical thinking in underserved communities across Gilgit Baltistan.
+                        </p>
+                        <p class="body-text">
+                            Mehfooz exists at the intersection of technology and humanity — where digital safety meets cultural empathy. We don't just teach tools; we cultivate wisdom.
+                        </p>
+                        <div class="mission-pillars">
+                            <div class="pillar-item">
+                                <div class="pillar-icon red">🛡️</div>
+                                <span>Safety First</span>
+                            </div>
+                            <div class="pillar-item">
+                                <div class="pillar-icon gold">👁️</div>
+                                <span>Truth Above All</span>
+                            </div>
+                            <div class="pillar-item">
+                                <div class="pillar-icon blue">🤝</div>
+                                <span>Radical Inclusion</span>
+                            </div>
+                        </div>
+                        <a href="#" class="arrow-link">
+                            Read Our Manifesto
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════
+             TOOLS / CARDS SECTION
+        ═══════════════════════════════════ -->
+        <section id="tools" class="tools-section">
+            <div class="container">
+                <div class="tools-header">
+                    <div class="section-tag">Our Toolkit</div>
+                    <h2 class="section-heading center">What We <em>Build</em></h2>
+                    <p class="section-sub">Three pillars of digital empowerment for mountain communities.</p>
+                </div>
+
+                <div class="cards-grid">
+                    <article class="glass-card" data-color="red">
+                        <div class="card-number">01</div>
+                        <div class="card-geo"></div>
+                        <div class="card-icon-wrap">🛡️</div>
+                        <h3>Cyber Safety</h3>
+                        <p>Hands-on workshops securing digital identities against evolving threats — from phishing to social engineering.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Workshops</span>
+                            <svg class="card-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </div>
+                    </article>
+
+                    <article class="glass-card" data-color="gold">
+                        <div class="card-number">02</div>
+                        <div class="card-geo"></div>
+                        <div class="card-icon-wrap">👁️</div>
+                        <h3>Misinformation Shield</h3>
+                        <p>AI-powered tools to verify news, spot deepfakes, and navigate the flood of digital misinformation.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Tools</span>
+                            <svg class="card-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </div>
+                    </article>
+
+                    <article class="glass-card" data-color="blue">
+                        <div class="card-number">03</div>
+                        <div class="card-geo"></div>
+                        <div class="card-icon-wrap">🤝</div>
+                        <h3>Digital Inclusion</h3>
+                        <p>Bridging the connectivity gap — bringing remote communities of GB into the digital age with dignity.</p>
+                        <div class="card-footer">
+                            <span class="card-tag">Community</span>
+                            <svg class="card-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════
+             CTA BAND
+        ═══════════════════════════════════ -->
+        <section class="cta-band">
+            <div class="container">
+                <div class="cta-inner">
+                    <div class="cta-geo-left">
+                        <div class="cta-circle"></div>
+                        <div class="cta-square"></div>
+                    </div>
+                    <div class="cta-content">
+                        <h2 class="cta-heading">Ready to become<br><em>digitally enlightened?</em></h2>
+                        <p class="cta-sub">Join thousands across Gilgit Baltistan taking control of their digital lives.</p>
+                        <div class="cta-buttons">
+                            <button id="open-bot-cta" class="btn-hero-primary magnetic">
+                                <span>Chat with AI Assistant</span>
+                                <div class="btn-icon">→</div>
+                            </button>
+                            <a href="#" class="btn-hero-ghost magnetic">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="cta-geo-right">
+                        <div class="cta-triangle"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════
+             FOOTER
+        ═══════════════════════════════════ -->
+        <footer class="main-footer">
+            <div class="container footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo-wrap">
+                        <img src="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png" alt="Mehfooz" class="footer-logo-img">
+                        <span class="footer-logo-text">Mehfooz</span>
+                    </div>
+                    <p class="footer-tagline">Digital Enlightenment<br>for Gilgit Baltistan.</p>
+                    <p class="footer-copy">© 2026. All Rights Reserved.</p>
+                </div>
+                <div class="footer-links-col">
+                    <h4 class="footer-col-title">Navigate</h4>
+                    <a href="#mission">Mission</a>
+                    <a href="#impact">Impact</a>
+                    <a href="#tools">Tools</a>
+                </div>
+                <div class="footer-links-col">
+                    <h4 class="footer-col-title">Connect</h4>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">Email</a>
+                </div>
+                <div class="footer-geo-block">
+                    <div class="footer-circle"></div>
+                    <div class="footer-square"></div>
+                    <div class="footer-triangle"></div>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Chat Modal -->
+    <div id="bot-modal" class="modal hidden">
+        <div class="modal-backdrop" id="modal-backdrop"></div>
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <div class="modal-header-brand">
+                    <div class="modal-dot"></div>
+                    <h3>Mehfooz Assistant</h3>
+                </div>
+                <button id="close-bot-demo" class="close-btn">✕</button>
+            </div>
+            <div id="modal-chat-log" class="chat-log"></div>
+            <form id="chat-form" class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Ask about digital safety..." autocomplete="off">
+                <button type="submit" class="send-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
-                <div class="faq-answer">We focus on localized, community-driven solutions that address the unique needs and challenges faced by residents of Gilgit Baltistan. Our content is tailored to the cultural, linguistic, and socioeconomic context of the region.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    Can Mehfooz Internet be accessed in remote or rural areas?
-                    <span class="faq-chevron">▼</span>
-                </button>
-                <div class="faq-answer">Absolutely. We have developed offline-accessible content and community-based learning hubs to reach even the most remote and underserved areas of Gilgit Baltistan.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    How can I get involved with Mehfooz Internet's mission?
-                    <span class="faq-chevron">▼</span>
-                </button>
-                <div class="faq-answer">You can participate in our community engagement programs, become a student ambassador, or volunteer for our digital literacy initiatives. Contact us through our website for more information on how to get involved.</div>
-            </div>
+            </form>
         </div>
     </div>
-</section>
 
-<!-- ======= BLOG ======= -->
-<section class="blog-section section" id="blog">
-    <div class="blog-header">
-        <div>
-            <span class="section-label">Blog</span>
-            <h2 class="section-title">Inspiring<br>Digital Resilience</h2>
-        </div>
-        <a href="#" class="btn btn-yellow">Explore More ↗</a>
-    </div>
-    <div class="blog-grid">
-        <div class="blog-card">
-            <img src="https://framerusercontent.com/images/65IRc8nsIA1Kejrjnr97Zc0VjY.jpg" alt="Youth for a Peaceful Society" class="blog-card-img">
-            <div class="blog-card-body">
-                <span class="blog-cat">Community</span>
-                <div class="blog-title">Youth for a Peaceful Society</div>
-            </div>
-        </div>
-        <div class="blog-card">
-            <img src="https://framerusercontent.com/images/QhSruodOGOVPJfk013ePCJCYog.jpg" alt="Unequal Maternal Care" class="blog-card-img" style="border-radius:0;">
-            <div class="blog-card-body">
-                <span class="blog-cat">DigiSaheli</span>
-                <div class="blog-title">Unequal Maternal Care: Gilgit Baltistan's Plight</div>
-            </div>
-        </div>
-        <div class="blog-card">
-            <img src="https://framerusercontent.com/images/IXxmZGXqh5wE5irxxE4JxcBuoyE.jpg" alt="Digital Propaganda" class="blog-card-img">
-            <div class="blog-card-body">
-                <span class="blog-cat">Digital Media</span>
-                <div class="blog-title">Pakistan's Rise in Digital Propaganda: What's Next?</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ======= CTA / CONTACT ======= -->
-<section class="cta-section section" id="contact">
-    <div class="cta-geo-1"></div>
-    <div class="cta-geo-2"></div>
-    <div>
-        <span class="section-label">Contact Us</span>
-        <h2 class="cta-title">
-            <span class="ln">Get in</span>
-            <span class="ln">Touch.</span>
-        </h2>
-        <p style="margin-top:1.5rem; font-size:1rem; line-height:1.65; max-width:400px; color:#333;">
-            Reach out to Mehfooz Internet. Whether you want to join a program, partner with us, or simply learn more — we'd love to hear from you.
-        </p>
-    </div>
-    <form class="cta-form" onsubmit="handleContactForm(event)">
-        <input type="text" class="cta-input" placeholder="Your Name" required>
-        <input type="email" class="cta-input" placeholder="Your Email" required>
-        <textarea class="cta-input" placeholder="Your Message" rows="4" style="resize:vertical;" required></textarea>
-        <button type="submit" class="btn btn-red" style="align-self:flex-start;">Send Message →</button>
-    </form>
-</section>
-
-<!-- ======= FOOTER ======= -->
-<footer class="footer">
-    <div class="footer-grid">
-        <div class="footer-brand">
-            <img src="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png" alt="Mehfooz">
-            <div class="footer-brand-name">Mehfooz<span> Internet</span></div>
-            <p class="footer-desc">Pioneering responsible digital experiences. Empowering Gilgit Baltistan with digital literacy, safety, and truth since 2024.</p>
-        </div>
-        <div class="footer-col">
-            <h5>Programs</h5>
-            <a href="#">Community Engagement</a>
-            <a href="#">Digital Learning Hub</a>
-            <a href="#">DigiSaheli</a>
-            <a href="#">Ulema Training</a>
-            <a href="#">Campus Programs</a>
-        </div>
-        <div class="footer-col">
-            <h5>Resources</h5>
-            <a href="#">MehfoozBot</a>
-            <a href="#">Mini-Courses</a>
-            <a href="#">Resource Hub</a>
-            <a href="#">E-Gov Navigator</a>
-            <a href="#">Blog</a>
-        </div>
-        <div class="footer-col">
-            <h5>Connect</h5>
-            <a href="#">Instagram</a>
-            <a href="#">Twitter / X</a>
-            <a href="#">Email Us</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">About Us</a>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <span>© 2024 Mehfooz Internet. All Rights Reserved. Made by Hasnain.</span>
-        <a href="#">↑ Back to Top</a>
-    </div>
-</footer>
-
-</main>
-
-<!-- ======= CHAT MODAL ======= -->
-<div class="modal-overlay" id="chatModal">
-    <div class="chat-modal">
-        <div class="chat-modal-header">
-            <h3>Mehfooz AI Assistant</h3>
-            <button class="chat-close" id="closeChat">✕</button>
-        </div>
-        <div class="chat-log" id="chatLog"></div>
-        <form class="chat-form" id="chatForm">
-            <input type="text" class="chat-input" id="chatInput" placeholder="Ask about digital safety..." autocomplete="off">
-            <button type="submit" class="chat-send">Send</button>
-        </form>
-    </div>
-</div>
-
-<script>
-// ============================================
-// CURSOR
-// ============================================
-const dot = document.getElementById('cursorDot');
-const ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-function animateCursor() {
-    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
-    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-    requestAnimationFrame(animateCursor);
-}
-animateCursor();
-
-// ============================================
-// LOADER
-// ============================================
-const bar = document.getElementById('loaderBar');
-let prog = 0;
-const iv = setInterval(() => {
-    prog += Math.random() * 12;
-    if (prog > 100) prog = 100;
-    bar.style.width = prog + '%';
-    if (prog >= 100) {
-        clearInterval(iv);
-        setTimeout(() => {
-            const loader = document.getElementById('loader');
-            gsap.to(loader, {
-                y: '-100%', duration: 1.2, ease: 'power4.inOut',
-                onComplete: () => { loader.style.display = 'none'; }
-            });
-            // Animate hero
-            gsap.from('.hero-title', { y: 80, opacity: 0, duration: 1.2, ease: 'power4.out', delay: 0.2 });
-            gsap.from('.hero-subtitle', { y: 40, opacity: 0, duration: 1, ease: 'power4.out', delay: 0.4 });
-            gsap.from('.hero-actions', { y: 30, opacity: 0, duration: 0.8, ease: 'power4.out', delay: 0.6 });
-            gsap.from('.hero-tag', { y: 20, opacity: 0, duration: 0.6, ease: 'power4.out', delay: 0.1 });
-            gsap.from('.hero-right', { x: 60, opacity: 0, duration: 1.2, ease: 'power4.out', delay: 0.3 });
-            animateCounters();
-        }, 200);
-    }
-}, 120);
-
-// ============================================
-// SCROLL ANIMATIONS
-// ============================================
-gsap.registerPlugin(ScrollTrigger);
-document.querySelectorAll('.fade-in').forEach(el => {
-    gsap.fromTo(el,
-        { y: 40, opacity: 0 },
-        {
-            y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
-            scrollTrigger: { trigger: el, start: 'top 85%' }
-        }
-    );
-});
-
-// ============================================
-// COUNTERS
-// ============================================
-function animateCounters() {
-    // Hero counters
-    gsap.to('#counter1', { innerText: 15000, duration: 2.5, snap: { innerText: 100 }, ease: 'power2.out', onUpdate: function() { document.getElementById('counter1').textContent = Math.ceil(this.targets()[0]._gsap.innerText).toLocaleString() + '+'; } });
-    gsap.to('#counter2', { innerText: 45, duration: 2, snap: { innerText: 1 }, ease: 'power2.out', onUpdate: function() { document.getElementById('counter2').textContent = Math.ceil(this.targets()[0]._gsap.innerText) + '+'; } });
-}
-
-// Stats section counters
-const statsTargets = [
-    { id: 'stat1', target: 15000, suffix: '+', format: true },
-    { id: 'stat2', target: 45, suffix: '+', format: false },
-    { id: 'stat3', target: 8, suffix: '', format: false },
-    { id: 'stat4', target: 200, suffix: '+', format: false },
-];
-statsTargets.forEach(s => {
-    const el = document.getElementById(s.id);
-    ScrollTrigger.create({
-        trigger: el,
-        start: 'top 85%',
-        once: true,
-        onEnter: () => {
-            const obj = { val: 0 };
-            gsap.to(obj, {
-                val: s.target, duration: 2, ease: 'power2.out',
-                onUpdate: () => {
-                    const v = Math.ceil(obj.val);
-                    el.textContent = (s.format ? v.toLocaleString() : v) + s.suffix;
-                }
-            });
-        }
-    });
-});
-
-// ============================================
-// HAMBURGER / MOBILE NAV
-// ============================================
-const hamburger = document.getElementById('hamburger');
-const mobileNav = document.getElementById('mobileNav');
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileNav.classList.toggle('open');
-});
-function closeMobileNav() {
-    hamburger.classList.remove('open');
-    mobileNav.classList.remove('open');
-}
-
-// ============================================
-// TESTIMONIALS SLIDER
-// ============================================
-const track = document.getElementById('testiTrack');
-let testiIdx = 0;
-const cards = track.querySelectorAll('.testimonial-card');
-const cardW = () => cards[0].offsetWidth + 24; // gap
-
-document.getElementById('testiNext').addEventListener('click', () => {
-    testiIdx = Math.min(testiIdx + 1, cards.length - 1);
-    track.style.transform = `translateX(-${testiIdx * cardW()}px)`;
-});
-document.getElementById('testiPrev').addEventListener('click', () => {
-    testiIdx = Math.max(testiIdx - 1, 0);
-    track.style.transform = `translateX(-${testiIdx * cardW()}px)`;
-});
-
-// ============================================
-// FAQ ACCORDION
-// ============================================
-document.querySelectorAll('.faq-question').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const item = btn.parentElement;
-        const isOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-        if (!isOpen) item.classList.add('open');
-    });
-});
-
-// ============================================
-// CHAT MODAL
-// ============================================
-const chatModal = document.getElementById('chatModal');
-const chatLog = document.getElementById('chatLog');
-const chatForm = document.getElementById('chatForm');
-const chatInput = document.getElementById('chatInput');
-
-function openChat() {
-    chatModal.classList.add('open');
-    if (chatLog.children.length === 0) {
-        addMsg('bot', "Hello! I am the Mehfooz Assistant. How can I help you navigate the digital world safely?");
-    }
-    setTimeout(() => chatInput.focus(), 300);
-}
-
-['openChatNav', 'openChatHero', 'openChatMobile'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('click', openChat);
-});
-
-document.getElementById('closeChat').addEventListener('click', () => chatModal.classList.remove('open'));
-chatModal.addEventListener('click', e => { if (e.target === chatModal) chatModal.classList.remove('open'); });
-
-chatForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const text = chatInput.value.trim();
-    if (!text) return;
-    addMsg('user', text);
-    chatInput.value = '';
-    setTimeout(() => {
-        const responses = [
-            "That's a great question about digital safety. Mehfooz Internet offers specific modules on this topic to help communities in Gilgit Baltistan.",
-            "Our MehfoozBot and mini-courses cover this topic in depth. You can enroll through our Digital Learning Hub.",
-            "Thank you for asking! This is exactly the kind of issue Mehfooz Internet is working to address through community engagement and digital literacy programs.",
-            "For verified information on this topic, we recommend checking our Digital Resource Hub, which has curated, fact-checked content for our community.",
-        ];
-        addMsg('bot', responses[Math.floor(Math.random() * responses.length)]);
-    }, 900);
-});
-
-function addMsg(sender, text) {
-    const div = document.createElement('div');
-    div.className = 'chat-msg ' + sender;
-    div.textContent = text;
-    chatLog.appendChild(div);
-    chatLog.scrollTop = chatLog.scrollHeight;
-}
-
-// ============================================
-// CONTACT FORM
-// ============================================
-function handleContactForm(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('button[type="submit"]');
-    btn.textContent = 'Message Sent ✓';
-    btn.style.background = 'var(--blue)';
-    setTimeout(() => {
-        btn.textContent = 'Send Message →';
-        btn.style.background = 'var(--red)';
-        e.target.reset();
-    }, 3000);
-}
-
-// ============================================
-// HERO COUNTER FAST FIX
-// ============================================
-// Simple counter override
-function runHeroCounters() {
-    const c1 = document.getElementById('counter1');
-    const c2 = document.getElementById('counter2');
-    let v1 = 0, v2 = 0;
-    const step1 = 15000 / 60, step2 = 45 / 60;
-    const t = setInterval(() => {
-        v1 = Math.min(v1 + step1 * 2, 15000);
-        v2 = Math.min(v2 + step2 * 2, 45);
-        c1.textContent = Math.ceil(v1).toLocaleString() + '+';
-        c2.textContent = Math.ceil(v2) + '+';
-        if (v1 >= 15000 && v2 >= 45) clearInterval(t);
-    }, 32);
-}
-setTimeout(runHeroCounters, 1800);
-</script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
