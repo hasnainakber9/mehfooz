@@ -5,373 +5,171 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mehfooz | Digital Enlightenment</title>
     <meta name="description" content="Empowering Gilgit Baltistan with digital literacy and safety.">
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Manrope:wght@300;500;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Outfit:wght@300;500;700;900&family=Manrope:wght@300;500;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="is-loading">
 
-    <!-- Noise Overlay -->
     <div class="noise-overlay"></div>
-
-    <!-- Custom Cursor -->
     <div id="cursor-dot" class="cursor-dot"></div>
     <div id="cursor-light" class="cursor-light"></div>
 
-    <!-- Preloader -->
+    <!-- PRELOADER -->
     <div id="loadingScreen" class="loader-curtain">
         <div class="loader-content">
             <img src="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png" alt="Mehfooz" class="loader-logo-img">
-            <div class="loader-text">MEHFOOZ</div>
+            <h1 class="loader-logo">MEHFOOZ</h1>
             <div class="loading-bar-wrapper">
                 <div class="loading-bar"></div>
             </div>
-            <div class="loader-percent">0%</div>
         </div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="fixed-nav" id="main-nav">
-        <div class="nav-inner">
-            <a href="#" class="nav-logo-wrap">
-                <img src="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png" alt="Mehfooz Logo" class="nav-logo-img">
-                <span class="nav-logo-text">Mehfooz<span class="dot-gold">.</span></span>
-            </a>
-            <div class="nav-menu">
-                <a href="#mission" class="nav-link">Mission</a>
-                <a href="#impact" class="nav-link">Impact</a>
-                <a href="#tools" class="nav-link">Tools</a>
-                <a href="#featured" class="nav-link">Press</a>
-                <button id="open-bot-demo-approach" class="btn-nav-cta">
-                    <span>AI Assistant</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
-            </div>
-            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-                <span></span><span></span>
-            </button>
+    <!-- NAV: logo image + original text logo + original links, untouched -->
+    <nav class="fixed-nav">
+        <div class="nav-logo-wrap">
+            <img src="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png" alt="Mehfooz Logo" class="nav-logo-img">
+            <div class="nav-logo">Mehfooz<span class="highlight-gold">.</span></div>
         </div>
+        <div class="nav-menu">
+            <a href="#mission" class="nav-link magnetic" data-strength="20">Mission</a>
+            <a href="#impact"  class="nav-link magnetic" data-strength="20">Impact</a>
+            <a href="#tools"   class="nav-link magnetic" data-strength="20">Tools</a>
+            <button id="open-bot-demo-approach" class="btn-primary magnetic" data-strength="40">AI Assistant</button>
+        </div>
+        <button id="mobile-nav-toggle" class="menu-toggle magnetic"><span></span><span></span></button>
     </nav>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#mission" class="mob-link">Mission</a>
-        <a href="#impact" class="mob-link">Impact</a>
-        <a href="#tools" class="mob-link">Tools</a>
-        <a href="#featured" class="mob-link">Press</a>
-        <button id="open-bot-mobile" class="btn-primary mt-2">AI Assistant</button>
-    </div>
+    <main id="main-content">
 
-    <main>
-
-        <!-- ═══════════════════════════════════
-             HERO SECTION
-        ═══════════════════════════════════ -->
+        <!-- ── HERO: exact original content ── -->
         <section class="hero-section">
             <canvas id="cosmicBackground"></canvas>
-
-            <!-- Geometric decorations -->
-            <div class="geo-circle geo-1"></div>
-            <div class="geo-square geo-2"></div>
-            <div class="geo-circle geo-3"></div>
-            <div class="geo-triangle geo-4"></div>
-
             <div class="hero-container">
-                <div class="hero-badge reveal-text">
-                    <span class="badge-dot"></span>
-                    Empowering Gilgit Baltistan
-                </div>
-
-                <h1 class="hero-title">
-                    <span class="reveal-text hero-line-1">Navigating the</span>
-                    <span class="reveal-text hero-line-2">Digital <em>Void</em></span>
-                    <span class="reveal-text hero-line-3">Safely.</span>
-                </h1>
-
-                <p class="hero-subtitle reveal-text">
-                    Safety. Truth. Inclusion — bringing digital literacy<br>to the mountains of Gilgit Baltistan.
-                </p>
-
-                <div class="hero-ctas reveal-text">
-                    <button id="open-bot-hero" class="btn-hero-primary magnetic">
-                        <span>Try AI Assistant</span>
-                        <div class="btn-icon">→</div>
-                    </button>
-                    <a href="#mission" class="btn-hero-ghost magnetic">Our Mission</a>
-                </div>
-
-                <div class="hero-stats reveal-text" id="impact">
-                    <div class="stat-item">
-                        <span class="stat-number" id="user-counter">0</span>
-                        <span class="stat-label">Lives Touched</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="platform-counter">0</span>
-                        <span class="stat-label">Communities Reached</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-number">3</span>
-                        <span class="stat-label">Core Programs</span>
+                <div class="hero-text-wrapper">
+                    <h1 id="hero-headline" class="hero-title">
+                        <span class="reveal-text">Navigating the</span><br>
+                        <span class="reveal-text highlight-gold">Digital Void</span>
+                    </h1>
+                    <p class="hero-subtitle reveal-text delay-1">
+                        Empowering Gilgit Baltistan with the light of digital literacy.
+                        Safety. Truth. Inclusion.
+                    </p>
+                    <div class="hero-stats reveal-text delay-2" id="impact">
+                        <div class="stat-item">
+                            <span class="stat-number" id="user-counter">0</span>
+                            <span class="stat-label">Lives Touched</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="platform-counter">0</span>
+                            <span class="stat-label">Communities</span>
+                        </div>
                     </div>
                 </div>
             </div>
-
             <div class="scroll-indicator">
-                <div class="scroll-line"></div>
-                <span>Scroll</span>
+                <span>Explore</span>
+                <div class="line"></div>
             </div>
         </section>
 
-        <!-- ═══════════════════════════════════
-             MARQUEE / FEATURED IN
-        ═══════════════════════════════════ -->
-        <section class="marquee-section" id="featured">
-            <div class="marquee-label">Featured In</div>
+        <!-- ── FEATURED IN: moving marquee, design-only addition ── -->
+        <div class="marquee-section">
+            <span class="marquee-label">Featured In</span>
             <div class="marquee-track-wrapper">
                 <div class="marquee-track">
-                    <div class="marquee-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-                        Dawn News
-                    </div>
-                    <div class="marquee-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20"/></svg>
-                        Geo TV
-                    </div>
-                    <div class="marquee-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 22,22 2,22"/></svg>
-                        Tribune
-                    </div>
-                    <div class="marquee-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-                        Digital Pakistan
-                    </div>
-                    <div class="marquee-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="4"/></svg>
-                        Tech Valley
-                    </div>
-                    <div class="marquee-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 22,22 2,22"/></svg>
-                        GB Times
-                    </div>
-                    <div class="marquee-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-                        Pamir Times
-                    </div>
-                    <!-- Duplicate for seamless loop -->
-                    <div class="marquee-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-                        Dawn News
-                    </div>
-                    <div class="marquee-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20"/></svg>
-                        Geo TV
-                    </div>
-                    <div class="marquee-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 22,22 2,22"/></svg>
-                        Tribune
-                    </div>
-                    <div class="marquee-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-                        Digital Pakistan
-                    </div>
-                    <div class="marquee-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="4"/></svg>
-                        Tech Valley
-                    </div>
-                    <div class="marquee-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 22,22 2,22"/></svg>
-                        GB Times
-                    </div>
-                    <div class="marquee-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-                        Pamir Times
-                    </div>
+                    <span class="marquee-item"><span class="m-dot red"></span>Dawn News</span>
+                    <span class="marquee-item"><span class="m-dot gold"></span>Geo TV</span>
+                    <span class="marquee-item"><span class="m-dot blue"></span>The Tribune</span>
+                    <span class="marquee-item"><span class="m-dot red"></span>Digital Pakistan</span>
+                    <span class="marquee-item"><span class="m-dot gold"></span>Tech Valley GB</span>
+                    <span class="marquee-item"><span class="m-dot blue"></span>Pamir Times</span>
+                    <span class="marquee-item"><span class="m-dot red"></span>GB Times</span>
+                    <!-- duplicate set for seamless infinite loop -->
+                    <span class="marquee-item"><span class="m-dot red"></span>Dawn News</span>
+                    <span class="marquee-item"><span class="m-dot gold"></span>Geo TV</span>
+                    <span class="marquee-item"><span class="m-dot blue"></span>The Tribune</span>
+                    <span class="marquee-item"><span class="m-dot red"></span>Digital Pakistan</span>
+                    <span class="marquee-item"><span class="m-dot gold"></span>Tech Valley GB</span>
+                    <span class="marquee-item"><span class="m-dot blue"></span>Pamir Times</span>
+                    <span class="marquee-item"><span class="m-dot red"></span>GB Times</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── MISSION: exact original content ── -->
+        <section id="mission" class="split-section">
+            <div class="container grid-2">
+                <div class="col-left" data-speed="0.9">
+                    <h2 class="section-heading">The <span class="serif-italic">Architecture</span><br>of Truth</h2>
+                </div>
+                <div class="col-right">
+                    <p class="lead-text">
+                        In an age of information overload, clarity is power. We build the infrastructure for critical thinking in underserved communities.
+                    </p>
+                    <a href="#" class="arrow-link magnetic">Read Our Manifesto &rarr;</a>
                 </div>
             </div>
         </section>
 
-        <!-- ═══════════════════════════════════
-             MISSION SECTION
-        ═══════════════════════════════════ -->
-        <section id="mission" class="mission-section">
+        <!-- ── TOOLS: exact original content ── -->
+        <section id="tools" class="cards-section">
             <div class="container">
-                <div class="mission-grid">
-                    <div class="mission-left">
-                        <div class="section-tag">Our Purpose</div>
-                        <h2 class="section-heading">
-                            The <em>Architecture</em><br>of Truth
-                        </h2>
-                        <div class="mission-geo-block">
-                            <div class="geo-block-circle"></div>
-                            <div class="geo-block-square"></div>
-                        </div>
-                    </div>
-                    <div class="mission-right">
-                        <p class="lead-text">
-                            In an age of information overload, clarity is power. We build the infrastructure for critical thinking in underserved communities across Gilgit Baltistan.
-                        </p>
-                        <p class="body-text">
-                            Mehfooz exists at the intersection of technology and humanity — where digital safety meets cultural empathy. We don't just teach tools; we cultivate wisdom.
-                        </p>
-                        <div class="mission-pillars">
-                            <div class="pillar-item">
-                                <div class="pillar-icon red">🛡️</div>
-                                <span>Safety First</span>
-                            </div>
-                            <div class="pillar-item">
-                                <div class="pillar-icon gold">👁️</div>
-                                <span>Truth Above All</span>
-                            </div>
-                            <div class="pillar-item">
-                                <div class="pillar-icon blue">🤝</div>
-                                <span>Radical Inclusion</span>
-                            </div>
-                        </div>
-                        <a href="#" class="arrow-link">
-                            Read Our Manifesto
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ═══════════════════════════════════
-             TOOLS / CARDS SECTION
-        ═══════════════════════════════════ -->
-        <section id="tools" class="tools-section">
-            <div class="container">
-                <div class="tools-header">
-                    <div class="section-tag">Our Toolkit</div>
-                    <h2 class="section-heading center">What We <em>Build</em></h2>
-                    <p class="section-sub">Three pillars of digital empowerment for mountain communities.</p>
-                </div>
-
+                <h2 class="section-heading center">Our Toolkit</h2>
                 <div class="cards-grid">
-                    <article class="glass-card" data-color="red">
-                        <div class="card-number">01</div>
-                        <div class="card-geo"></div>
-                        <div class="card-icon-wrap">🛡️</div>
+                    <article class="glass-card magnetic-card">
+                        <div class="card-icon">🛡️</div>
                         <h3>Cyber Safety</h3>
-                        <p>Hands-on workshops securing digital identities against evolving threats — from phishing to social engineering.</p>
-                        <div class="card-footer">
-                            <span class="card-tag">Workshops</span>
-                            <svg class="card-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </div>
+                        <p>Workshops on securing digital identities against threats.</p>
                     </article>
-
-                    <article class="glass-card" data-color="gold">
-                        <div class="card-number">02</div>
-                        <div class="card-geo"></div>
-                        <div class="card-icon-wrap">👁️</div>
-                        <h3>Misinformation Shield</h3>
-                        <p>AI-powered tools to verify news, spot deepfakes, and navigate the flood of digital misinformation.</p>
-                        <div class="card-footer">
-                            <span class="card-tag">Tools</span>
-                            <svg class="card-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </div>
+                    <article class="glass-card magnetic-card">
+                        <div class="card-icon">👁️</div>
+                        <h3>Misinformation</h3>
+                        <p>Tools to verify news and spot deepfakes instantly.</p>
                     </article>
-
-                    <article class="glass-card" data-color="blue">
-                        <div class="card-number">03</div>
-                        <div class="card-geo"></div>
-                        <div class="card-icon-wrap">🤝</div>
-                        <h3>Digital Inclusion</h3>
-                        <p>Bridging the connectivity gap — bringing remote communities of GB into the digital age with dignity.</p>
-                        <div class="card-footer">
-                            <span class="card-tag">Community</span>
-                            <svg class="card-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </div>
+                    <article class="glass-card magnetic-card">
+                        <div class="card-icon">🤝</div>
+                        <h3>Inclusion</h3>
+                        <p>Bridging the connectivity gap for remote regions.</p>
                     </article>
                 </div>
             </div>
         </section>
 
-        <!-- ═══════════════════════════════════
-             CTA BAND
-        ═══════════════════════════════════ -->
-        <section class="cta-band">
-            <div class="container">
-                <div class="cta-inner">
-                    <div class="cta-geo-left">
-                        <div class="cta-circle"></div>
-                        <div class="cta-square"></div>
-                    </div>
-                    <div class="cta-content">
-                        <h2 class="cta-heading">Ready to become<br><em>digitally enlightened?</em></h2>
-                        <p class="cta-sub">Join thousands across Gilgit Baltistan taking control of their digital lives.</p>
-                        <div class="cta-buttons">
-                            <button id="open-bot-cta" class="btn-hero-primary magnetic">
-                                <span>Chat with AI Assistant</span>
-                                <div class="btn-icon">→</div>
-                            </button>
-                            <a href="#" class="btn-hero-ghost magnetic">Learn More</a>
-                        </div>
-                    </div>
-                    <div class="cta-geo-right">
-                        <div class="cta-triangle"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ═══════════════════════════════════
-             FOOTER
-        ═══════════════════════════════════ -->
+        <!-- ── FOOTER: exact original content ── -->
         <footer class="main-footer">
-            <div class="container footer-grid">
+            <div class="container footer-flex">
                 <div class="footer-brand">
-                    <div class="footer-logo-wrap">
+                    <div class="footer-logo-row">
                         <img src="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png" alt="Mehfooz" class="footer-logo-img">
-                        <span class="footer-logo-text">Mehfooz</span>
+                        <h4>Mehfooz</h4>
                     </div>
-                    <p class="footer-tagline">Digital Enlightenment<br>for Gilgit Baltistan.</p>
-                    <p class="footer-copy">© 2026. All Rights Reserved.</p>
+                    <p>© 2026. All Rights Reserved.</p>
                 </div>
-                <div class="footer-links-col">
-                    <h4 class="footer-col-title">Navigate</h4>
-                    <a href="#mission">Mission</a>
-                    <a href="#impact">Impact</a>
-                    <a href="#tools">Tools</a>
-                </div>
-                <div class="footer-links-col">
-                    <h4 class="footer-col-title">Connect</h4>
-                    <a href="#">Instagram</a>
-                    <a href="#">Twitter</a>
-                    <a href="#">Email</a>
-                </div>
-                <div class="footer-geo-block">
-                    <div class="footer-circle"></div>
-                    <div class="footer-square"></div>
-                    <div class="footer-triangle"></div>
+                <div class="footer-links">
+                    <a href="#" class="magnetic">Instagram</a>
+                    <a href="#" class="magnetic">Twitter</a>
+                    <a href="#" class="magnetic">Email</a>
                 </div>
             </div>
         </footer>
 
     </main>
 
-    <!-- Chat Modal -->
+    <!-- CHAT MODAL: exact original content -->
     <div id="bot-modal" class="modal hidden">
         <div class="modal-backdrop" id="modal-backdrop"></div>
         <div class="modal-content glass-panel">
             <div class="modal-header">
-                <div class="modal-header-brand">
-                    <div class="modal-dot"></div>
-                    <h3>Mehfooz Assistant</h3>
-                </div>
-                <button id="close-bot-demo" class="close-btn">✕</button>
+                <h3>Mehfooz Assistant</h3>
+                <button id="close-bot-demo" class="close-btn magnetic">×</button>
             </div>
             <div id="modal-chat-log" class="chat-log"></div>
             <form id="chat-form" class="chat-input-area">
                 <input type="text" id="chat-input" placeholder="Ask about digital safety..." autocomplete="off">
-                <button type="submit" class="send-btn">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                </button>
+                <button type="submit" class="send-btn magnetic">Send</button>
             </form>
         </div>
     </div>
