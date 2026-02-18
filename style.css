@@ -483,7 +483,18 @@ body:hover .cursor-ring { border-color: rgba(218,165,32,0.5); }
     writing-mode: vertical-rl;
 }
 
-/* Reveal animation setup */
+/* Reveal animation setup — hero elements start hidden, JS reveals them */
+.hero-eyebrow,
+.hero-line-1,
+.hero-line-2,
+.hero-line-3,
+.hero-subtitle,
+.hero-actions,
+.hero-stats {
+    opacity: 0;
+    transform: translateY(36px);
+    /* transitions injected by JS at reveal time */
+}
 .reveal-text { opacity: 0; transform: translateY(40px); }
 
 /* --- 8. MISSION SECTION --- */
