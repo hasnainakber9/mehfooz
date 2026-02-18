@@ -1,3 +1,96 @@
+// ════════════════════════════════════
+// GEOMETRIC SHADER BACKGROUND (Three.js)
+// ════════════════════════════════════
+(function initShader() {
+    const canvasElement = document.getElementById('cosmicBackground');
+    if (!canvasElement || typeof THREE === 'undefined') return;
+
+    const scene    = new THREE.Scene();
+    const camera   = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    const renderer = new THREE.WebGLRenderer({ canvas: canvasElement, alpha: true, antialias: false });
+
+    function resize() {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    }
+    window.addEventListener('resize', resize, { passive: true });
+    resize();
+
+    const uniforms = {
+        u_time:       { value: 0.0 },
+        u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+        u_color_bg:   { value: new THREE.Color('#060608') },
+        u_color_dot:  { value: new THREE.Color('#D4A017') },
+        u_color_dot2: { value: new THREE.Color('#C8341A') }
+    };
+
+    const material = new THREE.ShaderMaterial({
+        uniforms,
+        vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = vec4(position, 1.0);
+            }
+        `,
+        fragmentShader: `
+            uniform float u_time;
+            uniform vec2  u_resolution;
+            uniform vec3  u_color_bg;
+            uniform vec3  u_color_dot;
+            uniform vec3  u_color_dot2;
+            varying vec2 vUv;
+
+            float star(vec2 uv, float r) {
+                float d = length(uv);
+                return smoothstep(r, r * 0.5, d);
+            }
+
+            void main() {
+                vec2 st = gl_FragCoord.xy / u_resolution.xy;
+                st.x *= u_resolution.x / u_resolution.y;
+
+                /* Flowing distortion */
+                vec2 dst = st;
+                dst.y += sin(st.x * 8.0 + u_time * 0.5) * 0.03;
+                dst.x += cos(st.y * 8.0 + u_time * 0.3) * 0.03;
+
+                /* Sparse gold dot grid */
+                vec2 g = fract(dst * 18.0) - 0.5;
+                float r = 0.10 + sin(u_time * 1.2 + st.x * 4.0 + st.y * 3.0) * 0.04;
+                float circle = step(length(g), r);
+
+                /* Second sparser red grid, offset */
+                vec2 g2 = fract((dst + 0.5) * 9.0) - 0.5;
+                float r2 = 0.06 + cos(u_time * 0.8 + st.y * 5.0) * 0.02;
+                float circle2 = step(length(g2), r2);
+
+                /* Combine layers */
+                vec3 col = u_color_bg;
+                col = mix(col, u_color_dot,  circle  * 0.18);
+                col = mix(col, u_color_dot2, circle2 * 0.12);
+
+                gl_FragColor = vec4(col, 0.9);
+            }
+        `,
+        transparent: true
+    });
+
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
+    scene.add(mesh);
+
+    const clock = new THREE.Clock();
+    (function animateShader() {
+        uniforms.u_time.value = clock.getElapsedTime();
+        uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+        renderer.render(scene, camera);
+        requestAnimationFrame(animateShader);
+    })();
+})();
+
+// ════════════════════════════════════
+// MAIN DOM LOGIC
+// ════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
 
     // ════════════════════════════════════
@@ -321,14 +414,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ════════════════════════════════════
-    // 10. CHAT BOT MODAL
+    // 10. CHAT BOT MODAL — Real Backend
     // ════════════════════════════════════
-    const botModal = document.getElementById('bot-modal');
-    const chatLog  = document.getElementById('modal-chat-log');
-    const chatForm = document.getElementById('chat-form');
-    const chatInput= document.getElementById('chat-input');
-    const closeBtn = document.getElementById('close-bot-demo');
-    const backdrop = document.getElementById('modal-backdrop');
+    const botModal  = document.getElementById('bot-modal');
+    const chatLog   = document.getElementById('modal-chat-log');
+    const chatForm  = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const closeBtn  = document.getElementById('close-bot-demo');
+    const backdrop  = document.getElementById('modal-backdrop');
+
+    // Unique session ID for conversation memory
+    const sessionId = Math.random().toString(36).substring(2, 9);
 
     // All open triggers
     ['open-bot-demo-approach', 'open-bot-hero', 'open-bot-cta', 'open-bot-mobile'].forEach(id => {
@@ -338,80 +434,108 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openModal() {
         botModal.classList.remove('hidden');
+        gsap.fromTo('.glass-panel',
+            { scale: 0.92, y: 30, opacity: 0 },
+            { scale: 1, y: 0, opacity: 1, duration: 0.45, ease: 'back.out(1.2)' }
+        );
         if (chatLog.children.length === 0) {
             setTimeout(() => {
-                addMessage('bot', "Hello. I am the Mehfooz Assistant. How can I help you navigate the digital world safely?");
-            }, 300);
+                addMessage('bot', 'Hello! I am the Mehfooz Assistant. Ask me anything about digital safety, misinformation, or cybersecurity in Gilgit Baltistan.');
+            }, 350);
         }
         chatInput.focus();
     }
 
     function closeModal() {
-        botModal.classList.add('hidden');
+        gsap.to('.glass-panel', {
+            scale: 0.92, y: 30, opacity: 0, duration: 0.3,
+            onComplete: () => botModal.classList.add('hidden')
+        });
     }
 
-    if (closeBtn)  closeBtn.addEventListener('click', closeModal);
-    if (backdrop)  backdrop.addEventListener('click', closeModal);
-
-    // Escape key close
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModal();
-    });
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (backdrop) backdrop.addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
     if (chatForm) {
-        chatForm.addEventListener('submit', (e) => {
+        chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const text = chatInput.value.trim();
             if (!text) return;
 
             addMessage('user', text);
             chatInput.value = '';
+            chatInput.disabled = true;
 
-            // Typing indicator
-            const typingEl = addMessage('bot', '...', true);
+            // Typing indicator (returns the bubble element directly)
+            const typingBubble = addMessage('bot', '● ● ●', false, true);
 
-            setTimeout(() => {
-                typingEl.remove();
-                const responses = [
-                    `Great question about "${text}". Our digital safety resources can help you with this topic.`,
-                    `We cover "${text}" in our workshops. Would you like to learn more about our programs?`,
-                    `Thank you for asking about "${text}". Awareness is the first step to digital safety.`,
-                    `This is an important topic. Our team in Gilgit Baltistan is addressing "${text}" through community programs.`
-                ];
-                addMessage('bot', responses[Math.floor(Math.random() * responses.length)]);
-            }, 1200);
+            try {
+                const response = await fetch('http://localhost:5000/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-session-id': sessionId
+                    },
+                    body: JSON.stringify({ message: text })
+                });
+
+                if (!response.ok) throw new Error(`Status ${response.status}`);
+                const data = await response.json();
+
+                typingBubble.textContent = data.reply;
+                typingBubble.style.letterSpacing = 'normal';
+                typingBubble.style.color = '#888899';
+
+            } catch (err) {
+                console.error('Mehfooz AI Gateway Error:', err);
+                typingBubble.textContent = 'Could not reach the Mehfooz AI Gateway. Please ensure the backend server is running on port 5000.';
+                typingBubble.style.color  = 'var(--c-red)';
+                typingBubble.style.letterSpacing = 'normal';
+            } finally {
+                chatInput.disabled = false;
+                chatInput.focus();
+                chatLog.scrollTop = chatLog.scrollHeight;
+            }
         });
     }
 
-    function addMessage(sender, text, isTyping = false) {
-        const div = document.createElement('div');
-        div.style.cssText = `
+    /**
+     * Adds a message bubble to the chat log.
+     * Returns the inner bubble element so callers can update its text.
+     */
+    function addMessage(sender, text, _unused = false, isTyping = false) {
+        const wrapper = document.createElement('div');
+        wrapper.style.cssText = `
             display: flex;
             justify-content: ${sender === 'user' ? 'flex-end' : 'flex-start'};
+            margin-bottom: 0.1rem;
         `;
-
         const bubble = document.createElement('div');
         bubble.style.cssText = `
             max-width: 80%;
             padding: 0.65rem 1rem;
             font-family: 'Manrope', sans-serif;
             font-size: 0.875rem;
-            line-height: 1.5;
+            line-height: 1.55;
+            border-radius: 2px;
             ${sender === 'user'
-                ? `background: rgba(212,160,23,0.12);
-                   border: 1px solid rgba(212,160,23,0.25);
-                   color: #e8e8f0;`
-                : `background: rgba(255,255,255,0.03);
-                   border: 1px solid rgba(255,255,255,0.06);
-                   color: #888899;`
+                ? 'background: rgba(212,160,23,0.12); border: 1px solid rgba(212,160,23,0.25); color: #e8e8f0;'
+                : 'background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); color: #888899;'
             }
-            ${isTyping ? 'letter-spacing: 0.3em; color: #888899;' : ''}
+            ${isTyping ? 'letter-spacing: 0.35em; color: #555566;' : ''}
         `;
         bubble.textContent = text;
-        div.appendChild(bubble);
-        chatLog.appendChild(div);
+        wrapper.appendChild(bubble);
+        chatLog.appendChild(wrapper);
+
+        gsap.fromTo(wrapper,
+            { x: sender === 'user' ? 10 : -10, opacity: 0 },
+            { x: 0, opacity: 1, duration: 0.3, ease: 'power2.out' }
+        );
+
         chatLog.scrollTop = chatLog.scrollHeight;
-        return div;
+        return bubble; // return bubble so callers can mutate it
     }
 
     // ════════════════════════════════════
