@@ -1,471 +1,478 @@
-document.addEventListener('DOMContentLoaded', () => {
+/* ============================================================
+   MEHFOOZ INTERNET — script.js
+   Preloader runs FIRST, before any optional dependency.
+   All third-party libs (Lenis, GSAP) are guarded with typeof checks.
+   ============================================================ */
 
-    // =============================================================
-    //  1. LENIS SMOOTH SCROLL
-    // =============================================================
-    const lenis = new Lenis({
-        duration: 1.4,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smooth: true
-    });
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
+// ─── PRELOADER: runs immediately, zero dependencies ──────────────────────────
+(function () {
+    var loader  = document.getElementById('loadingScreen');
+    var loadBar = document.querySelector('.loading-bar');
+    var loadPct = document.querySelector('.loader-percent');
 
-    gsap.registerPlugin(ScrollTrigger);
+    if (!loader) return;
 
-    // =============================================================
-    //  2. PRELOADER
-    // =============================================================
-    const loader  = document.getElementById('loadingScreen');
-    const loadBar = document.querySelector('.loading-bar');
-    const loadPct = document.querySelector('.loader-percent');
+    var progress = 0;
+    var done     = false;
 
-    // Safety: if loader element missing, skip straight to reveal
-    if (!loader) { revealSite(); }
+    function setProgress(val) {
+        if (loadBar) loadBar.style.width = val + '%';
+        if (loadPct) loadPct.textContent  = Math.floor(val) + '%';
+    }
 
-    let progress  = 0;
-    let done      = false;
-
-    const loadInterval = setInterval(() => {
+    function revealLoader() {
         if (done) return;
-        progress += Math.random() * 14 + 4;   // faster increments
-        if (progress >= 100) {
-            progress = 100;
-            done = true;
-            clearInterval(loadInterval);
-            // Update UI to 100% then reveal after brief pause
-            if (loadBar) loadBar.style.width = '100%';
-            if (loadPct) loadPct.textContent = '100%';
-            setTimeout(revealSite, 400);
-            return;
-        }
-        if (loadBar) loadBar.style.width = `${progress}%`;
-        if (loadPct) loadPct.textContent  = `${Math.floor(progress)}%`;
-    }, 100);
+        done = true;
+        setProgress(100);
 
-    function revealSite() {
-        // Ensure loader hides even if GSAP fails
-        if (loader) {
-            loader.style.transition = 'transform 1.2s cubic-bezier(0.19,1,0.22,1)';
+        setTimeout(function () {
+            loader.style.transition = 'transform 1.3s cubic-bezier(0.77,0,0.18,1)';
             loader.style.transform  = 'translateY(-100%)';
-            setTimeout(() => { loader.style.display = 'none'; }, 1300);
+
+            setTimeout(function () {
+                loader.style.display = 'none';
+                document.dispatchEvent(new Event('preloader:done'));
+            }, 1400);
+        }, 300);
+    }
+
+    var interval = setInterval(function () {
+        if (done) { clearInterval(interval); return; }
+        progress += (Math.random() * 15) + 5;
+        if (progress >= 100) {
+            clearInterval(interval);
+            revealLoader();
+        } else {
+            setProgress(progress);
         }
+    }, 90);
 
-        // Animate hero elements in — use class selector with fallback
-        const heroTargets = [
-            '.hero-eyebrow',
-            '.hero-line-1',
-            '.hero-line-2',
-            '.hero-line-3',
-            '.hero-subtitle',
-            '.hero-actions',
-            '.hero-stats'
-        ];
+    // Hard fallback: force reveal after 4s no matter what
+    setTimeout(revealLoader, 4000);
+}());
 
-        heroTargets.forEach((sel, i) => {
-            const el = document.querySelector(sel);
-            if (!el) return;
-            // CSS fallback: reset opacity/transform via style directly
-            el.style.transition = `opacity 0.9s ease ${0.3 + i * 0.12}s, transform 0.9s ease ${0.3 + i * 0.12}s`;
-            el.style.opacity    = '1';
-            el.style.transform  = 'translateY(0)';
-        });
 
-        // GSAP enhancement if available
+// ─── MAIN APP ────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function () {
+
+    // 1. LENIS SMOOTH SCROLL — safe init
+    var lenis = null;
+    if (typeof Lenis !== 'undefined') {
+        try {
+            lenis = new Lenis({
+                duration: 1.4,
+                easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+                smooth: true
+            });
+            (function tick(time) { lenis.raf(time); requestAnimationFrame(tick); }(0));
+        } catch (e) {
+            console.warn('Lenis init failed:', e);
+            lenis = null;
+        }
+    }
+
+    // 2. GSAP + ScrollTrigger — safe register
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+    }
+
+    // 3. HERO REVEAL — fires when preloader signals done
+    var heroSelectors = [
+        '.hero-eyebrow',
+        '.hero-line-1',
+        '.hero-line-2',
+        '.hero-line-3',
+        '.hero-subtitle',
+        '.hero-actions',
+        '.hero-stats'
+    ];
+
+    function revealHero() {
         if (typeof gsap !== 'undefined') {
-            gsap.to(heroTargets, {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                stagger: 0.12,
-                ease: 'power3.out',
-                delay: 0.4,
+            gsap.to(heroSelectors, {
+                opacity:    1,
+                y:          0,
+                duration:   1.1,
+                stagger:    0.13,
+                delay:      0.15,
+                ease:       'power3.out',
                 clearProps: 'transform'
             });
+        } else {
+            // Pure CSS fallback
+            heroSelectors.forEach(function (sel, i) {
+                var el = document.querySelector(sel);
+                if (!el) return;
+                var d = 0.15 + i * 0.13;
+                el.style.transition = 'opacity 1s ease ' + d + 's, transform 1s ease ' + d + 's';
+                el.style.opacity    = '1';
+                el.style.transform  = 'translateY(0)';
+            });
         }
-
         animateCounters();
     }
 
-    // =============================================================
-    //  3. CUSTOM CURSOR
-    // =============================================================
-    const cursorDot  = document.getElementById('cursor-dot');
-    const cursorRing = document.getElementById('cursor-ring');
-    const cursorLight = document.getElementById('cursor-light');
+    document.addEventListener('preloader:done', revealHero);
 
-    let mouseX = 0, mouseY = 0;
-    let ringX  = 0, ringY  = 0;
-    let lightX = 0, lightY = 0;
+    // 4. CUSTOM CURSOR
+    var cursorDot   = document.getElementById('cursor-dot');
+    var cursorRing  = document.getElementById('cursor-ring');
+    var cursorLight = document.getElementById('cursor-light');
 
-    window.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX; mouseY = e.clientY;
-        gsap.to(cursorDot,   { x: mouseX, y: mouseY, duration: 0.08, ease: 'none' });
-        gsap.to(cursorRing,  { x: mouseX, y: mouseY, duration: 0.25, ease: 'power2.out' });
-        gsap.to(cursorLight, { x: mouseX, y: mouseY, duration: 0.8, ease: 'power3.out' });
-    });
-
-    // Hover states for interactive elements
-    const interactiveEls = document.querySelectorAll('a, button, .magnetic-card, .faq-question, .program-card, .blog-card');
-    interactiveEls.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            gsap.to(cursorRing, { width: 56, height: 56, borderColor: 'rgba(218,165,32,0.7)', duration: 0.3 });
-            gsap.to(cursorDot,  { width: 3, height: 3, duration: 0.3 });
+    if (cursorDot && typeof gsap !== 'undefined') {
+        window.addEventListener('mousemove', function (e) {
+            gsap.to(cursorDot,   { x: e.clientX, y: e.clientY, duration: 0.08, ease: 'none' });
+            gsap.to(cursorRing,  { x: e.clientX, y: e.clientY, duration: 0.28, ease: 'power2.out' });
+            gsap.to(cursorLight, { x: e.clientX, y: e.clientY, duration: 0.9,  ease: 'power3.out' });
         });
-        el.addEventListener('mouseleave', () => {
-            gsap.to(cursorRing, { width: 36, height: 36, borderColor: 'rgba(218,165,32,0.4)', duration: 0.3 });
-            gsap.to(cursorDot,  { width: 5, height: 5, duration: 0.3 });
-        });
-    });
 
-    // =============================================================
-    //  4. MAGNETIC ELEMENTS
-    // =============================================================
-    document.querySelectorAll('.magnetic').forEach(el => {
-        el.addEventListener('mousemove', (e) => {
-            const rect = el.getBoundingClientRect();
-            const strength = parseFloat(el.getAttribute('data-strength') || 25);
-            const cx = rect.left + rect.width  / 2;
-            const cy = rect.top  + rect.height / 2;
-            gsap.to(el, {
-                x: (e.clientX - cx) * (strength / 100),
-                y: (e.clientY - cy) * (strength / 100),
-                duration: 0.4, ease: 'power2.out'
+        document.querySelectorAll('a, button, .magnetic-card, .program-card, .blog-card').forEach(function (el) {
+            el.addEventListener('mouseenter', function () {
+                gsap.to(cursorRing, { width: 56, height: 56, borderColor: 'rgba(218,165,32,0.75)', duration: 0.3 });
+                gsap.to(cursorDot,  { width: 3,  height: 3,  duration: 0.3 });
+            });
+            el.addEventListener('mouseleave', function () {
+                gsap.to(cursorRing, { width: 36, height: 36, borderColor: 'rgba(218,165,32,0.4)', duration: 0.3 });
+                gsap.to(cursorDot,  { width: 5,  height: 5,  duration: 0.3 });
             });
         });
-        el.addEventListener('mouseleave', () => {
-            gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+    }
+
+    // 5. MAGNETIC ELEMENTS
+    if (typeof gsap !== 'undefined') {
+        document.querySelectorAll('.magnetic').forEach(function (el) {
+            el.addEventListener('mousemove', function (e) {
+                var rect     = el.getBoundingClientRect();
+                var strength = parseFloat(el.getAttribute('data-strength') || '25');
+                var cx = rect.left + rect.width  / 2;
+                var cy = rect.top  + rect.height / 2;
+                gsap.to(el, {
+                    x: (e.clientX - cx) * (strength / 100),
+                    y: (e.clientY - cy) * (strength / 100),
+                    duration: 0.4, ease: 'power2.out'
+                });
+            });
+            el.addEventListener('mouseleave', function () {
+                gsap.to(el, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.4)' });
+            });
+        });
+    }
+
+    // 6. NAVIGATION SCROLL STATE + MOBILE MENU
+    var nav        = document.getElementById('mainNav');
+    var mobileMenu = document.getElementById('mobileMenu');
+    var menuToggle = document.getElementById('mobile-nav-toggle');
+
+    if (nav) {
+        window.addEventListener('scroll', function () {
+            nav.classList.toggle('scrolled', window.scrollY > 40);
+        }, { passive: true });
+    }
+
+    if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', function () {
+            var open = mobileMenu.classList.toggle('open');
+            menuToggle.classList.toggle('active', open);
+        });
+    }
+
+    document.querySelectorAll('.mobile-link, .mobile-cta').forEach(function (link) {
+        link.addEventListener('click', function () {
+            if (mobileMenu)  mobileMenu.classList.remove('open');
+            if (menuToggle)  menuToggle.classList.remove('active');
         });
     });
 
-    // =============================================================
-    //  5. NAVIGATION: SCROLL STATE + MOBILE MENU
-    // =============================================================
-    const nav        = document.getElementById('mainNav');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const menuToggle = document.getElementById('mobile-nav-toggle');
-
-    window.addEventListener('scroll', () => {
-        nav.classList.toggle('scrolled', window.scrollY > 40);
-    }, { passive: true });
-
-    menuToggle && menuToggle.addEventListener('click', () => {
-        const isOpen = mobileMenu.classList.toggle('open');
-        menuToggle.classList.toggle('active', isOpen);
-    });
-
-    // Close mobile menu on link click
-    document.querySelectorAll('.mobile-link, .mobile-cta').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.remove('open');
-            menuToggle && menuToggle.classList.remove('active');
+    // 7. SMOOTH SCROLL — anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            var target = document.querySelector(link.getAttribute('href'));
+            if (!target) return;
+            e.preventDefault();
+            if (lenis) {
+                lenis.scrollTo(target, { offset: -80, duration: 1.6 });
+            } else {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         });
     });
 
-    // =============================================================
-    //  6. COSMIC BACKGROUND CANVAS
-    // =============================================================
-    const canvas = document.getElementById('cosmicBackground');
+    // 8. COSMIC CANVAS
+    var canvas = document.getElementById('cosmicBackground');
     if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let W = canvas.width  = window.innerWidth;
-        let H = canvas.height = window.innerHeight;
+        var ctx = canvas.getContext('2d');
+        var W = canvas.width  = window.innerWidth;
+        var H = canvas.height = window.innerHeight;
 
-        const stars = Array.from({ length: 180 }, () => ({
-            x:     Math.random() * W,
-            y:     Math.random() * H,
-            size:  Math.random() * 1.6 + 0.2,
-            speed: Math.random() * 0.35 + 0.05,
-            opacity: Math.random() * 0.6 + 0.2,
-            twinkle: Math.random() * Math.PI * 2,
-            twinkleSpeed: Math.random() * 0.015 + 0.005
-        }));
+        var stars = Array.from({ length: 180 }, function () {
+            return {
+                x:            Math.random() * W,
+                y:            Math.random() * H,
+                size:         Math.random() * 1.5 + 0.2,
+                speed:        Math.random() * 0.3  + 0.05,
+                opacity:      Math.random() * 0.6  + 0.2,
+                twinkle:      Math.random() * Math.PI * 2,
+                twinkleSpeed: Math.random() * 0.015 + 0.005
+            };
+        });
 
         function animateCosmos() {
             ctx.clearRect(0, 0, W, H);
-            stars.forEach(s => {
-                s.twinkle += s.twinkleSpeed;
-                const alpha = s.opacity * (0.6 + 0.4 * Math.sin(s.twinkle));
-                ctx.beginPath();
-                ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(218, 165, 32, ${alpha})`;
-                ctx.fill();
-                s.y -= s.speed;
-                if (s.y < -2) { s.y = H + 2; s.x = Math.random() * W; }
-            });
 
-            // Ambient orb
-            const gradient = ctx.createRadialGradient(W * 0.5, H * 0.5, 0, W * 0.5, H * 0.5, W * 0.4);
-            gradient.addColorStop(0, 'rgba(218, 165, 32, 0.025)');
-            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-            ctx.fillStyle = gradient;
+            var grad = ctx.createRadialGradient(W * 0.5, H * 0.45, 0, W * 0.5, H * 0.45, W * 0.42);
+            grad.addColorStop(0, 'rgba(218,165,32,0.03)');
+            grad.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = grad;
             ctx.fillRect(0, 0, W, H);
+
+            stars.forEach(function (star) {
+                star.twinkle += star.twinkleSpeed;
+                var alpha = star.opacity * (0.55 + 0.45 * Math.sin(star.twinkle));
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(218,165,32,' + alpha + ')';
+                ctx.fill();
+                star.y -= star.speed;
+                if (star.y < -2) { star.y = H + 2; star.x = Math.random() * W; }
+            });
 
             requestAnimationFrame(animateCosmos);
         }
         animateCosmos();
 
-        window.addEventListener('resize', () => {
+        window.addEventListener('resize', function () {
             W = canvas.width  = window.innerWidth;
             H = canvas.height = window.innerHeight;
         });
     }
 
-    // =============================================================
-    //  7. STAT COUNTERS
-    // =============================================================
+    // 9. STAT COUNTERS
     function animateCounters() {
-        const counters = [
+        var counters = [
             { id: 'user-counter',     target: 15000 },
             { id: 'platform-counter', target: 45    }
         ];
-        counters.forEach(({ id, target }) => {
-            const el = document.getElementById(id);
+        counters.forEach(function (item) {
+            var el = document.getElementById(item.id);
             if (!el) return;
-            gsap.fromTo(el, { innerText: 0 }, {
-                innerText: target,
-                duration: 2.5,
-                ease: 'power2.out',
-                snap: { innerText: 1 },
-                scrollTrigger: { trigger: el, start: 'top 90%', once: true }
-            });
+
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.fromTo(el, { innerText: 0 }, {
+                    innerText: item.target,
+                    duration: 2.5,
+                    ease: 'power2.out',
+                    snap: { innerText: 1 },
+                    scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+                });
+            } else {
+                var current   = 0;
+                var increment = item.target / 60;
+                var t = setInterval(function () {
+                    current += increment;
+                    if (current >= item.target) { current = item.target; clearInterval(t); }
+                    el.textContent = Math.floor(current).toLocaleString();
+                }, 40);
+            }
         });
     }
 
-    // =============================================================
-    //  8. FAQ ACCORDION
-    // =============================================================
-    document.querySelectorAll('.faq-question').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const answer   = btn.nextElementSibling;
-            const isOpen   = btn.getAttribute('aria-expanded') === 'true';
-            const allBtns  = document.querySelectorAll('.faq-question');
-            const allAns   = document.querySelectorAll('.faq-answer');
+    // 10. FAQ ACCORDION
+    document.querySelectorAll('.faq-question').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var answer = btn.nextElementSibling;
+            var wasOpen = btn.getAttribute('aria-expanded') === 'true';
 
-            // Close all others
-            allBtns.forEach(b => b.setAttribute('aria-expanded', 'false'));
-            allAns.forEach(a => a.classList.remove('open'));
+            document.querySelectorAll('.faq-question').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+            document.querySelectorAll('.faq-answer').forEach(function (a)   { a.classList.remove('open'); });
 
-            // Toggle this one
-            if (!isOpen) {
+            if (!wasOpen) {
                 btn.setAttribute('aria-expanded', 'true');
                 answer.classList.add('open');
             }
         });
     });
 
-    // =============================================================
-    //  9. SCROLL-TRIGGERED FADE-UPS
-    // =============================================================
-    const fadeEls = document.querySelectorAll('.pillar-card, .glass-card, .program-card, .testimonial-card, .blog-card, .split-grid, .faq-grid, .contact-inner');
-    fadeEls.forEach((el, i) => {
-        el.classList.add('fade-up');
-        ScrollTrigger.create({
-            trigger: el,
-            start: 'top 88%',
-            onEnter: () => {
-                setTimeout(() => el.classList.add('visible'), i % 4 * 80);
-            },
-            once: true
+    // 11. SCROLL FADE-UP
+    var fadeTargets = document.querySelectorAll(
+        '.pillar-card, .glass-card, .program-card, .testimonial-card, .blog-card, .split-grid, .faq-grid, .contact-inner'
+    );
+
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        fadeTargets.forEach(function (el, i) {
+            gsap.fromTo(el,
+                { opacity: 0, y: 28 },
+                {
+                    opacity: 1, y: 0,
+                    duration: 0.85,
+                    ease: 'power3.out',
+                    delay: (i % 4) * 0.08,
+                    scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+                }
+            );
         });
-    });
+    } else {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity   = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
 
-    // =============================================================
-    //  10. CHAT BOT — Connected to Backend (with open-source fallback)
-    // =============================================================
-    const botModal   = document.getElementById('bot-modal');
-    const openBtn    = document.getElementById('open-bot-demo-approach');
-    const openBtnMob = document.getElementById('open-bot-mobile');
-    const closeBtn   = document.getElementById('close-bot-demo');
-    const chatForm   = document.getElementById('chat-form');
-    const chatInput  = document.getElementById('chat-input');
-    const chatLog    = document.getElementById('modal-chat-log');
+        fadeTargets.forEach(function (el) {
+            el.style.opacity    = '0';
+            el.style.transform  = 'translateY(28px)';
+            el.style.transition = 'opacity 0.85s ease, transform 0.85s ease';
+            io.observe(el);
+        });
+    }
 
-    // Unique session ID for conversation memory
-    const sessionId = Math.random().toString(36).substring(2, 10);
+    // 12. CHAT BOT
+    var botModal   = document.getElementById('bot-modal');
+    var openBtn    = document.getElementById('open-bot-demo-approach');
+    var openBtnMob = document.getElementById('open-bot-mobile');
+    var closeBtn   = document.getElementById('close-bot-demo');
+    var chatForm   = document.getElementById('chat-form');
+    var chatInput  = document.getElementById('chat-input');
+    var chatLog    = document.getElementById('modal-chat-log');
+    var backdrop   = document.getElementById('modal-backdrop');
+    var sessionId  = Math.random().toString(36).substring(2, 10);
+
+    var SYSTEM_PROMPT = 'You are the Mehfooz Assistant — a helpful, warm digital literacy expert for communities in Gilgit Baltistan, Pakistan. Help users with digital safety, fact-checking, cybersecurity, and misinformation. Be concise (2–3 sentences), friendly, and practical. Programs: Community Engagement, Campus Programs, DigiSaheli, Virtual Events, Mini-Courses, MehfoozBot, Digital Resource Hub, E-Government Navigator, Ulema Training.';
+    var conversationHistory = [{ role: 'system', content: SYSTEM_PROMPT }];
 
     function openModal() {
+        if (!botModal) return;
         botModal.classList.remove('hidden');
-        const panel = document.querySelector('.chat-panel');
-        gsap.fromTo(panel,
-            { scale: 0.92, y: 24, opacity: 0 },
-            { scale: 1, y: 0, opacity: 1, duration: 0.45, ease: 'back.out(1.4)' }
-        );
-        if (chatLog.children.length === 0) {
-            addMessage('bot', 'Hello! I\'m the Mehfooz Assistant. Ask me anything about digital safety, misinformation, or our programs in Gilgit Baltistan. 🌐');
+        var panel = document.querySelector('.chat-panel');
+        if (panel && typeof gsap !== 'undefined') {
+            gsap.fromTo(panel, { scale: 0.92, y: 24, opacity: 0 }, { scale: 1, y: 0, opacity: 1, duration: 0.45, ease: 'back.out(1.4)' });
+        } else if (panel) {
+            panel.style.opacity = '1'; panel.style.transform = 'none';
         }
-        chatInput.focus();
+        if (chatLog && chatLog.children.length === 0) {
+            addMessage('bot', "Hello! I'm the Mehfooz Assistant. Ask me anything about digital safety, misinformation, or our programs in Gilgit Baltistan. 🌐");
+        }
+        if (chatInput) chatInput.focus();
     }
 
     function closeModal() {
-        const panel = document.querySelector('.chat-panel');
-        gsap.to(panel, {
-            scale: 0.92, y: 24, opacity: 0, duration: 0.3, ease: 'power2.in',
-            onComplete: () => botModal.classList.add('hidden')
-        });
+        if (!botModal) return;
+        var panel = document.querySelector('.chat-panel');
+        if (panel && typeof gsap !== 'undefined') {
+            gsap.to(panel, { scale: 0.92, y: 24, opacity: 0, duration: 0.3, ease: 'power2.in',
+                onComplete: function () { botModal.classList.add('hidden'); } });
+        } else {
+            botModal.classList.add('hidden');
+        }
     }
 
-    openBtn    && openBtn.addEventListener('click', openModal);
-    openBtnMob && openBtnMob.addEventListener('click', () => { closeModal(); setTimeout(openModal, 50); });
-    closeBtn   && closeBtn.addEventListener('click', closeModal);
-
-    // Close on backdrop click
-    document.getElementById('modal-backdrop') && document.getElementById('modal-backdrop').addEventListener('click', closeModal);
-
-    // ---- AI via open-source fallback (Pollinations) ----
-    // Pollinations.ai provides a free, open-source AI completions endpoint.
-    // No API key required. Great for demos and open-source projects.
-    const SYSTEM_PROMPT = `You are the Mehfooz Assistant — a helpful, warm, and knowledgeable digital literacy expert for communities in Gilgit Baltistan, Pakistan. Your role is to educate people about digital safety, fact-checking, cybersecurity, online privacy, and combating misinformation. Keep responses concise (2-3 sentences), friendly, and practical. If asked about Mehfooz Internet's programs, mention: Community Engagement, Digital Learning Hub, DigiSaheli, MehfoozBot, Campus Programs, and Ulema Training.`;
-
-    // Conversation history for context continuity
-    const conversationHistory = [
-        { role: 'system', content: SYSTEM_PROMPT }
-    ];
+    if (openBtn)    openBtn.addEventListener('click', openModal);
+    if (openBtnMob) openBtnMob.addEventListener('click', openModal);
+    if (closeBtn)   closeBtn.addEventListener('click', closeModal);
+    if (backdrop)   backdrop.addEventListener('click', closeModal);
 
     async function callAI(userMessage) {
         conversationHistory.push({ role: 'user', content: userMessage });
 
-        // --- PRIMARY: Try the local backend (server.js) ---
         try {
-            const res = await fetch('http://localhost:5000/api/chat', {
+            var r = await fetch('http://localhost:5000/api/chat', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-session-id': sessionId
-                },
+                headers: { 'Content-Type': 'application/json', 'x-session-id': sessionId },
                 body: JSON.stringify({ message: userMessage }),
-                signal: AbortSignal.timeout(8000)
+                signal: AbortSignal.timeout(7000)
             });
-
-            if (res.ok) {
-                const data = await res.json();
-                conversationHistory.push({ role: 'assistant', content: data.reply });
-                return data.reply;
+            if (r.ok) {
+                var d = await r.json();
+                conversationHistory.push({ role: 'assistant', content: d.reply });
+                return d.reply;
             }
-        } catch (_) {
-            // Backend unavailable — fall through to open-source fallback
-        }
+        } catch (_) {}
 
-        // --- FALLBACK: Pollinations.ai (free, no key needed) ---
         try {
-            const messages = conversationHistory.slice(-8); // Last 8 turns for context
-            const res = await fetch('https://text.pollinations.ai/openai', {
+            var r2 = await fetch('https://text.pollinations.ai/openai', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    model: 'openai',
-                    messages: messages,
-                    max_tokens: 200,
-                    temperature: 0.7,
-                    seed: 42
-                }),
-                signal: AbortSignal.timeout(15000)
+                body: JSON.stringify({ model: 'openai', messages: conversationHistory.slice(-8), max_tokens: 200, temperature: 0.7 }),
+                signal: AbortSignal.timeout(14000)
             });
-
-            if (!res.ok) throw new Error('Pollinations API error');
-            const data = await res.json();
-            const reply = data.choices?.[0]?.message?.content?.trim() || 'I\'m here to help with digital literacy questions!';
-            conversationHistory.push({ role: 'assistant', content: reply });
-            return reply;
-
-        } catch (err) {
-            console.warn('AI Fallback Error:', err);
-            // Return context-aware offline response
+            if (!r2.ok) throw new Error('err');
+            var d2   = await r2.json();
+            var rep  = d2.choices?.[0]?.message?.content?.trim() || getOfflineResponse(userMessage);
+            conversationHistory.push({ role: 'assistant', content: rep });
+            return rep;
+        } catch (_) {
             return getOfflineResponse(userMessage);
         }
     }
 
     function getOfflineResponse(msg) {
-        const m = msg.toLowerCase();
-        if (m.includes('misinfo') || m.includes('fake') || m.includes('news')) {
-            return 'To spot misinformation: check the source, look for other credible reports, and use fact-checking tools. MehfoozBot can help you verify claims in real-time. 🔍';
-        }
-        if (m.includes('safe') || m.includes('security') || m.includes('password')) {
-            return 'For cyber safety: use strong unique passwords, enable two-factor authentication, and never share personal info with unknown contacts. Our Cyber Safety workshops cover all of this! 🛡️';
-        }
-        if (m.includes('program') || m.includes('course') || m.includes('learn')) {
-            return 'Mehfooz offers: Community Engagement, Campus Programs, DigiSaheli for women, Virtual Events, Mini-Courses, and our Digital Learning Hub. Type "Join a Program" on our homepage to start! 📚';
-        }
-        if (m.includes('gilgit') || m.includes('baltistan') || m.includes('gb')) {
-            return 'Mehfooz Internet is built specifically for Gilgit Baltistan — with offline access, Urdu/local language support, and community-led sessions in even the most remote areas. 🏔️';
-        }
-        return 'Thank you for reaching out! Mehfooz Internet is dedicated to digital literacy in Gilgit Baltistan. For specific queries, please contact us at hello@mehfooz.internet or explore our programs above. 💬';
+        var m = msg.toLowerCase();
+        if (/misinfo|fake|hoax|verify|fact.?check/.test(m))
+            return 'Always verify by checking the original source and looking for corroborating reports. MehfoozBot can fact-check claims in real-time! 🔍';
+        if (/safe|secur|hack|password|phish|scam/.test(m))
+            return 'Use strong unique passwords, enable two-factor authentication, and avoid suspicious links. Our Cyber Safety workshops cover all of this! 🛡️';
+        if (/program|course|learn|train|workshop|join/.test(m))
+            return 'We offer Community Engagement, Campus Programs, DigiSaheli, Mini-Courses, and our full Digital Learning Hub. Check the Programs section! 📚';
+        if (/gilgit|baltistan|remote|rural|offline/.test(m))
+            return 'Mehfooz is built for GB — offline content and local language support reach even the most remote valleys. 🏔️';
+        return 'Mehfooz Internet empowers Gilgit Baltistan with digital literacy. Explore our programs or email hello@mehfooz.internet. 💬';
     }
 
     if (chatForm) {
-        chatForm.addEventListener('submit', async (e) => {
+        chatForm.addEventListener('submit', async function (e) {
             e.preventDefault();
-            const text = chatInput.value.trim();
+            var text = chatInput ? chatInput.value.trim() : '';
             if (!text) return;
 
             addMessage('user', text);
-            chatInput.value = '';
-            chatInput.disabled = true;
-
-            const typingEl = addMessage('bot', '...');
-            typingEl.classList.add('typing');
+            if (chatInput) { chatInput.value = ''; chatInput.disabled = true; }
+            var typingEl = addMessage('bot', '...');
 
             try {
-                const reply = await callAI(text);
-                typingEl.classList.remove('typing');
+                var reply = await callAI(text);
                 typingEl.textContent = reply;
-                gsap.fromTo(typingEl, { opacity: 0 }, { opacity: 1, duration: 0.3 });
+                if (typeof gsap !== 'undefined') gsap.fromTo(typingEl, { opacity: 0 }, { opacity: 1, duration: 0.3 });
             } catch (err) {
-                typingEl.textContent = 'Could not reach the AI. Please try again or contact us directly.';
+                typingEl.textContent = 'Could not connect. Please try again.';
                 typingEl.style.color = 'var(--c-red)';
             } finally {
-                chatInput.disabled = false;
-                chatInput.focus();
-                chatLog.scrollTop = chatLog.scrollHeight;
+                if (chatInput) { chatInput.disabled = false; chatInput.focus(); }
+                if (chatLog) chatLog.scrollTop = chatLog.scrollHeight;
             }
         });
     }
 
     function addMessage(sender, text) {
-        const div = document.createElement('div');
-        div.className = `chat-msg msg-${sender}`;
+        var div = document.createElement('div');
+        div.className   = 'chat-msg msg-' + sender;
         div.textContent = text;
-        gsap.fromTo(div,
-            { scale: 0.85, opacity: 0, y: 10 },
-            { scale: 1, opacity: 1, y: 0, duration: 0.35, ease: 'back.out(1.5)' }
-        );
-        chatLog.appendChild(div);
-        chatLog.scrollTop = chatLog.scrollHeight;
+        if (typeof gsap !== 'undefined') {
+            gsap.fromTo(div, { scale: 0.88, opacity: 0, y: 8 }, { scale: 1, opacity: 1, y: 0, duration: 0.3, ease: 'back.out(1.5)' });
+        } else {
+            div.style.opacity = '1';
+        }
+        if (chatLog) { chatLog.appendChild(div); chatLog.scrollTop = chatLog.scrollHeight; }
         return div;
     }
 
-    // =============================================================
-    //  11. CONTACT FORM (client-side — wire up to backend as needed)
-    // =============================================================
-    const contactForm = document.getElementById('contactForm');
+    // 13. CONTACT FORM
+    var contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            const btn = contactForm.querySelector('.btn-primary');
-            const originalText = btn.querySelector('.btn-text').textContent;
-            btn.querySelector('.btn-text').textContent = 'Message Sent ✓';
-            btn.style.background = 'var(--c-gold)';
-            btn.style.color = '#000';
-            setTimeout(() => {
-                btn.querySelector('.btn-text').textContent = originalText;
-                btn.style.background = '';
-                btn.style.color = '';
+            var btn     = contactForm.querySelector('.btn-primary');
+            var btnText = btn ? btn.querySelector('.btn-text') : null;
+            if (btnText) btnText.textContent = 'Message Sent ✓';
+            if (btn) { btn.style.background = 'var(--c-gold)'; btn.style.color = '#000'; }
+            setTimeout(function () {
+                if (btnText) btnText.textContent = 'Send Message';
+                if (btn) { btn.style.background = ''; btn.style.color = ''; }
                 contactForm.reset();
             }, 3000);
         });
     }
-
-    // =============================================================
-    //  12. NAV LINK SMOOTH SCROLL
-    // =============================================================
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener('click', (e) => {
-            const target = document.querySelector(link.getAttribute('href'));
-            if (target) {
-                e.preventDefault();
-                lenis.scrollTo(target, { offset: -80, duration: 1.6 });
-            }
-        });
-    });
 
 });
