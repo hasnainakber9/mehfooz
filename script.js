@@ -1,96 +1,10 @@
-// ════════════════════════════════════════════════════════
-//  MEHFOOZ — script.js
-//  Original logic 100% preserved + Three.js shader bg
-//  + real Gemini backend chat
-// ════════════════════════════════════════════════════════
-
-// ── THREE.JS GLSL SHADER BACKGROUND ─────────────────────
-// Runs immediately (before DOMContentLoaded) so the canvas
-// is painted as soon as the preloader lifts.
-(function initShader() {
-    const canvas = document.getElementById('cosmicBackground');
-    if (!canvas || typeof THREE === 'undefined') return;
-
-    const scene    = new THREE.Scene();
-    const camera   = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
-
-    function resize() {
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-    }
-    window.addEventListener('resize', resize, { passive: true });
-    resize();
-
-    const uniforms = {
-        u_time:       { value: 0.0 },
-        u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
-    };
-
-    const material = new THREE.ShaderMaterial({
-        uniforms,
-        vertexShader: `
-            varying vec2 vUv;
-            void main() {
-                vUv = uv;
-                gl_Position = vec4(position, 1.0);
-            }
-        `,
-        fragmentShader: `
-            uniform float u_time;
-            uniform vec2  u_resolution;
-            varying vec2  vUv;
-
-            void main() {
-                vec2 st = gl_FragCoord.xy / u_resolution.xy;
-                st.x *= u_resolution.x / u_resolution.y;
-
-                // Flowing wave distortion
-                vec2 dst = st;
-                dst.y += sin(st.x * 7.0 + u_time * 0.45) * 0.028;
-                dst.x += cos(st.y * 7.0 + u_time * 0.28) * 0.028;
-
-                // Gold star/dot grid
-                vec2 g = fract(dst * 20.0) - 0.5;
-                float r = 0.09 + sin(u_time * 1.1 + st.x * 5.0 + st.y * 3.5) * 0.04;
-                float stars = step(length(g), r);
-
-                // Sparse secondary grid (dim red)
-                vec2 g2 = fract((dst + vec2(0.5)) * 10.0) - 0.5;
-                float r2 = 0.055 + cos(u_time * 0.7 + st.y * 4.0) * 0.02;
-                float stars2 = step(length(g2), r2);
-
-                // Base deep dark
-                vec3 col = vec3(0.024, 0.024, 0.04);
-                // Gold dots
-                col = mix(col, vec3(0.788, 0.596, 0.102), stars  * 0.22);
-                // Red accent dots
-                col = mix(col, vec3(0.722, 0.188, 0.102), stars2 * 0.14);
-
-                gl_FragColor = vec4(col, 1.0);
-            }
-        `
-    });
-
-    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
-    scene.add(mesh);
-
-    const clock = new THREE.Clock();
-    (function tick() {
-        uniforms.u_time.value = clock.getElapsedTime();
-        uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
-        renderer.render(scene, camera);
-        requestAnimationFrame(tick);
-    })();
-})();
-
-
-// ── MAIN LOGIC ───────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ── 1. LENIS SMOOTH SCROLL (original) ────────────────
+    // =============================================================
+    //  1. LENIS SMOOTH SCROLL
+    // =============================================================
     const lenis = new Lenis({
-        duration: 1.2,
+        duration: 1.4,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smooth: true
     });
@@ -99,138 +13,340 @@ document.addEventListener('DOMContentLoaded', () => {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // ── 2. PRELOADER SEQUENCE (original) ─────────────────
-    const loader     = document.querySelector('.loader-curtain');
-    const loadingBar = document.querySelector('.loading-bar');
+    // =============================================================
+    //  2. PRELOADER
+    // =============================================================
+    const loader    = document.getElementById('loadingScreen');
+    const loadBar   = document.querySelector('.loading-bar');
+    const loadPct   = document.querySelector('.loader-percent');
 
     let progress = 0;
     const loadInterval = setInterval(() => {
-        progress += Math.random() * 10;
-        if (progress > 100) progress = 100;
-        loadingBar.style.width = `${progress}%`;
-        if (progress === 100) {
-            clearInterval(loadInterval);
-            revealSite();
-        }
-    }, 100);
+        progress += Math.random() * 12 + 2;
+        if (progress >= 100) { progress = 100; clearInterval(loadInterval); revealSite(); }
+        loadBar.style.width = `${progress}%`;
+        if (loadPct) loadPct.textContent = `${Math.floor(progress)}%`;
+    }, 110);
 
     function revealSite() {
         const tl = gsap.timeline();
-        tl.to(loader, { y: '-100%', duration: 1.2, ease: 'power4.inOut' })
-          .from('.reveal-text', {
-              y: 100,
-              opacity: 0,
-              duration: 1.5,
-              stagger: 0.2,
-              ease: 'power4.out'
-          }, '-=0.5')
-          .from('.hero-stats', { opacity: 0, duration: 1 }, '-=1');
+        tl.to(loader, { y: '-100%', duration: 1.4, ease: 'power4.inOut', delay: 0.3 })
+          .set(loader, { display: 'none' })
+          .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.6')
+          .to('.hero-line-1',  { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, '-=0.75')
+          .to('.hero-line-2',  { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, '-=0.85')
+          .to('.hero-line-3',  { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, '-=0.85')
+          .to('.hero-subtitle', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.7')
+          .to('.hero-actions',  { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, '-=0.6')
+          .to('.hero-stats',    { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }, '-=0.5');
 
         animateCounters();
-        initNavScroll();
-        initScrollAnimations();
     }
 
-    // ── 3. NAV SCROLL STATE (design enhancement) ─────────
-    function initNavScroll() {
-        const nav = document.querySelector('.fixed-nav');
-        window.addEventListener('scroll', () => {
-            nav.classList.toggle('scrolled', window.scrollY > 60);
-        }, { passive: true });
-    }
+    // =============================================================
+    //  3. CUSTOM CURSOR
+    // =============================================================
+    const cursorDot  = document.getElementById('cursor-dot');
+    const cursorRing = document.getElementById('cursor-ring');
+    const cursorLight = document.getElementById('cursor-light');
 
-    // ── 4. CUSTOM CURSOR & MAGNETIC (original) ───────────
-    const cursor = document.getElementById('cursor-dot');
-    const light  = document.getElementById('cursor-light');
-
-    let mx = 0, my = 0, lx = 0, ly = 0;
+    let mouseX = 0, mouseY = 0;
+    let ringX  = 0, ringY  = 0;
+    let lightX = 0, lightY = 0;
 
     window.addEventListener('mousemove', (e) => {
-        mx = e.clientX; my = e.clientY;
-        gsap.to(cursor, { x: mx, y: my, duration: 0.1 });
+        mouseX = e.clientX; mouseY = e.clientY;
+        gsap.to(cursorDot,   { x: mouseX, y: mouseY, duration: 0.08, ease: 'none' });
+        gsap.to(cursorRing,  { x: mouseX, y: mouseY, duration: 0.25, ease: 'power2.out' });
+        gsap.to(cursorLight, { x: mouseX, y: mouseY, duration: 0.8, ease: 'power3.out' });
     });
 
-    // Smooth light trail
-    (function lightLoop() {
-        lx += (mx - lx) * 0.07;
-        ly += (my - ly) * 0.07;
-        gsap.set(light, { x: lx, y: ly });
-        requestAnimationFrame(lightLoop);
-    })();
+    // Hover states for interactive elements
+    const interactiveEls = document.querySelectorAll('a, button, .magnetic-card, .faq-question, .program-card, .blog-card');
+    interactiveEls.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            gsap.to(cursorRing, { width: 56, height: 56, borderColor: 'rgba(218,165,32,0.7)', duration: 0.3 });
+            gsap.to(cursorDot,  { width: 3, height: 3, duration: 0.3 });
+        });
+        el.addEventListener('mouseleave', () => {
+            gsap.to(cursorRing, { width: 36, height: 36, borderColor: 'rgba(218,165,32,0.4)', duration: 0.3 });
+            gsap.to(cursorDot,  { width: 5, height: 5, duration: 0.3 });
+        });
+    });
 
-    document.querySelectorAll('.magnetic').forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const rect     = btn.getBoundingClientRect();
-            const strength = btn.getAttribute('data-strength') || 30;
-            gsap.to(btn, {
-                x: (e.clientX - rect.left - rect.width  / 2) / strength * 10,
-                y: (e.clientY - rect.top  - rect.height / 2) / strength * 10,
-                duration: 0.3
+    // =============================================================
+    //  4. MAGNETIC ELEMENTS
+    // =============================================================
+    document.querySelectorAll('.magnetic').forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const strength = parseFloat(el.getAttribute('data-strength') || 25);
+            const cx = rect.left + rect.width  / 2;
+            const cy = rect.top  + rect.height / 2;
+            gsap.to(el, {
+                x: (e.clientX - cx) * (strength / 100),
+                y: (e.clientY - cy) * (strength / 100),
+                duration: 0.4, ease: 'power2.out'
             });
         });
-        btn.addEventListener('mouseleave', () => {
-            gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.5)' });
+        el.addEventListener('mouseleave', () => {
+            gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
         });
     });
 
-    // ── 5. COUNTERS (original) ───────────────────────────
+    // =============================================================
+    //  5. NAVIGATION: SCROLL STATE + MOBILE MENU
+    // =============================================================
+    const nav        = document.getElementById('mainNav');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuToggle = document.getElementById('mobile-nav-toggle');
+
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    menuToggle && menuToggle.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        menuToggle.classList.toggle('active', isOpen);
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.mobile-link, .mobile-cta').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            menuToggle && menuToggle.classList.remove('active');
+        });
+    });
+
+    // =============================================================
+    //  6. COSMIC BACKGROUND CANVAS
+    // =============================================================
+    const canvas = document.getElementById('cosmicBackground');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let W = canvas.width  = window.innerWidth;
+        let H = canvas.height = window.innerHeight;
+
+        const stars = Array.from({ length: 180 }, () => ({
+            x:     Math.random() * W,
+            y:     Math.random() * H,
+            size:  Math.random() * 1.6 + 0.2,
+            speed: Math.random() * 0.35 + 0.05,
+            opacity: Math.random() * 0.6 + 0.2,
+            twinkle: Math.random() * Math.PI * 2,
+            twinkleSpeed: Math.random() * 0.015 + 0.005
+        }));
+
+        function animateCosmos() {
+            ctx.clearRect(0, 0, W, H);
+            stars.forEach(s => {
+                s.twinkle += s.twinkleSpeed;
+                const alpha = s.opacity * (0.6 + 0.4 * Math.sin(s.twinkle));
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(218, 165, 32, ${alpha})`;
+                ctx.fill();
+                s.y -= s.speed;
+                if (s.y < -2) { s.y = H + 2; s.x = Math.random() * W; }
+            });
+
+            // Ambient orb
+            const gradient = ctx.createRadialGradient(W * 0.5, H * 0.5, 0, W * 0.5, H * 0.5, W * 0.4);
+            gradient.addColorStop(0, 'rgba(218, 165, 32, 0.025)');
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, W, H);
+
+            requestAnimationFrame(animateCosmos);
+        }
+        animateCosmos();
+
+        window.addEventListener('resize', () => {
+            W = canvas.width  = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+        });
+    }
+
+    // =============================================================
+    //  7. STAT COUNTERS
+    // =============================================================
     function animateCounters() {
-        const numbers = document.querySelectorAll('.stat-number');
-        numbers.forEach(num => {
-            const target = num.id === 'user-counter' ? 15000 : 45;
-            gsap.to(num, {
+        const counters = [
+            { id: 'user-counter',     target: 15000 },
+            { id: 'platform-counter', target: 45    }
+        ];
+        counters.forEach(({ id, target }) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            gsap.fromTo(el, { innerText: 0 }, {
                 innerText: target,
                 duration: 2.5,
+                ease: 'power2.out',
                 snap: { innerText: 1 },
-                scrollTrigger: { trigger: num, start: 'top 90%' }
+                scrollTrigger: { trigger: el, start: 'top 90%', once: true }
             });
         });
     }
 
-    // ── 6. SCROLL ANIMATIONS (design enhancement) ────────
-    function initScrollAnimations() {
-        gsap.utils.toArray('.section-heading').forEach(el => {
-            gsap.from(el, {
-                scrollTrigger: { trigger: el, start: 'top 88%' },
-                y: 40, opacity: 0, duration: 1, ease: 'power4.out'
-            });
-        });
-        gsap.from('.glass-card', {
-            scrollTrigger: { trigger: '.cards-grid', start: 'top 82%' },
-            y: 50, opacity: 0, duration: 0.9,
-            stagger: 0.14, ease: 'power3.out'
-        });
-        gsap.from('.col-right', {
-            scrollTrigger: { trigger: '.split-section', start: 'top 82%' },
-            x: 40, opacity: 0, duration: 1, ease: 'power4.out', delay: 0.1
-        });
-    }
+    // =============================================================
+    //  8. FAQ ACCORDION
+    // =============================================================
+    document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const answer   = btn.nextElementSibling;
+            const isOpen   = btn.getAttribute('aria-expanded') === 'true';
+            const allBtns  = document.querySelectorAll('.faq-question');
+            const allAns   = document.querySelectorAll('.faq-answer');
 
-    // ── 7. CHAT BOT (connected to real backend) ──────────
-    const botModal  = document.getElementById('bot-modal');
-    const openBtn   = document.getElementById('open-bot-demo-approach');
-    const closeBtn  = document.getElementById('close-bot-demo');
-    const chatForm  = document.getElementById('chat-form');
-    const chatInput = document.getElementById('chat-input');
-    const chatLog   = document.getElementById('modal-chat-log');
+            // Close all others
+            allBtns.forEach(b => b.setAttribute('aria-expanded', 'false'));
+            allAns.forEach(a => a.classList.remove('open'));
 
-    // Unique session ID for conversation memory
-    const sessionId = Math.random().toString(36).substring(2, 9);
-
-    if (openBtn) {
-        openBtn.addEventListener('click', () => {
-            botModal.classList.remove('hidden');
-            if (chatLog.children.length === 0) {
-                addMessage('bot', 'Hello. I am the Mehfooz Assistant. How can I help you navigate the digital world safely?');
+            // Toggle this one
+            if (!isOpen) {
+                btn.setAttribute('aria-expanded', 'true');
+                answer.classList.add('open');
             }
         });
+    });
+
+    // =============================================================
+    //  9. SCROLL-TRIGGERED FADE-UPS
+    // =============================================================
+    const fadeEls = document.querySelectorAll('.pillar-card, .glass-card, .program-card, .testimonial-card, .blog-card, .split-grid, .faq-grid, .contact-inner');
+    fadeEls.forEach((el, i) => {
+        el.classList.add('fade-up');
+        ScrollTrigger.create({
+            trigger: el,
+            start: 'top 88%',
+            onEnter: () => {
+                setTimeout(() => el.classList.add('visible'), i % 4 * 80);
+            },
+            once: true
+        });
+    });
+
+    // =============================================================
+    //  10. CHAT BOT — Connected to Backend (with open-source fallback)
+    // =============================================================
+    const botModal   = document.getElementById('bot-modal');
+    const openBtn    = document.getElementById('open-bot-demo-approach');
+    const openBtnMob = document.getElementById('open-bot-mobile');
+    const closeBtn   = document.getElementById('close-bot-demo');
+    const chatForm   = document.getElementById('chat-form');
+    const chatInput  = document.getElementById('chat-input');
+    const chatLog    = document.getElementById('modal-chat-log');
+
+    // Unique session ID for conversation memory
+    const sessionId = Math.random().toString(36).substring(2, 10);
+
+    function openModal() {
+        botModal.classList.remove('hidden');
+        const panel = document.querySelector('.chat-panel');
+        gsap.fromTo(panel,
+            { scale: 0.92, y: 24, opacity: 0 },
+            { scale: 1, y: 0, opacity: 1, duration: 0.45, ease: 'back.out(1.4)' }
+        );
+        if (chatLog.children.length === 0) {
+            addMessage('bot', 'Hello! I\'m the Mehfooz Assistant. Ask me anything about digital safety, misinformation, or our programs in Gilgit Baltistan. 🌐');
+        }
+        chatInput.focus();
     }
 
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => botModal.classList.add('hidden'));
+    function closeModal() {
+        const panel = document.querySelector('.chat-panel');
+        gsap.to(panel, {
+            scale: 0.92, y: 24, opacity: 0, duration: 0.3, ease: 'power2.in',
+            onComplete: () => botModal.classList.add('hidden')
+        });
     }
-    document.getElementById('modal-backdrop')?.addEventListener('click', () => botModal.classList.add('hidden'));
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') botModal.classList.add('hidden'); });
+
+    openBtn    && openBtn.addEventListener('click', openModal);
+    openBtnMob && openBtnMob.addEventListener('click', () => { closeModal(); setTimeout(openModal, 50); });
+    closeBtn   && closeBtn.addEventListener('click', closeModal);
+
+    // Close on backdrop click
+    document.getElementById('modal-backdrop') && document.getElementById('modal-backdrop').addEventListener('click', closeModal);
+
+    // ---- AI via open-source fallback (Pollinations) ----
+    // Pollinations.ai provides a free, open-source AI completions endpoint.
+    // No API key required. Great for demos and open-source projects.
+    const SYSTEM_PROMPT = `You are the Mehfooz Assistant — a helpful, warm, and knowledgeable digital literacy expert for communities in Gilgit Baltistan, Pakistan. Your role is to educate people about digital safety, fact-checking, cybersecurity, online privacy, and combating misinformation. Keep responses concise (2-3 sentences), friendly, and practical. If asked about Mehfooz Internet's programs, mention: Community Engagement, Digital Learning Hub, DigiSaheli, MehfoozBot, Campus Programs, and Ulema Training.`;
+
+    // Conversation history for context continuity
+    const conversationHistory = [
+        { role: 'system', content: SYSTEM_PROMPT }
+    ];
+
+    async function callAI(userMessage) {
+        conversationHistory.push({ role: 'user', content: userMessage });
+
+        // --- PRIMARY: Try the local backend (server.js) ---
+        try {
+            const res = await fetch('http://localhost:5000/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-session-id': sessionId
+                },
+                body: JSON.stringify({ message: userMessage }),
+                signal: AbortSignal.timeout(8000)
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                conversationHistory.push({ role: 'assistant', content: data.reply });
+                return data.reply;
+            }
+        } catch (_) {
+            // Backend unavailable — fall through to open-source fallback
+        }
+
+        // --- FALLBACK: Pollinations.ai (free, no key needed) ---
+        try {
+            const messages = conversationHistory.slice(-8); // Last 8 turns for context
+            const res = await fetch('https://text.pollinations.ai/openai', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    model: 'openai',
+                    messages: messages,
+                    max_tokens: 200,
+                    temperature: 0.7,
+                    seed: 42
+                }),
+                signal: AbortSignal.timeout(15000)
+            });
+
+            if (!res.ok) throw new Error('Pollinations API error');
+            const data = await res.json();
+            const reply = data.choices?.[0]?.message?.content?.trim() || 'I\'m here to help with digital literacy questions!';
+            conversationHistory.push({ role: 'assistant', content: reply });
+            return reply;
+
+        } catch (err) {
+            console.warn('AI Fallback Error:', err);
+            // Return context-aware offline response
+            return getOfflineResponse(userMessage);
+        }
+    }
+
+    function getOfflineResponse(msg) {
+        const m = msg.toLowerCase();
+        if (m.includes('misinfo') || m.includes('fake') || m.includes('news')) {
+            return 'To spot misinformation: check the source, look for other credible reports, and use fact-checking tools. MehfoozBot can help you verify claims in real-time. 🔍';
+        }
+        if (m.includes('safe') || m.includes('security') || m.includes('password')) {
+            return 'For cyber safety: use strong unique passwords, enable two-factor authentication, and never share personal info with unknown contacts. Our Cyber Safety workshops cover all of this! 🛡️';
+        }
+        if (m.includes('program') || m.includes('course') || m.includes('learn')) {
+            return 'Mehfooz offers: Community Engagement, Campus Programs, DigiSaheli for women, Virtual Events, Mini-Courses, and our Digital Learning Hub. Type "Join a Program" on our homepage to start! 📚';
+        }
+        if (m.includes('gilgit') || m.includes('baltistan') || m.includes('gb')) {
+            return 'Mehfooz Internet is built specifically for Gilgit Baltistan — with offline access, Urdu/local language support, and community-led sessions in even the most remote areas. 🏔️';
+        }
+        return 'Thank you for reaching out! Mehfooz Internet is dedicated to digital literacy in Gilgit Baltistan. For specific queries, please contact us at hello@mehfooz.internet or explore our programs above. 💬';
+    }
 
     if (chatForm) {
         chatForm.addEventListener('submit', async (e) => {
@@ -242,30 +358,17 @@ document.addEventListener('DOMContentLoaded', () => {
             chatInput.value = '';
             chatInput.disabled = true;
 
-            // Typing indicator — returns the bubble so we can update it
-            const typingBubble = addMessageBubble('bot', '● ● ●', true);
+            const typingEl = addMessage('bot', '...');
+            typingEl.classList.add('typing');
 
             try {
-                const response = await fetch('http://localhost:5000/api/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-session-id': sessionId
-                    },
-                    body: JSON.stringify({ message: text })
-                });
-
-                if (!response.ok) throw new Error(`Status ${response.status}`);
-                const data = await response.json();
-                typingBubble.textContent  = data.reply;
-                typingBubble.style.letterSpacing = 'normal';
-                typingBubble.style.color         = '#e0e0e0';
-
+                const reply = await callAI(text);
+                typingEl.classList.remove('typing');
+                typingEl.textContent = reply;
+                gsap.fromTo(typingEl, { opacity: 0 }, { opacity: 1, duration: 0.3 });
             } catch (err) {
-                console.error('Mehfooz AI Gateway:', err);
-                typingBubble.textContent  = 'Could not reach AI Gateway. Ensure server is running on port 5000.';
-                typingBubble.style.color  = '#b8301a';
-                typingBubble.style.letterSpacing = 'normal';
+                typingEl.textContent = 'Could not reach the AI. Please try again or contact us directly.';
+                typingEl.style.color = 'var(--c-red)';
             } finally {
                 chatInput.disabled = false;
                 chatInput.focus();
@@ -274,40 +377,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Original addMessage kept for bot greeting; returns the container div (original behaviour)
     function addMessage(sender, text) {
-        const msgDiv = document.createElement('div');
-        msgDiv.style.marginBottom = '10px';
-        msgDiv.style.textAlign    = sender === 'user' ? 'right' : 'left';
-        msgDiv.style.color        = sender === 'user' ? '#C9981A' : '#e0e0e0';
-        msgDiv.style.fontSize     = '0.875rem';
-        msgDiv.style.fontFamily   = 'Manrope, sans-serif';
-        msgDiv.style.lineHeight   = '1.55';
-        msgDiv.textContent        = text;
-        chatLog.appendChild(msgDiv);
+        const div = document.createElement('div');
+        div.className = `chat-msg msg-${sender}`;
+        div.textContent = text;
+        gsap.fromTo(div,
+            { scale: 0.85, opacity: 0, y: 10 },
+            { scale: 1, opacity: 1, y: 0, duration: 0.35, ease: 'back.out(1.5)' }
+        );
+        chatLog.appendChild(div);
         chatLog.scrollTop = chatLog.scrollHeight;
-        return msgDiv;
+        return div;
     }
 
-    // Extended version used for streaming — returns the inner bubble element
-    function addMessageBubble(sender, text, isTyping = false) {
-        const wrapper = document.createElement('div');
-        wrapper.style.textAlign = sender === 'user' ? 'right' : 'left';
-        wrapper.style.marginBottom = '10px';
-
-        const bubble = document.createElement('span');
-        bubble.style.display       = 'inline-block';
-        bubble.style.fontSize      = '0.875rem';
-        bubble.style.fontFamily    = 'Manrope, sans-serif';
-        bubble.style.lineHeight    = '1.55';
-        bubble.style.color         = sender === 'user' ? '#C9981A' : '#e0e0e0';
-        bubble.style.letterSpacing = isTyping ? '0.3em' : 'normal';
-        bubble.textContent         = text;
-
-        wrapper.appendChild(bubble);
-        chatLog.appendChild(wrapper);
-        chatLog.scrollTop = chatLog.scrollHeight;
-        return bubble; // caller mutates this directly
+    // =============================================================
+    //  11. CONTACT FORM (client-side — wire up to backend as needed)
+    // =============================================================
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = contactForm.querySelector('.btn-primary');
+            const originalText = btn.querySelector('.btn-text').textContent;
+            btn.querySelector('.btn-text').textContent = 'Message Sent ✓';
+            btn.style.background = 'var(--c-gold)';
+            btn.style.color = '#000';
+            setTimeout(() => {
+                btn.querySelector('.btn-text').textContent = originalText;
+                btn.style.background = '';
+                btn.style.color = '';
+                contactForm.reset();
+            }, 3000);
+        });
     }
+
+    // =============================================================
+    //  12. NAV LINK SMOOTH SCROLL
+    // =============================================================
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const target = document.querySelector(link.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                lenis.scrollTo(target, { offset: -80, duration: 1.6 });
+            }
+        });
+    });
 
 });
