@@ -4,55 +4,76 @@ import bodyParser from 'body-parser';
 import 'dotenv/config';
 import { GoogleGenAI } from '@google/genai';
 
-// Initialize Express server and AI client
 const app = express();
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const ai  = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-// Middleware setup
 app.use(cors());
-app.use(bodyParser.json()); // Parses incoming JSON requests
+app.use(bodyParser.json());
 
-// In-memory conversation store (For production, migrate to Redis/PostgreSQL)
+// ── In-memory session store ──────────────────────────────────────────────────
+// Structure: sessionId → Array<{ role: 'user'|'model', parts: [{ text }] }>
+// Gemini's native multi-turn format — no "system" role in the history array;
+// we pass the system instruction separately.
 const chatContexts = new Map();
 
-// POST request endpoint for the chatbot
+const SYSTEM_INSTRUCTION =
+    'You are the Mehfooz Assistant — friendly, concise, and deeply knowledgeable ' +
+    'about digital literacy, cybersecurity, and spotting misinformation, with a ' +
+    'special focus on communities in Gilgit Baltistan, Pakistan. ' +
+    'Keep every reply under 120 words. Use plain language. Be optimistic and empowering.';
+
+// ── POST /api/chat ───────────────────────────────────────────────────────────
 app.post('/api/chat', async (req, res) => {
-    const sessionId = req.headers['x-session-id'] || 'default';
-    const userMessage = req.body.message;
+    const sessionId   = req.headers['x-session-id'] || 'default';
+    const userMessage = (req.body.message || '').trim();
+
+    if (!userMessage) {
+        return res.status(400).json({ error: 'Message is required.' });
+    }
+
+    // Retrieve or initialise conversation history
+    if (!chatContexts.has(sessionId)) {
+        chatContexts.set(sessionId, []);
+    }
+    const history = chatContexts.get(sessionId);
+
+    // Append the new user turn
+    history.push({ role: 'user', parts: [{ text: userMessage }] });
 
     try {
-        if (!userMessage) {
-            return res.status(400).json({ error: "Message is required" });
-        }
-
-        // Retrieve or initialize conversation history
-        if (!chatContexts.has(sessionId)) {
-            chatContexts.set(sessionId, [
-                { role: "system", content: "You are the Mehfooz Assistant, a playful but highly knowledgeable expert in digital literacy, cybersecurity, and spotting misinformation for users in Gilgit Baltistan. Keep answers concise, helpful, and optimistic." }
-            ]);
-        }
-        
-        const history = chatContexts.get(sessionId);
-        history.push({ role: "user", content: userMessage });
-
-        // Call the AI model
-        const response = await ai.models.generateContent({
-            model: 'gemini-3-pro',
-            contents: userMessage,
+        // ── gemini-1.5-flash: free-tier, fast, supports multi-turn ──────────
+        const result = await ai.models.generateContent({
+            model: 'gemini-1.5-flash',          // ✅ real, free-tier model
+            systemInstruction: SYSTEM_INSTRUCTION,
+            contents: history,                   // full conversation history
         });
 
-        const botReply = response.text;
-        history.push({ role: "model", content: botReply });
+        const botReply = result.text ?? 'Sorry, I could not generate a response.';
 
-        res.json({ reply: botReply });
+        // Append the model's reply to history for next turn
+        history.push({ role: 'model', parts: [{ text: botReply }] });
+
+        // Cap history at 20 turns to prevent bloat
+        if (history.length > 40) history.splice(0, 2);
+
+        return res.json({ reply: botReply });
 
     } catch (error) {
-        console.error("AI Error:", error);
-        res.status(500).json({ error: "Failed to process digital enlightenment." });
+        console.error('Gemini API error:', error?.message ?? error);
+
+        // Remove the user turn we just added so history stays clean
+        history.pop();
+
+        return res.status(500).json({
+            error: 'Failed to reach the Mehfooz AI Gateway. Please try again shortly.'
+        });
     }
 });
 
+// ── Health check ─────────────────────────────────────────────────────────────
+app.get('/health', (_req, res) => res.json({ status: 'ok' }));
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-    console.log(`Mehfooz AI Gateway active on port ${PORT}`);
+    console.log(`✅  Mehfooz AI Gateway active → http://localhost:${PORT}`);
 });
