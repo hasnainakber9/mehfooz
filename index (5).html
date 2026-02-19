@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png?scale-down-to=512" type="image/png">
+    <title>Mehfooz | Pioneering Responsible Digital Experiences</title>
+    <meta name="description" content="Empowering Gilgit Baltistan with digital literacy, safety, and truth. Combating misinformation with education, empathy, and innovation.">
+    <meta property="og:title" content="Mehfooz">
+    <meta property="og:description" content="Pioneering responsible digital experiences for Gilgit Baltistan.">
+    <meta property="og:image" content="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ═══ SCROLL PROGRESS ═══ -->
+    <div id="scrollProgress" class="scroll-progress" aria-hidden="true"></div>
+
+    <!-- ═══ CURSOR ═══ -->
+    <div id="cursor-dot" class="cursor-dot"></div>
+    <div id="cursor-ring" class="cursor-ring"></div>
+
+    <!-- ═══ PRELOADER ═══ -->
+    <div id="loadingScreen" class="loader-curtain">
+        <div class="loader-geo-bg" aria-hidden="true">
+            <div class="lg-circle"></div>
+            <div class="lg-square"></div>
+            <div class="lg-triangle"></div>
+            <div class="lg-pill"></div>
+        </div>
+        <div class="loader-content">
+            <img src="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png" alt="Mehfooz" class="loader-logo-img">
+            <div class="loader-wordmark">MEHFOOZ<span>.</span></div>
+            <p class="loader-tagline">Pioneering Responsible Digital Experiences</p>
+            <div class="loading-bar-wrapper">
+                <div class="loading-bar" id="loadingBar"></div>
+            </div>
+            <span class="loader-percent" id="loaderPercent">0%</span>
+        </div>
+    </div>
+
+    <!-- ═══ NAVIGATION ═══ -->
+    <nav class="fixed-nav" id="mainNav" role="navigation" aria-label="Main navigation">
+        <div class="nav-inner">
+            <a href="#home" class="nav-brand" aria-label="Mehfooz home">
+                <img src="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png" alt="Mehfooz" class="nav-logo-img">
+                <span class="nav-wordmark">MEHFOOZ</span>
+            </a>
+            <ul class="nav-menu" id="navMenu" role="list">
+                <li><a href="#mission" class="nav-link">Mission</a></li>
+                <li><a href="#programs" class="nav-link">Programs</a></li>
+                <li><a href="#impact" class="nav-link">Impact</a></li>
+                <li><a href="#blog" class="nav-link">Blog</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li>
+                    <button id="openChatBtn" class="btn btn-red nav-cta magnetic" aria-label="Open AI Assistant">
+                        AI Assistant <span aria-hidden="true">✦</span>
+                    </button>
+                </li>
+            </ul>
+            <button id="mobileToggle" class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ═══ MOBILE MENU ═══ -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true" role="dialog" aria-label="Mobile navigation">
+        <a href="#mission" class="mobile-link">Mission</a>
+        <a href="#programs" class="mobile-link">Programs</a>
+        <a href="#impact" class="mobile-link">Impact</a>
+        <a href="#blog" class="mobile-link">Blog</a>
+        <a href="#contact" class="mobile-link">Contact</a>
+        <button id="openChatMobile" class="btn btn-yellow mobile-cta">AI Assistant ✦</button>
+    </div>
+
+    <main id="main-content">
+
+        <!-- ═══ HERO ═══ -->
+        <section class="hero-section" id="home" aria-label="Hero section">
+            <canvas id="cosmicBackground" aria-hidden="true"></canvas>
+
+            <!-- Confetti decorative shapes -->
+            <div class="confetti-field" aria-hidden="true">
+                <div class="conf conf-circle conf-red" style="top:12%;left:6%"></div>
+                <div class="conf conf-pill conf-blue" style="top:22%;right:7%"></div>
+                <div class="conf conf-square conf-yellow" style="bottom:18%;right:14%"></div>
+                <div class="conf conf-circle conf-green" style="bottom:28%;left:4%"></div>
+                <div class="conf conf-arch conf-purple" style="top:60%;left:14%"></div>
+                <div class="conf conf-blob conf-red" style="top:9%;right:26%"></div>
+                <div class="conf conf-dot conf-yellow" style="top:38%;left:3%"></div>
+                <div class="conf conf-dot conf-blue" style="bottom:12%;right:5%"></div>
+
+                <!-- Photo shapes -->
+                <div class="playful-shape shape-circle" aria-hidden="true"></div>
+                <div class="playful-shape shape-pill" aria-hidden="true"></div>
+                <div class="playful-shape shape-square" aria-hidden="true"></div>
+                <div class="playful-shape shape-arch" aria-hidden="true"></div>
+                <div class="playful-shape shape-blob" aria-hidden="true"></div>
+            </div>
+
+            <div class="hero-content">
+                <div class="hero-text-col">
+                    <div class="hero-eyebrow">
+                        <span class="eyebrow-dot" aria-hidden="true"></span>
+                        Gilgit Baltistan's Digital Future
+                    </div>
+                    <h1 class="hero-title">
+                        <span class="hero-line hl-1">PIONEERING</span>
+                        <span class="hero-line hl-2 accent-red">RESPONSIBLE</span>
+                        <span class="hero-line hl-3 accent-blue">DIGITAL</span>
+                        <span class="hero-line hl-4">EXPERIENCES</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Mehfooz delivers culturally-tailored digital literacy to vulnerable communities across Gilgit Baltistan — combating misinformation with education, empathy, and innovation.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#programs" class="btn candy-btn magnetic">
+                            <span class="candy-btn-inner">Join a Program</span>
+                            <span class="candy-btn-icon" aria-hidden="true">→</span>
+                        </a>
+                        <a href="#mission" class="btn candy-btn-outline magnetic">Our Mission</a>
+                    </div>
+                    <div class="hero-trust" aria-label="Trust indicators">
+                        <div class="trust-item"><span class="trust-num">15K+</span><span class="trust-lbl">Lives Touched</span></div>
+                        <div class="trust-divider" aria-hidden="true"></div>
+                        <div class="trust-item"><span class="trust-num">45+</span><span class="trust-lbl">Communities</span></div>
+                        <div class="trust-divider" aria-hidden="true"></div>
+                        <div class="trust-item"><span class="trust-num">8+</span><span class="trust-lbl">Programs</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ TICKER ═══ -->
+        <div class="ticker-wrap" aria-label="Keywords marquee" role="marquee">
+            <div class="ticker-track">
+                <span class="tick-item">Digital Literacy <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">Gilgit Baltistan <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">MehfoozBot <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">Cyber Safety <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">Misinformation Combat <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">DigiSaheli <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">Ulema Training <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">Campus Programs <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">Digital Literacy <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">Gilgit Baltistan <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">MehfoozBot <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">Cyber Safety <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">Misinformation Combat <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">DigiSaheli <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">Ulema Training <span class="tick-dot" aria-hidden="true">◆</span></span>
+                <span class="tick-item">Campus Programs <span class="tick-dot" aria-hidden="true">◆</span></span>
+            </div>
+        </div>
+
+        <!-- ═══ FEATURED IN ═══ -->
+        <div class="featured-bar" aria-label="Featured in and supported by">
+            <div class="container featured-inner">
+                <span class="featured-label">FEATURED IN &amp; SUPPORTED BY</span>
+                <div class="featured-logos">
+                    <a href="#" target="_blank" rel="noopener" class="featured-logo-link" title="Kevin Xu Initiative">
+                        <img src="https://images.squarespace-cdn.com/content/v1/650a374d936996258cfcbd33/99cae4e7-0ced-4c03-ae57-1fefbee86ee5/KXI_Logo_Website.png?format=1500w" alt="Kevin Xu Initiative" loading="lazy">
+                    </a>
+                    <a href="#" class="featured-logo-link" title="Dawn Media">
+                        <img src="https://framerusercontent.com/images/ZWIiWrxAqLllrERBNLU2Ib1wY0U.png" alt="Dawn" loading="lazy">
+                    </a>
+                    <a href="#" class="featured-logo-link" title="Media Partner">
+                        <img src="https://framerusercontent.com/images/vZYsCyjlRXEua2Wj3mc2v0uufSk.svg" alt="Media Partner" loading="lazy">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ MISSION ═══ -->
+        <section id="mission" class="mission-section" aria-label="Our Mission">
+            <div class="container">
+                <div class="split-grid">
+                    <div class="col-left fade-up">
+                        <div class="section-tag">Our Mission</div>
+                        <h2 class="section-heading">The Architecture<br>of <span class="accent-red-text">Truth</span></h2>
+                        <div class="bauhaus-rule" aria-hidden="true"></div>
+                        <div class="mission-geo" aria-hidden="true">
+                            <div class="mg-c mg-c1"></div>
+                            <div class="mg-s mg-s1"></div>
+                            <div class="mg-s mg-s2"></div>
+                        </div>
+                    </div>
+                    <div class="col-right fade-up">
+                        <p class="lead-text">
+                            In an age of information overload, clarity is power. We build the infrastructure for critical thinking in underserved communities across Gilgit Baltistan.
+                        </p>
+                        <p class="body-text">
+                            Our platform pioneers a unique collaboration model with communal leaders, educators, and digital innovators — ensuring every voice is heard and every mind is empowered to navigate the digital world with confidence and discernment.
+                        </p>
+                        <a href="#programs" class="arrow-link">Explore Our Programs <span class="arrow-icon" aria-hidden="true">→</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ WHY MEHFOOZ ═══ -->
+        <section class="pillars-section" id="why" aria-label="Why Mehfooz">
+            <div class="container">
+                <div class="section-header-center fade-up">
+                    <div class="section-tag">Why Mehfooz?</div>
+                    <h2 class="section-heading center-heading">Culturally Rooted,<br><span class="accent-blue-text">Digitally Empowered</span></h2>
+                </div>
+                <div class="pillars-grid">
+                    <div class="pillar-card fade-up">
+                        <div class="pillar-accent pillar-red" aria-hidden="true"></div>
+                        <div class="pillar-number" aria-hidden="true">01</div>
+                        <div class="pillar-icon-wrap" aria-label="Innovation icon">⚡</div>
+                        <h3 class="pillar-title">Innovative Technology Integration</h3>
+                        <p class="pillar-text">We utilize cutting-edge technologies such as AI-driven chatbots to provide dynamic, interactive learning experiences tailored to local needs and cultural contexts.</p>
+                    </div>
+                    <div class="pillar-card fade-up">
+                        <div class="pillar-accent pillar-blue" aria-hidden="true"></div>
+                        <div class="pillar-number" aria-hidden="true">02</div>
+                        <div class="pillar-icon-wrap" aria-label="Community icon">🤝</div>
+                        <h3 class="pillar-title">Community-Centric Approach</h3>
+                        <p class="pillar-text">Built on the principle of collective wisdom, pioneering a unique collaboration model with communal leaders that ensures genuine, grassroots engagement.</p>
+                    </div>
+                    <div class="pillar-card fade-up">
+                        <div class="pillar-accent pillar-yellow" aria-hidden="true"></div>
+                        <div class="pillar-number" aria-hidden="true">03</div>
+                        <div class="pillar-icon-wrap" aria-label="Research icon">🔍</div>
+                        <h3 class="pillar-title">Focus on Misinformation</h3>
+                        <p class="pillar-text">Unlike broad platforms, Mehfooz combines real-time data, contextual analysis, and user education to create a resilient, digitally-savvy community.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ STATS BAND ═══ -->
+        <div class="stats-band" aria-label="Impact statistics">
+            <div class="stat-band-item fade-up">
+                <span class="stat-band-num" data-target="15000">0</span><span class="stat-band-suf" aria-hidden="true">+</span>
+                <span class="stat-band-lbl">Lives Touched</span>
+            </div>
+            <div class="stat-band-item fade-up">
+                <span class="stat-band-num" data-target="45">0</span><span class="stat-band-suf" aria-hidden="true">+</span>
+                <span class="stat-band-lbl">Communities</span>
+            </div>
+            <div class="stat-band-item fade-up">
+                <span class="stat-band-num" data-target="8">0</span><span class="stat-band-suf" aria-hidden="true">+</span>
+                <span class="stat-band-lbl">Programs</span>
+            </div>
+            <div class="stat-band-item fade-up">
+                <span class="stat-band-num" data-target="200">0</span><span class="stat-band-suf" aria-hidden="true">+</span>
+                <span class="stat-band-lbl">Volunteers</span>
+            </div>
+        </div>
+
+        <!-- ═══ PROGRAMS ═══ -->
+        <section id="programs" class="programs-section" aria-label="Our Programs">
+
+            <!-- Program 1 -->
+            <div class="program-block program-block-red">
+                <div class="container">
+                    <div class="program-header-row fade-up">
+                        <div>
+                            <div class="section-tag tag-light">Program 01</div>
+                            <h2 class="section-heading light-heading">Community<br>Engagement Program</h2>
+                            <p class="program-desc">Empowering local leaders and fostering grassroots initiatives to promote digital literacy and combat misinformation across Gilgit Baltistan's diverse communities.</p>
+                            <a href="#contact" class="btn btn-outline-light magnetic">Learn More →</a>
+                        </div>
+                        <div class="program-geo-deco" aria-hidden="true">
+                            <div class="pg-circle"></div>
+                            <div class="pg-square"></div>
+                        </div>
+                    </div>
+                    <div class="program-cards-grid">
+                        <div class="program-card fade-up">
+                            <div class="program-card-img">
+                                <img src="https://images.unsplash.com/photo-1585699324551-f6c309eedeca?w=600&q=80" alt="Community leaders learning digital literacy in Ulema Training session" loading="lazy">
+                            </div>
+                            <div class="program-card-body">
+                                <span class="program-card-tag">Training</span>
+                                <h4>Ulema Training</h4>
+                                <p>Equipping religious leaders with digital literacy to guide their communities online responsibly.</p>
+                            </div>
+                        </div>
+                        <div class="program-card fade-up">
+                            <div class="program-card-img">
+                                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=80" alt="Students learning digital skills in Campus Program" loading="lazy">
+                            </div>
+                            <div class="program-card-body">
+                                <span class="program-card-tag">Education</span>
+                                <h4>Campus Program</h4>
+                                <p>Bringing digital safety workshops directly to universities and schools across GB.</p>
+                            </div>
+                        </div>
+                        <div class="program-card fade-up">
+                            <div class="program-card-img">
+                                <img src="https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=600&q=80" alt="Online digital literacy gathering in Virtual Community Events" loading="lazy">
+                            </div>
+                            <div class="program-card-body">
+                                <span class="program-card-tag">Virtual</span>
+                                <h4>Virtual Community Events</h4>
+                                <p>Online seminars and webinars connecting remote communities to digital expertise.</p>
+                            </div>
+                        </div>
+                        <div class="program-card fade-up">
+                            <div class="program-card-img">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&q=80" alt="Women empowerment through digital literacy in DigiSaheli program" loading="lazy">
+                            </div>
+                            <div class="program-card-body">
+                                <span class="program-card-tag">Women</span>
+                                <h4>DigiSaheli</h4>
+                                <p>A flagship initiative empowering women in GB with digital skills and safe online participation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Program 2 -->
+            <div class="program-block program-block-blue">
+                <div class="container">
+                    <div class="program-header-row fade-up">
+                        <div>
+                            <div class="section-tag tag-light">Program 02</div>
+                            <h2 class="section-heading light-heading">Digital Learning<br>Hub</h2>
+                            <p class="program-desc">A comprehensive platform offering tailored courses, AI-assisted learning, and interactive tools to equip users with essential digital skills and critical thinking abilities.</p>
+                            <a href="#contact" class="btn btn-outline-light magnetic">Learn More →</a>
+                        </div>
+                        <div class="program-geo-deco" aria-hidden="true">
+                            <div class="pg-circle" style="border-color: var(--yellow)"></div>
+                            <div class="pg-square" style="background: var(--yellow); opacity:.2;"></div>
+                        </div>
+                    </div>
+                    <div class="program-cards-grid">
+                        <div class="program-card fade-up">
+                            <div class="program-card-img">
+                                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80" alt="Digital literacy learning modules in Mini-Courses" loading="lazy">
+                            </div>
+                            <div class="program-card-body">
+                                <span class="program-card-tag">Learning</span>
+                                <h4>Mini-Courses</h4>
+                                <p>Short, focused courses covering cyber safety, fact-checking, and responsible digital citizenship.</p>
+                            </div>
+                        </div>
+                        <div class="program-card fade-up">
+                            <div class="program-card-img">
+                                <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80" alt="AI-powered digital literacy assistant MehfoozBot" loading="lazy">
+                            </div>
+                            <div class="program-card-body">
+                                <span class="program-card-tag">AI</span>
+                                <h4>MehfoozBot</h4>
+                                <p>An AI-powered chatbot offering real-time digital safety guidance and fact-checking support.</p>
+                            </div>
+                        </div>
+                        <div class="program-card fade-up">
+                            <div class="program-card-img">
+                                <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80" alt="Curated learning materials in Digital Resource Hub" loading="lazy">
+                            </div>
+                            <div class="program-card-body">
+                                <span class="program-card-tag">Resources</span>
+                                <h4>Digital Resource Hub</h4>
+                                <p>A curated library of verified, culturally-relevant digital safety resources and guides.</p>
+                            </div>
+                        </div>
+                        <div class="program-card fade-up">
+                            <div class="program-card-img">
+                                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" alt="Digital civic services guide in E-Government Navigator" loading="lazy">
+                            </div>
+                            <div class="program-card-body">
+                                <span class="program-card-tag">Civic</span>
+                                <h4>E-Government Navigator</h4>
+                                <p>Guides citizens of GB through Pakistan's digital government services, step by step.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ TOOLKIT / IMPACT ═══ -->
+        <section id="impact" class="impact-section" aria-label="Our Toolkit">
+            <div class="container">
+                <div class="section-header-center fade-up">
+                    <div class="section-tag">Our Toolkit</div>
+                    <h2 class="section-heading center-heading">Instruments of<br><span class="accent-red-text">Digital Safety</span></h2>
+                </div>
+                <div class="toolkit-grid">
+                    <article class="tool-card fade-up">
+                        <div class="tool-card-accent tc-red" aria-hidden="true"></div>
+                        <div class="tool-icon-wrap" aria-label="Shield icon">🛡️</div>
+                        <h3 class="tool-title">Cyber Safety</h3>
+                        <p class="tool-text">Workshops on securing digital identities against threats, protecting personal data, and navigating the online world with confidence.</p>
+                        <a href="#contact" class="tool-link">Learn more →</a>
+                    </article>
+                    <article class="tool-card fade-up">
+                        <div class="tool-card-accent tc-blue" aria-hidden="true"></div>
+                        <div class="tool-icon-wrap" aria-label="Eye icon">👁️</div>
+                        <h3 class="tool-title">Misinformation</h3>
+                        <p class="tool-text">Tools to verify news and spot deepfakes instantly. Building critical thinking skills through contextual analysis and real-world practice.</p>
+                        <a href="#contact" class="tool-link">Learn more →</a>
+                    </article>
+                    <article class="tool-card fade-up">
+                        <div class="tool-card-accent tc-yellow" aria-hidden="true"></div>
+                        <div class="tool-icon-wrap" aria-label="Handshake icon">🤝</div>
+                        <h3 class="tool-title">Inclusion</h3>
+                        <p class="tool-text">Bridging the connectivity gap for remote regions through offline-accessible content and community-based learning hubs reaching every corner of GB.</p>
+                        <a href="#contact" class="tool-link">Learn more →</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ TESTIMONIALS ═══ -->
+        <section class="testi-section" id="testimonials" aria-label="Testimonials">
+            <div class="testi-header-band">
+                <div class="container">
+                    <div class="section-tag tag-light">Testimonials</div>
+                    <h2 class="section-heading light-heading">User Stories—<br>How Users Feel <span class="accent-yellow-text">Empowered</span></h2>
+                </div>
+            </div>
+            <div class="testi-track-wrap">
+                <div class="testi-track" id="testiTrack" role="list">
+
+                    <div class="testi-card fade-up" role="listitem">
+                        <div class="testi-quote-mark" aria-hidden="true">"</div>
+                        <p class="testi-text">I am really excited to see how switching Mehfooz's interface to Urdu and other local languages will revolutionize the digital landscape.</p>
+                        <div class="testi-author">
+                            <img src="https://framerusercontent.com/images/fDE857VQgeGDPGkxXjOxadvHgAU.jpg" alt="Shujaat Ali portrait" class="testi-avatar" loading="lazy">
+                            <div>
+                                <strong class="testi-name">Shujaat Ali</strong>
+                                <span class="testi-role">Master's Student</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testi-card testi-featured fade-up" role="listitem">
+                        <div class="testi-quote-mark" aria-hidden="true">"</div>
+                        <p class="testi-text">I've always been curious about the internet, but I am also scared of the risks. Mehfooz really sounds promising and it makes me feel confident exploring the digital world safely.</p>
+                        <div class="testi-author">
+                            <img src="https://framerusercontent.com/images/9zMngbvGuKqzaU13qDFQ1Wok0w.png" alt="Zuhaib Khan portrait" class="testi-avatar" loading="lazy">
+                            <div>
+                                <strong class="testi-name">Zuhaib Khan</strong>
+                                <span class="testi-role">Project Manager</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testi-card fade-up" role="listitem">
+                        <div class="testi-quote-mark" aria-hidden="true">"</div>
+                        <p class="testi-text">I want to use Mehfooz's fact-checking tools to verify information I see online so that I don't fall for misinformation.</p>
+                        <div class="testi-author">
+                            <img src="https://framerusercontent.com/images/bUVuSWjBJjgg4lFtAVhRUTD2Z9k.png" alt="Basharat Hussain portrait" class="testi-avatar" loading="lazy">
+                            <div>
+                                <strong class="testi-name">Basharat Hussain</strong>
+                                <span class="testi-role">Brand Manager</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testi-card fade-up" role="listitem">
+                        <div class="testi-quote-mark" aria-hidden="true">"</div>
+                        <p class="testi-text">I love my community, and I want to see Mehfooz become the best it can be for everyone here in Gilgit Baltistan.</p>
+                        <div class="testi-author">
+                            <img src="https://framerusercontent.com/images/7CBmqP1K1vjlHl2338cotNRSo4Q.jpg" alt="Tehreem Batool portrait" class="testi-avatar" loading="lazy">
+                            <div>
+                                <strong class="testi-name">Tehreem Batool</strong>
+                                <span class="testi-role">Master's Student</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testi-card fade-up" role="listitem">
+                        <div class="testi-quote-mark" aria-hidden="true">"</div>
+                        <p class="testi-text">Can't wait to share Mehfooz's resources with my network so that more people in my area can benefit from digital literacy education.</p>
+                        <div class="testi-author">
+                            <img src="https://framerusercontent.com/images/W3FBrI7O1zpIFMqVwJQVMfxRyGQ.png" alt="Aliha Musavi portrait" class="testi-avatar" loading="lazy">
+                            <div>
+                                <strong class="testi-name">Aliha Musavi</strong>
+                                <span class="testi-role">Teacher</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="testi-nav" role="group" aria-label="Testimonial navigation">
+                    <button class="testi-btn" id="testiPrev" aria-label="Previous testimonial">←</button>
+                    <button class="testi-btn" id="testiNext" aria-label="Next testimonial">→</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ FAQ ═══ -->
+        <section class="faq-section" id="faq" aria-label="Frequently Asked Questions">
+            <div class="container">
+                <div class="faq-layout">
+                    <div class="faq-left fade-up">
+                        <div class="section-tag">FAQ</div>
+                        <h2 class="section-heading">Insights &amp;<br><span class="accent-red-text">Clarifications</span></h2>
+                        <p class="body-text">Frequently asked questions about our mission, approach, and how to get involved with Mehfooz.</p>
+                        <div class="faq-geo" aria-hidden="true">
+                            <div class="faq-geo-c"></div>
+                            <div class="faq-geo-s"></div>
+                            <div class="faq-geo-t"></div>
+                        </div>
+                    </div>
+                    <div class="faq-right">
+                        <div class="faq-item open">
+                            <button class="faq-question" aria-expanded="true">
+                                <span>How does Mehfooz combat misinformation?</span>
+                                <span class="faq-icon" aria-hidden="true">▼</span>
+                            </button>
+                            <div class="faq-answer" role="region">
+                                <p>We work closely with the community offering specialized courses, fact-checking tools, and AI-assisted learning through MehfoozBot to help users identify, verify, and report false information circulating online.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question" aria-expanded="false">
+                                <span>How does Mehfooz differ from other digital literacy initiatives?</span>
+                                <span class="faq-icon" aria-hidden="true">▼</span>
+                            </button>
+                            <div class="faq-answer" role="region">
+                                <p>We focus on localized, community-driven solutions that address the unique needs of residents of Gilgit Baltistan. Our content is tailored to the cultural, linguistic, and socioeconomic context of the region — something no other platform provides.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question" aria-expanded="false">
+                                <span>Can Mehfooz be accessed in remote or rural areas?</span>
+                                <span class="faq-icon" aria-hidden="true">▼</span>
+                            </button>
+                            <div class="faq-answer" role="region">
+                                <p>Absolutely. We have developed offline-accessible content and community-based learning hubs to reach even the most remote and underserved areas of Gilgit Baltistan.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question" aria-expanded="false">
+                                <span>How can I get involved with Mehfooz's mission?</span>
+                                <span class="faq-icon" aria-hidden="true">▼</span>
+                            </button>
+                            <div class="faq-answer" role="region">
+                                <p>You can participate in our community engagement programs, become a student ambassador, or volunteer for our digital literacy initiatives. Contact us through our website or email <a href="mailto:hello@mehfooz.internet">hello@mehfooz.internet</a> for more information.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question" aria-expanded="false">
+                                <span>Is Mehfooz's content available in Urdu?</span>
+                                <span class="faq-icon" aria-hidden="true">▼</span>
+                            </button>
+                            <div class="faq-answer" role="region">
+                                <p>We are actively developing Urdu and local language interfaces so every community member in GB can benefit — regardless of their English proficiency. Our MehfoozBot already supports Urdu queries.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ BLOG ═══ -->
+        <section id="blog" class="blog-section" aria-label="Blog">
+            <div class="blog-header-band">
+                <div class="container blog-header-inner fade-up">
+                    <div>
+                        <div class="section-tag tag-light">Blog</div>
+                        <h2 class="section-heading light-heading">Inspiring<br><span class="accent-yellow-text">Digital Resilience</span></h2>
+                    </div>
+                    <a href="#" class="btn btn-yellow magnetic">Explore All Posts →</a>
+                </div>
+            </div>
+            <div class="blog-grid">
+                <a href="#" class="blog-card blog-card-featured fade-up">
+                    <div class="blog-card-img">
+                        <img src="https://framerusercontent.com/images/65IRc8nsIA1Kejrjnr97Zc0VjY.jpg" alt="Youth for a Peaceful Society article cover" loading="lazy">
+                    </div>
+                    <div class="blog-card-body">
+                        <span class="blog-tag">Community</span>
+                        <h3 class="blog-title">Youth for a Peaceful Society</h3>
+                        <span class="blog-read">Read Article →</span>
+                    </div>
+                </a>
+                <a href="#" class="blog-card fade-up">
+                    <div class="blog-card-img">
+                        <img src="https://framerusercontent.com/images/QhSruodOGOVPJfk013ePCJCYog.jpg" alt="Unequal Maternal Care: Gilgit Baltistan's Plight article cover" loading="lazy">
+                    </div>
+                    <div class="blog-card-body">
+                        <span class="blog-tag">DigiSaheli</span>
+                        <h3 class="blog-title">Unequal Maternal Care: Gilgit Baltistan's Plight</h3>
+                        <span class="blog-read">Read Article →</span>
+                    </div>
+                </a>
+                <a href="#" class="blog-card fade-up">
+                    <div class="blog-card-img">
+                        <img src="https://framerusercontent.com/images/IXxmZGXqh5wE5irxxE4JxcBuoyE.jpg" alt="Pakistan's rise in digital propaganda article cover" loading="lazy">
+                    </div>
+                    <div class="blog-card-body">
+                        <span class="blog-tag">Digital Media</span>
+                        <h3 class="blog-title">Pakistan's Rise in Digital Propaganda: What's Next?</h3>
+                        <span class="blog-read">Read Article →</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- ═══ CONTACT ═══ -->
+        <section id="contact" class="contact-section" aria-label="Contact Us">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-left fade-up">
+                        <div class="section-tag">Contact Us</div>
+                        <h2 class="section-heading">Get in Touch—<br><span class="accent-red-text">Reach Out to Us</span></h2>
+                        <p class="body-text">Have questions about our programs, want to partner with us, or ready to get involved? We'd love to hear from you.</p>
+                        <div class="contact-socials" role="list">
+                            <a href="https://instagram.com" class="social-link" target="_blank" rel="noopener" role="listitem">Instagram ↗</a>
+                            <a href="https://twitter.com" class="social-link" target="_blank" rel="noopener" role="listitem">Twitter / X ↗</a>
+                            <a href="mailto:hello@mehfooz.internet" class="social-link" role="listitem">Email ↗</a>
+                        </div>
+                        <div class="contact-geo" aria-hidden="true">
+                            <div class="cg-circle"></div>
+                            <div class="cg-sq cg-sq-1"></div>
+                            <div class="cg-sq cg-sq-2"></div>
+                        </div>
+                    </div>
+                    <form class="contact-form fade-up" id="contactForm" action="https://formspree.io/f/xnngrpzb" method="POST" novalidate aria-label="Contact form">
+                        <div class="form-group">
+                            <label class="form-label" for="cfName">Full Name</label>
+                            <input type="text" id="cfName" name="name" class="form-input" placeholder="Your full name" required autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="cfEmail">Email Address</label>
+                            <input type="email" id="cfEmail" name="email" class="form-input" placeholder="your@email.com" required autocomplete="email">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="cfMsg">Message</label>
+                            <textarea id="cfMsg" name="message" class="form-input form-textarea" placeholder="Tell us how we can help..." required rows="5"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-red btn-full magnetic">
+                            <span class="btn-text">Send Message</span>
+                            <span class="btn-icon" aria-hidden="true">→</span>
+                        </button>
+                        <p class="form-success" id="formSuccess" role="status" aria-live="polite"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ FOOTER ═══ -->
+        <footer class="main-footer" role="contentinfo">
+            <div class="footer-geo-bar" aria-hidden="true">
+                <div class="footer-geo-item fg-c fg-red"></div>
+                <div class="footer-geo-item fg-s fg-yellow"></div>
+                <div class="footer-geo-item fg-c fg-blue"></div>
+                <div class="footer-geo-item fg-s fg-red"></div>
+                <div class="footer-geo-item fg-c fg-yellow"></div>
+            </div>
+            <div class="container footer-inner">
+                <div class="footer-brand fade-up">
+                    <img src="https://framerusercontent.com/images/ldbPohI9fyxoGOQnKSHhcj5FP6g.png" alt="Mehfooz" class="footer-logo">
+                    <div class="footer-wordmark">MEHFOOZ</div>
+                    <p class="footer-tagline">Pioneering responsible digital experiences for Gilgit Baltistan. Safety. Truth. Inclusion.</p>
+                </div>
+                <div class="footer-cols">
+                    <div class="footer-col">
+                        <h5 class="footer-col-title">Platform</h5>
+                        <a href="#mission" class="footer-link">Our Mission</a>
+                        <a href="#programs" class="footer-link">Programs</a>
+                        <a href="#impact" class="footer-link">Our Toolkit</a>
+                        <a href="#blog" class="footer-link">Blog</a>
+                        <a href="#faq" class="footer-link">FAQ</a>
+                    </div>
+                    <div class="footer-col">
+                        <h5 class="footer-col-title">Programs</h5>
+                        <a href="#programs" class="footer-link">Community Engagement</a>
+                        <a href="#programs" class="footer-link">Digital Learning Hub</a>
+                        <a href="#programs" class="footer-link">DigiSaheli</a>
+                        <a href="#programs" class="footer-link">MehfoozBot</a>
+                        <a href="#programs" class="footer-link">Campus Program</a>
+                    </div>
+                    <div class="footer-col">
+                        <h5 class="footer-col-title">Connect</h5>
+                        <a href="https://instagram.com" class="footer-link" target="_blank" rel="noopener">Instagram</a>
+                        <a href="https://twitter.com" class="footer-link" target="_blank" rel="noopener">Twitter / X</a>
+                        <a href="#" class="footer-link">Privacy Policy</a>
+                        <a href="#" class="footer-link">About Us</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container footer-bottom-inner">
+                    <span>© 2024 Mehfooz All Rights Reserved.</span>
+                    <span>Made with ♥ by Hasnain</span>
+                    <a href="#home" class="back-top magnetic">↑ Back to Top</a>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- ═══ AI CHAT MODAL ═══ -->
+    <div id="chatModal" class="chat-modal hidden" role="dialog" aria-modal="true" aria-label="Mehfooz AI Assistant">
+        <div class="chat-backdrop" id="chatBackdrop"></div>
+        <div class="chat-panel">
+            <div class="chat-panel-header">
+                <div class="chat-header-left">
+                    <div class="chat-status-dot" aria-label="AI online"></div>
+                    <div>
+                        <h3 class="chat-title">Mehfooz Assistant</h3>
+                        <span class="chat-subtitle">AI-powered digital literacy guide</span>
+                    </div>
+                </div>
+                <button id="closeChatBtn" class="chat-close-btn" aria-label="Close chat">✕</button>
+            </div>
+            <div id="chat-log" class="chat-log" aria-live="polite" aria-relevant="additions"></div>
+            <form class="chat-input-area" id="chatForm" aria-label="Chat message form">
+                <input type="text" id="chat-input" class="chat-input" placeholder="Ask about digital safety, programs..." autocomplete="off" aria-label="Type your message">
+                <button type="submit" class="chat-send-btn" aria-label="Send message">→</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
