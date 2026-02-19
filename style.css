@@ -478,37 +478,71 @@ ul { list-style: none; }
     .playful-shape { display: none; } /* Hide complex shapes on mobile to save space */
 }
 /* ── 7b. FEATURED BAR ───────────────────────────────────────── */
+
+/* 1. Define the professional floating animation */
+@keyframes professionalFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
 .featured-bar {
     background: var(--white);
     border-bottom: 4px solid var(--fg);
     padding: 1.75rem 0;
 }
+
 .featured-inner {
     display: flex;
     align-items: center;
+    justify-content: center; /* Centers the whole group */
     gap: 3rem;
     flex-wrap: wrap;
 }
+
 .featured-label {
     font-size: .6rem; font-weight: 700;
     text-transform: uppercase; letter-spacing: .2em;
     color: #999; white-space: nowrap; flex-shrink: 0;
 }
+
 .featured-logos {
-    display: flex; align-items: center;
-    gap: 2.5rem; flex-wrap: wrap; flex: 1;
+    display: flex; 
+    align-items: center;
+    justify-content: center; /* Centers the logos together */
+    gap: 2.5rem; 
+    flex-wrap: wrap; 
 }
+
 .featured-logo-link {
-    display: flex; align-items: center;
-    opacity: .45; filter: grayscale(1);
-    transition: opacity .3s, filter .3s;
+    display: flex; 
+    align-items: center;
+    opacity: .6; /* Slightly more visible by default */
+    filter: grayscale(1);
+    transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+    
+    /* Apply the floating animation continuously */
+    animation: professionalFloat 4s ease-in-out infinite;
 }
-.featured-logo-link:hover { opacity: 1; filter: grayscale(0); }
+
+/* 2. Stagger the animation timing so they float in a wave pattern */
+.featured-logo-link:nth-child(1) { animation-delay: 0s; }
+.featured-logo-link:nth-child(2) { animation-delay: 1.2s; }
+.featured-logo-link:nth-child(3) { animation-delay: 2.4s; }
+
+/* 3. Pause the animation and pop the color on hover */
+.featured-logo-link:hover { 
+    opacity: 1; 
+    filter: grayscale(0); 
+    transform: scale(1.05); /* Subtle pop effect */
+    animation-play-state: paused; /* Stops moving so it's easy to click */
+}
+
 .featured-logo-link img {
     height: 28px; width: auto;
     max-width: 140px;
     object-fit: contain;
 }
+
 .logo-text-fallback {
     font-size: .75rem; font-weight: 700;
     text-transform: uppercase; letter-spacing: .08em;
