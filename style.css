@@ -301,10 +301,17 @@ ul { list-style: none; }
 
 /* ── 7. HERO ────────────────────────────────────────────────── */
 
-/* Define the fade-in animation */
-@keyframes fadeInHero {
-    0% { opacity: 0; transform: scale(1.05); }
-    100% { opacity: 1; transform: scale(1); }
+/* Playful Popping Animation */
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+    60% { opacity: 1; transform: scale(1.03) translateY(-5px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Floating animation for geometric shapes */
+@keyframes floatGeo {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(8deg); }
 }
 
 .hero-section {
@@ -313,127 +320,163 @@ ul { list-style: none; }
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 4px solid var(--fg);
     position: relative;
     overflow: hidden;
-
-    /* Background Image with Dark Fade Overlay */
-    /* ensures white text is readable */
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('image_024a87.jpg');
+    
+    /* Full background image with a dark slate overlay */
+    background: linear-gradient(rgba(30, 41, 59, 0.6), rgba(30, 41, 59, 0.85)), url('image_024a87.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    
-    /* Apply Animation */
-    animation: fadeInHero 1.5s ease-out forwards;
+    border-bottom: 4px solid #1E293B; /* Hard border from design system */
 }
 
-#cosmicBackground {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    z-index: 0; pointer-events: none;
-    opacity: .2; /* Lower opacity to not conflict with image */
-}
-
-/* We remove the grid layout and center the text column */
-.hero-grid {
+/* Container to center the popping text card */
+.hero-content {
     width: 100%;
     display: flex;
     justify-content: center;
+    z-index: 10;
+    padding: 0 5%;
 }
 
+/* The Playful "Sticker" Card holding the text */
 .hero-text-col {
-    padding: 5rem 2rem;
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
+    padding: 4rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    position: relative; z-index: 1;
     max-width: 900px;
-    border-right: none; /* Remove previous border */
+    
+    /* Playful Design System Tokens */
+    background-color: #FFFDF5; /* Warm Cream */
+    border: 4px solid #1E293B; /* Slate 800 */
+    border-radius: 24px;
+    box-shadow: 12px 12px 0px 0px #8B5CF6; /* Hard Pop Shadow in Violet */
+    
+    /* Bouncy entrance */
+    opacity: 0;
+    animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
 }
 
 .hero-eyebrow {
     display: flex; align-items: center; gap: .6rem;
-    font-size: var(--fs-small); font-weight: 700;
+    font-size: 0.9rem; font-weight: 800;
     text-transform: uppercase; letter-spacing: .15em;
-    color: rgba(255, 255, 255, 0.8); /* Light grey for visibility */
-    margin-bottom: 2rem;
+    color: #64748B; /* Slate 500 */
+    margin-bottom: 1.5rem;
+}
+
+.eyebrow-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #F472B6; /* Hot Pink */
+    flex-shrink: 0;
 }
 
 .hero-title {
-    font-size: var(--fs-hero); font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 4.5rem); 
+    font-weight: 800;
     text-transform: uppercase; letter-spacing: -.025em;
-    line-height: .92; margin-bottom: 2rem;
+    line-height: .95; margin-bottom: 1.5rem;
     display: flex; flex-direction: column;
-    color: var(--white); /* Force white color */
+    color: #1E293B;
 }
 
+.accent-pink { color: #F472B6; }
+.accent-violet { color: #8B5CF6; }
+
 .hero-subtitle {
-    font-size: var(--fs-body); line-height: 1.7; 
-    color: rgba(255, 255, 255, 0.9); /* Lighter text */
-    max-width: 600px; margin-bottom: 2.5rem;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-size: 1.15rem; line-height: 1.7; 
+    color: #1E293B; font-weight: 500;
+    max-width: 650px; margin-bottom: 2.5rem;
 }
 
 .hero-actions {
-    display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3.5rem;
-    justify-content: center; /* Center buttons */
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
 }
 
-.hero-stats {
-    display: flex; align-items: stretch; gap: 0;
-    border: 2px solid rgba(255, 255, 255, 0.3); /* Lighter border */
-    background: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
-    backdrop-filter: blur(5px);
+/* The "Candy Button" from Design System */
+.candy-btn {
+    background: #8B5CF6; /* Vivid Violet */
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    border: 3px solid #1E293B;
+    border-radius: 9999px; /* Pill shape */
+    padding: 1rem 2rem;
+    box-shadow: 4px 4px 0px 0px #1E293B; /* Hard shadow */
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+}
+.candy-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px 0px #1E293B;
+    background: #F472B6; /* Fill with pink on hover */
+    color: #1E293B;
+}
+.candy-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px #1E293B;
 }
 
-.stat-item {
-    padding: 1.25rem 1.5rem;
-    display: flex; flex-direction: column;
-    flex: 1;
+/* Secondary Button */
+.candy-btn-outline {
+    background: #FFFDF5;
+    color: #1E293B;
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    border: 3px solid #1E293B;
+    border-radius: 9999px;
+    padding: 1rem 2rem;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+}
+.candy-btn-outline:hover {
+    background: #FBBF24; /* Fill with yellow */
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0px 0px #1E293B;
 }
 
-.stat-item + .stat-item { border-left: 2px solid rgba(255, 255, 255, 0.3); }
-
-.stat-number {
-    font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 900;
-    color: var(--red); line-height: 1;
+/* Decorative Geometric Background Shapes (Confetti effect) */
+.playful-shape {
+    position: absolute;
+    z-index: 1;
+    border: 4px solid #1E293B;
+    animation: floatGeo 6s ease-in-out infinite;
+}
+.shape-circle {
+    width: 140px; height: 140px; border-radius: 50%;
+    background: #FBBF24; /* Yellow */
+    top: 15%; left: 8%;
+}
+.shape-square {
+    width: 100px; height: 100px;
+    background: #34D399; /* Mint */
+    bottom: 20%; right: 10%;
+    animation-delay: 1s;
+    transform: rotate(15deg);
+}
+.shape-pill {
+    width: 70px; height: 150px; border-radius: 9999px;
+    background: #F472B6; /* Pink */
+    top: 25%; right: 8%;
+    animation-delay: 2s;
 }
 
-.stat-suffix {
-    font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 900;
-    color: var(--red); line-height: 1;
+/* Mobile Adjustments for the new Hero */
+@media (max-width: 768px) {
+    .hero-text-col {
+        padding: 3rem 1.5rem;
+        border-radius: 16px;
+        box-shadow: 6px 6px 0px 0px #8B5CF6;
+    }
+    .hero-title { font-size: clamp(2rem, 10vw, 3rem); }
+    .playful-shape { display: none; } /* Hide complex shapes on mobile to save space */
 }
-
-.stat-label {
-    font-size: .65rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .15em;
-    color: rgba(255, 255, 255, 0.7);
-    margin-top: .4rem;
-}
-
-.scroll-indicator {
-    position: absolute; bottom: 2rem; left: 50%;
-    transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: .5rem;
-    z-index: 2;
-}
-.scroll-line {
-    width: 1px; height: 50px;
-    background: var(--white);
-    animation: scroll-pulse 1.8s ease-in-out infinite;
-}
-.scroll-label {
-    font-size: .6rem; font-weight: 700;
-    letter-spacing: .2em; text-transform: uppercase;
-    color: var(--white);
-}
-
-/* Remove old geo column styles since HTML is deleted */
-.hero-geo-col, .hero-img-wrap, .hero-main-img {
-    display: none;
-}
-
 /* ── 7b. FEATURED BAR ───────────────────────────────────────── */
 .featured-bar {
     background: var(--white);
