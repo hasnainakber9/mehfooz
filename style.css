@@ -334,42 +334,48 @@ ul { list-style: none; }
     100% { background-position: 0% 50%; }
 }
 
+/* ── 7. HERO ────────────────────────────────────────────────── */
+
+/* Playful Entrance Animation */
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Floating animation for the image shapes */
+@keyframes floatGeo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
 .hero-section {
     min-height: 100vh;
     padding-top: var(--nav-h);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    
+    /* THESE IMPORTANT TAGS KILL THE OLD GRID AND FORCE IT TO THE CENTER */
+    display: flex !important; 
+    align-items: center !important;
+    justify-content: center !important;
+    
     position: relative;
     overflow: hidden;
     border-bottom: 4px solid var(--fg);
-    
-    /* Made transparent so the new full-page body background shines through */
-    background: transparent; 
-}
-    
-    /* Cosmic Animated Background matched to dark brand colors */
-    background: linear-gradient(-45deg, #121212, #1a1a2e, #16213e, #0f3460);
-    background-size: 400% 400%;
-    animation: cosmicBg 15s ease infinite;
+    background: transparent;
+    width: 100%;
 }
 
-/* Cosmic Canvas Stars */
-#cosmicBackground {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    z-index: 0; pointer-events: none;
-    opacity: 0.5;
-    filter: invert(1); /* Turns existing JS particles into white stars */
-}
-
-/* Centers the main card */
 .hero-content {
     width: 100%;
-    display: flex;
-    justify-content: center;
+    
+    /* FORCE CENTER ALIGNMENT */
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    
     z-index: 10;
     padding: 0 5%;
+    margin: 0 auto;
+    position: relative;
 }
 
 /* The Central "Sticker" Card */
@@ -381,10 +387,13 @@ ul { list-style: none; }
     text-align: center;
     max-width: 850px;
     
+    /* Prevents old margins from pushing it around */
+    margin: 0 auto !important; 
+    
     background-color: var(--white);
     border: 4px solid var(--fg);
     border-radius: 24px;
-    box-shadow: 12px 12px 0px 0px var(--blue); /* Maps the screenshot shadow to your Brand Blue */
+    box-shadow: 12px 12px 0px 0px var(--blue);
     
     opacity: 0;
     animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
@@ -473,7 +482,7 @@ ul { list-style: none; }
 
 /* Floating Image Shapes - Filled with your provided images */
 .playful-shape {
-    position: absolute;
+    position: absolute !important; /* This stops the shapes from pushing the center box */
     z-index: 1;
     border: 4px solid var(--fg);
     box-shadow: 8px 8px 0px 0px rgba(0,0,0,0.6);
@@ -482,7 +491,6 @@ ul { list-style: none; }
     background-repeat: no-repeat;
     animation: floatGeo 6s ease-in-out infinite;
 }
-
 /* Shape 1: Circle */
 .shape-circle {
     width: 170px; height: 170px; 
