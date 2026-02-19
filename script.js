@@ -340,17 +340,40 @@ document.addEventListener('DOMContentLoaded', function () {
     var formSuccess  = document.getElementById('formSuccess');
 
     if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
+        contactForm.addEventListener('submit', async function (e) {
             e.preventDefault();
-            var btn  = contactForm.querySelector('button[type="submit"]');
-            var text = btn ? btn.querySelector('.btn-text') : null;
-            if (text) text.textContent = 'Message Sent ✓';
-            if (formSuccess) formSuccess.textContent = 'Thank you! We\'ll be in touch soon.';
-            setTimeout(function () {
-                if (text) text.textContent = 'Send Message';
-                if (formSuccess) formSuccess.textContent = '';
-                contactForm.reset();
-            }, 4000);
+            var btn     = contactForm.querySelector('button[type="submit"]');
+            var btnText = btn ? btn.querySelector('.btn-text') : null;
+            if (btn) btn.disabled = true;
+            if (btnText) btnText.textContent = 'Sending…';
+            if (formSuccess) { formSuccess.textContent = ''; formSuccess.style.color = ''; }
+
+            try {
+                var res = await fetch('https://formspree.io/f/xnngrpzb', {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (res.ok) {
+                    if (btnText) btnText.textContent = 'Sent ✓';
+                    if (formSuccess) formSuccess.textContent = 'Thank you! We\'ll be in touch soon.';
+                    contactForm.reset();
+                    setTimeout(function () {
+                        if (btnText) btnText.textContent = 'Send Message';
+                        if (formSuccess) formSuccess.textContent = '';
+                        if (btn) btn.disabled = false;
+                    }, 4500);
+                } else {
+                    throw new Error('non-ok');
+                }
+            } catch (_) {
+                if (btnText) btnText.textContent = 'Try Again';
+                if (formSuccess) {
+                    formSuccess.textContent = 'Something went wrong — email hello@mehfooz.internet directly.';
+                    formSuccess.style.color = 'var(--red)';
+                }
+                if (btn) btn.disabled = false;
+            }
         });
     }
 
