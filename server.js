@@ -1,175 +1,104 @@
 /**
- * MEHFOOZ INTERNET — AI Gateway Server
- * Uses Google Gemini (primary) with open-source Pollinations fallback.
- * Run: node server.js (requires Node 18+)
+ * MEHFOOZ INTERNET — server.js
+ * Run: npm install express cors body-parser  →  node server.js
+ * Zero API keys. Works out of the box.
  */
 
 import express    from 'express';
 import cors       from 'cors';
 import bodyParser from 'body-parser';
-import 'dotenv/config';
 
-const app = express();
+const app  = express();
+const PORT = process.env.PORT || 5000;
 
-// ─── Middleware ───────────────────────────────────────────────────────────────
-app.use(cors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5500', 'http://127.0.0.1:5500', '*'],
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'x-session-id']
-}));
+const SYSTEM = `You are the Mehfooz Assistant — a helpful, warm digital literacy expert for communities in Gilgit Baltistan, Pakistan. Help users with digital safety, misinformation, cybersecurity, and Mehfooz Internet's programs (DigiSaheli, Ulema Training, Campus Program, MehfoozBot, Digital Learning Hub, E-Government Navigator). Be concise (2–3 sentences), friendly, and practical. Switch to Urdu if the user writes in Urdu.`;
+
+// Session memory (last 10 turns per user)
+const sessions = new Map();
+function getHistory(id) {
+    if (!sessions.has(id)) sessions.set(id, []);
+    return sessions.get(id);
+}
+
+app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static('.'));  // serves your index.html, style.css, script.js
 
-// ─── In-memory session store (replace with Redis/DB in production) ────────────
-const chatContexts = new Map();
-
-const SYSTEM_PROMPT = `You are the Mehfooz Assistant — a helpful, warm, and knowledgeable digital literacy expert serving communities in Gilgit Baltistan, Pakistan.
-
-Your purpose:
-- Educate users about digital safety, cybersecurity, online privacy, and combating misinformation
-- Inform users about Mehfooz Internet's programs: Community Engagement, Campus Programs, DigiSaheli, Virtual Events, Mini-Courses, MehfoozBot, Digital Resource Hub, E-Government Navigator, Ulema Training
-- Guide users on how to verify information, spot fake news, and stay safe online
-
-Tone: Warm, encouraging, concise (2–3 sentences max per response), practical.
-Language: English by default; switch to Urdu if the user writes in Urdu.
-Never make up information. If unsure, direct the user to contact Mehfooz Internet directly.`;
-
-// ─── Session helpers ──────────────────────────────────────────────────────────
-function getHistory(sessionId) {
-    if (!chatContexts.has(sessionId)) {
-        chatContexts.set(sessionId, [
-            { role: 'user',  parts: [{ text: 'System: ' + SYSTEM_PROMPT }] },
-            { role: 'model', parts: [{ text: 'Understood. I\'m ready to assist users of Mehfooz Internet.' }] }
-        ]);
-    }
-    return chatContexts.get(sessionId);
-}
-
-// ─── Primary: Google Gemini ───────────────────────────────────────────────────
-async function callGemini(history, userMessage) {
-    // Lazy-import to avoid crash if package missing
-    const { GoogleGenerativeAI } = await import('@google/generative-ai').catch(() => null) || {};
-    if (!GoogleGenerativeAI) throw new Error('Gemini SDK not installed');
-
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) throw new Error('No GEMINI_API_KEY');
-
-    const genAI = new GoogleGenerativeAI(apiKey);
-    // Use gemini-1.5-flash — fast, free-tier available, stable model string
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-
-    const chat = model.startChat({
-        history,
-        generationConfig: { maxOutputTokens: 300, temperature: 0.75 }
-    });
-    const result = await chat.sendMessage(userMessage);
-    return result.response.text();
-}
-
-// ─── Fallback: Pollinations (free, no key needed) ─────────────────────────────
-async function callPollinations(sessionId, userMessage) {
-    const messages = [{ role: 'system', content: SYSTEM_PROMPT }];
-
-    // Build a simple conversation array for the fallback
-    const history = chatContexts.get(sessionId) || [];
-    history.slice(-6).forEach(turn => {
-        if (turn.role === 'user') {
-            messages.push({ role: 'user', content: turn.parts?.[0]?.text || '' });
-        } else if (turn.role === 'model') {
-            messages.push({ role: 'assistant', content: turn.parts?.[0]?.text || '' });
-        }
-    });
-    messages.push({ role: 'user', content: userMessage });
-
-    const response = await fetch('https://text.pollinations.ai/openai', {
+// ── AI call via Pollinations (free, no key, GPT-4o under the hood) ────────────
+async function askAI(history, message) {
+    const res = await fetch('https://text.pollinations.ai/openai', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             model: 'openai',
-            messages,
-            max_tokens: 200,
-            temperature: 0.75,
-            seed: 42
+            messages: [
+                { role: 'system', content: SYSTEM },
+                ...history,
+                { role: 'user', content: message }
+            ],
+            max_tokens: 220,
+            temperature: 0.7
         }),
         signal: AbortSignal.timeout(15000)
     });
-
-    if (!response.ok) throw new Error(`Pollinations error: ${response.status}`);
-    const data = await response.json();
-    return data.choices?.[0]?.message?.content?.trim() || 'Thank you for your question!';
+    if (!res.ok) throw new Error('Pollinations ' + res.status);
+    const d = await res.json();
+    const reply = d?.choices?.[0]?.message?.content?.trim();
+    if (!reply) throw new Error('empty');
+    return reply;
 }
 
-// ─── Contextual offline response ──────────────────────────────────────────────
-function offlineResponse(msg) {
+// ── Offline fallback (keyword-matched, zero network) ─────────────────────────
+function offline(msg) {
     const m = msg.toLowerCase();
-    if (/misinfo|fake|hoax|rumor|rumour|verify|fact.?check/.test(m))
-        return 'To spot misinformation: always check the original source, look for corroborating reports from credible outlets, and use our MehfoozBot fact-checking tool. 🔍';
-    if (/safe|secur|hack|password|phish|scam|privacy/.test(m))
-        return 'For cyber safety: use strong, unique passwords for every account, enable two-factor authentication, and avoid clicking suspicious links. Our Cyber Safety workshops go deeper! 🛡️';
-    if (/program|course|learn|train|workshop|join/.test(m))
-        return 'Mehfooz offers: Community Engagement, Campus Programs, DigiSaheli for women, Virtual Events, Mini-Courses, and our Digital Learning Hub. Visit our Programs section to get started! 📚';
-    if (/gilgit|baltistan|gb|remote|rural|offline/.test(m))
-        return 'Mehfooz is built for Gilgit Baltistan — with offline-accessible content and local language support, reaching even the most remote valleys. 🏔️';
+    if (/misinfo|fake|verify|fact.?check|deepfake/.test(m))
+        return 'Always check the original source, look for corroborating reports, and use MehfoozBot\'s fact-checking tool before sharing anything online. 🔍';
+    if (/safe|secur|password|phish|scam|hack|privacy/.test(m))
+        return 'Use strong unique passwords, enable two-factor authentication, and never click suspicious links. Our Cyber Safety workshops cover this in depth! 🛡️';
+    if (/digisaheli|women|female/.test(m))
+        return 'DigiSaheli empowers women in GB with digital skills and online safety tools to participate confidently in the digital world. 💜';
+    if (/ulema|religious|mosque|imam/.test(m))
+        return 'Our Ulema Training equips religious leaders with digital literacy to guide their communities responsibly online. 🕌';
+    if (/program|course|learn|join|enroll|train/.test(m))
+        return 'Mehfooz offers: Community Engagement, Campus Programs, DigiSaheli, Virtual Events, Mini-Courses, and the Digital Learning Hub. Visit our Programs section! 📚';
     if (/urdu|language|local/.test(m))
-        return 'We are actively developing Urdu and local language interfaces so every community member in GB can benefit — regardless of their English proficiency. 🌐';
-    return 'Mehfooz Internet is here to empower Gilgit Baltistan with digital literacy. Explore our programs or contact us at hello@mehfooz.internet for more. 💬';
+        return 'MehfoozBot already responds in Urdu — just write in Urdu and it will reply in kind. Full Urdu support is expanding! 🌐';
+    if (/remote|rural|offline|village|connectivity/.test(m))
+        return 'We have offline-accessible content and community hubs reaching even the most remote valleys of Gilgit Baltistan. 🏔️';
+    if (/hello|hi|salam|salaam|hey/.test(m))
+        return 'Assalam-u-Alaikum! 👋 I\'m the Mehfooz Assistant. Ask me about digital safety, our programs, or anything about Mehfooz Internet!';
+    if (/contact|email/.test(m))
+        return 'Reach us at hello@mehfooz.internet or through our social channels. We\'d love to hear from you! 📧';
+    return 'Mehfooz Internet empowers Gilgit Baltistan with digital literacy. Explore our programs or email hello@mehfooz.internet for help. 💬';
 }
 
-// ─── Main Chat Endpoint ───────────────────────────────────────────────────────
+// ── POST /api/chat ────────────────────────────────────────────────────────────
 app.post('/api/chat', async (req, res) => {
-    const sessionId  = req.headers['x-session-id'] || 'default';
-    const userMessage = (req.body.message || '').trim();
+    const id      = (req.headers['x-session-id'] || 'default').slice(0, 64);
+    const message = (req.body?.message || '').trim().slice(0, 800);
+    if (!message) return res.status(400).json({ error: 'Message required.' });
 
-    if (!userMessage) {
-        return res.status(400).json({ error: 'Message is required.' });
-    }
+    const history = getHistory(id);
+    let reply, provider;
 
-    const history = getHistory(sessionId);
-    let botReply  = '';
-
-    // 1 — Try Google Gemini
     try {
-        botReply = await callGemini(history, userMessage);
-        // Update Gemini-format history
-        history.push({ role: 'user',  parts: [{ text: userMessage }] });
-        history.push({ role: 'model', parts: [{ text: botReply }] });
-        chatContexts.set(sessionId, history);
-    } catch (geminiErr) {
-        console.warn('[Gemini] Unavailable, trying Pollinations:', geminiErr.message);
-
-        // 2 — Try Pollinations fallback
-        try {
-            botReply = await callPollinations(sessionId, userMessage);
-            history.push({ role: 'user',  parts: [{ text: userMessage }] });
-            history.push({ role: 'model', parts: [{ text: botReply }] });
-            chatContexts.set(sessionId, history);
-        } catch (pollErr) {
-            console.warn('[Pollinations] Unavailable, using offline response:', pollErr.message);
-            // 3 — Offline contextual response
-            botReply = offlineResponse(userMessage);
-        }
+        reply    = await askAI(history, message);
+        provider = 'pollinations';
+    } catch (e) {
+        console.warn('[AI] Unavailable, using offline fallback:', e.message);
+        reply    = offline(message);
+        provider = 'offline';
     }
 
-    res.json({ reply: botReply, sessionId });
+    history.push({ role: 'user',      content: message });
+    history.push({ role: 'assistant', content: reply   });
+    if (history.length > 20) history.splice(0, 2);   // keep last 10 exchanges
+
+    res.json({ reply, provider, sessionId: id });
 });
 
-// ─── Health Check ─────────────────────────────────────────────────────────────
-app.get('/api/health', (_req, res) => {
-    res.json({
-        status: 'ok',
-        service: 'Mehfooz AI Gateway',
-        timestamp: new Date().toISOString(),
-        gemini: !!process.env.GEMINI_API_KEY ? 'configured' : 'not configured (using fallback)'
-    });
-});
+// ── GET /api/health ───────────────────────────────────────────────────────────
+app.get('/api/health', (_req, res) => res.json({ status: 'ok', sessions: sessions.size }));
 
-// ─── Start ────────────────────────────────────────────────────────────────────
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`
-╔══════════════════════════════════════════╗
-║     Mehfooz AI Gateway — Active          ║
-║     Port: ${PORT}                           ║
-║     Gemini: ${process.env.GEMINI_API_KEY ? '✓ Configured' : '✗ Not set (fallback ON)'}           ║
-╚══════════════════════════════════════════╝
-    `);
-});
+// ── Start ─────────────────────────────────────────────────────────────────────
+app.listen(PORT, () => console.log(`Mehfooz AI running → http://localhost:${PORT}`));
