@@ -301,52 +301,51 @@ ul { list-style: none; }
 
 /* ── 7. HERO ────────────────────────────────────────────────── */
 
-/* Playful Popping Animation for the central card */
+/* Playful Entrance Animation */
 @keyframes popIn {
     0% { opacity: 0; transform: scale(0.9) translateY(20px); }
     100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 /* Floating animation for the image shapes */
-@keyframes floatImages {
+@keyframes floatGeo {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-15px); }
 }
 
 /* Cosmic Animated Background Gradient */
-@keyframes cosmicGradient {
+@keyframes cosmicBg {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
 .hero-section {
-    height: 100vh; /* Locks exactly to screen height */
-    min-height: 650px; /* Prevents squishing on tiny screens */
+    min-height: 100vh; /* Locks to screen height */
     padding-top: var(--nav-h);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    overflow: hidden; /* Stops scrollbars from floating elements */
+    overflow: hidden;
     border-bottom: 4px solid var(--fg);
     
-    /* Cosmic Animated Gradient */
-    background: linear-gradient(-45deg, #0f172a, #1e1b4b, #111827, #172554);
+    /* Cosmic Animated Background matched to dark brand colors */
+    background: linear-gradient(-45deg, #121212, #1a1a2e, #16213e, #0f3460);
     background-size: 400% 400%;
-    animation: cosmicGradient 15s ease infinite;
+    animation: cosmicBg 15s ease infinite;
 }
 
-/* Reusing your existing JS canvas, but inverting it so the stars glow white! */
+/* Cosmic Canvas Stars */
 #cosmicBackground {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     z-index: 0; pointer-events: none;
     opacity: 0.5;
-    filter: invert(1); /* Turns the dark particles from your JS into white stars */
+    filter: invert(1); /* Turns existing JS particles into white stars */
 }
 
-/* Container to center the popping text card */
+/* Centers the main card */
 .hero-content {
     width: 100%;
     display: flex;
@@ -355,9 +354,9 @@ ul { list-style: none; }
     padding: 0 5%;
 }
 
-/* The Playful "Sticker" Card mapped to your Brand Colors */
+/* The Central "Sticker" Card */
 .hero-text-col {
-    padding: 3rem 4rem;
+    padding: 4rem 3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -367,7 +366,7 @@ ul { list-style: none; }
     background-color: var(--white);
     border: 4px solid var(--fg);
     border-radius: 24px;
-    box-shadow: 12px 12px 0px 0px var(--blue); /* Brand Blue Shadow */
+    box-shadow: 12px 12px 0px 0px var(--blue); /* Maps the screenshot shadow to your Brand Blue */
     
     opacity: 0;
     animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
@@ -377,22 +376,21 @@ ul { list-style: none; }
     display: flex; align-items: center; gap: .6rem;
     font-size: 0.85rem; font-weight: 800;
     text-transform: uppercase; letter-spacing: .15em;
-    color: #666;
-    margin-bottom: 1.25rem;
+    color: #555;
+    margin-bottom: 1.5rem;
 }
 
 .eyebrow-dot {
     width: 10px; height: 10px; border-radius: 50%;
-    background: var(--yellow); /* Brand Yellow */
+    background: var(--red); /* Brand Red */
     flex-shrink: 0;
 }
 
-/* Scaled down slightly using clamp to ensure it fits 100vh */
 .hero-title {
-    font-size: clamp(2.2rem, 5vw, 4rem); 
+    font-size: clamp(2.5rem, 6vw, 4.5rem); 
     font-weight: 900;
-    text-transform: uppercase; letter-spacing: -.02em;
-    line-height: .95; margin-bottom: 1.25rem;
+    text-transform: uppercase; letter-spacing: -.025em;
+    line-height: .95; margin-bottom: 1.5rem;
     display: flex; flex-direction: column;
     color: var(--fg);
 }
@@ -401,61 +399,114 @@ ul { list-style: none; }
 .accent-blue { color: var(--blue); }
 
 .hero-subtitle {
-    font-size: 1.1rem; line-height: 1.6; 
-    color: #444; font-weight: 500;
-    max-width: 600px; margin-bottom: 2rem;
+    font-size: 1.15rem; line-height: 1.7; 
+    color: #333; font-weight: 500;
+    max-width: 600px; margin-bottom: 2.5rem;
 }
 
 .hero-actions {
     display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
 }
 
-/* Floating Image Layout & Styling */
-.playful-img {
-    position: absolute;
-    z-index: 1;
-    object-fit: cover;
-    border: 4px solid var(--fg);
-    box-shadow: 8px 8px 0px 0px rgba(0,0,0,0.5); /* Deep shadow to pop off background */
-    animation: floatImages 6s ease-in-out infinite;
+/* Primary Button */
+.candy-btn {
+    background: var(--red);
+    color: var(--white);
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    border: 3px solid var(--fg);
+    border-radius: 9999px;
+    padding: 1rem 2rem;
+    box-shadow: 4px 4px 0px 0px var(--fg);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+}
+.candy-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px 0px var(--fg);
+    background: var(--blue); /* Hover changes to Brand Blue */
+    color: var(--white);
+}
+.candy-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px var(--fg);
 }
 
-.img-circle {
-    width: 180px; height: 180px; 
+/* Secondary Button */
+.candy-btn-outline {
+    background: var(--white);
+    color: var(--fg);
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    border: 3px solid var(--fg);
+    border-radius: 9999px;
+    padding: 1rem 2rem;
+    box-shadow: 4px 4px 0px 0px var(--fg);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+}
+.candy-btn-outline:hover {
+    background: var(--yellow); /* Hover changes to Brand Yellow */
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px 0px var(--fg);
+}
+
+/* Floating Image Shapes - Filled with your provided images */
+.playful-shape {
+    position: absolute;
+    z-index: 1;
+    border: 4px solid var(--fg);
+    box-shadow: 8px 8px 0px 0px rgba(0,0,0,0.6);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: floatGeo 6s ease-in-out infinite;
+}
+
+/* Shape 1: Circle */
+.shape-circle {
+    width: 170px; height: 170px; 
     border-radius: 50%;
+    background-image: url('https://framerusercontent.com/images/Fk9ZcXwxKKdy8uszFQl0yoC1V6I.png');
     top: 15%; left: 8%;
     animation-delay: 0s;
 }
 
-.img-square {
-    width: 150px; height: 150px; 
-    border-radius: 24px;
-    bottom: 15%; right: 10%;
-    transform: rotate(10deg);
-    animation-delay: 1s;
+/* Shape 2: Pill/Oval */
+.shape-pill {
+    width: 110px; height: 230px; 
+    border-radius: 9999px;
+    background-image: url('https://framerusercontent.com/images/GC04UfKOaDtPl2w9CWGq9GPH0No.png');
+    top: 20%; right: 6%;
+    transform: rotate(15deg);
+    animation-delay: 1.5s;
 }
 
-.img-pill {
-    width: 120px; height: 200px; 
-    border-radius: 9999px;
-    top: 20%; right: 5%;
-    transform: rotate(-15deg);
-    animation-delay: 2s;
+/* Shape 3: Rounded Square */
+.shape-square {
+    width: 150px; height: 150px; 
+    border-radius: 20px;
+    background-image: url('https://framerusercontent.com/images/xTH5bJ6Nasck8lvROKK3VmiI.jpg?scale-down-to=1024');
+    bottom: 12%; right: 15%;
+    transform: rotate(-10deg);
+    animation-delay: 0.7s;
 }
 
 /* Mobile Adjustments */
 @media (max-width: 1024px) {
-    .playful-img { display: none; } /* Hide complex images on tablets/mobile to keep it clean */
+    .playful-shape { display: none; } /* Hide complex shapes on smaller screens */
 }
 
 @media (max-width: 768px) {
-    .hero-section { height: auto; min-height: 100vh; }
+    .hero-section { min-height: 100vh; }
     .hero-text-col {
         padding: 2.5rem 1.5rem;
         border-radius: 16px;
         box-shadow: 6px 6px 0px 0px var(--blue);
     }
-    .hero-title { font-size: clamp(2rem, 10vw, 2.5rem); }
+    .hero-title { font-size: clamp(2rem, 10vw, 3rem); }
 }
 /* ── 7b. FEATURED BAR ───────────────────────────────────────── */
 
