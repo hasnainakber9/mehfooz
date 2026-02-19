@@ -34,12 +34,26 @@ html { font-size: 16px; scroll-behavior: smooth; -webkit-font-smoothing: antiali
 
 body {
     background-color: var(--bg);
-    color: var(--fg);
+    color: var(--white); /* Ensures text outside white cards stays readable on dark space */
     font-family: var(--f);
     font-weight: 500;
     overflow-x: hidden;
     cursor: none;
     line-height: 1.6;
+    
+    /* NEW: Cosmic Starry Background for the ENTIRE page */
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 130px 80px, #ffffff, rgba(0,0,0,0)),
+      radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)),
+      linear-gradient(-45deg, #121212, #1a1a2e, #16213e, #0f3460);
+    background-repeat: repeat;
+    background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 400% 400%;
+    background-attachment: fixed; /* Keeps stars from scrolling away */
+    animation: cosmicBg 15s ease infinite;
 }
 
 img { display: block; max-width: 100%; }
@@ -321,7 +335,7 @@ ul { list-style: none; }
 }
 
 .hero-section {
-    min-height: 100vh; /* Locks to screen height */
+    min-height: 100vh;
     padding-top: var(--nav-h);
     display: flex;
     align-items: center;
@@ -329,6 +343,10 @@ ul { list-style: none; }
     position: relative;
     overflow: hidden;
     border-bottom: 4px solid var(--fg);
+    
+    /* Made transparent so the new full-page body background shines through */
+    background: transparent; 
+}
     
     /* Cosmic Animated Background matched to dark brand colors */
     background: linear-gradient(-45deg, #121212, #1a1a2e, #16213e, #0f3460);
@@ -492,6 +510,26 @@ ul { list-style: none; }
     bottom: 12%; right: 15%;
     transform: rotate(-10deg);
     animation-delay: 0.7s;
+}
+
+/* Shape 4: Arch */
+.shape-arch {
+    width: 140px; height: 180px; 
+    border-radius: 100px 100px 0 0; /* Creates an Arch shape */
+    background-image: url('https://framerusercontent.com/images/JvXgrtpk8v6vQNpIc2vab77oc.jpg');
+    top: 65%; left: 16%;
+    transform: rotate(-15deg);
+    animation-delay: 2.5s;
+}
+
+/* Shape 5: Blob/Leaf */
+.shape-blob {
+    width: 150px; height: 150px; 
+    border-radius: 50% 0 50% 50%; /* Creates a playful Leaf shape */
+    background-image: url('https://framerusercontent.com/images/oSDDTeWsqaaPH04OdMfQ7v73EXk.jpg');
+    top: 10%; right: 28%;
+    transform: rotate(20deg);
+    animation-delay: 1.2s;
 }
 
 /* Mobile Adjustments */
