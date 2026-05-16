@@ -1,0 +1,17 @@
+{
+  "name": "mehfooz-website",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Production static website for Mehfooz Internet.",
+  "scripts": {
+    "build": "node scripts/build-site.mjs",
+    "check": "node scripts/check-site.mjs",
+    "lint": "node scripts/check-site.mjs",
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-label="Ethical investigation workflow illustration">
+  <rect width="1200" height="720" rx="32" fill="#0d1117"/>
+  <rect x="64" y="64" width="1072" height="592" rx="28" fill="#111827" stroke="#22304a"/>
+  <circle cx="1000" cy="150" r="170" fill="#22c55e" opacity=".22"/>
+  <circle cx="230" cy="620" r="190" fill="#22c55e" opacity=".12"/>
+  <g stroke="#334155" stroke-width="2" opacity=".55">
+    <path d="M120 160 H1080"/><path d="M120 202 H1080"/><path d="M120 244 H1080"/><path d="M120 286 H1080"/><path d="M120 328 H1080"/><path d="M120 370 H1080"/><path d="M120 412 H1080"/><path d="M120 454 H1080"/><path d="M120 496 H1080"/><path d="M120 538 H1080"/>
+    <path d="M180 120 V600"/><path d="M300 120 V600"/><path d="M420 120 V600"/><path d="M540 120 V600"/><path d="M660 120 V600"/><path d="M780 120 V600"/><path d="M900 120 V600"/><path d="M1020 120 V600"/>
+  </g>
+  <g fill="none" stroke="#22c55e" stroke-width="8"><circle cx="250" cy="300" r="55"/><circle cx="500" cy="300" r="55"/><circle cx="750" cy="300" r="55"/><circle cx="1000" cy="300" r="55"/><path d="M305 300h140M555 300h140M805 300h140"/></g>
+  <text x="110" y="170" fill="#8fb8ff" font-family="Arial, sans-serif" font-size="28" font-weight="700">MEHFOOZ RESEARCH</text>
+  <text x="110" y="535" fill="#ffffff" font-family="Arial, sans-serif" font-size="54" font-weight="800">Ethical investigation workflow</text>
+</svg>

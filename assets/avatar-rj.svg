@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="RJ avatar">
+  <rect width="240" height="240" rx="40" fill="#f8fbff"/>
+  <circle cx="120" cy="98" r="48" fill="#14b8a6" opacity=".9"/>
+  <path d="M48 218c13-49 41-74 72-74s59 25 72 74" fill="#14b8a6" opacity=".28"/>
+  <text x="120" y="116" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="40" font-weight="800">RJ</text>
+</svg>
