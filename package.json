@@ -8,8 +8,8 @@
     "build": "node scripts/build-site.mjs",
     "check": "node scripts/check-site.mjs",
     "lint": "node scripts/check-site.mjs",
-    "dev": "node server.js",
-    "start": "node server.js"
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs"
   },
   "engines": {
     "node": ">=18"

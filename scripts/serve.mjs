@@ -3,7 +3,7 @@ import { createServer } from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const port = Number(process.env.PORT || 5000);
 
 const mimeTypes = {
@@ -25,7 +25,7 @@ function safePath(urlPath) {
 function resolveRequest(requestUrl) {
   const url = new URL(requestUrl, "http://localhost");
   const cleaned = safePath(url.pathname);
-  const direct = path.join(__dirname, cleaned);
+  const direct = path.join(projectRoot, cleaned);
 
   if (cleaned && existsSync(direct) && statSync(direct).isFile()) {
     return direct;
@@ -37,11 +37,11 @@ function resolveRequest(requestUrl) {
   }
 
   if (!path.extname(cleaned)) {
-    const indexFile = path.join(__dirname, cleaned, "index.html");
+    const indexFile = path.join(projectRoot, cleaned, "index.html");
     if (existsSync(indexFile)) return indexFile;
   }
 
-  return path.join(__dirname, "404.html");
+  return path.join(projectRoot, "404.html");
 }
 
 const server = createServer((req, res) => {
