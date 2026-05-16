@@ -10,8 +10,5 @@
     "lint": "node scripts/check-site.mjs",
     "dev": "node scripts/serve.mjs",
     "start": "node scripts/serve.mjs"
-  },
-  "engines": {
-    "node": ">=18"
   }
 }
