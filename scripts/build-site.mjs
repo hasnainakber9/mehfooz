@@ -6,7 +6,7 @@ import {
   ethics,
   faqs,
   featured,
-  gbDistrictPins,
+  heroMapLabels,
   imageCredits,
   metrics,
   nav,
@@ -49,7 +49,8 @@ const staleAssetFiles = [
   "assets/blog-actionable-intelligence.svg",
   "assets/blog-youth-peace.svg",
   "assets/blog-maternal-care.svg",
-  "assets/blog-digital-propaganda.svg"
+  "assets/blog-digital-propaganda.svg",
+  "assets/open-students-computer.jpg"
 ];
 
 function esc(value = "") {
@@ -250,8 +251,8 @@ function heroMedia(depth) {
     }
   ];
 
-  return `<div class="hero-signal-composition" data-tilt-scene aria-label="Gilgit Baltistan district signal network">
-    <img class="hero-reference-scene" src="${asset("assets/open-rakaposhi-jutial.jpg", depth)}" alt="View of Rakaposhi and mountains near Gilgit Baltistan" loading="eager">
+  return `<div class="hero-signal-composition" data-tilt-scene aria-label="Gilgit Baltistan community signal network">
+    <img class="hero-reference-scene" src="${asset("assets/hero-gb-community-signal.png", depth)}" alt="Monochrome community learning scene with a Gilgit Baltistan signal map" loading="eager">
     <div class="signal-depth signal-depth-a" aria-hidden="true"></div>
     <div class="signal-depth signal-depth-b" aria-hidden="true"></div>
     <div class="signal-particles" aria-hidden="true">
@@ -262,9 +263,9 @@ function heroMedia(depth) {
       <span></span><span></span><span></span>
     </div>
 
-    <div class="district-pin-field" aria-label="Gilgit-Baltistan districts pinned on the map">
-      ${gbDistrictPins
-        .map((district, index) => `<span class="district-pin" style="--x:${district.x}%;--y:${district.y}%;--pin-delay:${index * 55}ms"><i></i><strong>${esc(district.name)}</strong></span>`)
+    <div class="hero-map-labels" aria-label="Reference locations on the Gilgit-Baltistan signal map">
+      ${heroMapLabels
+        .map((location, index) => `<span class="map-location-label" style="--x:${location.x}%;--y:${location.y}%;--pin-delay:${index * 70}ms"><i></i><strong>${esc(location.name)}</strong><small>${esc(location.detail)}</small></span>`)
         .join("")}
     </div>
 
@@ -305,7 +306,7 @@ function partnerRail(depth) {
 function imageStory(depth) {
   return `<div class="image-story">
     <figure class="story-photo story-photo-large reveal">
-      <img src="${asset("assets/open-gb-people.jpg", depth)}" alt="People in Gilgit Baltistan speaking together outdoors" loading="lazy">
+      <img src="${asset("assets/framer-community.jpg", depth)}" alt="Woman and child in a Gilgit Baltistan mountain setting" loading="lazy">
     </figure>
     <div class="story-panel reveal">
       <span class="kicker">Community-first safety</span>
@@ -319,7 +320,7 @@ function imageStory(depth) {
 function impactLens(depth) {
   return `<div class="impact-lens">
     <figure class="impact-visual reveal" data-tilt-scene>
-      <img src="${asset("assets/open-students-computer.jpg", depth)}" alt="Students working together at a classroom computer" loading="lazy">
+      <img src="${asset("assets/open-gb-people.jpg", depth)}" alt="People in Gilgit Baltistan speaking together outdoors" loading="lazy">
       <figcaption>
         <span>operational reach</span>
         <strong>public literacy, analysis, and trust infrastructure</strong>
@@ -375,7 +376,7 @@ function programAtlas(depth, limit = programs.length) {
   const imageMap = {
     "community-engagement": "assets/framer-program-card.png",
     "ulema-training": "assets/open-gb-people.jpg",
-    "campus-program": "assets/open-students-computer.jpg",
+    "campus-program": "assets/framer-about-photo.jpg",
     "virtual-events": "assets/framer-program-card.png",
     digisaheli: "assets/framer-avatar-1.jpg",
     "learning-hub": "assets/open-rakaposhi-jutial.jpg",
@@ -432,7 +433,7 @@ function analysisStudio(depth) {
         <p>Public-source signals are triaged, corroborated, scored, and translated into calm, actionable briefs.</p>
       </div>
       <figure>
-        <img src="${asset("assets/hero-gb-community-signal.png", depth)}" alt="District signal network visual" loading="lazy">
+        <img src="${asset("assets/open-rakaposhi-jutial.jpg", depth)}" alt="Rakaposhi mountain view from Gilgit Baltistan" loading="lazy">
       </figure>
     </div>
     <div class="chart-stack">
@@ -660,7 +661,7 @@ function teamCards(depth) {
 }
 
 function renderServices(depth) {
-  return `${pageHero("Services and solutions", "Programs, OSINT, and threat intelligence support", "A complete view of mehfooz service pathways, from community workshops to defensive public-source investigation and reporting.", depth, "assets/open-students-computer.jpg")}
+  return `${pageHero("Services and solutions", "Programs, OSINT, and threat intelligence support", "A complete view of mehfooz service pathways, from community workshops to defensive public-source investigation and reporting.", depth, "assets/framer-about-photo.jpg")}
   <section class="section">
     <div class="container solution-grid">
       ${solutions
@@ -820,7 +821,7 @@ function renderPost(post, depth) {
 }
 
 function renderContact(depth) {
-  return `${pageHero("Contact us", "Begin the conversation", "Tell us about your program, training need, public-source analysis question, or digital safety challenge.", depth, "assets/open-rakaposhi-jutial.jpg")}
+  return `${pageHero("Contact us", "Begin the conversation", "Tell us about your program, training need, public-source analysis question, or digital safety challenge.", depth, "assets/framer-community.jpg")}
   <section class="section">
     <div class="container contact-grid">
       <div>

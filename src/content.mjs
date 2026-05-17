@@ -18,38 +18,13 @@ export const nav = [
   { label: "Contact", href: "contact/" }
 ];
 
-export const gbDistricts = [
-  "Astore",
-  "Darel",
-  "Diamer",
-  "Ghanche",
-  "Ghizer",
-  "Gilgit",
-  "Gupis-Yasin",
-  "Hunza",
-  "Kharmang",
-  "Nagar",
-  "Roundu",
-  "Shigar",
-  "Skardu",
-  "Tangir"
-];
-
-export const gbDistrictPins = [
-  { name: "Ghizer", x: 20, y: 33 },
-  { name: "Gupis-Yasin", x: 29, y: 27 },
-  { name: "Hunza", x: 48, y: 20 },
-  { name: "Shigar", x: 49, y: 28 },
-  { name: "Nagar", x: 44, y: 35 },
-  { name: "Gilgit", x: 37, y: 42 },
-  { name: "Skardu", x: 53, y: 44 },
-  { name: "Ghanche", x: 49, y: 39 },
-  { name: "Darel", x: 18, y: 39 },
-  { name: "Tangir", x: 30, y: 45 },
-  { name: "Diamer", x: 25, y: 49 },
-  { name: "Kharmang", x: 50, y: 47 },
-  { name: "Roundu", x: 36, y: 53 },
-  { name: "Astore", x: 54, y: 54 }
+export const heroMapLabels = [
+  { name: "GHIZER", detail: "Local Education Hub", x: 18, y: 29 },
+  { name: "HUNZA", detail: "Community Classroom", x: 18, y: 43 },
+  { name: "GILGIT", detail: "Signal Coordination", x: 36, y: 38 },
+  { name: "SKARDU", detail: "Youth Collective HQ", x: 53, y: 22 },
+  { name: "ASTORE", detail: "Field Reporter Hub", x: 54, y: 36 },
+  { name: "KHAPLU", detail: "Cultural Archive", x: 55, y: 45 }
 ];
 
 export const imageCredits = [
@@ -65,12 +40,6 @@ export const imageCredits = [
     source: "https://commons.wikimedia.org/wiki/File:Peoples_of_Gilgit_Baltistan.jpg",
     license: "Wikimedia Commons"
   },
-  {
-    asset: "assets/open-students-computer.jpg",
-    title: "Students using a computer.jpg",
-    source: "https://commons.wikimedia.org/wiki/File:Students_using_a_computer.jpg",
-    license: "Wikimedia Commons"
-  }
 ];
 
 export const metrics = [
@@ -501,7 +470,7 @@ export const blogPosts = [
     category: "Digital Media",
     author: "mehfooz editorial",
     readTime: "6 min read",
-    image: "assets/open-students-computer.jpg",
+    image: "assets/framer-about-photo.jpg",
     content: [
       {
         heading: "Pakistan’s rise in digital propaganda: what’s next?",
