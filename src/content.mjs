@@ -1,12 +1,11 @@
 export const site = {
-  name: "Mehfooz Internet",
-  shortName: "Mehfooz",
+  name: "mehfooz",
+  shortName: "mehfooz",
   tagline: "Pioneering responsible digital experiences",
   description:
-    "Mehfooz Internet builds culturally aware digital literacy programs, ethical OSINT workflows, and threat intelligence reporting for safer online communities.",
-  email: "hello@mehfooz.internet",
-  phone: "+92 300 000 0000",
-  location: "Gilgit Baltistan, Pakistan",
+    "mehfooz builds culturally aware digital literacy programs, ethical OSINT workflows, and threat intelligence reporting for safer online communities.",
+  formAction: "https://formspree.io/f/xnngrpzb",
+  contactPage: "https://www.mehfooz.me/contact/",
   copyrightYear: "2026"
 };
 
@@ -102,7 +101,7 @@ export const programs = [
   },
   {
     id: "mehfoozbot",
-    title: "MehfoozBot",
+    title: "Guided Safety Assistant",
     eyebrow: "Guided assistance",
     summary:
       "A planned assistant experience for quick digital safety guidance, source checking prompts, and local-language learning support.",
@@ -240,11 +239,11 @@ export const workflow = [
 
 export const chartData = {
   threatCategories: [
-    { label: "Misinformation", value: 34, color: "#3b82f6" },
-    { label: "Impersonation", value: 18, color: "#22c55e" },
-    { label: "Phishing", value: 21, color: "#f59e0b" },
-    { label: "Harassment", value: 14, color: "#ef4444" },
-    { label: "Data exposure", value: 13, color: "#8b5cf6" }
+    { label: "Misinformation", value: 34, color: "#111111" },
+    { label: "Impersonation", value: 18, color: "#4b4842" },
+    { label: "Phishing", value: 21, color: "#77736a" },
+    { label: "Harassment", value: 14, color: "#a39b8f" },
+    { label: "Data exposure", value: 13, color: "#d8d1c4" }
   ],
   riskTrend: [
     { label: "Week 1", value: 42 },
@@ -257,11 +256,11 @@ export const chartData = {
     { label: "Week 8", value: 51 }
   ],
   reliability: [
-    { label: "Official", value: 28, color: "#22c55e" },
-    { label: "Corroborated media", value: 24, color: "#3b82f6" },
-    { label: "Community reports", value: 19, color: "#f59e0b" },
-    { label: "Unverified posts", value: 17, color: "#ef4444" },
-    { label: "Archived material", value: 12, color: "#14b8a6" }
+    { label: "Official", value: 28, color: "#111111" },
+    { label: "Corroborated media", value: 24, color: "#4b4842" },
+    { label: "Community reports", value: 19, color: "#77736a" },
+    { label: "Unverified posts", value: 17, color: "#a39b8f" },
+    { label: "Archived material", value: 12, color: "#d8d1c4" }
   ],
   regionBreakdown: [
     { label: "Gilgit", value: 31 },
@@ -272,10 +271,10 @@ export const chartData = {
     { label: "Other", value: 7 }
   ],
   caseStatus: [
-    { label: "Triage", value: 16, color: "#60a5fa" },
-    { label: "In analysis", value: 11, color: "#fbbf24" },
-    { label: "Ready for review", value: 7, color: "#a78bfa" },
-    { label: "Closed", value: 23, color: "#34d399" }
+    { label: "Triage", value: 16, color: "#111111" },
+    { label: "In analysis", value: 11, color: "#5c5850" },
+    { label: "Ready for review", value: 7, color: "#8d867a" },
+    { label: "Closed", value: 23, color: "#c9c1b4" }
   ],
   workflowFunnel: [
     { label: "Signals", value: 420 },
@@ -285,10 +284,10 @@ export const chartData = {
     { label: "Reported", value: 38 }
   ],
   severity: [
-    { label: "Low", value: 29, color: "#22c55e" },
-    { label: "Medium", value: 41, color: "#f59e0b" },
-    { label: "High", value: 22, color: "#ef4444" },
-    { label: "Critical", value: 8, color: "#7f1d1d" }
+    { label: "Low", value: 29, color: "#c9c1b4" },
+    { label: "Medium", value: 41, color: "#8d867a" },
+    { label: "High", value: 22, color: "#4b4842" },
+    { label: "Critical", value: 8, color: "#111111" }
   ],
   investigationTimeline: [
     { label: "Signal detected", value: 10 },
@@ -301,9 +300,9 @@ export const chartData = {
 
 export const faqs = [
   {
-    question: "How does Mehfooz combat misinformation?",
+    question: "How does the program combat misinformation?",
     answer:
-      "Mehfooz combines community education, source verification workflows, and carefully explained public-source analysis so people can pause, verify, and respond without amplifying false claims."
+      "mehfooz combines community education, source verification workflows, and carefully explained public-source analysis so people can pause, verify, and respond without amplifying false claims."
   },
   {
     question: "Is the OSINT work ethical?",
@@ -316,7 +315,7 @@ export const faqs = [
       "The program model supports offline resource packs, community learning hubs, and low-bandwidth delivery so training can continue where connectivity is inconsistent."
   },
   {
-    question: "Who can use Mehfooz services?",
+    question: "Who can use the services?",
     answer:
       "Community organizations, schools, civic groups, newsrooms, and small teams that need practical digital safety education or defensive public-source intelligence support."
   }
@@ -325,7 +324,7 @@ export const faqs = [
 export const testimonials = [
   {
     quote:
-      "The strongest part of Mehfooz is that it explains digital safety in language our community already understands.",
+      "The strongest part of mehfooz is that it explains digital safety in language our community already understands.",
     name: "Shujaat Ali",
     role: "Master's Student"
   },
@@ -349,7 +348,7 @@ export const team = [
     role: "Founder",
     initials: "HA",
     bio:
-      "Founder of Mehfooz Internet, focused on digital literacy, community development, and safer public participation online across Gilgit Baltistan."
+      "Founder of mehfooz, focused on digital literacy, community development, and safer public participation online across Gilgit Baltistan."
   },
   {
     name: "Raunaq Jain",
@@ -376,7 +375,7 @@ export const blogPosts = [
     date: "2026-05-12",
     displayDate: "May 12, 2026",
     category: "Threat Intelligence",
-    author: "Mehfooz Research Desk",
+    author: "Research desk",
     readTime: "6 min read",
     image: "assets/framer-workshop.jpg",
     content: [
@@ -384,7 +383,7 @@ export const blogPosts = [
         heading: "Public context changes the quality of the brief",
         paragraphs: [
           "Threat intelligence is most useful when it helps a team make a better decision. Open-source intelligence supports that goal by adding public context: what is being said, where a claim appeared first, which sources agree, and where confidence is still low.",
-          "For Mehfooz, OSINT is not about collecting everything. It is about collecting enough public information to understand a risk, protect people, and explain the limits of the finding."
+          "For mehfooz, OSINT is not about collecting everything. It is about collecting enough public information to understand a risk, protect people, and explain the limits of the finding."
         ]
       },
       {
@@ -411,7 +410,7 @@ export const blogPosts = [
     date: "2026-04-28",
     displayDate: "Apr 28, 2026",
     category: "Digital Safety",
-    author: "Mehfooz Field Team",
+    author: "Field team",
     readTime: "5 min read",
     image: "assets/framer-about-visual.png",
     content: [
@@ -446,7 +445,7 @@ export const blogPosts = [
     date: "2026-04-15",
     displayDate: "Apr 15, 2026",
     category: "Ethics",
-    author: "Mehfooz Analysis Desk",
+    author: "Analysis desk",
     readTime: "7 min read",
     image: "assets/framer-community.jpg",
     content: [
@@ -481,7 +480,7 @@ export const blogPosts = [
     date: "2026-03-31",
     displayDate: "Mar 31, 2026",
     category: "Analysis",
-    author: "Mehfooz Research Desk",
+    author: "Research desk",
     readTime: "5 min read",
     image: "assets/framer-program-card.png",
     content: [
@@ -489,7 +488,7 @@ export const blogPosts = [
         heading: "A score is not the finding",
         paragraphs: [
           "Risk scores help teams compare cases, but they should never replace an analyst explanation. A number without context can hide uncertainty and encourage rushed decisions.",
-          "Mehfooz treats scoring as a summary layer. The report still needs source notes, impact context, confidence levels, and recommended next steps."
+          "mehfooz treats scoring as a summary layer. The report still needs source notes, impact context, confidence levels, and recommended next steps."
         ]
       },
       {
@@ -516,7 +515,7 @@ export const blogPosts = [
     date: "2026-03-14",
     displayDate: "Mar 14, 2026",
     category: "Workflow",
-    author: "Mehfooz Analysis Desk",
+    author: "Analysis desk",
     readTime: "6 min read",
     image: "assets/framer-about-photo.jpg",
     content: [

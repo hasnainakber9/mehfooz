@@ -1,5 +1,5 @@
 (() => {
-  const chartData = window.MEHFOOZ_CHARTS || {};
+  const chartData = window.mehfoozCharts || {};
   const qs = (selector, scope = document) => scope.querySelector(selector);
   const qsa = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
@@ -88,16 +88,37 @@
     if (!form) return;
     const status = qs("[data-form-status]", form);
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
       const formData = new FormData(form);
       const name = String(formData.get("name") || "").trim();
+      const submitButton = qs('button[type="submit"]', form);
+      if (submitButton) submitButton.disabled = true;
       if (status) {
-        status.textContent = name
-          ? `Thanks, ${name}. Your message is ready for intake.`
-          : "Thanks. Your message is ready for intake.";
+        status.textContent = "Sending...";
       }
-      form.reset();
+
+      try {
+        const response = await fetch(form.action, {
+          method: form.method || "POST",
+          body: formData,
+          headers: { Accept: "application/json" }
+        });
+
+        if (!response.ok) throw new Error("Form submission failed");
+        if (status) {
+          status.textContent = name
+            ? `Thank you, ${name}. Your message has been received.`
+            : "Thank you. Your message has been received.";
+        }
+        form.reset();
+      } catch (error) {
+        if (status) {
+          status.textContent = "The form could not be submitted just now. Please try again.";
+        }
+      } finally {
+        if (submitButton) submitButton.disabled = false;
+      }
     });
   }
 
@@ -129,11 +150,11 @@
     const dark = canvas.closest(".section-dark, .hero-dashboard");
     return {
       dark: Boolean(dark),
-      text: dark ? "#eaf2ff" : "#0d1117",
-      muted: dark ? "#9fb0c5" : "#5b6678",
-      grid: dark ? "rgba(255,255,255,0.12)" : "rgba(13,17,23,0.1)",
-      line: dark ? "#8fb8ff" : "#0b5cff",
-      fill: dark ? "rgba(59,130,246,0.18)" : "rgba(11,92,255,0.12)"
+      text: dark ? "#f7f4ee" : "#090909",
+      muted: dark ? "#bdb7ad" : "#706d66",
+      grid: dark ? "rgba(255,255,255,0.14)" : "rgba(9,9,9,0.12)",
+      line: dark ? "#f7f4ee" : "#111111",
+      fill: dark ? "rgba(255,255,255,0.1)" : "rgba(9,9,9,0.08)"
     };
   }
 
@@ -143,7 +164,7 @@
 
   function label(ctx, text, x, y, color, size = 12, weight = 700) {
     ctx.fillStyle = color;
-    ctx.font = `${weight} ${size}px Inter, system-ui, sans-serif`;
+    ctx.font = `${weight} ${size}px "Helvetica Neue", Helvetica, Arial, sans-serif`;
     ctx.textBaseline = "middle";
     ctx.fillText(text, x, y);
   }
@@ -199,7 +220,7 @@
     points.forEach((point, index) => {
       ctx.beginPath();
       ctx.arc(point.x, point.y, index === points.length - 1 ? 5 : 4, 0, Math.PI * 2);
-      ctx.fillStyle = index === points.length - 1 ? "#22c55e" : theme.line;
+      ctx.fillStyle = index === points.length - 1 ? "#111111" : theme.line;
       ctx.fill();
     });
 
@@ -266,9 +287,9 @@
       ctx.fillRect(labelW + pad, y, barW, h);
       const widthValue = (item.value / max) * barW;
       const gradient = ctx.createLinearGradient(labelW + pad, 0, labelW + pad + barW, 0);
-      gradient.addColorStop(0, "#0b5cff");
-      gradient.addColorStop(0.65, "#38bdf8");
-      gradient.addColorStop(1, "#22c55e");
+      gradient.addColorStop(0, "#111111");
+      gradient.addColorStop(0.65, "#706d66");
+      gradient.addColorStop(1, "#d8d1c4");
       ctx.fillStyle = gradient;
       ctx.fillRect(labelW + pad, y, widthValue, h);
       label(ctx, `${item.value}%`, labelW + pad + widthValue + 8, y + h / 2, theme.muted, 12, 800);
@@ -323,8 +344,8 @@
       const x = (width - w) / 2;
       const y = 22 + index * (rowH + gap);
       const gradient = ctx.createLinearGradient(x, 0, x + w, 0);
-      gradient.addColorStop(0, "#0b5cff");
-      gradient.addColorStop(1, index > 2 ? "#22c55e" : "#38bdf8");
+      gradient.addColorStop(0, "#111111");
+      gradient.addColorStop(1, index > 2 ? "#8d867a" : "#706d66");
       ctx.fillStyle = gradient;
       ctx.beginPath();
       ctx.roundRect?.(x, y, w, rowH, 8);
@@ -354,7 +375,7 @@
       const x = padX + (item.value / 100) * (width - padX * 2);
       ctx.beginPath();
       ctx.arc(x, y, 10, 0, Math.PI * 2);
-      ctx.fillStyle = index === data.length - 1 ? "#22c55e" : "#0b5cff";
+      ctx.fillStyle = index === data.length - 1 ? "#111111" : "#706d66";
       ctx.fill();
       ctx.strokeStyle = theme.dark ? "#0d1117" : "#fff";
       ctx.lineWidth = 4;

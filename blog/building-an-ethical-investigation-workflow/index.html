@@ -3,29 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Building an Ethical Investigation Workflow | Mehfooz Internet</title>
+  <title>Building an Ethical Investigation Workflow | mehfooz</title>
   <meta name="description" content="A defensive investigation workflow that keeps public-source work scoped, documented, and respectful of the people affected.">
-  <meta name="theme-color" content="#0d1117">
-  <meta property="og:title" content="Building an Ethical Investigation Workflow | Mehfooz Internet">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta property="og:title" content="Building an Ethical Investigation Workflow | mehfooz">
   <meta property="og:description" content="A defensive investigation workflow that keeps public-source work scoped, documented, and respectful of the people affected.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="../../assets/og-card.svg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../../assets/framer-logo.png" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../style.css">
-  <script>window.MEHFOOZ_CHARTS = {"threatCategories":[{"label":"Misinformation","value":34,"color":"#3b82f6"},{"label":"Impersonation","value":18,"color":"#22c55e"},{"label":"Phishing","value":21,"color":"#f59e0b"},{"label":"Harassment","value":14,"color":"#ef4444"},{"label":"Data exposure","value":13,"color":"#8b5cf6"}],"riskTrend":[{"label":"Week 1","value":42},{"label":"Week 2","value":48},{"label":"Week 3","value":46},{"label":"Week 4","value":57},{"label":"Week 5","value":53},{"label":"Week 6","value":61},{"label":"Week 7","value":58},{"label":"Week 8","value":51}],"reliability":[{"label":"Official","value":28,"color":"#22c55e"},{"label":"Corroborated media","value":24,"color":"#3b82f6"},{"label":"Community reports","value":19,"color":"#f59e0b"},{"label":"Unverified posts","value":17,"color":"#ef4444"},{"label":"Archived material","value":12,"color":"#14b8a6"}],"regionBreakdown":[{"label":"Gilgit","value":31},{"label":"Skardu","value":24},{"label":"Hunza","value":16},{"label":"Ghizer","value":12},{"label":"Diamer","value":10},{"label":"Other","value":7}],"caseStatus":[{"label":"Triage","value":16,"color":"#60a5fa"},{"label":"In analysis","value":11,"color":"#fbbf24"},{"label":"Ready for review","value":7,"color":"#a78bfa"},{"label":"Closed","value":23,"color":"#34d399"}],"workflowFunnel":[{"label":"Signals","value":420},{"label":"Scoped","value":260},{"label":"Enriched","value":150},{"label":"Corroborated","value":92},{"label":"Reported","value":38}],"severity":[{"label":"Low","value":29,"color":"#22c55e"},{"label":"Medium","value":41,"color":"#f59e0b"},{"label":"High","value":22,"color":"#ef4444"},{"label":"Critical","value":8,"color":"#7f1d1d"}],"investigationTimeline":[{"label":"Signal detected","value":10},{"label":"Source review","value":28},{"label":"Cross-check","value":49},{"label":"Risk scored","value":67},{"label":"Report issued","value":88}]};</script>
+  <script>window.mehfoozCharts = {"threatCategories":[{"label":"Misinformation","value":34,"color":"#111111"},{"label":"Impersonation","value":18,"color":"#4b4842"},{"label":"Phishing","value":21,"color":"#77736a"},{"label":"Harassment","value":14,"color":"#a39b8f"},{"label":"Data exposure","value":13,"color":"#d8d1c4"}],"riskTrend":[{"label":"Week 1","value":42},{"label":"Week 2","value":48},{"label":"Week 3","value":46},{"label":"Week 4","value":57},{"label":"Week 5","value":53},{"label":"Week 6","value":61},{"label":"Week 7","value":58},{"label":"Week 8","value":51}],"reliability":[{"label":"Official","value":28,"color":"#111111"},{"label":"Corroborated media","value":24,"color":"#4b4842"},{"label":"Community reports","value":19,"color":"#77736a"},{"label":"Unverified posts","value":17,"color":"#a39b8f"},{"label":"Archived material","value":12,"color":"#d8d1c4"}],"regionBreakdown":[{"label":"Gilgit","value":31},{"label":"Skardu","value":24},{"label":"Hunza","value":16},{"label":"Ghizer","value":12},{"label":"Diamer","value":10},{"label":"Other","value":7}],"caseStatus":[{"label":"Triage","value":16,"color":"#111111"},{"label":"In analysis","value":11,"color":"#5c5850"},{"label":"Ready for review","value":7,"color":"#8d867a"},{"label":"Closed","value":23,"color":"#c9c1b4"}],"workflowFunnel":[{"label":"Signals","value":420},{"label":"Scoped","value":260},{"label":"Enriched","value":150},{"label":"Corroborated","value":92},{"label":"Reported","value":38}],"severity":[{"label":"Low","value":29,"color":"#c9c1b4"},{"label":"Medium","value":41,"color":"#8d867a"},{"label":"High","value":22,"color":"#4b4842"},{"label":"Critical","value":8,"color":"#111111"}],"investigationTimeline":[{"label":"Signal detected","value":10},{"label":"Source review","value":28},{"label":"Cross-check","value":49},{"label":"Risk scored","value":67},{"label":"Report issued","value":88}]};</script>
   <script src="../../script.js" defer></script>
 </head>
 <body class="article-page">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header" data-header>
     <div class="container header-inner">
-      <a class="brand" href="../../" aria-label="Mehfooz Internet home">
+      <a class="brand" href="../../" aria-label="mehfooz home">
         <img src="../../assets/framer-logo.png" alt="" width="46" height="46">
-        <span><strong>Mehfooz</strong><small>Internet</small></span>
+        <span><strong>mehfooz</strong></span>
       </a>
       <nav class="desktop-nav" aria-label="Main navigation">
         <a class="nav-link" href="../../">Home</a><a class="nav-link" href="../../about/">About</a><a class="nav-link" href="../../services/">Services</a><a class="nav-link" href="../../threat-intelligence/">Threat Intelligence</a><a class="nav-link is-active" href="../../blog/" aria-current="page">Blog</a><a class="nav-link" href="../../contact/">Contact</a>
@@ -52,7 +49,7 @@
           <div class="blog-meta article-meta"><span>Ethics</span><span>Apr 15, 2026</span><span>7 min read</span></div>
           <h1>Building an Ethical Investigation Workflow</h1>
           <p>A defensive investigation workflow that keeps public-source work scoped, documented, and respectful of the people affected.</p>
-          <span class="article-author">By Mehfooz Analysis Desk</span>
+          <span class="article-author">By Analysis desk</span>
         </div>
         <img src="../../assets/framer-community.jpg" alt="" loading="eager">
       </div>
@@ -78,7 +75,7 @@
     <div class="container cta-inner">
       <div>
         <span class="kicker">Ready to build resilience?</span>
-        <h2>Bring Mehfooz into your next digital safety or OSINT workflow.</h2>
+        <h2>Bring this digital safety and OSINT workflow into your next engagement.</h2>
       </div>
       <a class="button button-primary" href="../../contact/">Start a conversation</a>
     </div>
@@ -89,9 +86,9 @@
     <div>
       <a class="brand footer-brand" href="../../">
         <img src="../../assets/framer-logo.png" alt="" width="42" height="42">
-        <span><strong>Mehfooz</strong><small>Internet</small></span>
+        <span><strong>mehfooz</strong></span>
       </a>
-      <p>Mehfooz Internet builds culturally aware digital literacy programs, ethical OSINT workflows, and threat intelligence reporting for safer online communities.</p>
+      <p>mehfooz builds culturally aware digital literacy programs, ethical OSINT workflows, and threat intelligence reporting for safer online communities.</p>
       <div class="footer-badges">
         <span>Ethical OSINT</span>
         <span>Digital Literacy</span>
@@ -107,14 +104,16 @@
       </div>
     </div>
     <div>
-      <h2>Contact</h2>
-      <p>Gilgit Baltistan, Pakistan</p>
-      <a href="mailto:hello@mehfooz.internet">hello@mehfooz.internet</a>
-      <a href="../../contact/">Book an introduction</a>
+      <h2>Focus</h2>
+      <div class="footer-links">
+        <span>Ethical OSINT</span>
+        <span>Digital resilience</span>
+        <span>Threat intelligence</span>
+      </div>
     </div>
   </div>
   <div class="container footer-bottom">
-    <span>&copy; 2026 Mehfooz Internet. All rights reserved.</span>
+    <span>&copy; 2026 mehfooz. All rights reserved.</span>
     <a href="#main" data-back-top>Back to top</a>
   </div>
 </footer>

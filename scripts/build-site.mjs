@@ -91,18 +91,15 @@ function layout({ title, description, active, depth, body, pageClass = "" }) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${esc(pageTitle)}</title>
   <meta name="description" content="${esc(desc)}">
-  <meta name="theme-color" content="#0d1117">
+  <meta name="theme-color" content="#0a0a0a">
   <meta property="og:title" content="${esc(pageTitle)}">
   <meta property="og:description" content="${esc(desc)}">
   <meta property="og:type" content="website">
   <meta property="og:image" content="${asset("assets/og-card.svg", depth)}">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="${asset("assets/framer-logo.png", depth)}" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="${asset("style.css", depth)}">
-  <script>window.MEHFOOZ_CHARTS = ${chartsJson};</script>
+  <script>window.mehfoozCharts = ${chartsJson};</script>
   <script src="${asset("script.js", depth)}" defer></script>
 </head>
 <body class="${esc(pageClass)}">
@@ -111,7 +108,7 @@ function layout({ title, description, active, depth, body, pageClass = "" }) {
     <div class="container header-inner">
       <a class="brand" href="${href("", depth)}" aria-label="${esc(site.name)} home">
         <img src="${asset("assets/framer-logo.png", depth)}" alt="" width="46" height="46">
-        <span><strong>Mehfooz</strong><small>Internet</small></span>
+        <span><strong>mehfooz</strong></span>
       </a>
       <nav class="desktop-nav" aria-label="Main navigation">
         ${navMarkup(active, depth)}
@@ -144,7 +141,7 @@ function footer(depth) {
     <div>
       <a class="brand footer-brand" href="${href("", depth)}">
         <img src="${asset("assets/framer-logo.png", depth)}" alt="" width="42" height="42">
-        <span><strong>Mehfooz</strong><small>Internet</small></span>
+        <span><strong>mehfooz</strong></span>
       </a>
       <p>${esc(site.description)}</p>
       <div class="footer-badges">
@@ -162,10 +159,12 @@ function footer(depth) {
       </div>
     </div>
     <div>
-      <h2>Contact</h2>
-      <p>${esc(site.location)}</p>
-      <a href="mailto:${esc(site.email)}">${esc(site.email)}</a>
-      <a href="${href("contact/", depth)}">Book an introduction</a>
+      <h2>Focus</h2>
+      <div class="footer-links">
+        <span>Ethical OSINT</span>
+        <span>Digital resilience</span>
+        <span>Threat intelligence</span>
+      </div>
     </div>
   </div>
   <div class="container footer-bottom">
@@ -207,7 +206,7 @@ function heroDashboard() {
 }
 
 function heroMedia(depth) {
-  return `<div class="premium-media" aria-label="Mehfooz visual story">
+  return `<div class="premium-media" aria-label="mehfooz visual story">
     <figure class="media-frame media-frame-main">
       <img src="${asset("assets/framer-workshop.jpg", depth)}" alt="Digital map of Gilgit Baltistan in a protective hand" loading="eager">
       <figcaption>
@@ -245,7 +244,7 @@ function imageStory(depth) {
     <div class="story-panel reveal">
       <span class="kicker">Community-first safety</span>
       <h2>Premium learning, practical protection, locally grounded intelligence.</h2>
-      <p>Mehfooz combines digital safety training, public-source analysis, and clear reporting so partners and communities can make better decisions online with confidence.</p>
+      <p>mehfooz combines digital safety training, public-source analysis, and clear reporting so partners and communities can make better decisions online with confidence.</p>
       <a class="text-link" href="${href("about/", depth)}">Read the mission</a>
     </div>
     <figure class="story-photo story-photo-small reveal">
@@ -322,9 +321,9 @@ function renderHome(depth) {
   return `<section class="hero section-dark premium-hero">
     <div class="container hero-grid">
       <div class="hero-copy reveal">
-        <span class="kicker">Mehfooz Internet</span>
+        <span class="kicker">Responsible digital practice</span>
         <h1>Pioneering responsible digital experiences</h1>
-        <p>Mehfooz brings culturally tailored digital literacy, misinformation resilience, and ethical public-source intelligence workflows to communities and organizations that need clarity online.</p>
+        <p>mehfooz brings culturally tailored digital literacy, misinformation resilience, and ethical public-source intelligence workflows to communities and organizations that need clarity online.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="${href("contact/", depth)}">Join a program</a>
           <a class="button button-secondary" href="${href("threat-intelligence/", depth)}">View analysis dashboard</a>
@@ -360,7 +359,7 @@ function renderHome(depth) {
   <section class="section">
     <div class="container split">
       <div>
-        ${sectionIntro("OSINT analysis", "From public signals to responsible decisions", "Mehfooz uses defensive public-source analysis to help teams understand misinformation, impersonation, digital exposure, and community risk.")}
+        ${sectionIntro("OSINT analysis", "From public signals to responsible decisions", "mehfooz uses defensive public-source analysis to help teams understand misinformation, impersonation, digital exposure, and community risk.")}
         <ul class="check-list">
           ${ethics.map((item) => `<li>${esc(item)}</li>`).join("")}
         </ul>
@@ -381,11 +380,11 @@ function renderHome(depth) {
   <section class="section">
     <div class="container two-column">
       <div>
-        ${sectionIntro("FAQ", "Insights and clarifications", "Straight answers for partners, communities, and teams evaluating Mehfooz.")}
+        ${sectionIntro("FAQ", "Insights and clarifications", "Straight answers for partners, communities, and teams evaluating mehfooz.")}
         ${faqMarkup()}
       </div>
       <div>
-        ${sectionIntro("User stories", "How people feel safer with Mehfooz", "")}
+        ${sectionIntro("User stories", "How people feel safer online", "")}
         ${testimonialMarkup()}
       </div>
     </div>
@@ -451,7 +450,7 @@ function testimonialMarkup() {
 }
 
 function renderAbout(depth) {
-  return `${pageHero("About us", "Redefining the digital landscape", "Mehfooz Internet began with a simple belief: safer digital participation depends on local trust, clear education, and practical tools that respect the people they serve.", depth)}
+  return `${pageHero("About us", "Redefining the digital landscape", "mehfooz began with a simple belief: safer digital participation depends on local trust, clear education, and practical tools that respect the people they serve.", depth)}
   <section class="section">
     <div class="container">
       ${metricGrid()}
@@ -467,7 +466,7 @@ function renderAbout(depth) {
       <div class="story-card reveal">
         <span class="kicker">Our mission</span>
         <h2>Cultivating digital wisdom</h2>
-        <p>Mehfooz creates trustworthy learning opportunities, ethical analysis workflows, and public reporting practices that help people make safer decisions in an increasingly connected world.</p>
+        <p>mehfooz creates trustworthy learning opportunities, ethical analysis workflows, and public reporting practices that help people make safer decisions in an increasingly connected world.</p>
       </div>
     </div>
   </section>
@@ -476,14 +475,14 @@ function renderAbout(depth) {
       <div class="founder-note reveal">
         <span class="kicker">Meet our founder</span>
         <h2>A simple yet powerful vision</h2>
-        <p>Mehfooz Internet was founded to help people in Gilgit Baltistan navigate the digital world safely and responsibly. The initiative is designed to be accessible, culturally relevant, and practical, with a focus on online safety, critical thinking, and responsible public participation.</p>
+        <p>mehfooz was founded to help people in Gilgit Baltistan navigate the digital world safely and responsibly. The initiative is designed to be accessible, culturally relevant, and practical, with a focus on online safety, critical thinking, and responsible public participation.</p>
         <p>Today, the work extends into ethical OSINT and threat intelligence because communities need more than awareness. They need ways to understand public signals, respond to misinformation, and communicate risk without creating more harm.</p>
         <strong>Hasnain Akber</strong>
       </div>
       <div class="team-preview reveal">
         <figure class="founder-portrait">
-          <img src="${asset("assets/framer-founder.jpg", depth)}" alt="Hasnain Akber, founder of Mehfooz Internet" loading="lazy">
-          <figcaption>Founder of Mehfooz Internet</figcaption>
+          <img src="${asset("assets/framer-founder.jpg", depth)}" alt="Hasnain Akber, founder of mehfooz" loading="lazy">
+          <figcaption>Founder</figcaption>
         </figure>
         ${teamCards(depth)}
       </div>
@@ -513,7 +512,7 @@ function teamCards(depth) {
 }
 
 function renderServices(depth) {
-  return `${pageHero("Services and solutions", "Programs, OSINT, and threat intelligence support", "A complete view of Mehfooz service pathways, from community workshops to defensive public-source investigation and reporting.", depth)}
+  return `${pageHero("Services and solutions", "Programs, OSINT, and threat intelligence support", "A complete view of mehfooz service pathways, from community workshops to defensive public-source investigation and reporting.", depth)}
   <section class="section">
     <div class="container solution-grid">
       ${solutions
@@ -538,7 +537,7 @@ function renderServices(depth) {
   <section class="section">
     <div class="container split">
       <div>
-        ${sectionIntro("Operating model", "How an engagement works", "Mehfooz keeps delivery lightweight, transparent, and designed around the people who will actually use the output.")}
+        ${sectionIntro("Operating model", "How an engagement works", "mehfooz keeps delivery lightweight, transparent, and designed around the people who will actually use the output.")}
         ${workflowMarkup()}
       </div>
       <div class="callout-panel reveal">
@@ -557,7 +556,7 @@ function renderServices(depth) {
 }
 
 function renderOsint(depth) {
-  return `${pageHero("OSINT techniques", "Ethical public-source analysis for defensive work", "A professional, non-harmful overview of how Mehfooz structures open-source intelligence collection, enrichment, analysis, and reporting.", depth)}
+  return `${pageHero("OSINT techniques", "Ethical public-source analysis for defensive work", "A professional, non-harmful overview of how mehfooz structures open-source intelligence collection, enrichment, analysis, and reporting.", depth)}
   <section class="section">
     <div class="container split">
       <div>
@@ -595,7 +594,7 @@ function renderOsint(depth) {
 }
 
 function renderThreatIntel(depth) {
-  return `${pageHero("Threat intelligence and analysis", "Demo analytics for safer decisions", "Realistic visualizations show how Mehfooz can present public-source findings, confidence levels, case status, and risk movement without pretending demo data is live intelligence.", depth)}
+  return `${pageHero("Threat intelligence and analysis", "Demo analytics for safer decisions", "Realistic visualizations show how mehfooz can present public-source findings, confidence levels, case status, and risk movement without pretending demo data is live intelligence.", depth)}
   <section class="section">
     <div class="container dashboard-grid">
       ${chartCard("Threat category distribution", "Issue types seen in a sample defensive analysis queue.", "threatCategories")}
@@ -673,18 +672,18 @@ function renderPost(post, depth) {
 }
 
 function renderContact(depth) {
-  return `${pageHero("Contact us", "Reach out to Mehfooz Internet", "Tell us about your program, training need, public-source analysis question, or digital safety challenge.", depth)}
+  return `${pageHero("Contact us", "Begin the conversation", "Tell us about your program, training need, public-source analysis question, or digital safety challenge.", depth)}
   <section class="section">
     <div class="container contact-grid">
       <div>
-        ${sectionIntro("Start here", "A focused first conversation", "Use the form and the page will confirm the message locally. For production, connect the form to email, CRM, or a secure intake system.")}
-        <div class="contact-cards">
-          <article><span>Email</span><a href="mailto:${esc(site.email)}">${esc(site.email)}</a></article>
-          <article><span>Location</span><strong>${esc(site.location)}</strong></article>
-          <article><span>Response focus</span><strong>Programs, OSINT, threat intel, workshops</strong></article>
-        </div>
+        ${sectionIntro("Start here", "A focused first brief", "Use the form for program, analysis, training, or partnership requests. Submissions are handled through the existing secure form endpoint.")}
+        <figure class="contact-image reveal">
+          <img src="${asset("assets/framer-about-photo.jpg", depth)}" alt="A small group working together in a training session" loading="lazy">
+        </figure>
       </div>
-      <form class="contact-form reveal" data-contact-form>
+      <form class="contact-form reveal" action="${esc(site.formAction)}" method="POST" data-contact-form>
+        <input type="hidden" name="_next" value="${esc(site.contactPage)}">
+        <input type="hidden" name="_subject" value="New mehfooz website inquiry">
         <label>
           <span>Name</span>
           <input name="name" type="text" autocomplete="name" required>
@@ -719,7 +718,7 @@ function renderContact(depth) {
 }
 
 function renderTeam(depth) {
-  return `${pageHero("Our team", "Meet the Mehfooz visionaries", "A compact team page for the people and fellows shaping the program, strategy, and research direction.", depth)}
+  return `${pageHero("Our team", "Meet the people behind the work", "A compact team page for the people and fellows shaping the program, strategy, and research direction.", depth)}
   <section class="section">
     <div class="container">${teamCards(depth)}</div>
   </section>
@@ -733,9 +732,9 @@ function renderPrivacy(depth) {
       <h2>What this website collects</h2>
       <p>This static website does not run advertising trackers and does not collect personal data unless a visitor chooses to submit the contact form. The demo form confirms locally in the browser and should be connected to a production intake system before real submissions are accepted.</p>
       <h2>Public-source analysis</h2>
-      <p>Mehfooz analysis content is educational and defensive. Any real engagement should document scope, data minimization practices, source handling, and retention expectations before work begins.</p>
-      <h2>Contact</h2>
-      <p>Questions about privacy or responsible data handling can be sent to <a href="mailto:${esc(site.email)}">${esc(site.email)}</a>.</p>
+      <p>mehfooz analysis content is educational and defensive. Any real engagement should document scope, data minimization practices, source handling, and retention expectations before work begins.</p>
+      <h2>Responsible requests</h2>
+      <p>Privacy or responsible data handling questions should be submitted through the contact form so they can be reviewed with the right context.</p>
     </div>
   </section>`;
 }
@@ -756,7 +755,7 @@ function cta(depth) {
     <div class="container cta-inner">
       <div>
         <span class="kicker">Ready to build resilience?</span>
-        <h2>Bring Mehfooz into your next digital safety or OSINT workflow.</h2>
+        <h2>Bring this digital safety and OSINT workflow into your next engagement.</h2>
       </div>
       <a class="button button-primary" href="${href("contact/", depth)}">Start a conversation</a>
     </div>
@@ -764,45 +763,39 @@ function cta(depth) {
 }
 
 function logoSvg() {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Mehfooz Internet mark">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="mehfooz mark">
   <rect width="96" height="96" rx="20" fill="#f8fbff"/>
   <path d="M25 67 46 20" stroke="#07111f" stroke-width="11" stroke-linecap="round"/>
-  <path d="M43 69 64 22" stroke="#0b5cff" stroke-width="11" stroke-linecap="round"/>
-  <path d="M61 67 76 34" stroke="#38bdf8" stroke-width="11" stroke-linecap="round"/>
+  <path d="M43 69 64 22" stroke="#3a3a3a" stroke-width="11" stroke-linecap="round"/>
+  <path d="M61 67 76 34" stroke="#77736a" stroke-width="11" stroke-linecap="round"/>
 </svg>`;
 }
 
 function ogSvg() {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0d1117"/>
-      <stop offset="0.55" stop-color="#111827"/>
-      <stop offset="1" stop-color="#0b5cff"/>
-    </linearGradient>
   </defs>
-  <rect width="1200" height="630" fill="url(#g)"/>
-  <circle cx="980" cy="100" r="220" fill="#38bdf8" opacity=".12"/>
-  <circle cx="120" cy="560" r="260" fill="#22c55e" opacity=".1"/>
+  <rect width="1200" height="630" fill="#080808"/>
+  <rect x="64" y="64" width="1072" height="502" fill="none" stroke="#d8d1c4" opacity=".22"/>
   <g transform="translate(90 92) scale(1.25)">${logoSvg().replace(/<svg[^>]*>|<\/svg>/g, "")}</g>
-  <text x="90" y="330" fill="#fff" font-family="Arial, sans-serif" font-size="74" font-weight="800">Mehfooz Internet</text>
-  <text x="92" y="405" fill="#d8e7ff" font-family="Arial, sans-serif" font-size="38">Responsible digital experiences, OSINT, and threat intelligence</text>
-  <text x="92" y="490" fill="#8fb8ff" font-family="Arial, sans-serif" font-size="26">Ethical public-source analysis for safer communities</text>
+  <text x="90" y="330" fill="#fff" font-family="Arial, sans-serif" font-size="74" font-weight="800">mehfooz</text>
+  <text x="92" y="405" fill="#d8d1c4" font-family="Arial, sans-serif" font-size="38">Responsible digital experiences, OSINT, and threat intelligence</text>
+  <text x="92" y="490" fill="#a39b8f" font-family="Arial, sans-serif" font-size="26">Ethical public-source analysis for safer communities</text>
 </svg>`;
 }
 
 function blogImage(title, accent, pattern) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-label="${esc(title)} illustration">
-  <rect width="1200" height="720" rx="32" fill="#0d1117"/>
-  <rect x="64" y="64" width="1072" height="592" rx="28" fill="#111827" stroke="#22304a"/>
+  <rect width="1200" height="720" fill="#080808"/>
+  <rect x="64" y="64" width="1072" height="592" fill="#111111" stroke="#3a3a3a"/>
   <circle cx="1000" cy="150" r="170" fill="${accent}" opacity=".22"/>
-  <circle cx="230" cy="620" r="190" fill="#22c55e" opacity=".12"/>
+  <circle cx="230" cy="620" r="190" fill="#d8d1c4" opacity=".08"/>
   <g stroke="#334155" stroke-width="2" opacity=".55">
     ${Array.from({ length: 10 }, (_, index) => `<path d="M120 ${160 + index * 42} H1080"/>`).join("")}
     ${Array.from({ length: 8 }, (_, index) => `<path d="M${180 + index * 120} 120 V600"/>`).join("")}
   </g>
   ${pattern}
-  <text x="110" y="170" fill="#8fb8ff" font-family="Arial, sans-serif" font-size="28" font-weight="700">MEHFOOZ RESEARCH</text>
+  <text x="110" y="170" fill="#d8d1c4" font-family="Arial, sans-serif" font-size="28" font-weight="700">mehfooz research</text>
   <text x="110" y="535" fill="#ffffff" font-family="Arial, sans-serif" font-size="54" font-weight="800">${esc(title)}</text>
 </svg>`;
 }
@@ -820,37 +813,37 @@ async function writeAssetFiles() {
   const blogPatterns = {
     "assets/blog-osint-threat-intelligence.svg": blogImage(
       "OSINT and threat intelligence",
-      "#3b82f6",
-      '<path d="M185 330c130-130 285-36 390 20s224 42 340-74" fill="none" stroke="#60a5fa" stroke-width="10"/><circle cx="185" cy="330" r="18" fill="#60a5fa"/><circle cx="575" cy="350" r="18" fill="#22c55e"/><circle cx="915" cy="276" r="18" fill="#f59e0b"/>'
+      "#d8d1c4",
+      '<path d="M185 330c130-130 285-36 390 20s224 42 340-74" fill="none" stroke="#d8d1c4" stroke-width="10"/><circle cx="185" cy="330" r="18" fill="#d8d1c4"/><circle cx="575" cy="350" r="18" fill="#8d867a"/><circle cx="915" cy="276" r="18" fill="#4b4842"/>'
     ),
     "assets/blog-digital-footprint.svg": blogImage(
       "Digital footprint mapping",
-      "#14b8a6",
-      '<g fill="none" stroke="#38bdf8" stroke-width="8"><rect x="190" y="235" width="170" height="110" rx="18"/><rect x="515" y="205" width="190" height="140" rx="18"/><rect x="850" y="260" width="150" height="96" rx="18"/><path d="M360 292h155M705 276h145"/></g>'
+      "#a39b8f",
+      '<g fill="none" stroke="#a39b8f" stroke-width="8"><rect x="190" y="235" width="170" height="110" rx="18"/><rect x="515" y="205" width="190" height="140" rx="18"/><rect x="850" y="260" width="150" height="96" rx="18"/><path d="M360 292h155M705 276h145"/></g>'
     ),
     "assets/blog-ethical-workflow.svg": blogImage(
       "Ethical investigation workflow",
-      "#22c55e",
-      '<g fill="none" stroke="#22c55e" stroke-width="8"><circle cx="250" cy="300" r="55"/><circle cx="500" cy="300" r="55"/><circle cx="750" cy="300" r="55"/><circle cx="1000" cy="300" r="55"/><path d="M305 300h140M555 300h140M805 300h140"/></g>'
+      "#77736a",
+      '<g fill="none" stroke="#77736a" stroke-width="8"><circle cx="250" cy="300" r="55"/><circle cx="500" cy="300" r="55"/><circle cx="750" cy="300" r="55"/><circle cx="1000" cy="300" r="55"/><path d="M305 300h140M555 300h140M805 300h140"/></g>'
     ),
     "assets/blog-risk-scores.svg": blogImage(
       "Risk scores in cyber intelligence",
-      "#f59e0b",
-      '<g fill="#f59e0b"><rect x="200" y="360" width="90" height="110" rx="14"/><rect x="330" y="300" width="90" height="170" rx="14"/><rect x="460" y="250" width="90" height="220" rx="14"/><rect x="590" y="325" width="90" height="145" rx="14"/><rect x="720" y="210" width="90" height="260" rx="14"/></g><path d="M190 270c160-80 280-20 390-76 108-55 205-26 292 18" fill="none" stroke="#60a5fa" stroke-width="9"/>'
+      "#8d867a",
+      '<g fill="#8d867a"><rect x="200" y="360" width="90" height="110" rx="14"/><rect x="330" y="300" width="90" height="170" rx="14"/><rect x="460" y="250" width="90" height="220" rx="14"/><rect x="590" y="325" width="90" height="145" rx="14"/><rect x="720" y="210" width="90" height="260" rx="14"/></g><path d="M190 270c160-80 280-20 390-76 108-55 205-26 292 18" fill="none" stroke="#d8d1c4" stroke-width="9"/>'
     ),
     "assets/blog-actionable-intelligence.svg": blogImage(
       "Raw signals to actionable intelligence",
-      "#8b5cf6",
-      '<g fill="none" stroke="#a78bfa" stroke-width="8"><path d="M210 310h200l95-80h210l115 120h170"/><circle cx="210" cy="310" r="16" fill="#a78bfa"/><circle cx="505" cy="230" r="16" fill="#38bdf8"/><circle cx="830" cy="350" r="16" fill="#22c55e"/></g>'
+      "#4b4842",
+      '<g fill="none" stroke="#a39b8f" stroke-width="8"><path d="M210 310h200l95-80h210l115 120h170"/><circle cx="210" cy="310" r="16" fill="#a39b8f"/><circle cx="505" cy="230" r="16" fill="#d8d1c4"/><circle cx="830" cy="350" r="16" fill="#77736a"/></g>'
     )
   };
 
   await mkdir(path.join(root, "assets"), { recursive: true });
   await writeFile(path.join(root, "assets/brand-mark.svg"), logoSvg(), "utf8");
   await writeFile(path.join(root, "assets/og-card.svg"), ogSvg(), "utf8");
-  await writeFile(path.join(root, "assets/avatar-ha.svg"), avatarSvg("HA", "#0b5cff"), "utf8");
-  await writeFile(path.join(root, "assets/avatar-rj.svg"), avatarSvg("RJ", "#14b8a6"), "utf8");
-  await writeFile(path.join(root, "assets/avatar-cf.svg"), avatarSvg("CF", "#f59e0b"), "utf8");
+  await writeFile(path.join(root, "assets/avatar-ha.svg"), avatarSvg("HA", "#111111"), "utf8");
+  await writeFile(path.join(root, "assets/avatar-rj.svg"), avatarSvg("RJ", "#5c5850"), "utf8");
+  await writeFile(path.join(root, "assets/avatar-cf.svg"), avatarSvg("CF", "#8d867a"), "utf8");
   for (const [file, svg] of Object.entries(blogPatterns)) {
     await writeFile(path.join(root, file), svg, "utf8");
   }
@@ -874,7 +867,7 @@ async function writePages() {
       active: "about/",
       depth: 1,
       title: "About",
-      description: "Learn about Mehfooz Internet's mission, vision, founder, and community digital safety work.",
+      description: "Learn about mehfooz mission, vision, founder, and community digital safety work.",
       body: renderAbout(1)
     },
     {
@@ -882,7 +875,7 @@ async function writePages() {
       active: "services/",
       depth: 1,
       title: "Services",
-      description: "Explore Mehfooz programs, ethical OSINT services, and threat intelligence reporting support.",
+      description: "Explore mehfooz programs, ethical OSINT services, and threat intelligence reporting support.",
       body: renderServices(1)
     },
     {
@@ -906,7 +899,7 @@ async function writePages() {
       active: "blog/",
       depth: 1,
       title: "Blog",
-      description: "Read Mehfooz articles on OSINT, digital safety, threat intelligence, and responsible investigation workflows.",
+      description: "Read mehfooz articles on OSINT, digital safety, threat intelligence, and responsible investigation workflows.",
       body: renderBlog(1)
     },
     {
@@ -914,7 +907,7 @@ async function writePages() {
       active: "contact/",
       depth: 1,
       title: "Contact",
-      description: "Contact Mehfooz Internet about programs, digital safety workshops, OSINT analysis, or threat intelligence reporting.",
+      description: "Contact mehfooz about programs, digital safety workshops, OSINT analysis, or threat intelligence reporting.",
       body: renderContact(1)
     },
     {
@@ -922,7 +915,7 @@ async function writePages() {
       active: "team/",
       depth: 1,
       title: "Our Team",
-      description: "Meet the Mehfooz Internet team and community fellows.",
+      description: "Meet the mehfooz team and community fellows.",
       body: renderTeam(1)
     },
     {
@@ -930,7 +923,7 @@ async function writePages() {
       active: "privacy/",
       depth: 1,
       title: "Privacy Policy",
-      description: "Privacy and responsible data handling notes for the Mehfooz Internet website.",
+      description: "Privacy and responsible data handling notes for the mehfooz website.",
       body: renderPrivacy(1)
     },
     {
@@ -939,7 +932,7 @@ async function writePages() {
       depth: 0,
       title: "Page not found",
       description: "The requested page could not be found.",
-      body: `${pageHero("404", "Page not found", "The page may have moved. Use the navigation to return to the Mehfooz site.", 0)}${cta(0)}`,
+      body: `${pageHero("404", "Page not found", "The page may have moved. Use the navigation to return to the mehfooz site.", 0)}${cta(0)}`,
       pageClass: "not-found"
     }
   ];
@@ -989,4 +982,4 @@ await cleanOldGenerated();
 await writeAssetFiles();
 await writePages();
 
-console.log(`Generated Mehfooz static site: ${1 + pageDirs.length + blogPosts.length + 1} pages, ${assetFiles.length} assets.`);
+console.log(`Generated mehfooz static site: ${1 + pageDirs.length + blogPosts.length + 1} pages, ${assetFiles.length} assets.`);

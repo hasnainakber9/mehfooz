@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Production static website for Mehfooz Internet.",
+  "description": "Production static website for mehfooz.",
   "scripts": {
     "build": "node scripts/build-site.mjs",
     "check": "node scripts/check-site.mjs",

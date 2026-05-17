@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Mehfooz Internet mark">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="mehfooz mark">
   <rect width="96" height="96" rx="20" fill="#f8fbff"/>
   <path d="M25 67 46 20" stroke="#07111f" stroke-width="11" stroke-linecap="round"/>
-  <path d="M43 69 64 22" stroke="#0b5cff" stroke-width="11" stroke-linecap="round"/>
-  <path d="M61 67 76 34" stroke="#38bdf8" stroke-width="11" stroke-linecap="round"/>
+  <path d="M43 69 64 22" stroke="#3a3a3a" stroke-width="11" stroke-linecap="round"/>
+  <path d="M61 67 76 34" stroke="#77736a" stroke-width="11" stroke-linecap="round"/>
 </svg>

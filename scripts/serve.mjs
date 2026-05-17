@@ -58,5 +58,5 @@ const server = createServer((req, res) => {
 });
 
 server.listen(port, () => {
-  console.log(`Mehfooz website preview running at http://localhost:${port}`);
+  console.log(`mehfooz website preview running at http://localhost:${port}`);
 });
