@@ -39,8 +39,8 @@ const assetFiles = [
   "assets/blog-risk-scores.svg",
   "assets/blog-actionable-intelligence.svg",
   "assets/avatar-ha.svg",
-  "assets/avatar-rj.svg",
-  "assets/avatar-cf.svg"
+  "assets/avatar-zk.svg",
+  "assets/avatar-sa.svg"
 ];
 
 function esc(value = "") {
@@ -102,7 +102,7 @@ function layout({ title, description, active, depth, body, pageClass = "" }) {
   <script>window.mehfoozCharts = ${chartsJson};</script>
   <script src="${asset("script.js", depth)}" defer></script>
 </head>
-<body class="${esc(pageClass)}">
+<body class="cinematic-site ${esc(pageClass)}">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header" data-header>
     <div class="container header-inner">
@@ -129,10 +129,38 @@ function layout({ title, description, active, depth, body, pageClass = "" }) {
   <main id="main">
     ${body}
   </main>
+  ${botWidget(depth)}
   ${footer(depth)}
 </body>
 </html>
 `;
+}
+
+function botWidget(depth) {
+  return `<div class="bot-shell" data-chat-shell>
+  <button class="bot-launcher" type="button" data-chat-open aria-haspopup="dialog" aria-controls="chatModal">
+    <span class="bot-launcher-orb" aria-hidden="true"></span>
+    <span>mehfoozbot</span>
+  </button>
+  <div id="chatModal" class="chat-modal hidden" role="dialog" aria-modal="true" aria-label="mehfoozbot">
+    <div class="chat-backdrop" data-chat-close></div>
+    <section class="chat-panel" aria-label="mehfoozbot conversation">
+      <header class="chat-panel-header">
+        <div>
+          <span class="chat-status"><i aria-hidden="true"></i> online guidance</span>
+          <h2>mehfoozbot</h2>
+        </div>
+        <button class="chat-close-btn" type="button" data-chat-close aria-label="Close mehfoozbot">x</button>
+      </header>
+      <div class="chat-log" data-chat-log aria-live="polite" aria-relevant="additions"></div>
+      <form class="chat-input-area" data-chat-form>
+        <label class="sr-only" for="chat-input">Ask mehfoozbot</label>
+        <input id="chat-input" class="chat-input" name="message" type="text" autocomplete="off" aria-label="Ask about verification or digital safety">
+        <button class="chat-send-btn" type="submit">Send</button>
+      </form>
+    </section>
+  </div>
+</div>`;
 }
 
 function footer(depth) {
@@ -182,29 +210,6 @@ function sectionIntro(kicker, title, text, align = "") {
   </div>`;
 }
 
-function heroDashboard() {
-  return `<div class="hero-dashboard" aria-label="Demo intelligence dashboard">
-    <div class="dashboard-top">
-      <div>
-        <span class="status-dot"></span>
-        <strong>Public Signal Desk</strong>
-      </div>
-      <span>Demo environment</span>
-    </div>
-    <div class="risk-card">
-      <span>Composite community risk</span>
-      <strong>51</strong>
-      <small>Down 7 points after source review</small>
-    </div>
-    <canvas class="mini-chart" data-chart="riskTrend" aria-label="Risk score trend chart"></canvas>
-    <div class="signal-list">
-      <div><span>High confidence sources</span><strong>52%</strong></div>
-      <div><span>Items needing review</span><strong>17</strong></div>
-      <div><span>Reports prepared</span><strong>38</strong></div>
-    </div>
-  </div>`;
-}
-
 function heroMedia(depth) {
   return `<div class="premium-media experience-stage" data-tilt-scene aria-label="Interactive digital safety visual system">
     <canvas class="orbit-canvas" data-orbit-scene aria-hidden="true"></canvas>
@@ -224,9 +229,14 @@ function heroMedia(depth) {
       <strong>Gilgit Baltistan first</strong>
       <small>Local context, safer participation, clear analysis.</small>
     </div>
-    <div class="stage-node node-a"><span></span>verify</div>
-    <div class="stage-node node-b"><span></span>educate</div>
-    <div class="stage-node node-c"><span></span>report</div>
+    <div class="hero-action-stack" aria-label="Core actions">
+      <a href="${href("threat-intelligence/", depth)}"><span>01</span><strong>Verify</strong><i aria-hidden="true">-></i></a>
+      <a href="${href("services/", depth)}"><span>02</span><strong>Educate</strong><i aria-hidden="true">-></i></a>
+      <a href="${href("contact/", depth)}"><span>03</span><strong>Report</strong><i aria-hidden="true">-></i></a>
+    </div>
+    <div class="stage-node node-a"><span></span>Ghizer</div>
+    <div class="stage-node node-b"><span></span>Skardu</div>
+    <div class="stage-node node-c"><span></span>Hunza</div>
   </div>`;
 }
 
@@ -321,7 +331,7 @@ function programAtlas(depth, limit = programs.length) {
     "virtual-events": "assets/framer-program-card.png",
     digisaheli: "assets/framer-avatar-1.jpg",
     "learning-hub": "assets/framer-workshop.jpg",
-    "guided-safety-assistant": "assets/framer-program-card.png",
+    mehfoozbot: "assets/framer-program-card.png",
     "osint-desk": "assets/framer-workshop.jpg"
   };
   const selected = programs[0];
@@ -354,14 +364,13 @@ function programAtlas(depth, limit = programs.length) {
   </div>`;
 }
 
-function chartCard(title, text, chart, note = "Demo data for product visualization, not live intelligence.") {
+function chartCard(title, text, chart) {
   return `<article class="chart-card reveal">
     <div class="chart-copy">
       <h3>${esc(title)}</h3>
       <p>${esc(text)}</p>
     </div>
     <canvas data-chart="${esc(chart)}" aria-label="${esc(title)} chart"></canvas>
-    <small>${esc(note)}</small>
   </article>`;
 }
 
@@ -370,7 +379,7 @@ function analysisStudio(depth) {
     <div class="analysis-stage reveal" data-tilt-scene>
       <canvas class="orbit-canvas compact" data-orbit-scene data-orbit-variant="compact" aria-hidden="true"></canvas>
       <div class="analysis-panel">
-        <span>live demo model</span>
+        <span>signal model</span>
         <strong>signals become decisions</strong>
         <p>Public-source signals are triaged, corroborated, scored, and translated into calm, actionable briefs.</p>
       </div>
@@ -379,7 +388,7 @@ function analysisStudio(depth) {
       </figure>
     </div>
     <div class="chart-stack">
-      ${chartCard("Threat category distribution", "A quick view of common issue types in a demo monitoring queue.", "threatCategories")}
+      ${chartCard("Threat category distribution", "A quick view of common issue types in a monitoring queue.", "threatCategories")}
       ${chartCard("Source reliability breakdown", "Shows why claims need context before they become recommendations.", "reliability")}
     </div>
   </div>`;
@@ -414,9 +423,10 @@ function renderHome(depth) {
         <h1>Pioneering responsible digital experiences</h1>
         <p>mehfooz brings culturally tailored digital literacy, misinformation resilience, and ethical public-source intelligence workflows to communities and organizations that need clarity online.</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="${href("contact/", depth)}">Join a program</a>
-          <a class="button button-secondary" href="${href("threat-intelligence/", depth)}">View analysis dashboard</a>
+          <a class="button button-primary" href="${href("services/", depth)}">Explore our work</a>
+          <a class="button button-secondary" href="${href("about/", depth)}">Learn more</a>
         </div>
+        <a class="scroll-cue" href="#impact">Scroll</a>
       </div>
       <div class="reveal">${heroMedia(depth)}</div>
     </div>
@@ -426,7 +436,7 @@ function renderHome(depth) {
       ${featured.map((item) => `<strong>${esc(item)}</strong>`).join("")}
     </div>
   </section>
-  <section class="section">
+  <section class="section" id="impact">
     <div class="container">
       ${impactLens(depth)}
     </div>
@@ -536,7 +546,7 @@ function testimonialMarkup() {
 }
 
 function renderAbout(depth) {
-  return `${pageHero("About us", "Redefining the digital landscape", "mehfooz began with a simple belief: safer digital participation depends on local trust, clear education, and practical tools that respect the people they serve.", depth)}
+  return `${pageHero("About us", "Redefining the digital landscape", "mehfooz began with a simple belief: safer digital participation depends on local trust, clear education, and practical tools that respect the people they serve.", depth, "assets/framer-about-visual.png")}
   <section class="section">
     <div class="container">
       ${metricGrid()}
@@ -580,8 +590,8 @@ function renderAbout(depth) {
 function teamCards(depth) {
   const avatarMap = {
     HA: "assets/framer-founder.jpg",
-    RJ: "assets/framer-avatar-2.png",
-    CF: "assets/framer-avatar-1.jpg"
+    ZK: "assets/framer-avatar-2.png",
+    SA: "assets/framer-avatar-1.jpg"
   };
   return `<div class="team-grid compact">
     ${team
@@ -598,7 +608,7 @@ function teamCards(depth) {
 }
 
 function renderServices(depth) {
-  return `${pageHero("Services and solutions", "Programs, OSINT, and threat intelligence support", "A complete view of mehfooz service pathways, from community workshops to defensive public-source investigation and reporting.", depth)}
+  return `${pageHero("Services and solutions", "Programs, OSINT, and threat intelligence support", "A complete view of mehfooz service pathways, from community workshops to defensive public-source investigation and reporting.", depth, "assets/framer-community.jpg")}
   <section class="section">
     <div class="container solution-grid">
       ${solutions
@@ -642,7 +652,7 @@ function renderServices(depth) {
 }
 
 function renderOsint(depth) {
-  return `${pageHero("OSINT techniques", "Ethical public-source analysis for defensive work", "A professional, non-harmful overview of how mehfooz structures open-source intelligence collection, enrichment, analysis, and reporting.", depth)}
+  return `${pageHero("OSINT techniques", "Ethical public-source analysis for defensive work", "A professional, non-harmful overview of how mehfooz structures open-source intelligence collection, enrichment, analysis, and reporting.", depth, "assets/framer-workshop.jpg")}
   <section class="section">
     <div class="container split">
       <div>
@@ -680,14 +690,14 @@ function renderOsint(depth) {
 }
 
 function renderThreatIntel(depth) {
-  return `${pageHero("Threat intelligence and analysis", "Demo analytics for safer decisions", "Realistic visualizations show how mehfooz can present public-source findings, confidence levels, case status, and risk movement without pretending demo data is live intelligence.", depth)}
+  return `${pageHero("Threat intelligence and analysis", "Signal intelligence for safer decisions", "A refined intelligence view for public-source findings, confidence levels, case status, and risk movement.", depth, "assets/framer-about-photo.jpg")}
   <section class="section">
     <div class="container dashboard-grid">
-      ${chartCard("Threat category distribution", "Issue types seen in a sample defensive analysis queue.", "threatCategories")}
-      ${chartCard("Risk score trend", "Composite score movement across an eight-week demo period.", "riskTrend")}
+      ${chartCard("Threat category distribution", "Issue types seen in a defensive analysis queue.", "threatCategories")}
+      ${chartCard("Risk clarity trend", "Composite clarity movement across a recent review cycle.", "riskTrend")}
       ${chartCard("Investigation timeline", "Progress from signal detection to report issue.", "investigationTimeline")}
       ${chartCard("Source reliability breakdown", "How the source pool is weighted before conclusions are made.", "reliability")}
-      ${chartCard("Regional signal breakdown", "Region-level demo distribution for public safety planning.", "regionBreakdown")}
+      ${chartCard("Regional signal breakdown", "Region-level distribution for public safety planning.", "regionBreakdown")}
       ${chartCard("Case status overview", "A review queue split by triage, analysis, review, and closed cases.", "caseStatus")}
       ${chartCard("OSINT workflow funnel", "How raw signals narrow into corroborated reporting.", "workflowFunnel")}
       ${chartCard("Alert severity distribution", "Severity mix after analyst review and de-duplication.", "severity")}
@@ -701,7 +711,7 @@ function renderThreatIntel(depth) {
       <div class="insight-list">
         <article class="insight-item reveal"><span>01</span><p>Use confidence levels so readers can see whether a claim is confirmed, likely, possible, or unverified.</p></article>
         <article class="insight-item reveal"><span>02</span><p>Keep raw public signals separate from analysis notes and recommendations.</p></article>
-        <article class="insight-item reveal"><span>03</span><p>Label demo data clearly and never imply unverified intelligence is real-world fact.</p></article>
+        <article class="insight-item reveal"><span>03</span><p>Present findings calmly so teams can respond without amplifying harm.</p></article>
       </div>
     </div>
   </section>
@@ -710,7 +720,7 @@ function renderThreatIntel(depth) {
 
 function renderBlog(depth) {
   const categories = [...new Set(blogPosts.map((post) => post.category))];
-  return `${pageHero("Blog", "Digital resources and community updates", "Articles on ethical OSINT, digital resilience, risk scoring, misinformation response, and public-source intelligence workflows.", depth)}
+  return `${pageHero("Blog", "Digital resources and community updates", "Articles on ethical OSINT, digital resilience, risk scoring, misinformation response, and public-source intelligence workflows.", depth, "assets/framer-about-photo.jpg")}
   <section class="section">
     <div class="container">
       <div class="filter-row" aria-label="Blog filters">
@@ -758,7 +768,7 @@ function renderPost(post, depth) {
 }
 
 function renderContact(depth) {
-  return `${pageHero("Contact us", "Begin the conversation", "Tell us about your program, training need, public-source analysis question, or digital safety challenge.", depth)}
+  return `${pageHero("Contact us", "Begin the conversation", "Tell us about your program, training need, public-source analysis question, or digital safety challenge.", depth, "assets/framer-about-photo.jpg")}
   <section class="section">
     <div class="container contact-grid">
       <div>
@@ -804,7 +814,7 @@ function renderContact(depth) {
 }
 
 function renderTeam(depth) {
-  return `${pageHero("Our team", "Meet the people behind the work", "A compact team page for the people and fellows shaping the program, strategy, and research direction.", depth)}
+  return `${pageHero("Our team", "Meet the people behind the work", "A compact team page for the people shaping program, strategy, policy, and research direction.", depth, "assets/framer-founder.jpg")}
   <section class="section">
     <div class="container">${teamCards(depth)}</div>
   </section>
@@ -816,7 +826,7 @@ function renderPrivacy(depth) {
   <section class="section">
     <div class="container legal-content">
       <h2>What this website collects</h2>
-      <p>This static website does not run advertising trackers and does not collect personal data unless a visitor chooses to submit the contact form. The demo form confirms locally in the browser and should be connected to a production intake system before real submissions are accepted.</p>
+      <p>This static website does not run advertising trackers and does not collect personal data unless a visitor chooses to submit the contact form.</p>
       <h2>Public-source analysis</h2>
       <p>mehfooz analysis content is educational and defensive. Any real engagement should document scope, data minimization practices, source handling, and retention expectations before work begins.</p>
       <h2>Responsible requests</h2>
@@ -825,13 +835,26 @@ function renderPrivacy(depth) {
   </section>`;
 }
 
-function pageHero(kicker, title, text, depth) {
+function pageSignalVisual(depth, image = "assets/framer-workshop.jpg") {
+  return `<aside class="page-signal-visual reveal" data-tilt-scene>
+    <canvas class="orbit-canvas compact" data-orbit-scene data-orbit-variant="compact" aria-hidden="true"></canvas>
+    <img src="${asset(image, depth)}" alt="" loading="eager">
+    <div class="signal-pin pin-a"><span></span>Verify</div>
+    <div class="signal-pin pin-b"><span></span>Educate</div>
+    <div class="signal-pin pin-c"><span></span>Report</div>
+  </aside>`;
+}
+
+function pageHero(kicker, title, text, depth, image = "assets/framer-workshop.jpg") {
   return `<section class="page-hero section-dark">
-    <div class="container page-hero-inner reveal">
-      <span class="kicker">${esc(kicker)}</span>
-      <h1>${esc(title)}</h1>
-      <p>${esc(text)}</p>
-      <div class="breadcrumb"><a href="${href("", depth)}">Home</a><span>/</span><strong>${esc(kicker)}</strong></div>
+    <div class="container page-hero-inner">
+      <div class="page-hero-copy reveal">
+        <span class="kicker">${esc(kicker)}</span>
+        <h1>${esc(title)}</h1>
+        <p>${esc(text)}</p>
+        <div class="breadcrumb"><a href="${href("", depth)}">Home</a><span>/</span><strong>${esc(kicker)}</strong></div>
+      </div>
+      ${pageSignalVisual(depth, image)}
     </div>
   </section>`;
 }
@@ -928,8 +951,8 @@ async function writeAssetFiles() {
   await writeFile(path.join(root, "assets/brand-mark.svg"), logoSvg(), "utf8");
   await writeFile(path.join(root, "assets/og-card.svg"), ogSvg(), "utf8");
   await writeFile(path.join(root, "assets/avatar-ha.svg"), avatarSvg("HA", "#111111"), "utf8");
-  await writeFile(path.join(root, "assets/avatar-rj.svg"), avatarSvg("RJ", "#5c5850"), "utf8");
-  await writeFile(path.join(root, "assets/avatar-cf.svg"), avatarSvg("CF", "#8d867a"), "utf8");
+  await writeFile(path.join(root, "assets/avatar-zk.svg"), avatarSvg("ZK", "#5c5850"), "utf8");
+  await writeFile(path.join(root, "assets/avatar-sa.svg"), avatarSvg("SA", "#8d867a"), "utf8");
   for (const [file, svg] of Object.entries(blogPatterns)) {
     await writeFile(path.join(root, file), svg, "utf8");
   }
@@ -977,7 +1000,7 @@ async function writePages() {
       active: "threat-intelligence/",
       depth: 1,
       title: "Threat Intelligence",
-      description: "Demo threat intelligence dashboards, risk scoring, timelines, and source reliability visualizations.",
+      description: "Threat intelligence dashboards, risk scoring, timelines, and source reliability visualizations.",
       body: renderThreatIntel(1)
     },
     {
@@ -1001,7 +1024,7 @@ async function writePages() {
       active: "team/",
       depth: 1,
       title: "Our Team",
-      description: "Meet the mehfooz team and community fellows.",
+      description: "Meet the mehfooz team shaping program, strategy, policy, and research direction.",
       body: renderTeam(1)
     },
     {
@@ -1057,6 +1080,9 @@ async function cleanOldGenerated() {
   }
   await mkdir(path.join(root, "assets"), { recursive: true });
   for (const file of assetFiles) {
+    await rm(path.join(root, file), { force: true });
+  }
+  for (const file of ["assets/avatar-rj.svg", "assets/avatar-cf.svg"]) {
     await rm(path.join(root, file), { force: true });
   }
   for (const file of ["404.html"]) {

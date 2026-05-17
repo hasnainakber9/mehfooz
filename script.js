@@ -314,6 +314,110 @@
     });
   }
 
+  function initChatBot() {
+    const modal = qs("#chatModal");
+    const log = qs("[data-chat-log]");
+    const form = qs("[data-chat-form]");
+    const input = qs("#chat-input");
+    if (!modal || !log || !form || !input) return;
+
+    const sessionId = `mhfz-${Math.random().toString(36).slice(2, 10)}`;
+    let waiting = false;
+
+    const offlineReply = (message = "") => {
+      const text = message.toLowerCase();
+      if (/misinfo|fake|hoax|rumou?r|verify|fact.?check|source/.test(text)) {
+        return "Pause before sharing, look for the original source, compare it with trusted public references, and keep uncertainty visible when you discuss the claim.";
+      }
+      if (/safe|secur|password|phish|scam|hack|privacy|account/.test(text)) {
+        return "Use unique passwords, turn on two-factor authentication, review privacy settings, and avoid links or files that pressure you to act quickly.";
+      }
+      if (/osint|public.?source|analysis|report|timeline|risk/.test(text)) {
+        return "Responsible public-source analysis starts with a clear question, proportional collection, corroboration, confidence labels, and a calm report focused on harm reduction.";
+      }
+      if (/program|course|learn|train|workshop|join|enroll|service/.test(text)) {
+        return "mehfooz supports community learning, campus programs, women-led safety, trusted messenger training, and public-source analysis workflows.";
+      }
+      if (/urdu|language|local/.test(text)) {
+        return "You can write in Urdu. mehfoozbot will keep the guidance simple, respectful, and focused on practical digital safety.";
+      }
+      if (/contact|reach|email|phone|address/.test(text)) {
+        return "Use the contact form on this website for program, training, analysis, or partnership requests.";
+      }
+      return "I can help with digital safety, verification, misinformation, privacy, and responsible public-source analysis. Share the question or situation you want to think through.";
+    };
+
+    const addMessage = (sender, text) => {
+      const message = document.createElement("div");
+      message.className = `chat-msg msg-${sender}`;
+      if (text === "...") message.classList.add("typing");
+      message.textContent = text;
+      log.appendChild(message);
+      log.scrollTop = log.scrollHeight;
+      return message;
+    };
+
+    const open = () => {
+      modal.classList.remove("hidden");
+      document.body.classList.add("chat-open");
+      if (!log.children.length) {
+        addMessage(
+          "bot",
+          "Assalam-u-Alaikum. I am mehfoozbot. Ask me about verification, privacy, misinformation, OSINT workflows, or mehfooz programs."
+        );
+      }
+      setTimeout(() => input.focus(), 120);
+    };
+
+    const close = () => {
+      modal.classList.add("hidden");
+      document.body.classList.remove("chat-open");
+    };
+
+    const askRemote = async (message) => {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-session-id": sessionId },
+        body: JSON.stringify({ message }),
+        signal: AbortSignal.timeout(14000)
+      });
+      if (!response.ok) throw new Error("chat request failed");
+      const data = await response.json();
+      if (!data.reply) throw new Error("empty reply");
+      return data.reply;
+    };
+
+    qsa("[data-chat-open]").forEach((button) => button.addEventListener("click", open));
+    qsa("[data-chat-close]").forEach((button) => button.addEventListener("click", close));
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !modal.classList.contains("hidden")) close();
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const text = input.value.trim();
+      if (!text || waiting) return;
+
+      addMessage("user", text);
+      input.value = "";
+      input.disabled = true;
+      waiting = true;
+      const typing = addMessage("bot", "...");
+
+      try {
+        typing.textContent = await askRemote(text);
+      } catch {
+        typing.textContent = offlineReply(text);
+      } finally {
+        typing.classList.remove("typing");
+        input.disabled = false;
+        waiting = false;
+        input.focus();
+        log.scrollTop = log.scrollHeight;
+      }
+    });
+  }
+
   function resizeCanvas(canvas) {
     const rect = canvas.getBoundingClientRect();
     const width = Math.max(300, Math.floor(rect.width));
@@ -327,7 +431,7 @@
   }
 
   function chartTheme(canvas) {
-    const dark = canvas.closest(".section-dark, .hero-dashboard");
+    const dark = canvas.closest(".section-dark, .hero-dashboard, .cinematic-site");
     return {
       dark: Boolean(dark),
       text: dark ? "#f7f4ee" : "#090909",
@@ -405,7 +509,7 @@
     });
 
     const last = points[points.length - 1];
-    label(ctx, String(last.value), Math.min(width - 54, last.x + 10), last.y - 14, theme.text, 14, 800);
+    label(ctx, `${last.value}%`, Math.min(width - 64, last.x + 10), last.y - 14, theme.text, 14, 800);
     label(ctx, data[0].label, pad.left, height - 17, theme.muted, 11, 700);
     label(ctx, data[data.length - 1].label, width - pad.right - 54, height - 17, theme.muted, 11, 700);
   }
@@ -431,8 +535,9 @@
       angle += slice;
     });
 
-    label(ctx, `${total}%`, cx - 28, cy, theme.text, 20, 900);
-    label(ctx, "mix", cx - 12, cy + 24, theme.muted, 12, 700);
+    const primary = data.reduce((winner, item) => (item.value > winner.value ? item : winner), data[0]);
+    label(ctx, `${primary.value}%`, cx - 28, cy, theme.text, 20, 900);
+    label(ctx, "primary", cx - 24, cy + 24, theme.muted, 12, 700);
 
     const legendX = Math.min(width * 0.56, cx + radius + 42);
     const startY = Math.max(30, cy - data.length * 15);
@@ -495,8 +600,7 @@
       x += segment;
     });
 
-    label(ctx, `${total} cases`, barX, barY - 30, theme.text, 22, 900);
-    label(ctx, "demo review queue", barX, barY - 8, theme.muted, 12, 800);
+    label(ctx, "review balance", barX, barY - 20, theme.text, 18, 900);
 
     const cols = width > 480 ? 2 : 1;
     data.forEach((item, index) => {
@@ -506,7 +610,7 @@
       const ly = barY + 72 + row * 28;
       ctx.fillStyle = item.color;
       ctx.fillRect(lx, ly - 6, 12, 12);
-      label(ctx, `${item.label}: ${item.value}`, lx + 20, ly, theme.text, 12, 800);
+      label(ctx, `${item.label}: ${item.value}%`, lx + 20, ly, theme.text, 12, 800);
     });
   }
 
@@ -532,7 +636,7 @@
       if (!ctx.roundRect) ctx.rect(x, y, w, rowH);
       ctx.fill();
       label(ctx, item.label, x + 14, y + rowH / 2, "#fff", 12, 900);
-      label(ctx, String(item.value), x + w - 46, y + rowH / 2, "#fff", 12, 900);
+      label(ctx, `${item.value}%`, x + w - 54, y + rowH / 2, "#fff", 12, 900);
     });
   }
 
@@ -607,6 +711,7 @@
     initProgramAtlas();
     initFlowSteps();
     initOrbitScenes();
+    initChatBot();
     initCharts();
   });
 })();

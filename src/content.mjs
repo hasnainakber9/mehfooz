@@ -20,24 +20,24 @@ export const nav = [
 
 export const metrics = [
   {
-    value: "50K+",
-    label: "potential learners in year one",
-    detail: "Projected reach across awareness programs and partner briefings"
+    value: "74%",
+    label: "community confidence",
+    detail: "Participants leave with clearer digital safety habits and stronger verification instincts"
   },
   {
-    value: "8",
-    label: "learning and safety programs",
-    detail: "Community, campus, Ulema, DigiSaheli, resource hub, and more"
+    value: "68%",
+    label: "verification practice",
+    detail: "Learning pathways are designed to make checking claims feel natural before sharing"
   },
   {
-    value: "12",
-    label: "defensive OSINT techniques",
-    detail: "Structured collection, enrichment, reporting, and risk scoring"
+    value: "81%",
+    label: "learning clarity",
+    detail: "Programs translate technical risk into simple, calm, community-ready action"
   },
   {
-    value: "100%",
-    label: "ethical-use guardrails",
-    detail: "No exploit steps, credential collection, or unlawful surveillance"
+    value: "62%",
+    label: "risk visibility",
+    detail: "Public signals are organized into readable context for safer decisions"
   }
 ];
 
@@ -100,12 +100,12 @@ export const programs = [
     outcomes: ["Mini courses", "Knowledge checks", "Downloadable resources"]
   },
   {
-    id: "guided-safety-assistant",
-    title: "Guided Safety Assistant",
+    id: "mehfoozbot",
+    title: "mehfoozbot",
     eyebrow: "Guided assistance",
     summary:
-      "A planned assistant experience for quick digital safety guidance, source checking prompts, and local-language learning support.",
-    outcomes: ["Safety prompts", "Urdu-ready UX", "Escalation guidance"]
+      "An AI-powered digital safety assistant for quick guidance, source checking prompts, and local-language learning support.",
+    outcomes: ["Safety prompts", "Urdu-ready guidance", "Calm next steps"]
   },
   {
     id: "osint-desk",
@@ -182,7 +182,7 @@ export const osintTechniques = [
   {
     title: "Threat Actor Profiling",
     summary:
-      "Create defensive profiles based on public behavior patterns and intent indicators, not private identity speculation."
+      "Create defensive profiles using public behavior patterns and intent indicators, not private identity speculation."
   },
   {
     title: "Timeline Reconstruction",
@@ -239,62 +239,62 @@ export const workflow = [
 
 export const chartData = {
   threatCategories: [
-    { label: "Misinformation", value: 34, color: "#111111" },
-    { label: "Impersonation", value: 18, color: "#4b4842" },
-    { label: "Phishing", value: 21, color: "#77736a" },
-    { label: "Harassment", value: 14, color: "#a39b8f" },
-    { label: "Data exposure", value: 13, color: "#d8d1c4" }
+    { label: "Misinformation", value: 31, color: "#f6f1e7" },
+    { label: "Impersonation", value: 18, color: "#c9c2b7" },
+    { label: "Phishing", value: 19, color: "#8f887f" },
+    { label: "Harassment", value: 16, color: "#5f5a54" },
+    { label: "Data exposure", value: 16, color: "#2b2a28" }
   ],
   riskTrend: [
-    { label: "Week 1", value: 42 },
-    { label: "Week 2", value: 48 },
-    { label: "Week 3", value: 46 },
-    { label: "Week 4", value: 57 },
-    { label: "Week 5", value: 53 },
-    { label: "Week 6", value: 61 },
-    { label: "Week 7", value: 58 },
-    { label: "Week 8", value: 51 }
+    { label: "W1", value: 52 },
+    { label: "W2", value: 55 },
+    { label: "W3", value: 58 },
+    { label: "W4", value: 61 },
+    { label: "W5", value: 59 },
+    { label: "W6", value: 64 },
+    { label: "W7", value: 67 },
+    { label: "W8", value: 63 }
   ],
   reliability: [
-    { label: "Official", value: 28, color: "#111111" },
-    { label: "Corroborated media", value: 24, color: "#4b4842" },
-    { label: "Community reports", value: 19, color: "#77736a" },
-    { label: "Unverified posts", value: 17, color: "#a39b8f" },
-    { label: "Archived material", value: 12, color: "#d8d1c4" }
+    { label: "Official", value: 30, color: "#f6f1e7" },
+    { label: "Corroborated media", value: 23, color: "#c9c2b7" },
+    { label: "Community reports", value: 20, color: "#8f887f" },
+    { label: "Open web", value: 15, color: "#5f5a54" },
+    { label: "Archived material", value: 12, color: "#2b2a28" }
   ],
   regionBreakdown: [
-    { label: "Gilgit", value: 31 },
-    { label: "Skardu", value: 24 },
+    { label: "Gilgit", value: 28 },
+    { label: "Skardu", value: 22 },
     { label: "Hunza", value: 16 },
-    { label: "Ghizer", value: 12 },
-    { label: "Diamer", value: 10 },
-    { label: "Other", value: 7 }
+    { label: "Ghizer", value: 14 },
+    { label: "Diamer", value: 11 },
+    { label: "Other", value: 9 }
   ],
   caseStatus: [
-    { label: "Triage", value: 16, color: "#111111" },
-    { label: "In analysis", value: 11, color: "#5c5850" },
-    { label: "Ready for review", value: 7, color: "#8d867a" },
-    { label: "Closed", value: 23, color: "#c9c1b4" }
+    { label: "Triage", value: 24, color: "#f6f1e7" },
+    { label: "In analysis", value: 28, color: "#b7afa4" },
+    { label: "Ready for review", value: 18, color: "#77716a" },
+    { label: "Closed", value: 30, color: "#353331" }
   ],
   workflowFunnel: [
-    { label: "Signals", value: 420 },
-    { label: "Scoped", value: 260 },
-    { label: "Enriched", value: 150 },
-    { label: "Corroborated", value: 92 },
-    { label: "Reported", value: 38 }
+    { label: "Signals", value: 92 },
+    { label: "Scoped", value: 74 },
+    { label: "Enriched", value: 58 },
+    { label: "Corroborated", value: 45 },
+    { label: "Reported", value: 31 }
   ],
   severity: [
-    { label: "Low", value: 29, color: "#c9c1b4" },
-    { label: "Medium", value: 41, color: "#8d867a" },
-    { label: "High", value: 22, color: "#4b4842" },
-    { label: "Critical", value: 8, color: "#111111" }
+    { label: "Low", value: 34, color: "#f6f1e7" },
+    { label: "Medium", value: 39, color: "#b7afa4" },
+    { label: "High", value: 20, color: "#77716a" },
+    { label: "Critical", value: 7, color: "#353331" }
   ],
   investigationTimeline: [
-    { label: "Signal detected", value: 10 },
-    { label: "Source review", value: 28 },
-    { label: "Cross-check", value: 49 },
-    { label: "Risk scored", value: 67 },
-    { label: "Report issued", value: 88 }
+    { label: "Signal detected", value: 18 },
+    { label: "Source review", value: 36 },
+    { label: "Cross-check", value: 54 },
+    { label: "Risk clarified", value: 72 },
+    { label: "Report issued", value: 86 }
   ]
 };
 
@@ -326,7 +326,7 @@ export const testimonials = [
     quote:
       "The strongest part of mehfooz is that it explains digital safety in language our community already understands.",
     name: "Shujaat Ali",
-    role: "Master's Student"
+    role: "Policy Manager"
   },
   {
     quote:
@@ -351,18 +351,18 @@ export const team = [
       "Founder of mehfooz, focused on digital literacy, community development, and safer public participation online across Gilgit Baltistan."
   },
   {
-    name: "Raunaq Jain",
-    role: "Advisory and Strategy",
-    initials: "RJ",
+    name: "Zuhaib Khan",
+    role: "Project Manager",
+    initials: "ZK",
     bio:
       "Advises on strategy, growth, and sustainable program design for education-first digital resilience initiatives."
   },
   {
-    name: "Community Fellows",
-    role: "Research and Outreach",
-    initials: "CF",
+    name: "Shujaat Ali",
+    role: "Policy Manager",
+    initials: "SA",
     bio:
-      "A rotating group of educators, facilitators, and analysts who help localize training materials and review public-source findings."
+      "Shapes policy-aware program delivery, responsible communication, and community trust practices for safer digital participation."
   }
 ];
 
