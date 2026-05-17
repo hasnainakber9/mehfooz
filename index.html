@@ -11,7 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="assets/og-card.svg">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="assets/brand-mark.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/framer-logo.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -24,11 +24,11 @@
   <header class="site-header" data-header>
     <div class="container header-inner">
       <a class="brand" href="./" aria-label="Mehfooz Internet home">
-        <img src="assets/brand-mark.svg" alt="" width="46" height="46">
+        <img src="assets/framer-logo.png" alt="" width="46" height="46">
         <span><strong>Mehfooz</strong><small>Internet</small></span>
       </a>
       <nav class="desktop-nav" aria-label="Main navigation">
-        <a class="nav-link is-active" href="./" aria-current="page">Home</a><a class="nav-link" href="about/">About</a><a class="nav-link" href="services/">Services</a><a class="nav-link" href="osint-techniques/">OSINT Techniques</a><a class="nav-link" href="threat-intelligence/">Threat Intelligence</a><a class="nav-link" href="blog/">Blog</a><a class="nav-link" href="contact/">Contact</a>
+        <a class="nav-link is-active" href="./" aria-current="page">Home</a><a class="nav-link" href="about/">About</a><a class="nav-link" href="services/">Services</a><a class="nav-link" href="threat-intelligence/">Threat Intelligence</a><a class="nav-link" href="blog/">Blog</a><a class="nav-link" href="contact/">Contact</a>
       </nav>
       <a class="header-cta" href="contact/">Start here</a>
       <button class="mobile-toggle" type="button" data-mobile-toggle aria-label="Open navigation" aria-expanded="false">
@@ -38,13 +38,13 @@
     </div>
     <div class="mobile-panel" data-mobile-panel aria-hidden="true">
       <nav class="mobile-nav" aria-label="Mobile navigation">
-        <a class="nav-link is-active" href="./" aria-current="page">Home</a><a class="nav-link" href="about/">About</a><a class="nav-link" href="services/">Services</a><a class="nav-link" href="osint-techniques/">OSINT Techniques</a><a class="nav-link" href="threat-intelligence/">Threat Intelligence</a><a class="nav-link" href="blog/">Blog</a><a class="nav-link" href="contact/">Contact</a>
+        <a class="nav-link is-active" href="./" aria-current="page">Home</a><a class="nav-link" href="about/">About</a><a class="nav-link" href="services/">Services</a><a class="nav-link" href="threat-intelligence/">Threat Intelligence</a><a class="nav-link" href="blog/">Blog</a><a class="nav-link" href="contact/">Contact</a>
         <a class="button button-primary" href="contact/">Start here</a>
       </nav>
     </div>
   </header>
   <main id="main">
-    <section class="hero section-dark">
+    <section class="hero section-dark premium-hero">
     <div class="container hero-grid">
       <div class="hero-copy reveal">
         <span class="kicker">Mehfooz Internet</span>
@@ -52,30 +52,35 @@
         <p>Mehfooz brings culturally tailored digital literacy, misinformation resilience, and ethical public-source intelligence workflows to communities and organizations that need clarity online.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="contact/">Join a program</a>
-          <a class="button button-secondary" href="osint-techniques/">Explore OSINT techniques</a>
+          <a class="button button-secondary" href="threat-intelligence/">View analysis dashboard</a>
         </div>
       </div>
-      <div class="reveal"><div class="hero-dashboard" aria-label="Demo intelligence dashboard">
-    <div class="dashboard-top">
-      <div>
-        <span class="status-dot"></span>
-        <strong>Public Signal Desk</strong>
-      </div>
-      <span>Demo environment</span>
-    </div>
-    <div class="risk-card">
-      <span>Composite community risk</span>
-      <strong>51</strong>
-      <small>Down 7 points after source review</small>
-    </div>
-    <canvas class="mini-chart" data-chart="riskTrend" aria-label="Risk score trend chart"></canvas>
-    <div class="signal-list">
-      <div><span>High confidence sources</span><strong>52%</strong></div>
-      <div><span>Items needing review</span><strong>17</strong></div>
-      <div><span>Reports prepared</span><strong>38</strong></div>
+      <div class="reveal"><div class="premium-media" aria-label="Mehfooz visual story">
+    <figure class="media-frame media-frame-main">
+      <img src="assets/framer-workshop.jpg" alt="Digital map of Gilgit Baltistan in a protective hand" loading="eager">
+      <figcaption>
+        <strong>Gilgit Baltistan first</strong>
+        <span>Local context, safer digital participation, and clear public-source analysis.</span>
+      </figcaption>
+    </figure>
+    <figure class="media-frame media-frame-secondary">
+      <img src="assets/framer-community.jpg" alt="Community member from Gilgit Baltistan" loading="eager">
+    </figure>
+    <div class="media-stat-card">
+      <span>Modeled reach</span>
+      <strong>50K+</strong>
+      <small>learners and community members</small>
     </div>
   </div></div>
     </div>
+    <div class="container partner-rail" aria-label="Featured in and supported by">
+    <span>Featured in and supported by</span>
+    <div>
+      <img src="assets/framer-dawn.png" alt="Dawn" loading="lazy">
+      <img src="assets/framer-partner.svg" alt="Partner logo" loading="lazy">
+      <strong>Community-first digital safety</strong>
+    </div>
+  </div>
     <div class="container featured-strip" aria-label="Focus areas">
       <span>Featured focus</span>
       <strong>Community Learning</strong><strong>Digital Safety</strong><strong>Misinformation Response</strong><strong>OSINT Analysis</strong><strong>Threat Intelligence</strong><strong>Reporting</strong>
@@ -87,7 +92,7 @@
     <article class="metric-card reveal">
           <strong>50K+</strong>
           <span>potential learners in year one</span>
-          <p>Modeled from Framer reference goals and community program planning</p>
+          <p>Projected reach across awareness programs and partner briefings</p>
         </article><article class="metric-card reveal">
           <strong>8</strong>
           <span>learning and safety programs</span>
@@ -104,12 +109,30 @@
   </div>
     </div>
   </section>
-  <section class="section section-dark">
+  <section class="section premium-story-section">
+    <div class="container">
+      <div class="image-story">
+    <figure class="story-photo story-photo-large reveal">
+      <img src="assets/framer-about-visual.png" alt="Digital literacy workshop participants using laptops" loading="lazy">
+    </figure>
+    <div class="story-panel reveal">
+      <span class="kicker">Community-first safety</span>
+      <h2>Premium learning, practical protection, locally grounded intelligence.</h2>
+      <p>Mehfooz combines digital safety training, public-source analysis, and clear reporting so partners and communities can make better decisions online with confidence.</p>
+      <a class="text-link" href="about/">Read the mission</a>
+    </div>
+    <figure class="story-photo story-photo-small reveal">
+      <img src="assets/framer-about-photo.jpg" alt="Small group working together in a training session" loading="lazy">
+    </figure>
+  </div>
+    </div>
+  </section>
+  <section class="section section-dark program-showcase">
     <div class="container">
       <div class="section-intro center">
     <span class="kicker">Our programs</span>
     <h2>Built with a focus on learning, engagement, and innovation</h2>
-    <p>The Framer reference shaped the program structure. This rebuild keeps the community mission while making each pathway clearer and more operational.</p>
+    <p>Each pathway is designed for real community learning, responsible online behavior, and partner-ready reporting.</p>
   </div>
       <div class="program-grid">
     <article class="program-card reveal" id="community-engagement">
@@ -309,7 +332,7 @@
       <div class="blog-grid">
     <article class="blog-card reveal" data-category="Threat Intelligence">
           <a class="blog-image" href="blog/how-osint-supports-modern-threat-intelligence/">
-            <img src="assets/blog-osint-threat-intelligence.svg" alt="" loading="lazy">
+            <img src="assets/framer-workshop.jpg" alt="" loading="lazy">
           </a>
           <div class="blog-body">
             <div class="blog-meta"><span>Threat Intelligence</span><span>May 12, 2026</span><span>6 min read</span></div>
@@ -319,7 +342,7 @@
           </div>
         </article><article class="blog-card reveal" data-category="Digital Safety">
           <a class="blog-image" href="blog/digital-footprint-mapping-for-organizations/">
-            <img src="assets/blog-digital-footprint.svg" alt="" loading="lazy">
+            <img src="assets/framer-about-visual.png" alt="" loading="lazy">
           </a>
           <div class="blog-body">
             <div class="blog-meta"><span>Digital Safety</span><span>Apr 28, 2026</span><span>5 min read</span></div>
@@ -329,7 +352,7 @@
           </div>
         </article><article class="blog-card reveal" data-category="Ethics">
           <a class="blog-image" href="blog/building-an-ethical-investigation-workflow/">
-            <img src="assets/blog-ethical-workflow.svg" alt="" loading="lazy">
+            <img src="assets/framer-community.jpg" alt="" loading="lazy">
           </a>
           <div class="blog-body">
             <div class="blog-meta"><span>Ethics</span><span>Apr 15, 2026</span><span>7 min read</span></div>
@@ -358,7 +381,7 @@
   <div class="container footer-grid">
     <div>
       <a class="brand footer-brand" href="./">
-        <img src="assets/brand-mark.svg" alt="" width="42" height="42">
+        <img src="assets/framer-logo.png" alt="" width="42" height="42">
         <span><strong>Mehfooz</strong><small>Internet</small></span>
       </a>
       <p>Mehfooz Internet builds culturally aware digital literacy programs, ethical OSINT workflows, and threat intelligence reporting for safer online communities.</p>
@@ -371,7 +394,7 @@
     <div>
       <h2>Explore</h2>
       <div class="footer-links">
-        <a href="./">Home</a><a href="about/">About</a><a href="services/">Services</a><a href="osint-techniques/">OSINT Techniques</a><a href="threat-intelligence/">Threat Intelligence</a><a href="blog/">Blog</a><a href="contact/">Contact</a>
+        <a href="./">Home</a><a href="about/">About</a><a href="services/">Services</a><a href="threat-intelligence/">Threat Intelligence</a><a href="blog/">Blog</a><a href="contact/">Contact</a>
         <a href="team/">Team</a>
         <a href="privacy/">Privacy</a>
       </div>

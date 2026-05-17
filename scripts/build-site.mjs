@@ -97,7 +97,7 @@ function layout({ title, description, active, depth, body, pageClass = "" }) {
   <meta property="og:type" content="website">
   <meta property="og:image" content="${asset("assets/og-card.svg", depth)}">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="${asset("assets/brand-mark.svg", depth)}" type="image/svg+xml">
+  <link rel="icon" href="${asset("assets/framer-logo.png", depth)}" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -110,7 +110,7 @@ function layout({ title, description, active, depth, body, pageClass = "" }) {
   <header class="site-header" data-header>
     <div class="container header-inner">
       <a class="brand" href="${href("", depth)}" aria-label="${esc(site.name)} home">
-        <img src="${asset("assets/brand-mark.svg", depth)}" alt="" width="46" height="46">
+        <img src="${asset("assets/framer-logo.png", depth)}" alt="" width="46" height="46">
         <span><strong>Mehfooz</strong><small>Internet</small></span>
       </a>
       <nav class="desktop-nav" aria-label="Main navigation">
@@ -143,7 +143,7 @@ function footer(depth) {
   <div class="container footer-grid">
     <div>
       <a class="brand footer-brand" href="${href("", depth)}">
-        <img src="${asset("assets/brand-mark.svg", depth)}" alt="" width="42" height="42">
+        <img src="${asset("assets/framer-logo.png", depth)}" alt="" width="42" height="42">
         <span><strong>Mehfooz</strong><small>Internet</small></span>
       </a>
       <p>${esc(site.description)}</p>
@@ -203,6 +203,54 @@ function heroDashboard() {
       <div><span>Items needing review</span><strong>17</strong></div>
       <div><span>Reports prepared</span><strong>38</strong></div>
     </div>
+  </div>`;
+}
+
+function heroMedia(depth) {
+  return `<div class="premium-media" aria-label="Mehfooz visual story">
+    <figure class="media-frame media-frame-main">
+      <img src="${asset("assets/framer-workshop.jpg", depth)}" alt="Digital map of Gilgit Baltistan in a protective hand" loading="eager">
+      <figcaption>
+        <strong>Gilgit Baltistan first</strong>
+        <span>Local context, safer digital participation, and clear public-source analysis.</span>
+      </figcaption>
+    </figure>
+    <figure class="media-frame media-frame-secondary">
+      <img src="${asset("assets/framer-community.jpg", depth)}" alt="Community member from Gilgit Baltistan" loading="eager">
+    </figure>
+    <div class="media-stat-card">
+      <span>Modeled reach</span>
+      <strong>50K+</strong>
+      <small>learners and community members</small>
+    </div>
+  </div>`;
+}
+
+function partnerRail(depth) {
+  return `<div class="container partner-rail" aria-label="Featured in and supported by">
+    <span>Featured in and supported by</span>
+    <div>
+      <img src="${asset("assets/framer-dawn.png", depth)}" alt="Dawn" loading="lazy">
+      <img src="${asset("assets/framer-partner.svg", depth)}" alt="Partner logo" loading="lazy">
+      <strong>Community-first digital safety</strong>
+    </div>
+  </div>`;
+}
+
+function imageStory(depth) {
+  return `<div class="image-story">
+    <figure class="story-photo story-photo-large reveal">
+      <img src="${asset("assets/framer-about-visual.png", depth)}" alt="Digital literacy workshop participants using laptops" loading="lazy">
+    </figure>
+    <div class="story-panel reveal">
+      <span class="kicker">Community-first safety</span>
+      <h2>Premium learning, practical protection, locally grounded intelligence.</h2>
+      <p>Mehfooz combines digital safety training, public-source analysis, and clear reporting so partners and communities can make better decisions online with confidence.</p>
+      <a class="text-link" href="${href("about/", depth)}">Read the mission</a>
+    </div>
+    <figure class="story-photo story-photo-small reveal">
+      <img src="${asset("assets/framer-about-photo.jpg", depth)}" alt="Small group working together in a training session" loading="lazy">
+    </figure>
   </div>`;
 }
 
@@ -271,7 +319,7 @@ function blogCards(depth, limit = blogPosts.length) {
 }
 
 function renderHome(depth) {
-  return `<section class="hero section-dark">
+  return `<section class="hero section-dark premium-hero">
     <div class="container hero-grid">
       <div class="hero-copy reveal">
         <span class="kicker">Mehfooz Internet</span>
@@ -279,11 +327,12 @@ function renderHome(depth) {
         <p>Mehfooz brings culturally tailored digital literacy, misinformation resilience, and ethical public-source intelligence workflows to communities and organizations that need clarity online.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="${href("contact/", depth)}">Join a program</a>
-          <a class="button button-secondary" href="${href("osint-techniques/", depth)}">Explore OSINT techniques</a>
+          <a class="button button-secondary" href="${href("threat-intelligence/", depth)}">View analysis dashboard</a>
         </div>
       </div>
-      <div class="reveal">${heroDashboard()}</div>
+      <div class="reveal">${heroMedia(depth)}</div>
     </div>
+    ${partnerRail(depth)}
     <div class="container featured-strip" aria-label="Focus areas">
       <span>Featured focus</span>
       ${featured.map((item) => `<strong>${esc(item)}</strong>`).join("")}
@@ -294,9 +343,14 @@ function renderHome(depth) {
       ${metricGrid()}
     </div>
   </section>
-  <section class="section section-dark">
+  <section class="section premium-story-section">
     <div class="container">
-      ${sectionIntro("Our programs", "Built with a focus on learning, engagement, and innovation", "The Framer reference shaped the program structure. This rebuild keeps the community mission while making each pathway clearer and more operational.", "center")}
+      ${imageStory(depth)}
+    </div>
+  </section>
+  <section class="section section-dark program-showcase">
+    <div class="container">
+      ${sectionIntro("Our programs", "Built with a focus on learning, engagement, and innovation", "Each pathway is designed for real community learning, responsible online behavior, and partner-ready reporting.", "center")}
       ${programCards(6)}
       <div class="section-actions">
         <a class="button button-secondary" href="${href("services/", depth)}">View all services</a>
@@ -427,6 +481,10 @@ function renderAbout(depth) {
         <strong>Hasnain Akber</strong>
       </div>
       <div class="team-preview reveal">
+        <figure class="founder-portrait">
+          <img src="${asset("assets/framer-founder.jpg", depth)}" alt="Hasnain Akber, founder of Mehfooz Internet" loading="lazy">
+          <figcaption>Founder of Mehfooz Internet</figcaption>
+        </figure>
         ${teamCards(depth)}
       </div>
     </div>
@@ -436,9 +494,9 @@ function renderAbout(depth) {
 
 function teamCards(depth) {
   const avatarMap = {
-    HA: "assets/avatar-ha.svg",
-    RJ: "assets/avatar-rj.svg",
-    CF: "assets/avatar-cf.svg"
+    HA: "assets/framer-founder.jpg",
+    RJ: "assets/framer-avatar-2.png",
+    CF: "assets/framer-avatar-1.jpg"
   };
   return `<div class="team-grid compact">
     ${team
@@ -473,7 +531,7 @@ function renderServices(depth) {
   </section>
   <section class="section section-dark">
     <div class="container">
-      ${sectionIntro("Program catalog", "Learning pathways from the Framer reference, rebuilt for clarity", "Each service has a clear purpose, audience, and outcome.", "center")}
+      ${sectionIntro("Program catalog", "Learning pathways built for clarity", "Each service has a clear purpose, audience, and outcome.", "center")}
       ${programCards()}
     </div>
   </section>
@@ -918,7 +976,10 @@ async function cleanOldGenerated() {
   for (const dir of pageDirs) {
     await rm(path.join(root, dir), { recursive: true, force: true });
   }
-  await rm(path.join(root, "assets"), { recursive: true, force: true });
+  await mkdir(path.join(root, "assets"), { recursive: true });
+  for (const file of assetFiles) {
+    await rm(path.join(root, file), { force: true });
+  }
   for (const file of ["404.html"]) {
     await rm(path.join(root, file), { force: true });
   }

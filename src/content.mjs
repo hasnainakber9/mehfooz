@@ -14,7 +14,6 @@ export const nav = [
   { label: "Home", href: "" },
   { label: "About", href: "about/" },
   { label: "Services", href: "services/" },
-  { label: "OSINT Techniques", href: "osint-techniques/" },
   { label: "Threat Intelligence", href: "threat-intelligence/" },
   { label: "Blog", href: "blog/" },
   { label: "Contact", href: "contact/" }
@@ -24,7 +23,7 @@ export const metrics = [
   {
     value: "50K+",
     label: "potential learners in year one",
-    detail: "Modeled from Framer reference goals and community program planning"
+    detail: "Projected reach across awareness programs and partner briefings"
   },
   {
     value: "8",
@@ -379,7 +378,7 @@ export const blogPosts = [
     category: "Threat Intelligence",
     author: "Mehfooz Research Desk",
     readTime: "6 min read",
-    image: "assets/blog-osint-threat-intelligence.svg",
+    image: "assets/framer-workshop.jpg",
     content: [
       {
         heading: "Public context changes the quality of the brief",
@@ -414,7 +413,7 @@ export const blogPosts = [
     category: "Digital Safety",
     author: "Mehfooz Field Team",
     readTime: "5 min read",
-    image: "assets/blog-digital-footprint.svg",
+    image: "assets/framer-about-visual.png",
     content: [
       {
         heading: "Your public presence is part of your security posture",
@@ -449,7 +448,7 @@ export const blogPosts = [
     category: "Ethics",
     author: "Mehfooz Analysis Desk",
     readTime: "7 min read",
-    image: "assets/blog-ethical-workflow.svg",
+    image: "assets/framer-community.jpg",
     content: [
       {
         heading: "Start with boundaries",
@@ -484,7 +483,7 @@ export const blogPosts = [
     category: "Analysis",
     author: "Mehfooz Research Desk",
     readTime: "5 min read",
-    image: "assets/blog-risk-scores.svg",
+    image: "assets/framer-program-card.png",
     content: [
       {
         heading: "A score is not the finding",
@@ -519,7 +518,7 @@ export const blogPosts = [
     category: "Workflow",
     author: "Mehfooz Analysis Desk",
     readTime: "6 min read",
-    image: "assets/blog-actionable-intelligence.svg",
+    image: "assets/framer-about-photo.jpg",
     content: [
       {
         heading: "Raw signals are messy",
