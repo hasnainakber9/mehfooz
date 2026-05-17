@@ -81,12 +81,12 @@ function sendJson(res, status, body) {
 const server = createServer(async (req, res) => {
   const requestUrl = new URL(req.url || "/", "http://localhost");
 
-  if (requestUrl.pathname === "/api/health") {
+  if (requestUrl.pathname === "/api/health" || requestUrl.pathname === "/api/health/") {
     sendJson(res, 200, botHealth());
     return;
   }
 
-  if (requestUrl.pathname === "/api/chat") {
+  if (requestUrl.pathname === "/api/chat" || requestUrl.pathname === "/api/chat/") {
     if (req.method !== "POST") {
       sendJson(res, 405, { error: "Method not allowed." });
       return;

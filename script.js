@@ -375,7 +375,7 @@
     };
 
     const askRemote = async (message) => {
-      const response = await fetch("/api/chat", {
+      const response = await fetch("/api/chat/", {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-session-id": sessionId },
         body: JSON.stringify({ message }),
