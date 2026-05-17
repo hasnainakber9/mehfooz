@@ -100,7 +100,7 @@ export const programs = [
     outcomes: ["Mini courses", "Knowledge checks", "Downloadable resources"]
   },
   {
-    id: "mehfoozbot",
+    id: "guided-safety-assistant",
     title: "Guided Safety Assistant",
     eyebrow: "Guided assistance",
     summary:

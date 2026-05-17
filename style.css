@@ -2634,3 +2634,641 @@ body {
     justify-content: flex-start;
   }
 }
+
+/* Immersive interaction layer */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 720ms ease, transform 720ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.experience-stage,
+.analysis-stage,
+.impact-visual,
+.program-preview {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform-style: preserve-3d;
+  transition: transform 260ms ease;
+}
+
+.experience-stage {
+  isolation: isolate;
+  min-height: 690px;
+  overflow: hidden;
+  border: 1px solid rgba(247, 244, 238, 0.18);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.08), transparent 38%),
+    radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 45%), rgba(255,255,255,0.14), transparent 28%),
+    #0d0d0d;
+}
+
+.premium-hero::after {
+  content: none;
+}
+
+.orbit-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  opacity: 0.86;
+  mix-blend-mode: screen;
+}
+
+.stage-image {
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(247, 244, 238, 0.16);
+}
+
+.stage-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.08);
+}
+
+.stage-image-main {
+  inset: 8% 8% 12% 8%;
+  opacity: 0.78;
+}
+
+.stage-image-main::after,
+.impact-visual::after,
+.analysis-stage figure::after,
+.contact-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 36%, rgba(0,0,0,0.62));
+}
+
+.stage-image-portrait {
+  right: 9%;
+  bottom: 7%;
+  width: min(260px, 42%);
+  aspect-ratio: 4 / 5;
+  transform: translateZ(72px);
+}
+
+.stage-card {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  gap: 0.28rem;
+  width: min(230px, 42%);
+  padding: 1.05rem;
+  border: 1px solid rgba(247, 244, 238, 0.2);
+  background: rgba(8, 8, 8, 0.72);
+  backdrop-filter: blur(18px);
+  transform: translateZ(120px);
+}
+
+.stage-card span,
+.stage-node,
+.impact-visual figcaption span,
+.program-preview span,
+.analysis-panel span {
+  color: #d8d1c4;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.stage-card strong,
+.program-preview h3,
+.analysis-panel strong {
+  color: #f7f4ee;
+  font-family: var(--display);
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.stage-card-top {
+  top: 7.2%;
+  right: 8.2%;
+}
+
+.stage-card-bottom {
+  left: 10%;
+  bottom: 11%;
+  width: min(320px, 52%);
+}
+
+.stage-node {
+  position: absolute;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid rgba(247, 244, 238, 0.2);
+  background: rgba(8, 8, 8, 0.54);
+  backdrop-filter: blur(12px);
+  animation: floatLabel 6s ease-in-out infinite;
+}
+
+.stage-node span {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 18px currentColor;
+}
+
+.node-a {
+  left: 11%;
+  top: 16%;
+}
+
+.node-b {
+  right: 15%;
+  top: 49%;
+  animation-delay: -1.8s;
+}
+
+.node-c {
+  left: 36%;
+  bottom: 7%;
+  animation-delay: -3.4s;
+}
+
+@keyframes floatLabel {
+  0%, 100% { transform: translate3d(0, 0, 130px); }
+  50% { transform: translate3d(0, -14px, 130px); }
+}
+
+.impact-lens {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(1.6rem, 4vw, 4rem);
+  align-items: stretch;
+}
+
+.impact-visual {
+  position: relative;
+  min-height: 620px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(9, 9, 9, 0.16);
+  background: #111;
+}
+
+.impact-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+}
+
+.impact-visual figcaption {
+  position: absolute;
+  z-index: 2;
+  left: clamp(1.25rem, 4vw, 2.5rem);
+  right: clamp(1.25rem, 4vw, 2.5rem);
+  bottom: clamp(1.25rem, 4vw, 2.5rem);
+  display: grid;
+  gap: 0.45rem;
+}
+
+.impact-visual figcaption strong {
+  color: #fff;
+  font-family: var(--display);
+  font-size: clamp(1.45rem, 3vw, 2.6rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.impact-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.impact-metrics .metric-card {
+  min-height: 0;
+  transform: translate3d(var(--lift-x, 0), var(--lift-y, 0), 0);
+  transition: transform 220ms ease, background 220ms ease, border-color 220ms ease;
+}
+
+.impact-metrics .metric-card:hover {
+  background: #090909;
+  border-color: #090909;
+  color: #f7f4ee;
+}
+
+.impact-metrics .metric-card:hover p,
+.impact-metrics .metric-card:hover span {
+  color: #d8d1c4;
+}
+
+.impact-metrics .metric-card:hover strong {
+  color: #fff;
+}
+
+.program-atlas {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: start;
+}
+
+.program-preview {
+  position: sticky;
+  top: 112px;
+  min-height: 660px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: #111;
+}
+
+.program-preview img {
+  width: 100%;
+  height: 100%;
+  min-height: 660px;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.08);
+  opacity: 0.82;
+  transition: opacity 240ms ease, transform 420ms ease;
+}
+
+.program-preview:hover img {
+  opacity: 0.96;
+  transform: scale(1.035);
+}
+
+.program-preview div {
+  position: absolute;
+  z-index: 2;
+  left: 1.4rem;
+  right: 1.4rem;
+  bottom: 1.4rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.program-preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.78));
+}
+
+.program-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.program-list .program-card {
+  cursor: pointer;
+  transform: translate3d(var(--lift-x, 0), var(--lift-y, 0), 0);
+  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+}
+
+.program-list .program-card.is-active,
+.program-list .program-card:hover,
+.program-list .program-card:focus {
+  outline: 0;
+  border-color: rgba(255,255,255,0.42);
+  background: rgba(255,255,255,0.08);
+}
+
+.analysis-studio {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 3vw, 3rem);
+  align-items: stretch;
+}
+
+.analysis-section {
+  overflow: hidden;
+}
+
+.analysis-narrative {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.analysis-copy {
+  position: sticky;
+  top: 112px;
+}
+
+.analysis-copy .section-intro {
+  max-width: none;
+}
+
+.analysis-studio .chart-stack {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.analysis-stage {
+  position: relative;
+  min-height: 570px;
+  overflow: hidden;
+  border: 1px solid rgba(9, 9, 9, 0.16);
+  background: #0a0a0a;
+}
+
+.analysis-stage .orbit-canvas {
+  opacity: 0.76;
+}
+
+.analysis-panel {
+  position: absolute;
+  z-index: 2;
+  top: 1.3rem;
+  left: 1.3rem;
+  right: 1.3rem;
+  display: grid;
+  gap: 0.7rem;
+  padding: 1.2rem;
+  border: 1px solid rgba(247,244,238,0.18);
+  background: rgba(8,8,8,0.62);
+  backdrop-filter: blur(18px);
+}
+
+.analysis-panel p {
+  max-width: 420px;
+  margin: 0;
+  color: #c6c0b7;
+}
+
+.analysis-stage figure {
+  position: absolute;
+  left: 1.3rem;
+  right: 1.3rem;
+  bottom: 1.3rem;
+  height: 235px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(247,244,238,0.18);
+}
+
+.analysis-stage figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.06);
+}
+
+.story-panel {
+  border-radius: 0;
+  background: rgba(251, 250, 247, 0.9);
+  box-shadow: none;
+}
+
+.program-showcase .program-card {
+  border-radius: 0;
+}
+
+.workflow {
+  position: relative;
+}
+
+.workflow::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(9,9,9,0.3), transparent);
+}
+
+.workflow-item {
+  overflow: hidden;
+  transform: translateY(0);
+  transition: transform 240ms ease, background 240ms ease, color 240ms ease, border-color 240ms ease;
+}
+
+.workflow-item::after {
+  content: "";
+  position: absolute;
+  inset: auto 1rem 1rem 1rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms ease, opacity 320ms ease;
+}
+
+.workflow-item.is-current,
+.workflow-item:hover {
+  transform: translateY(-8px);
+  background: #090909;
+  border-color: #090909;
+  color: #f7f4ee;
+}
+
+.workflow-item.is-current p,
+.workflow-item:hover p,
+.workflow-item.is-current span,
+.workflow-item:hover span {
+  color: #d8d1c4;
+}
+
+.workflow-item.is-current::after,
+.workflow-item:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.button,
+.nav-link,
+.text-link,
+.filter-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before,
+.filter-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.16);
+  transform: translateX(-105%);
+  transition: transform 280ms ease;
+}
+
+.button:hover::before,
+.filter-button:hover::before {
+  transform: translateX(105%);
+}
+
+.contact-form {
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-form::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(9,9,9,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(9,9,9,0.04) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: linear-gradient(160deg, rgba(0,0,0,0.7), transparent 64%);
+}
+
+.contact-form > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 1081px) {
+  .premium-hero .hero-grid {
+    grid-template-columns: minmax(0, 0.82fr) minmax(500px, 1fr);
+  }
+}
+
+@media (max-width: 1080px) {
+  .impact-lens,
+  .program-atlas,
+  .analysis-studio,
+  .analysis-narrative {
+    grid-template-columns: 1fr;
+  }
+
+  .analysis-copy {
+    position: relative;
+    top: auto;
+  }
+
+  .program-preview {
+    position: relative;
+    top: auto;
+    min-height: 480px;
+  }
+
+  .program-preview img {
+    min-height: 480px;
+  }
+
+  .program-list,
+  .impact-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .premium-hero {
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .premium-hero::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 22%, rgba(255,255,255,0.18), transparent 23%),
+      linear-gradient(180deg, rgba(8,8,8,0.72) 0%, rgba(8,8,8,0.92) 45%, #080808 100%),
+      url("assets/framer-workshop.jpg") center bottom / cover;
+    filter: grayscale(1) contrast(1.05);
+    opacity: 0.36;
+    pointer-events: none;
+  }
+
+  .premium-hero .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .experience-stage,
+  .analysis-stage {
+    min-height: 520px;
+  }
+
+  .stage-image-main {
+    inset: 0;
+  }
+
+  .stage-image-portrait {
+    width: 145px;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .stage-card {
+    width: 150px;
+    padding: 0.85rem;
+  }
+
+  .stage-card-top {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .stage-card-bottom {
+    left: 1rem;
+    bottom: 1rem;
+    width: calc(100% - 190px);
+  }
+
+  .stage-node {
+    display: none;
+  }
+
+  .impact-visual,
+  .program-preview,
+  .analysis-stage {
+    min-height: 420px;
+  }
+
+  .program-preview img {
+    min-height: 420px;
+  }
+
+  .program-list,
+  .impact-metrics,
+  .analysis-studio .chart-stack {
+    grid-template-columns: 1fr;
+  }
+
+  .analysis-panel {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .experience-stage,
+  .analysis-stage,
+  .impact-visual,
+  .program-preview,
+  .impact-metrics .metric-card,
+  .program-list .program-card {
+    transform: none !important;
+  }
+}

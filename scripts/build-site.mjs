@@ -206,22 +206,27 @@ function heroDashboard() {
 }
 
 function heroMedia(depth) {
-  return `<div class="premium-media" aria-label="mehfooz visual story">
-    <figure class="media-frame media-frame-main">
+  return `<div class="premium-media experience-stage" data-tilt-scene aria-label="Interactive digital safety visual system">
+    <canvas class="orbit-canvas" data-orbit-scene aria-hidden="true"></canvas>
+    <figure class="stage-image stage-image-main">
       <img src="${asset("assets/framer-workshop.jpg", depth)}" alt="Digital map of Gilgit Baltistan in a protective hand" loading="eager">
-      <figcaption>
-        <strong>Gilgit Baltistan first</strong>
-        <span>Local context, safer digital participation, and clear public-source analysis.</span>
-      </figcaption>
     </figure>
-    <figure class="media-frame media-frame-secondary">
+    <figure class="stage-image stage-image-portrait">
       <img src="${asset("assets/framer-community.jpg", depth)}" alt="Community member from Gilgit Baltistan" loading="eager">
     </figure>
-    <div class="media-stat-card">
-      <span>Modeled reach</span>
-      <strong>50K+</strong>
-      <small>learners and community members</small>
+    <div class="stage-card stage-card-top">
+      <span>source confidence</span>
+      <strong>92%</strong>
+      <small>verified public context</small>
     </div>
+    <div class="stage-card stage-card-bottom">
+      <span>visual brief</span>
+      <strong>Gilgit Baltistan first</strong>
+      <small>Local context, safer participation, clear analysis.</small>
+    </div>
+    <div class="stage-node node-a"><span></span>verify</div>
+    <div class="stage-node node-b"><span></span>educate</div>
+    <div class="stage-node node-c"><span></span>report</div>
   </div>`;
 }
 
@@ -250,6 +255,29 @@ function imageStory(depth) {
     <figure class="story-photo story-photo-small reveal">
       <img src="${asset("assets/framer-about-photo.jpg", depth)}" alt="Small group working together in a training session" loading="lazy">
     </figure>
+  </div>`;
+}
+
+function impactLens(depth) {
+  return `<div class="impact-lens">
+    <figure class="impact-visual reveal" data-tilt-scene>
+      <img src="${asset("assets/framer-about-visual.png", depth)}" alt="Digital literacy workshop participants using laptops" loading="lazy">
+      <figcaption>
+        <span>operational reach</span>
+        <strong>public literacy, analysis, and trust infrastructure</strong>
+      </figcaption>
+    </figure>
+    <div class="impact-metrics">
+      ${metrics
+        .map(
+          (metric, index) => `<article class="metric-card reveal" data-magnetic style="--delay:${index}">
+            <strong>${esc(metric.value)}</strong>
+            <span>${esc(metric.label)}</span>
+            <p>${esc(metric.detail)}</p>
+          </article>`
+        )
+        .join("")}
+    </div>
   </div>`;
 }
 
@@ -285,6 +313,47 @@ function programCards(limit = programs.length) {
   </div>`;
 }
 
+function programAtlas(depth, limit = programs.length) {
+  const imageMap = {
+    "community-engagement": "assets/framer-community.jpg",
+    "ulema-training": "assets/framer-about-photo.jpg",
+    "campus-program": "assets/framer-about-visual.png",
+    "virtual-events": "assets/framer-program-card.png",
+    digisaheli: "assets/framer-avatar-1.jpg",
+    "learning-hub": "assets/framer-workshop.jpg",
+    "guided-safety-assistant": "assets/framer-program-card.png",
+    "osint-desk": "assets/framer-workshop.jpg"
+  };
+  const selected = programs[0];
+  const selectedImage = imageMap[selected.id];
+  return `<div class="program-atlas">
+    <aside class="program-preview reveal" data-program-preview data-tilt-scene>
+      <img src="${asset(selectedImage, depth)}" alt="" loading="lazy" data-program-preview-image>
+      <div>
+        <span data-program-preview-kicker>${esc(selected.eyebrow)}</span>
+        <h3 data-program-preview-title>${esc(selected.title)}</h3>
+        <p data-program-preview-text>${esc(selected.summary)}</p>
+      </div>
+    </aside>
+    <div class="program-list">
+      ${programs
+        .slice(0, limit)
+        .map((program, index) => {
+          const image = imageMap[program.id] || "assets/framer-workshop.jpg";
+          return `<article class="program-card reveal${index === 0 ? " is-active" : ""}" id="${esc(program.id)}" data-program-card data-image="${asset(image, depth)}" data-kicker="${esc(program.eyebrow)}" data-title="${esc(program.title)}" data-text="${esc(program.summary)}">
+            <span>${esc(program.eyebrow)}</span>
+            <h3>${esc(program.title)}</h3>
+            <p>${esc(program.summary)}</p>
+            <ul>
+              ${program.outcomes.map((item) => `<li>${esc(item)}</li>`).join("")}
+            </ul>
+          </article>`;
+        })
+        .join("")}
+    </div>
+  </div>`;
+}
+
 function chartCard(title, text, chart, note = "Demo data for product visualization, not live intelligence.") {
   return `<article class="chart-card reveal">
     <div class="chart-copy">
@@ -294,6 +363,26 @@ function chartCard(title, text, chart, note = "Demo data for product visualizati
     <canvas data-chart="${esc(chart)}" aria-label="${esc(title)} chart"></canvas>
     <small>${esc(note)}</small>
   </article>`;
+}
+
+function analysisStudio(depth) {
+  return `<div class="analysis-studio">
+    <div class="analysis-stage reveal" data-tilt-scene>
+      <canvas class="orbit-canvas compact" data-orbit-scene data-orbit-variant="compact" aria-hidden="true"></canvas>
+      <div class="analysis-panel">
+        <span>live demo model</span>
+        <strong>signals become decisions</strong>
+        <p>Public-source signals are triaged, corroborated, scored, and translated into calm, actionable briefs.</p>
+      </div>
+      <figure>
+        <img src="${asset("assets/framer-about-photo.jpg", depth)}" alt="Small group working together in a training session" loading="lazy">
+      </figure>
+    </div>
+    <div class="chart-stack">
+      ${chartCard("Threat category distribution", "A quick view of common issue types in a demo monitoring queue.", "threatCategories")}
+      ${chartCard("Source reliability breakdown", "Shows why claims need context before they become recommendations.", "reliability")}
+    </div>
+  </div>`;
 }
 
 function blogCards(depth, limit = blogPosts.length) {
@@ -339,7 +428,7 @@ function renderHome(depth) {
   </section>
   <section class="section">
     <div class="container">
-      ${metricGrid()}
+      ${impactLens(depth)}
     </div>
   </section>
   <section class="section premium-story-section">
@@ -350,25 +439,22 @@ function renderHome(depth) {
   <section class="section section-dark program-showcase">
     <div class="container">
       ${sectionIntro("Our programs", "Built with a focus on learning, engagement, and innovation", "Each pathway is designed for real community learning, responsible online behavior, and partner-ready reporting.", "center")}
-      ${programCards(6)}
+      ${programAtlas(depth, 6)}
       <div class="section-actions">
         <a class="button button-secondary" href="${href("services/", depth)}">View all services</a>
       </div>
     </div>
   </section>
-  <section class="section">
-    <div class="container split">
-      <div>
+  <section class="section analysis-section">
+    <div class="container analysis-narrative">
+      <div class="analysis-copy">
         ${sectionIntro("OSINT analysis", "From public signals to responsible decisions", "mehfooz uses defensive public-source analysis to help teams understand misinformation, impersonation, digital exposure, and community risk.")}
         <ul class="check-list">
           ${ethics.map((item) => `<li>${esc(item)}</li>`).join("")}
         </ul>
         <a class="text-link" href="${href("threat-intelligence/", depth)}">See the analysis dashboard</a>
       </div>
-      <div class="chart-stack">
-        ${chartCard("Threat category distribution", "A quick view of common issue types in a demo monitoring queue.", "threatCategories")}
-        ${chartCard("Source reliability breakdown", "Shows why claims need context before they become recommendations.", "reliability")}
-      </div>
+      ${analysisStudio(depth)}
     </div>
   </section>
   <section class="section soft-band">
@@ -405,7 +491,7 @@ function workflowMarkup() {
   return `<ol class="workflow">
     ${workflow
       .map(
-        (item) => `<li class="workflow-item reveal">
+        (item) => `<li class="workflow-item reveal" data-flow-step>
           <span>${esc(item.step)}</span>
           <h3>${esc(item.title)}</h3>
           <p>${esc(item.text)}</p>

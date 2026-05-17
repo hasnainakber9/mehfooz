@@ -134,6 +134,186 @@
     });
   }
 
+  function initTiltScenes() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    qsa("[data-tilt-scene]").forEach((scene) => {
+      scene.addEventListener("pointermove", (event) => {
+        const rect = scene.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        scene.style.setProperty("--tilt-x", `${(-y * 8).toFixed(2)}deg`);
+        scene.style.setProperty("--tilt-y", `${(x * 10).toFixed(2)}deg`);
+        scene.style.setProperty("--mouse-x", `${(event.clientX - rect.left).toFixed(0)}px`);
+        scene.style.setProperty("--mouse-y", `${(event.clientY - rect.top).toFixed(0)}px`);
+      });
+      scene.addEventListener("pointerleave", () => {
+        scene.style.setProperty("--tilt-x", "0deg");
+        scene.style.setProperty("--tilt-y", "0deg");
+      });
+    });
+  }
+
+  function initMagneticCards() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    qsa("[data-magnetic], .program-card, .chart-card, .blog-card").forEach((card) => {
+      card.addEventListener("pointermove", (event) => {
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        card.style.setProperty("--lift-x", `${(x * 10).toFixed(2)}px`);
+        card.style.setProperty("--lift-y", `${(y * 10).toFixed(2)}px`);
+      });
+      card.addEventListener("pointerleave", () => {
+        card.style.setProperty("--lift-x", "0px");
+        card.style.setProperty("--lift-y", "0px");
+      });
+    });
+  }
+
+  function initProgramAtlas() {
+    qsa("[data-program-card]").forEach((card) => {
+      const atlas = card.closest(".program-atlas");
+      const preview = atlas?.querySelector("[data-program-preview]");
+      if (!preview) return;
+      const image = qs("[data-program-preview-image]", preview);
+      const kicker = qs("[data-program-preview-kicker]", preview);
+      const title = qs("[data-program-preview-title]", preview);
+      const text = qs("[data-program-preview-text]", preview);
+
+      const activate = () => {
+        qsa("[data-program-card]", atlas).forEach((item) => item.classList.toggle("is-active", item === card));
+        if (image && card.dataset.image) image.src = card.dataset.image;
+        if (kicker) kicker.textContent = card.dataset.kicker || "";
+        if (title) title.textContent = card.dataset.title || "";
+        if (text) text.textContent = card.dataset.text || "";
+      };
+
+      card.tabIndex = 0;
+      card.addEventListener("mouseenter", activate);
+      card.addEventListener("focus", activate);
+      card.addEventListener("click", activate);
+    });
+  }
+
+  function initFlowSteps() {
+    const steps = qsa("[data-flow-step]");
+    if (!steps.length || !("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle("is-current", entry.isIntersecting);
+        });
+      },
+      { threshold: 0.55 }
+    );
+    steps.forEach((step) => observer.observe(step));
+  }
+
+  function initOrbitScenes() {
+    const canvases = qsa("[data-orbit-scene]");
+    if (!canvases.length) return;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    canvases.forEach((canvas) => {
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      const compact = canvas.dataset.orbitVariant === "compact";
+      const nodes = Array.from({ length: compact ? 18 : 34 }, (_, index) => ({
+        angle: (index / (compact ? 18 : 34)) * Math.PI * 2,
+        ring: index % 3,
+        drift: 0.65 + (index % 5) * 0.13
+      }));
+      let width = 0;
+      let height = 0;
+      let dpr = 1;
+      let frame = 0;
+
+      function resize() {
+        const rect = canvas.getBoundingClientRect();
+        width = Math.max(320, Math.floor(rect.width));
+        height = Math.max(260, Math.floor(rect.height || rect.width * 0.65));
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function draw(now = 0) {
+        frame += 1;
+        ctx.clearRect(0, 0, width, height);
+        const cx = width * 0.5;
+        const cy = height * (compact ? 0.52 : 0.5);
+        const radiusX = width * (compact ? 0.34 : 0.38);
+        const radiusY = height * (compact ? 0.24 : 0.28);
+        const time = now * 0.00028;
+
+        ctx.strokeStyle = "rgba(247,244,238,0.16)";
+        ctx.lineWidth = 1;
+        [0.62, 0.82, 1].forEach((scale, index) => {
+          ctx.beginPath();
+          ctx.ellipse(cx, cy, radiusX * scale, radiusY * scale, 0, 0, Math.PI * 2);
+          ctx.stroke();
+          if (!compact && index === 1) {
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, radiusX * scale, radiusY * scale, Math.PI / 3, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+        });
+
+        const projected = nodes.map((node) => {
+          const angle = node.angle + time * node.drift;
+          const depth = (Math.sin(angle) + 1) / 2;
+          const ringScale = 0.62 + node.ring * 0.18;
+          return {
+            x: cx + Math.cos(angle) * radiusX * ringScale,
+            y: cy + Math.sin(angle) * radiusY * ringScale + (depth - 0.5) * 34,
+            depth,
+            size: 1.5 + depth * (compact ? 3 : 4)
+          };
+        });
+
+        ctx.strokeStyle = "rgba(247,244,238,0.12)";
+        ctx.lineWidth = 1;
+        projected.forEach((point, index) => {
+          const next = projected[(index + 5) % projected.length];
+          if (Math.abs(point.depth - next.depth) < 0.42) {
+            ctx.beginPath();
+            ctx.moveTo(point.x, point.y);
+            ctx.lineTo(next.x, next.y);
+            ctx.stroke();
+          }
+        });
+
+        projected.forEach((point) => {
+          ctx.beginPath();
+          ctx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(247,244,238,${0.2 + point.depth * 0.72})`;
+          ctx.fill();
+        });
+
+        const pulse = 0.5 + Math.sin(now * 0.002) * 0.5;
+        ctx.beginPath();
+        ctx.arc(cx, cy, compact ? 28 + pulse * 8 : 44 + pulse * 12, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(247,244,238,${0.18 + pulse * 0.16})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        if (!reduceMotion) requestAnimationFrame(draw);
+      }
+
+      resize();
+      draw();
+      if ("ResizeObserver" in window) {
+        new ResizeObserver(() => {
+          resize();
+          if (reduceMotion) draw();
+        }).observe(canvas);
+      } else {
+        window.addEventListener("resize", resize);
+      }
+    });
+  }
+
   function resizeCanvas(canvas) {
     const rect = canvas.getBoundingClientRect();
     const width = Math.max(300, Math.floor(rect.width));
@@ -422,6 +602,11 @@
     initBlogFilters();
     initContactForm();
     initBackToTop();
+    initTiltScenes();
+    initMagneticCards();
+    initProgramAtlas();
+    initFlowSteps();
+    initOrbitScenes();
     initCharts();
   });
 })();
