@@ -35,6 +35,44 @@ export const gbDistricts = [
   "Tangir"
 ];
 
+export const gbDistrictPins = [
+  { name: "Ghizer", x: 20, y: 33 },
+  { name: "Gupis-Yasin", x: 29, y: 27 },
+  { name: "Hunza", x: 48, y: 20 },
+  { name: "Shigar", x: 49, y: 28 },
+  { name: "Nagar", x: 44, y: 35 },
+  { name: "Gilgit", x: 37, y: 42 },
+  { name: "Skardu", x: 53, y: 44 },
+  { name: "Ghanche", x: 49, y: 39 },
+  { name: "Darel", x: 18, y: 39 },
+  { name: "Tangir", x: 30, y: 45 },
+  { name: "Diamer", x: 25, y: 49 },
+  { name: "Kharmang", x: 50, y: 47 },
+  { name: "Roundu", x: 36, y: 53 },
+  { name: "Astore", x: 54, y: 54 }
+];
+
+export const imageCredits = [
+  {
+    asset: "assets/open-rakaposhi-jutial.jpg",
+    title: "View of Rakaposhi from Jutial.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:View_of_Rakaposhi_from_Jutial.jpg",
+    license: "Wikimedia Commons"
+  },
+  {
+    asset: "assets/open-gb-people.jpg",
+    title: "Peoples of Gilgit Baltistan.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Peoples_of_Gilgit_Baltistan.jpg",
+    license: "Wikimedia Commons"
+  },
+  {
+    asset: "assets/open-students-computer.jpg",
+    title: "Students using a computer.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Students_using_a_computer.jpg",
+    license: "Wikimedia Commons"
+  }
+];
+
 export const metrics = [
   {
     value: "74%",
@@ -272,11 +310,11 @@ export const workflow = [
 
 export const chartData = {
   threatCategories: [
-    { label: "Misinformation", value: 31, color: "#dfe8bd" },
-    { label: "Impersonation", value: 18, color: "#a5b66f" },
-    { label: "Phishing", value: 19, color: "#69764b" },
-    { label: "Harassment", value: 16, color: "#414734" },
-    { label: "Data exposure", value: 16, color: "#1f241d" }
+    { label: "Misinformation", value: 31, color: "#dbeaff" },
+    { label: "Impersonation", value: 18, color: "#8fbaff" },
+    { label: "Phishing", value: 19, color: "#3d7dff" },
+    { label: "Harassment", value: 16, color: "#1f4ea8" },
+    { label: "Data exposure", value: 16, color: "#10234d" }
   ],
   riskTrend: [
     { label: "W1", value: 52 },
@@ -289,11 +327,11 @@ export const chartData = {
     { label: "W8", value: 63 }
   ],
   reliability: [
-    { label: "Official", value: 30, color: "#edf4d2" },
-    { label: "Corroborated media", value: 23, color: "#b8c987" },
-    { label: "Community reports", value: 20, color: "#7d8c56" },
-    { label: "Open web", value: 15, color: "#4b533d" },
-    { label: "Archived material", value: 12, color: "#252b22" }
+    { label: "Official", value: 30, color: "#eef6ff" },
+    { label: "Corroborated media", value: 23, color: "#b9d8ff" },
+    { label: "Community reports", value: 20, color: "#74a7ff" },
+    { label: "Open web", value: 15, color: "#2855b8" },
+    { label: "Archived material", value: 12, color: "#111f46" }
   ],
   regionBreakdown: [
     { label: "Gilgit", value: 28 },
@@ -306,10 +344,10 @@ export const chartData = {
     { label: "Nagar", value: 8 }
   ],
   caseStatus: [
-    { label: "Triage", value: 24, color: "#edf4d2" },
-    { label: "In analysis", value: 28, color: "#a5b66f" },
-    { label: "Ready for review", value: 18, color: "#69764b" },
-    { label: "Closed", value: 30, color: "#252b22" }
+    { label: "Triage", value: 24, color: "#eef6ff" },
+    { label: "In analysis", value: 28, color: "#8fbaff" },
+    { label: "Ready for review", value: 18, color: "#3d7dff" },
+    { label: "Closed", value: 30, color: "#111f46" }
   ],
   workflowFunnel: [
     { label: "Signals", value: 92 },
@@ -319,10 +357,10 @@ export const chartData = {
     { label: "Reported", value: 31 }
   ],
   severity: [
-    { label: "Low", value: 34, color: "#edf4d2" },
-    { label: "Medium", value: 39, color: "#a5b66f" },
-    { label: "High", value: 20, color: "#69764b" },
-    { label: "Critical", value: 7, color: "#252b22" }
+    { label: "Low", value: 34, color: "#eef6ff" },
+    { label: "Medium", value: 39, color: "#8fbaff" },
+    { label: "High", value: 20, color: "#3d7dff" },
+    { label: "Critical", value: 7, color: "#111f46" }
   ],
   investigationTimeline: [
     { label: "Signal detected", value: 18 },
@@ -412,7 +450,7 @@ export const blogPosts = [
     category: "Community",
     author: "mehfooz editorial",
     readTime: "5 min read",
-    image: "assets/blog-youth-peace.svg",
+    image: "assets/open-gb-people.jpg",
     content: [
       {
         heading: "Youth for a Peaceful Society",
@@ -436,7 +474,7 @@ export const blogPosts = [
     category: "Community",
     author: "mehfooz editorial",
     readTime: "8 min read",
-    image: "assets/blog-maternal-care.svg",
+    image: "assets/open-rakaposhi-jutial.jpg",
     content: [
       {
         heading: "An Analysis of How Marginalisation Exacerbates Maternal Mortality Rate: The Case of Balochistan and Gilgit Baltistan",
@@ -463,7 +501,7 @@ export const blogPosts = [
     category: "Digital Media",
     author: "mehfooz editorial",
     readTime: "6 min read",
-    image: "assets/blog-digital-propaganda.svg",
+    image: "assets/open-students-computer.jpg",
     content: [
       {
         heading: "Pakistan’s rise in digital propaganda: what’s next?",

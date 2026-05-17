@@ -6,7 +6,8 @@ import {
   ethics,
   faqs,
   featured,
-  gbDistricts,
+  gbDistrictPins,
+  imageCredits,
   metrics,
   nav,
   osintTechniques,
@@ -27,6 +28,7 @@ const pageDirs = [
   "threat-intelligence",
   "blog",
   "contact",
+  "image-credits",
   "team",
   "privacy"
 ];
@@ -34,9 +36,6 @@ const pageDirs = [
 const assetFiles = [
   "assets/brand-mark.svg",
   "assets/og-card.svg",
-  "assets/blog-youth-peace.svg",
-  "assets/blog-maternal-care.svg",
-  "assets/blog-digital-propaganda.svg",
   "assets/avatar-ha.svg",
   "assets/avatar-zk.svg",
   "assets/avatar-sa.svg"
@@ -47,7 +46,10 @@ const staleAssetFiles = [
   "assets/blog-digital-footprint.svg",
   "assets/blog-ethical-workflow.svg",
   "assets/blog-risk-scores.svg",
-  "assets/blog-actionable-intelligence.svg"
+  "assets/blog-actionable-intelligence.svg",
+  "assets/blog-youth-peace.svg",
+  "assets/blog-maternal-care.svg",
+  "assets/blog-digital-propaganda.svg"
 ];
 
 function esc(value = "") {
@@ -175,7 +177,6 @@ function footer(depth) {
   <div class="container footer-grid">
     <div>
       <a class="brand footer-brand" href="${href("", depth)}">
-        <img src="${asset("assets/framer-logo.png", depth)}" alt="" width="42" height="42">
         <span><strong>mehfooz</strong></span>
       </a>
       <p>${esc(site.description)}</p>
@@ -191,6 +192,7 @@ function footer(depth) {
         ${nav.map((item) => `<a href="${href(item.href, depth)}">${esc(item.label)}</a>`).join("")}
         <a href="${href("team/", depth)}">Team</a>
         <a href="${href("privacy/", depth)}">Privacy</a>
+        <a href="${href("image-credits/", depth)}">Image credits</a>
       </div>
     </div>
     <div>
@@ -248,8 +250,8 @@ function heroMedia(depth) {
     }
   ];
 
-  return `<div class="hero-signal-composition" data-tilt-scene aria-label="Gilgit Baltistan community signal network">
-    <img class="hero-reference-scene" src="${asset("assets/hero-gb-community-signal.png", depth)}" alt="Monochrome community education scene with a Gilgit Baltistan signal map" loading="eager">
+  return `<div class="hero-signal-composition" data-tilt-scene aria-label="Gilgit Baltistan district signal network">
+    <img class="hero-reference-scene" src="${asset("assets/open-rakaposhi-jutial.jpg", depth)}" alt="View of Rakaposhi and mountains near Gilgit Baltistan" loading="eager">
     <div class="signal-depth signal-depth-a" aria-hidden="true"></div>
     <div class="signal-depth signal-depth-b" aria-hidden="true"></div>
     <div class="signal-particles" aria-hidden="true">
@@ -260,17 +262,10 @@ function heroMedia(depth) {
       <span></span><span></span><span></span>
     </div>
 
-    <span class="signal-node point-ghizer" aria-hidden="true"></span>
-    <span class="signal-node point-hunza" aria-hidden="true"></span>
-    <span class="signal-node point-skardu" aria-hidden="true"></span>
-    <span class="signal-node point-astore" aria-hidden="true"></span>
-    <span class="signal-node point-khaplu" aria-hidden="true"></span>
-
-    <div class="district-layer" aria-label="Gilgit-Baltistan district coverage">
-      <span>GB district layer</span>
-      <div>
-        ${gbDistricts.map((district, index) => `<i style="--chip-delay:${index * 60}ms">${esc(district)}</i>`).join("")}
-      </div>
+    <div class="district-pin-field" aria-label="Gilgit-Baltistan districts pinned on the map">
+      ${gbDistrictPins
+        .map((district, index) => `<span class="district-pin" style="--x:${district.x}%;--y:${district.y}%;--pin-delay:${index * 55}ms"><i></i><strong>${esc(district.name)}</strong></span>`)
+        .join("")}
     </div>
 
     <svg class="action-connectors" viewBox="0 0 320 320" aria-hidden="true">
@@ -310,7 +305,7 @@ function partnerRail(depth) {
 function imageStory(depth) {
   return `<div class="image-story">
     <figure class="story-photo story-photo-large reveal">
-      <img src="${asset("assets/framer-about-visual.png", depth)}" alt="Digital literacy workshop participants using laptops" loading="lazy">
+      <img src="${asset("assets/open-gb-people.jpg", depth)}" alt="People in Gilgit Baltistan speaking together outdoors" loading="lazy">
     </figure>
     <div class="story-panel reveal">
       <span class="kicker">Community-first safety</span>
@@ -318,16 +313,13 @@ function imageStory(depth) {
       <p>mehfooz combines digital safety training, public-source analysis, and clear reporting so partners and communities can make better decisions online with confidence.</p>
       <a class="text-link" href="${href("about/", depth)}">Read the mission</a>
     </div>
-    <figure class="story-photo story-photo-small reveal">
-      <img src="${asset("assets/framer-about-photo.jpg", depth)}" alt="Small group working together in a training session" loading="lazy">
-    </figure>
   </div>`;
 }
 
 function impactLens(depth) {
   return `<div class="impact-lens">
     <figure class="impact-visual reveal" data-tilt-scene>
-      <img src="${asset("assets/framer-workshop.jpg", depth)}" alt="Abstract Gilgit Baltistan digital signal artwork" loading="lazy">
+      <img src="${asset("assets/open-students-computer.jpg", depth)}" alt="Students working together at a classroom computer" loading="lazy">
       <figcaption>
         <span>operational reach</span>
         <strong>public literacy, analysis, and trust infrastructure</strong>
@@ -381,14 +373,14 @@ function programCards(limit = programs.length) {
 
 function programAtlas(depth, limit = programs.length) {
   const imageMap = {
-    "community-engagement": "assets/framer-community.jpg",
-    "ulema-training": "assets/framer-about-photo.jpg",
-    "campus-program": "assets/framer-about-visual.png",
+    "community-engagement": "assets/framer-program-card.png",
+    "ulema-training": "assets/open-gb-people.jpg",
+    "campus-program": "assets/open-students-computer.jpg",
     "virtual-events": "assets/framer-program-card.png",
     digisaheli: "assets/framer-avatar-1.jpg",
-    "learning-hub": "assets/framer-workshop.jpg",
+    "learning-hub": "assets/open-rakaposhi-jutial.jpg",
     mehfoozbot: "assets/framer-program-card.png",
-    "osint-desk": "assets/framer-workshop.jpg"
+    "osint-desk": "assets/hero-gb-community-signal.png"
   };
   const selected = programs[0];
   const selectedImage = imageMap[selected.id];
@@ -405,7 +397,7 @@ function programAtlas(depth, limit = programs.length) {
       ${programs
         .slice(0, limit)
         .map((program, index) => {
-          const image = imageMap[program.id] || "assets/framer-workshop.jpg";
+          const image = imageMap[program.id] || "assets/hero-gb-community-signal.png";
           return `<article class="program-card reveal${index === 0 ? " is-active" : ""}" id="${esc(program.id)}" data-program-card data-image="${asset(image, depth)}" data-kicker="${esc(program.eyebrow)}" data-title="${esc(program.title)}" data-text="${esc(program.summary)}">
             <span>${esc(program.eyebrow)}</span>
             <h3>${esc(program.title)}</h3>
@@ -440,7 +432,7 @@ function analysisStudio(depth) {
         <p>Public-source signals are triaged, corroborated, scored, and translated into calm, actionable briefs.</p>
       </div>
       <figure>
-        <img src="${asset("assets/framer-program-card.png", depth)}" alt="A digital learning program interface card" loading="lazy">
+        <img src="${asset("assets/hero-gb-community-signal.png", depth)}" alt="District signal network visual" loading="lazy">
       </figure>
     </div>
     <div class="chart-stack">
@@ -450,23 +442,27 @@ function analysisStudio(depth) {
   </div>`;
 }
 
-function blogCards(depth, limit = blogPosts.length) {
+function blogCards(depth, limit = blogPosts.length, options = {}) {
+  const showImages = options.images !== false;
   return `<div class="blog-grid">
     ${blogPosts
       .slice(0, limit)
-      .map(
-        (post) => `<article class="blog-card reveal" data-category="${esc(post.category)}">
-          <a class="blog-image" href="${href(`blog/${post.slug}/`, depth)}">
+      .map((post) => {
+        const imageMarkup = showImages
+          ? `          <a class="blog-image" href="${href(`blog/${post.slug}/`, depth)}">
             <img src="${asset(post.image, depth)}" alt="" loading="lazy">
           </a>
-          <div class="blog-body">
+`
+          : "";
+        return `<article class="blog-card reveal" data-category="${esc(post.category)}">
+${imageMarkup}          <div class="blog-body">
             <div class="blog-meta"><span>${esc(post.category)}</span><span>${esc(post.displayDate)}</span><span>${esc(post.readTime)}</span></div>
             <h3><a href="${href(`blog/${post.slug}/`, depth)}">${esc(post.title)}</a></h3>
             <p>${esc(post.summary)}</p>
             <a class="text-link" href="${href(`blog/${post.slug}/`, depth)}">Read article</a>
           </div>
-        </article>`
-      )
+        </article>`;
+      })
       .join("")}
   </div>`;
 }
@@ -544,7 +540,7 @@ function renderHome(depth) {
   <section class="section section-dark">
     <div class="container">
       ${sectionIntro("Blog", "Explore digital resilience insights", "Professional notes on ethical OSINT, digital footprint mapping, risk scoring, and community safety.", "center")}
-      ${blogCards(depth, 3)}
+      ${blogCards(depth, 3, { images: false })}
       <div class="section-actions">
         <a class="button button-secondary" href="${href("blog/", depth)}">Explore more</a>
       </div>
@@ -602,7 +598,7 @@ function testimonialMarkup() {
 }
 
 function renderAbout(depth) {
-  return `${pageHero("About us", "Redefining the digital landscape", "mehfooz began with a simple belief: safer digital participation depends on local trust, clear education, and practical tools that respect the people they serve.", depth, "assets/framer-about-visual.png")}
+  return `${pageHero("About us", "Redefining the digital landscape", "mehfooz began with a simple belief: safer digital participation depends on local trust, clear education, and practical tools that respect the people they serve.", depth, "assets/open-gb-people.jpg")}
   <section class="section">
     <div class="container">
       ${metricGrid()}
@@ -645,9 +641,9 @@ function renderAbout(depth) {
 
 function teamCards(depth) {
   const avatarMap = {
-    HA: "assets/framer-founder.jpg",
-    ZK: "assets/framer-avatar-2.png",
-    SA: "assets/framer-avatar-1.jpg"
+    HA: "assets/avatar-ha.svg",
+    ZK: "assets/avatar-zk.svg",
+    SA: "assets/avatar-sa.svg"
   };
   return `<div class="team-grid compact">
     ${team
@@ -664,7 +660,7 @@ function teamCards(depth) {
 }
 
 function renderServices(depth) {
-  return `${pageHero("Services and solutions", "Programs, OSINT, and threat intelligence support", "A complete view of mehfooz service pathways, from community workshops to defensive public-source investigation and reporting.", depth, "assets/framer-community.jpg")}
+  return `${pageHero("Services and solutions", "Programs, OSINT, and threat intelligence support", "A complete view of mehfooz service pathways, from community workshops to defensive public-source investigation and reporting.", depth, "assets/open-students-computer.jpg")}
   <section class="section">
     <div class="container solution-grid">
       ${solutions
@@ -708,7 +704,7 @@ function renderServices(depth) {
 }
 
 function renderOsint(depth) {
-  return `${pageHero("OSINT techniques", "Ethical public-source analysis for defensive work", "A professional, non-harmful overview of how mehfooz structures open-source intelligence collection, enrichment, analysis, and reporting.", depth, "assets/framer-workshop.jpg")}
+  return `${pageHero("OSINT techniques", "Ethical public-source analysis for defensive work", "A professional, non-harmful overview of how mehfooz structures open-source intelligence collection, enrichment, analysis, and reporting.", depth, "assets/hero-gb-community-signal.png")}
   <section class="section">
     <div class="container split">
       <div>
@@ -746,7 +742,7 @@ function renderOsint(depth) {
 }
 
 function renderThreatIntel(depth) {
-  return `${pageHero("Threat intelligence and analysis", "Signal intelligence for safer decisions", "A refined intelligence view for public-source findings, confidence levels, case status, and risk movement.", depth, "assets/framer-about-photo.jpg")}
+  return `${pageHero("Threat intelligence and analysis", "Signal intelligence for safer decisions", "A refined intelligence view for public-source findings, confidence levels, case status, and risk movement.", depth, "assets/open-rakaposhi-jutial.jpg")}
   <section class="section">
     <div class="container dashboard-grid">
       ${chartCard("Threat category distribution", "Issue types seen in a defensive analysis queue.", "threatCategories")}
@@ -776,7 +772,7 @@ function renderThreatIntel(depth) {
 
 function renderBlog(depth) {
   const categories = [...new Set(blogPosts.map((post) => post.category))];
-  return `${pageHero("Blog", "Digital resources and community updates", "Articles on ethical OSINT, digital resilience, risk scoring, misinformation response, and public-source intelligence workflows.", depth, "assets/framer-about-photo.jpg")}
+  return `${pageHero("Blog", "Digital resources and community updates", "Articles on ethical OSINT, digital resilience, risk scoring, misinformation response, and public-source intelligence workflows.", depth, "assets/hero-gb-community-signal.png")}
   <section class="section">
     <div class="container">
       <div class="filter-row" aria-label="Blog filters">
@@ -824,13 +820,13 @@ function renderPost(post, depth) {
 }
 
 function renderContact(depth) {
-  return `${pageHero("Contact us", "Begin the conversation", "Tell us about your program, training need, public-source analysis question, or digital safety challenge.", depth, "assets/framer-about-photo.jpg")}
+  return `${pageHero("Contact us", "Begin the conversation", "Tell us about your program, training need, public-source analysis question, or digital safety challenge.", depth, "assets/open-rakaposhi-jutial.jpg")}
   <section class="section">
     <div class="container contact-grid">
       <div>
         ${sectionIntro("Start here", "A focused first brief", "Use the form for program, analysis, training, or partnership requests. Submissions are handled through the existing secure form endpoint.")}
         <figure class="contact-image reveal">
-          <img src="${asset("assets/framer-about-photo.jpg", depth)}" alt="A small group working together in a training session" loading="lazy">
+          <img src="${asset("assets/open-gb-people.jpg", depth)}" alt="People in Gilgit Baltistan speaking together outdoors" loading="lazy">
         </figure>
       </div>
       <form class="contact-form reveal" action="${esc(site.formAction)}" method="POST" data-contact-form>
@@ -891,7 +887,25 @@ function renderPrivacy(depth) {
   </section>`;
 }
 
-function pageSignalVisual(depth, image = "assets/framer-workshop.jpg") {
+function renderImageCredits(depth) {
+  return `${pageHero("Image credits", "Open-source visual references", "A compact attribution page for real imagery used across the mehfooz website.", depth, "assets/open-rakaposhi-jutial.jpg")}
+  <section class="section">
+    <div class="container credits-list">
+      ${imageCredits
+        .map(
+          (credit) => `<article class="credit-card reveal">
+        <strong>${esc(credit.title)}</strong>
+        <span>${esc(credit.asset)}</span>
+        <p>${esc(credit.license)}</p>
+        <a class="text-link" href="${esc(credit.source)}" rel="noopener">View source</a>
+      </article>`
+        )
+        .join("")}
+    </div>
+  </section>`;
+}
+
+function pageSignalVisual(depth, image = "assets/open-rakaposhi-jutial.jpg") {
   return `<aside class="page-signal-visual reveal" data-tilt-scene>
     <canvas class="orbit-canvas compact" data-orbit-scene data-orbit-variant="compact" aria-hidden="true"></canvas>
     <img src="${asset(image, depth)}" alt="" loading="eager">
@@ -901,7 +915,7 @@ function pageSignalVisual(depth, image = "assets/framer-workshop.jpg") {
   </aside>`;
 }
 
-function pageHero(kicker, title, text, depth, image = "assets/framer-workshop.jpg") {
+function pageHero(kicker, title, text, depth, image = "assets/open-rakaposhi-jutial.jpg") {
   return `<section class="page-hero section-dark">
     <div class="container page-hero-inner">
       <div class="page-hero-copy reveal">
@@ -931,8 +945,8 @@ function logoSvg() {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="mehfooz mark">
   <rect width="96" height="96" rx="20" fill="#f8fbff"/>
   <path d="M25 67 46 20" stroke="#07111f" stroke-width="11" stroke-linecap="round"/>
-  <path d="M43 69 64 22" stroke="#3a3a3a" stroke-width="11" stroke-linecap="round"/>
-  <path d="M61 67 76 34" stroke="#77736a" stroke-width="11" stroke-linecap="round"/>
+  <path d="M43 69 64 22" stroke="#09265c" stroke-width="11" stroke-linecap="round"/>
+  <path d="M61 67 76 34" stroke="#0f63d8" stroke-width="11" stroke-linecap="round"/>
 </svg>`;
 }
 
@@ -975,33 +989,12 @@ function avatarSvg(initials, color) {
 }
 
 async function writeAssetFiles() {
-  const blogPatterns = {
-    "assets/blog-youth-peace.svg": blogImage(
-      "Youth for a peaceful society",
-      "#c6db7b",
-      '<g fill="none" stroke="#c6db7b" stroke-width="8"><circle cx="270" cy="310" r="64"/><circle cx="500" cy="260" r="42"/><circle cx="730" cy="330" r="58"/><path d="M334 310C420 220 560 220 688 330M540 260c70-34 132-10 190 70"/></g><g fill="#edf4d2"><circle cx="270" cy="310" r="14"/><circle cx="500" cy="260" r="12"/><circle cx="730" cy="330" r="14"/></g>'
-    ),
-    "assets/blog-maternal-care.svg": blogImage(
-      "Unequal maternal care",
-      "#a5b66f",
-      '<g fill="none" stroke="#a5b66f" stroke-width="9"><path d="M230 365c70-135 205-135 275 0 70-135 205-135 275 0"/><path d="M305 392h410"/><circle cx="370" cy="280" r="42"/><circle cx="640" cy="280" r="42"/></g><path d="M220 470c190-52 420-52 620 0" fill="none" stroke="#edf4d2" stroke-width="8" opacity=".6"/>'
-    ),
-    "assets/blog-digital-propaganda.svg": blogImage(
-      "Digital propaganda",
-      "#69764b",
-      '<g fill="none" stroke="#a5b66f" stroke-width="8"><path d="M220 340h190l92-84h206l120 112h160"/><path d="M255 250c124-90 268-40 362-92 92-50 194-24 272 22"/></g><g fill="#edf4d2"><circle cx="220" cy="340" r="16"/><circle cx="502" cy="256" r="16"/><circle cx="828" cy="368" r="16"/><circle cx="889" cy="180" r="13"/></g>'
-    )
-  };
-
   await mkdir(path.join(root, "assets"), { recursive: true });
   await writeFile(path.join(root, "assets/brand-mark.svg"), logoSvg(), "utf8");
   await writeFile(path.join(root, "assets/og-card.svg"), ogSvg(), "utf8");
   await writeFile(path.join(root, "assets/avatar-ha.svg"), avatarSvg("HA", "#111111"), "utf8");
-  await writeFile(path.join(root, "assets/avatar-zk.svg"), avatarSvg("ZK", "#5c5850"), "utf8");
-  await writeFile(path.join(root, "assets/avatar-sa.svg"), avatarSvg("SA", "#8d867a"), "utf8");
-  for (const [file, svg] of Object.entries(blogPatterns)) {
-    await writeFile(path.join(root, file), svg, "utf8");
-  }
+  await writeFile(path.join(root, "assets/avatar-zk.svg"), avatarSvg("ZK", "#09265c"), "utf8");
+  await writeFile(path.join(root, "assets/avatar-sa.svg"), avatarSvg("SA", "#0f63d8"), "utf8");
 }
 
 async function writePages() {
@@ -1064,6 +1057,14 @@ async function writePages() {
       title: "Contact",
       description: "Contact mehfooz about programs, digital safety workshops, OSINT analysis, or threat intelligence reporting.",
       body: renderContact(1)
+    },
+    {
+      file: "image-credits/index.html",
+      active: "image-credits/",
+      depth: 1,
+      title: "Image Credits",
+      description: "Image credits and source links for open-source visual references used by mehfooz.",
+      body: renderImageCredits(1)
     },
     {
       file: "team/index.html",
