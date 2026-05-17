@@ -210,33 +210,81 @@ function sectionIntro(kicker, title, text, align = "") {
   </div>`;
 }
 
+function actionIcon(type) {
+  const icons = {
+    verify: `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><path d="m16 16 4 4"></path></svg>`,
+    educate: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5c2.8-.8 5.4-.3 8 1.5 2.6-1.8 5.2-2.3 8-1.5v11c-2.8-.8-5.4-.3-8 1.5-2.6-1.8-5.2-2.3-8-1.5v-11Z"></path><path d="M12 8v11"></path></svg>`,
+    report: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 18 1.2-4.5L15.7 3a2.1 2.1 0 0 1 3 3L8.2 16.5 4 18Z"></path><path d="m14 4.7 5.3 5.3"></path></svg>`
+  };
+  return icons[type];
+}
+
 function heroMedia(depth) {
-  return `<div class="premium-media experience-stage" data-tilt-scene aria-label="Interactive digital safety visual system">
-    <canvas class="orbit-canvas" data-orbit-scene aria-hidden="true"></canvas>
-    <figure class="stage-image stage-image-main">
-      <img src="${asset("assets/framer-workshop.jpg", depth)}" alt="Digital map of Gilgit Baltistan in a protective hand" loading="eager">
-    </figure>
-    <figure class="stage-image stage-image-portrait">
-      <img src="${asset("assets/framer-community.jpg", depth)}" alt="Community member from Gilgit Baltistan" loading="eager">
-    </figure>
-    <div class="stage-card stage-card-top">
-      <span>source confidence</span>
-      <strong>92%</strong>
-      <small>verified public context</small>
+  const actions = [
+    {
+      href: "threat-intelligence/",
+      icon: "verify",
+      title: "Verify",
+      text: "Check information from trusted sources"
+    },
+    {
+      href: "services/",
+      icon: "educate",
+      title: "Educate",
+      text: "Build digital literacy together"
+    },
+    {
+      href: "contact/",
+      icon: "report",
+      title: "Report",
+      text: "Share what matters safely and responsibly"
+    }
+  ];
+
+  return `<div class="hero-signal-composition" data-tilt-scene aria-label="Gilgit Baltistan community signal network">
+    <img class="hero-reference-scene" src="${asset("assets/hero-gb-community-signal.png", depth)}" alt="Monochrome community education scene with a Gilgit Baltistan signal map" loading="eager">
+    <div class="signal-depth signal-depth-a" aria-hidden="true"></div>
+    <div class="signal-depth signal-depth-b" aria-hidden="true"></div>
+    <div class="signal-particles" aria-hidden="true">
+      ${Array.from({ length: 34 }, (_, index) => `<span style="--x:${8 + ((index * 29) % 86)}%;--y:${5 + ((index * 47) % 82)}%;--s:${1 + (index % 4)}px;--d:${(index % 7) * 0.35}s"></span>`).join("")}
     </div>
-    <div class="stage-card stage-card-bottom">
-      <span>visual brief</span>
-      <strong>Gilgit Baltistan first</strong>
-      <small>Local context, safer participation, clear analysis.</small>
+
+    <div class="hero-radar-rings" aria-hidden="true">
+      <span></span><span></span><span></span>
     </div>
-    <div class="hero-action-stack" aria-label="Core actions">
-      <a href="${href("threat-intelligence/", depth)}"><span>01</span><strong>Verify</strong><i aria-hidden="true">-></i></a>
-      <a href="${href("services/", depth)}"><span>02</span><strong>Educate</strong><i aria-hidden="true">-></i></a>
-      <a href="${href("contact/", depth)}"><span>03</span><strong>Report</strong><i aria-hidden="true">-></i></a>
+
+    <span class="signal-node point-ghizer" aria-hidden="true"></span>
+    <span class="signal-node point-hunza" aria-hidden="true"></span>
+    <span class="signal-node point-skardu" aria-hidden="true"></span>
+    <span class="signal-node point-astore" aria-hidden="true"></span>
+    <span class="signal-node point-khaplu" aria-hidden="true"></span>
+
+    <div class="map-location loc-ghizer"><strong>GHIZER</strong><span>Local Education Hub</span></div>
+    <div class="map-location loc-hunza"><strong>HUNZA</strong><span>Community Classroom</span></div>
+    <div class="map-location loc-skardu"><strong>SKARDU</strong><span>Youth Collective HQ</span></div>
+    <div class="map-location loc-astore"><strong>ASTORE</strong><span>Field Reporter Hub</span></div>
+    <div class="map-location loc-khaplu"><strong>KHAPLU</strong><span>Cultural Archive</span></div>
+
+    <svg class="action-connectors" viewBox="0 0 320 320" aria-hidden="true">
+      <path d="M18 110C66 110 91 78 136 78H172"></path>
+      <path d="M18 160C66 160 91 160 136 160H172"></path>
+      <path d="M18 210C66 210 91 242 136 242H172"></path>
+      <circle cx="18" cy="110" r="3"></circle>
+      <circle cx="18" cy="160" r="3"></circle>
+      <circle cx="18" cy="210" r="3"></circle>
+    </svg>
+
+    <div class="signal-action-stack" aria-label="Core actions">
+      ${actions
+        .map(
+          (item, index) => `<a class="signal-action-card" href="${href(item.href, depth)}" style="--card-delay:${index * 120}ms">
+        <span class="signal-action-icon">${actionIcon(item.icon)}</span>
+        <span class="signal-action-copy"><strong>${esc(item.title)}</strong><small>${esc(item.text)}</small></span>
+        <i aria-hidden="true">-></i>
+      </a>`
+        )
+        .join("")}
     </div>
-    <div class="stage-node node-a"><span></span>Ghizer</div>
-    <div class="stage-node node-b"><span></span>Skardu</div>
-    <div class="stage-node node-c"><span></span>Hunza</div>
   </div>`;
 }
 
