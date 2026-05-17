@@ -3,7 +3,7 @@ export const site = {
   shortName: "mehfooz",
   tagline: "Pioneering responsible digital experiences",
   description:
-    "mehfooz builds culturally aware digital literacy programs, ethical OSINT workflows, and threat intelligence reporting for safer online communities.",
+    "mehfooz helps communities and organizations navigate the digital world safely through culturally relevant digital literacy, misinformation resilience, and ethical public-source intelligence workflows.",
   formAction: "https://formspree.io/f/xnngrpzb",
   contactPage: "https://www.mehfooz.me/contact/",
   copyrightYear: "2026"
@@ -18,6 +18,23 @@ export const nav = [
   { label: "Contact", href: "contact/" }
 ];
 
+export const gbDistricts = [
+  "Astore",
+  "Darel",
+  "Diamer",
+  "Ghanche",
+  "Ghizer",
+  "Gilgit",
+  "Gupis-Yasin",
+  "Hunza",
+  "Kharmang",
+  "Nagar",
+  "Roundu",
+  "Shigar",
+  "Skardu",
+  "Tangir"
+];
+
 export const metrics = [
   {
     value: "74%",
@@ -26,8 +43,8 @@ export const metrics = [
   },
   {
     value: "68%",
-    label: "verification practice",
-    detail: "Learning pathways are designed to make checking claims feel natural before sharing"
+    label: "misinformation readiness",
+    detail: "Learning pathways make checking claims feel natural before sharing"
   },
   {
     value: "81%",
@@ -42,11 +59,11 @@ export const metrics = [
 ];
 
 export const featured = [
-  "Community Learning",
-  "Digital Safety",
-  "Misinformation Response",
-  "OSINT Analysis",
-  "Threat Intelligence",
+  "Community learning",
+  "Digital safety",
+  "Misinformation response",
+  "Public-source analysis",
+  "Threat intelligence",
   "Reporting"
 ];
 
@@ -54,148 +71,164 @@ export const programs = [
   {
     id: "community-engagement",
     title: "Community Engagement Program",
-    eyebrow: "Grassroots literacy",
+    eyebrow: "grassroots literacy",
     summary:
-      "Equips local leaders with practical digital safety lessons, misinformation response playbooks, and accessible workshop materials.",
-    outcomes: ["Village-level workshops", "Local-language safety guides", "Trusted referral pathways"]
+      "Empowering local leaders and fostering grassroots initiatives to promote digital literacy and combat misinformation across Gilgit Baltistan's diverse communities.",
+    outcomes: ["Local workshops", "Trusted messenger playbooks", "Community reporting pathways"]
   },
   {
     id: "ulema-training",
     title: "Ulema Training",
-    eyebrow: "Trusted messengers",
+    eyebrow: "trusted advocates",
     summary:
-      "Supports religious and community leaders with careful guidance for verifying information and reducing online rumor spread.",
-    outcomes: ["Verification checklists", "Responsible sharing modules", "Community Q&A sessions"]
+      "The Ulema Training program equips religious leaders in Gilgit Baltistan with digital literacy skills, enabling them to guide their communities in the responsible use of technology.",
+    outcomes: ["Digital foundations", "Online safety and ethics", "Community outreach"]
   },
   {
     id: "campus-program",
-    title: "Campus Program",
-    eyebrow: "Youth resilience",
+    title: "Campus Programs",
+    eyebrow: "youth resilience",
     summary:
-      "Helps students understand social media manipulation, digital footprints, privacy settings, and safe reporting practices.",
-    outcomes: ["Student ambassador kits", "Scenario labs", "Peer mentoring"]
+      "Cultivating young digital leaders through digital literacy clubs, student-led projects, teacher support, and campus infrastructure that makes responsible technology part of the academic environment.",
+    outcomes: ["Student ambassador kits", "Teacher training", "Digital literacy clubs"]
   },
   {
     id: "virtual-events",
     title: "Virtual Community Events",
-    eyebrow: "Remote access",
+    eyebrow: "remote access",
     summary:
-      "Runs live and recorded sessions for communities with limited access to in-person training or reliable connectivity.",
-    outcomes: ["Recorded lessons", "Live office hours", "Offline follow-up packs"]
+      "Online gatherings to inspire and educate, with expert talks, workshops, panels, live discussions, and low-bandwidth formats for communities that cannot always gather in person.",
+    outcomes: ["Live workshops", "Recorded sessions", "Offline follow-up resources"]
   },
   {
     id: "digisaheli",
     title: "DigiSaheli",
-    eyebrow: "Women-led safety",
+    eyebrow: "women-led safety",
     summary:
-      "Creates safer participation pathways for women through privacy education, harassment response, and practical confidence building.",
-    outcomes: ["Privacy clinics", "Reporting support", "Mentor circles"]
+      "Creating a supportive environment for learning and growth for women in accessing technology, digital confidence, privacy, and safer public participation.",
+    outcomes: ["Privacy clinics", "Mentor circles", "Responsible reporting support"]
+  },
+  {
+    id: "mini-courses",
+    title: "Mini-Courses",
+    eyebrow: "bite-sized learning",
+    summary:
+      "Concise, focused learning modules on digital literacy topics, tailored for residents of Gilgit Baltistan and built for practical, self-paced progress.",
+    outcomes: ["Digital basics", "Online safety", "Fact-checking techniques"]
   },
   {
     id: "learning-hub",
     title: "Digital Learning Hub",
-    eyebrow: "Self-paced learning",
+    eyebrow: "self-paced learning",
     summary:
-      "A modular learning library for digital literacy, misinformation awareness, cyber hygiene, and ethical investigation basics.",
-    outcomes: ["Mini courses", "Knowledge checks", "Downloadable resources"]
+      "A comprehensive platform offering tailored courses, AI-assisted learning, and interactive tools to equip users with essential digital skills and critical thinking abilities.",
+    outcomes: ["Mini courses", "Knowledge checks", "Local-language resources"]
   },
   {
     id: "mehfoozbot",
     title: "mehfoozbot",
-    eyebrow: "Guided assistance",
+    eyebrow: "guided assistance",
     summary:
-      "An AI-powered digital safety assistant for quick guidance, source checking prompts, and local-language learning support.",
-    outcomes: ["Safety prompts", "Urdu-ready guidance", "Calm next steps"]
+      "An AI-driven chatbot for personalized learning experiences, real-time assistance, source checking prompts, and calm guidance for everyday digital safety questions.",
+    outcomes: ["Safety prompts", "Verification support", "Local-language guidance"]
   },
   {
-    id: "osint-desk",
-    title: "OSINT Analysis Desk",
-    eyebrow: "Defensive intelligence",
+    id: "resource-hub",
+    title: "Digital Resource Hub",
+    eyebrow: "local context",
     summary:
-      "Turns public signals into structured context for risk awareness, incident timelines, and transparent reporting.",
-    outcomes: ["Source reliability scoring", "Timeline reconstruction", "Executive reporting"]
+      "Resources addressing digital challenges unique to Gilgit Baltistan, contextualizing global digital issues for local understanding and practical community use.",
+    outcomes: ["Reference guides", "Public explainers", "Community toolkits"]
+  },
+  {
+    id: "e-government",
+    title: "E-Government Navigator",
+    eyebrow: "public access",
+    summary:
+      "A gateway to accessing online government services with ease and confidence, helping citizens understand forms, portals, and digital public services.",
+    outcomes: ["Service explainers", "Navigation guidance", "Low-bandwidth support"]
   }
 ];
 
 export const solutions = [
   {
-    title: "Digital Resilience Programs",
+    title: "Verify",
     summary:
-      "Culturally tailored workshops and learning resources that help communities verify information, protect privacy, and make safer online decisions.",
-    tags: ["Workshops", "Local context", "Education"],
-    deliverables: ["Training curriculum", "Workshop facilitation", "Post-session resource packs"]
+      "A structured verification pathway for checking public claims, comparing sources, understanding uncertainty, and reducing the spread of misinformation.",
+    tags: ["fact-checking", "source review", "misinformation"],
+    deliverables: ["Verification matrix", "Claim review brief", "Community correction guidance"]
   },
   {
-    title: "Ethical OSINT Investigations",
+    title: "Educate",
     summary:
-      "Public-source collection and enrichment for defensive investigations, focused on transparency, proportionality, and documented confidence levels.",
-    tags: ["OSINT", "Documentation", "Risk scoring"],
-    deliverables: ["Collection plan", "Evidence register", "Analyst report"]
+      "Culturally rooted digital literacy programs that turn online safety, privacy, media literacy, and critical thinking into practical community learning.",
+    tags: ["workshops", "local context", "education"],
+    deliverables: ["Training curriculum", "Workshop facilitation", "Resource packs"]
   },
   {
-    title: "Threat Intelligence Reporting",
+    title: "Report",
     summary:
-      "Readable briefings that explain relevant online risks, source reliability, timeline context, and recommended defensive actions.",
-    tags: ["Threat intel", "Briefings", "Visualization"],
-    deliverables: ["Situation report", "Dashboard snapshot", "Decision brief"]
+      "Calm, ethical public-source reporting that helps organizations understand digital risk, source reliability, timeline context, and responsible next steps.",
+    tags: ["public-source analysis", "reporting", "risk context"],
+    deliverables: ["Situation report", "Dashboard view", "Decision brief"]
   },
   {
-    title: "Misinformation Response",
+    title: "Strengthen",
     summary:
-      "A practical workflow for identifying questionable narratives, checking public sources, and communicating corrections without amplifying harm.",
-    tags: ["Misinformation", "Community comms", "Verification"],
-    deliverables: ["Narrative map", "Verification matrix", "Response guidance"]
+      "Ongoing support for digital learning hubs, student programs, trusted messenger networks, and public-interest teams that need resilient online practices.",
+    tags: ["capacity building", "program design", "trust"],
+    deliverables: ["Engagement model", "Learning pathway", "Evaluation review"]
   }
 ];
 
 export const osintTechniques = [
   {
-    title: "Collection Planning",
+    title: "Collection planning",
     summary:
       "Define the question, scope, public sources, exclusions, privacy boundaries, and review checkpoints before any collection begins."
   },
   {
-    title: "Social Media Intelligence",
+    title: "Social media intelligence",
     summary:
       "Observe public narratives, engagement patterns, and content provenance while avoiding invasive targeting or harassment."
   },
   {
-    title: "Domain and Infrastructure Analysis",
+    title: "Domain and infrastructure analysis",
     summary:
       "Review public DNS, hosting, certificates, and website metadata to understand ownership signals and infrastructure relationships."
   },
   {
-    title: "Metadata Review",
+    title: "Metadata review",
     summary:
       "Inspect publicly available file and image metadata for context, with strict handling rules for sensitive personal information."
   },
   {
-    title: "Digital Footprint Mapping",
+    title: "Digital footprint mapping",
     summary:
       "Map an organization or program's public online presence to identify exposed contact points, inconsistent branding, and trust gaps."
   },
   {
-    title: "Source Reliability Scoring",
+    title: "Source reliability scoring",
     summary:
       "Rate sources by transparency, corroboration, recency, independence, and known bias before drawing conclusions."
   },
   {
-    title: "Threat Actor Profiling",
+    title: "Threat actor profiling",
     summary:
       "Create defensive profiles using public behavior patterns and intent indicators, not private identity speculation."
   },
   {
-    title: "Timeline Reconstruction",
+    title: "Timeline reconstruction",
     summary:
       "Convert raw public signals into a chronological view that separates confirmed events, assessments, and open questions."
   },
   {
-    title: "Data Enrichment",
+    title: "Data enrichment",
     summary:
       "Add public context from reputable datasets and official sources so analysts can compare weak signals against stronger references."
   },
   {
-    title: "Reporting and Visualization",
+    title: "Reporting and visualization",
     summary:
       "Present findings with confidence levels, source notes, clear limitations, and recommended defensive next steps."
   }
@@ -239,11 +272,11 @@ export const workflow = [
 
 export const chartData = {
   threatCategories: [
-    { label: "Misinformation", value: 31, color: "#f6f1e7" },
-    { label: "Impersonation", value: 18, color: "#c9c2b7" },
-    { label: "Phishing", value: 19, color: "#8f887f" },
-    { label: "Harassment", value: 16, color: "#5f5a54" },
-    { label: "Data exposure", value: 16, color: "#2b2a28" }
+    { label: "Misinformation", value: 31, color: "#dfe8bd" },
+    { label: "Impersonation", value: 18, color: "#a5b66f" },
+    { label: "Phishing", value: 19, color: "#69764b" },
+    { label: "Harassment", value: 16, color: "#414734" },
+    { label: "Data exposure", value: 16, color: "#1f241d" }
   ],
   riskTrend: [
     { label: "W1", value: 52 },
@@ -256,25 +289,27 @@ export const chartData = {
     { label: "W8", value: 63 }
   ],
   reliability: [
-    { label: "Official", value: 30, color: "#f6f1e7" },
-    { label: "Corroborated media", value: 23, color: "#c9c2b7" },
-    { label: "Community reports", value: 20, color: "#8f887f" },
-    { label: "Open web", value: 15, color: "#5f5a54" },
-    { label: "Archived material", value: 12, color: "#2b2a28" }
+    { label: "Official", value: 30, color: "#edf4d2" },
+    { label: "Corroborated media", value: 23, color: "#b8c987" },
+    { label: "Community reports", value: 20, color: "#7d8c56" },
+    { label: "Open web", value: 15, color: "#4b533d" },
+    { label: "Archived material", value: 12, color: "#252b22" }
   ],
   regionBreakdown: [
     { label: "Gilgit", value: 28 },
     { label: "Skardu", value: 22 },
-    { label: "Hunza", value: 16 },
-    { label: "Ghizer", value: 14 },
-    { label: "Diamer", value: 11 },
-    { label: "Other", value: 9 }
+    { label: "Diamer", value: 17 },
+    { label: "Ghizer", value: 16 },
+    { label: "Hunza", value: 14 },
+    { label: "Astore", value: 11 },
+    { label: "Ghanche", value: 10 },
+    { label: "Nagar", value: 8 }
   ],
   caseStatus: [
-    { label: "Triage", value: 24, color: "#f6f1e7" },
-    { label: "In analysis", value: 28, color: "#b7afa4" },
-    { label: "Ready for review", value: 18, color: "#77716a" },
-    { label: "Closed", value: 30, color: "#353331" }
+    { label: "Triage", value: 24, color: "#edf4d2" },
+    { label: "In analysis", value: 28, color: "#a5b66f" },
+    { label: "Ready for review", value: 18, color: "#69764b" },
+    { label: "Closed", value: 30, color: "#252b22" }
   ],
   workflowFunnel: [
     { label: "Signals", value: 92 },
@@ -284,10 +319,10 @@ export const chartData = {
     { label: "Reported", value: 31 }
   ],
   severity: [
-    { label: "Low", value: 34, color: "#f6f1e7" },
-    { label: "Medium", value: 39, color: "#b7afa4" },
-    { label: "High", value: 20, color: "#77716a" },
-    { label: "Critical", value: 7, color: "#353331" }
+    { label: "Low", value: 34, color: "#edf4d2" },
+    { label: "Medium", value: 39, color: "#a5b66f" },
+    { label: "High", value: 20, color: "#69764b" },
+    { label: "Critical", value: 7, color: "#252b22" }
   ],
   investigationTimeline: [
     { label: "Signal detected", value: 18 },
@@ -300,43 +335,43 @@ export const chartData = {
 
 export const faqs = [
   {
-    question: "How does the program combat misinformation?",
+    question: "How does mehfooz combat misinformation?",
     answer:
-      "mehfooz combines community education, source verification workflows, and carefully explained public-source analysis so people can pause, verify, and respond without amplifying false claims."
+      "We work closely with the community offering specialized courses, fact-checking tools, and AI-assisted learning through mehfoozbot to help users identify, verify, and report false information circulating online."
   },
   {
-    question: "Is the OSINT work ethical?",
+    question: "How does mehfooz's approach differ from other digital literacy initiatives?",
     answer:
-      "Yes. The site presents defensive, public-source methods only. It avoids exploit steps, evasion tactics, credential collection, private surveillance, or identifying private people without a legitimate protective purpose."
+      "We focus on localized, community-driven solutions that address the unique needs and challenges faced by residents of Gilgit Baltistan. Our content is tailored to the cultural, linguistic, and socioeconomic context of the region."
   },
   {
-    question: "Can programs work in remote areas?",
+    question: "Can mehfooz be accessed in remote or rural areas of Gilgit Baltistan?",
     answer:
-      "The program model supports offline resource packs, community learning hubs, and low-bandwidth delivery so training can continue where connectivity is inconsistent."
+      "Absolutely. We have developed offline-accessible content and community-based learning hubs to reach even the most remote and underserved areas of the region."
   },
   {
-    question: "Who can use the services?",
+    question: "How can I get involved with mehfooz's mission?",
     answer:
-      "Community organizations, schools, civic groups, newsrooms, and small teams that need practical digital safety education or defensive public-source intelligence support."
+      "You can participate in our community engagement programs, become a student ambassador, or volunteer for our digital literacy initiatives. Use the contact form for more information on how to get involved."
   }
 ];
 
 export const testimonials = [
   {
     quote:
-      "The strongest part of mehfooz is that it explains digital safety in language our community already understands.",
+      "I am really excited to see how switching mehfooz's interface to Urdu and other local languages will revolutionize digital landscape",
     name: "Shujaat Ali",
     role: "Policy Manager"
   },
   {
     quote:
-      "The investigation workflow makes it easier to separate rumor, weak signals, and confirmed facts before sharing anything.",
+      "I've always been curious about the internet, but I am also scared of the risks. mehfooz really sounds promising and it makes me feel confident exploring the digital world safely.",
     name: "Zuhaib Khan",
     role: "Project Manager"
   },
   {
     quote:
-      "A practical resource hub for people who want online safety to feel less abstract and more doable.",
+      "Can't wait to share mehfooz's resources with my network so that more people in my area can benefit from digital literacy education",
     name: "Tehreem Batool",
     role: "Teacher"
   }
@@ -348,196 +383,97 @@ export const team = [
     role: "Founder",
     initials: "HA",
     bio:
-      "Founder of mehfooz, focused on digital literacy, community development, and safer public participation online across Gilgit Baltistan."
+      "Hasnain is an Equitech Scholar with extensive experience in digital literacy initiatives and community development. His background combines technical expertise with a deep understanding of Gilgit Baltistan's unique cultural landscape."
   },
   {
     name: "Zuhaib Khan",
     role: "Project Manager",
     initials: "ZK",
     bio:
-      "Advises on strategy, growth, and sustainable program design for education-first digital resilience initiatives."
+      "Zuhaib brings advisory, strategy, and growth experience to the initiative, shaping sustainable program design for Gilgit Baltistan's digital landscape."
   },
   {
     name: "Shujaat Ali",
     role: "Policy Manager",
     initials: "SA",
     bio:
-      "Shapes policy-aware program delivery, responsible communication, and community trust practices for safer digital participation."
+      "Shujaat shapes policy-aware program delivery, responsible communication, and community trust practices for safer digital participation."
   }
 ];
 
 export const blogPosts = [
   {
-    slug: "how-osint-supports-modern-threat-intelligence",
-    title: "How OSINT Supports Modern Threat Intelligence",
+    slug: "youth-for-a-peaceful-society",
+    title: "Youth for a Peaceful Society",
     summary:
-      "A practical look at how public-source context helps teams understand risk without overreaching or turning analysis into surveillance.",
-    date: "2026-05-12",
-    displayDate: "May 12, 2026",
-    category: "Threat Intelligence",
-    author: "Research desk",
-    readTime: "6 min read",
-    image: "assets/framer-workshop.jpg",
-    content: [
-      {
-        heading: "Public context changes the quality of the brief",
-        paragraphs: [
-          "Threat intelligence is most useful when it helps a team make a better decision. Open-source intelligence supports that goal by adding public context: what is being said, where a claim appeared first, which sources agree, and where confidence is still low.",
-          "For mehfooz, OSINT is not about collecting everything. It is about collecting enough public information to understand a risk, protect people, and explain the limits of the finding."
-        ]
-      },
-      {
-        heading: "From signals to assessments",
-        paragraphs: [
-          "A public post, a suspicious domain, or a repeated rumor is only a signal. Analysts need to enrich that signal with timestamps, source quality, corroboration, and impact. That process turns scattered observations into a careful assessment.",
-          "The most important discipline is separating facts from interpretation. A report should make it obvious what was directly observed, what was inferred, and what still needs review."
-        ]
-      },
-      {
-        heading: "Responsible intelligence is defensible",
-        paragraphs: [
-          "Ethical OSINT uses public sources, minimizes personal data, and avoids private targeting. It also makes room for uncertainty. Confidence levels, source notes, and clear limitations make a report more trustworthy than overconfident language.",
-          "The final output should help people act safely: verify before sharing, tighten account security, correct misleading information, or escalate a concern to the right support channel."
-        ]
-      }
-    ]
-  },
-  {
-    slug: "digital-footprint-mapping-for-organizations",
-    title: "Digital Footprint Mapping for Organizations",
-    summary:
-      "How small teams can review their public presence, reduce confusion, and close trust gaps before attackers or rumor networks exploit them.",
-    date: "2026-04-28",
-    displayDate: "Apr 28, 2026",
-    category: "Digital Safety",
-    author: "Field team",
+      "According to UNFPA, there are more than 1.8 billion young people in the world today, 90% of whom live in developing countries.",
+    date: "2024-10-08",
+    displayDate: "Oct 8, 2024",
+    category: "Community",
+    author: "mehfooz editorial",
     readTime: "5 min read",
-    image: "assets/framer-about-visual.png",
+    image: "assets/blog-youth-peace.svg",
     content: [
       {
-        heading: "Your public presence is part of your security posture",
+        heading: "Youth for a Peaceful Society",
         paragraphs: [
-          "A digital footprint map lists the public channels, domains, contact points, and documents connected to an organization. It helps teams see what a community member, journalist, or adversary can already find.",
-          "This review is especially useful for programs that serve the public. Inconsistent names, outdated phone numbers, or abandoned social accounts can create confusion and make impersonation easier."
-        ]
-      },
-      {
-        heading: "What to map",
-        paragraphs: [
-          "Start with official websites, social profiles, public email addresses, press mentions, shared documents, and registration records that are meant to be public. Record the source, date checked, owner, and any action needed.",
-          "The goal is not to expose private details. The goal is to reduce avoidable public risk and make trustworthy channels easier to recognize."
-        ]
-      },
-      {
-        heading: "Turn findings into maintenance",
-        paragraphs: [
-          "A useful footprint review ends with small operational fixes: update bios, remove dead links, align branding, pin official contact details, and document who owns each channel.",
-          "Repeat the review quarterly or after major campaigns. Public trust is easier to maintain when the official surface stays clean and consistent."
+          "According to UNFPA, there are more than 1.8 billion young people in the world today, 90% of whom live in developing countries. Even in Pakistan, according to a UN study, 64% of the population is under the age of 30 and 29% is between the ages of 15 and 24, which is a vital factor in social change and development, especially in developing countries. But why don't a large number of the denizens of developed countries become a force for reform and peaceful society?",
+          "Tolerance and acceptance are the two major elements of a non-violent society. These help people in understanding each other’s perspectives while fostering harmony in a society. Meanwhile, empathy is considered a prerequisite in the development of a society. One must get into others' shoes to understand the real picture and support each other. But why must youth be a vital part of a peaceful society? Let’s discuss this below.",
+          "The reality facing this huge bulk of society is the main barrier in their commitment to creating a peaceful society. The community instability in developing countries with economic instability, high unemployment, increased exposure to health risks create barriers in youth participation. Peer pressure and social taboos also hinder the path towards dreaming of a better future for the youth. The increased consumption of drugs and high-level mental health risks without proper counseling in developing countries has put the lives of a whole generation at stake. Meanwhile, lack of proper direction and resources to overcome all the challenges are the key barriers, but is there a way out?",
+          "The role of the state is vital in tackling these issues where various scholars have put forward their recommendations. Stephen S. and Marina M. emphasize adopting a positive youth development approach that takes into consideration the positive attributes and strengths of youth instead of their weaknesses. On a personal level, analyzing the pros and cons of the problem is necessary as every cloud has a silver lining. But being positive doesn't mean we must neglect the other side. If a glass is half-filled one has to ponder over why the other half is empty and try filling that. But if the problem has some bigger cons, , we can adopt different strategies by consulting with the right people, by taking close friends and family into the loop. But if we see that the problem's solution is not in our hands, we can always let it go as life moves on.",
+          "The final word, youth is the vital segment of society that can’t be neglected. States and institutions must bring reforms focusing on the 3 E’s ‘Empowerment’ ‘Engagement 'and ‘Encouragement’ to use the potential of the youth in building a peaceful and inclusive society."
         ]
       }
     ]
   },
   {
-    slug: "building-an-ethical-investigation-workflow",
-    title: "Building an Ethical Investigation Workflow",
+    slug: "unequal-maternal-care-balochistan-and-gilgit-baltistan-s-plight",
+    title: "Unequal Maternal Care: Balochistan and Gilgit Baltistan's Plight",
     summary:
-      "A defensive investigation workflow that keeps public-source work scoped, documented, and respectful of the people affected.",
-    date: "2026-04-15",
-    displayDate: "Apr 15, 2026",
-    category: "Ethics",
-    author: "Analysis desk",
-    readTime: "7 min read",
-    image: "assets/framer-community.jpg",
+      "Maternal mortality remains a global concern, with 287,000 maternal deaths globally in 2020.",
+    date: "2024-10-20",
+    displayDate: "Oct 20, 2024",
+    category: "Community",
+    author: "mehfooz editorial",
+    readTime: "8 min read",
+    image: "assets/blog-maternal-care.svg",
     content: [
       {
-        heading: "Start with boundaries",
+        heading: "An Analysis of How Marginalisation Exacerbates Maternal Mortality Rate: The Case of Balochistan and Gilgit Baltistan",
         paragraphs: [
-          "Good investigations begin before collection. Define the question, who needs the answer, what public sources are appropriate, and what information should be excluded. This keeps the work proportionate.",
-          "For community safety work, boundaries are not bureaucracy. They are the difference between protective analysis and harmful attention."
-        ]
-      },
-      {
-        heading: "Document every step",
-        paragraphs: [
-          "A collection log should capture source URLs, timestamps, analyst notes, confidence levels, and review status. This makes the final report easier to audit and easier to correct when new information appears.",
-          "Documentation also helps teams avoid repeating weak assumptions. When uncertainty is visible, reviewers can challenge it before it becomes a conclusion."
-        ]
-      },
-      {
-        heading: "Report for action, not spectacle",
-        paragraphs: [
-          "The best investigation reports are clear, calm, and practical. They explain what happened, why it matters, what evidence supports the assessment, and what the reader can do next.",
-          "Avoid sensational language. Avoid unnecessary personal details. Keep the focus on reducing harm."
+          "Maternal mortality remains a global concern, with 287,000 maternal deaths globally in 2020. While this is a global issue, maternal mortality rate (MMR) is more prevalent in the marginalised communities due to lack of access to basic health facilities, high poverty rate, lack of basic awareness and socio-economic disadvantages. Although Pakistan’s situation is quite worse - with a maternal mortality rate of 186 deaths per 100,000 livebirths due to poor health facilities with substandard infrastructure and lack of basic awareness around the health issues. The country has a total number of 1201  public hospitals with poorly managed staff and only 731 Maternity & Child Health Centers. The situation is more concerning in the regions like Gilgit Baltistan (disputed territory governed by Pakistan) and Balochistan (conflict-ridden province of Pakistan) with more frightening numbers. Balochistan with a mere 12 Million population recorded 466 maternal deaths and the numbers in Gilgit Baltistan with even lesser population of 1.5 Million, maternal death numbers even go higher with around 261 recorded. Meanwhile Punjab with 110 Millions as per 2017 census, the MMR was 235.",
+          "Maternal mortality is a serious public health challenge worldwide, particularly in low- and middle-income countries, with sub-Saharan Africa and Southern Asia contributing to 87% of global cases. While significant reductions in maternal mortality have been made in recent years, the situation remains critical in vulnerable and conflict-ridden settings, where women face a significantly higher risk of maternal death. Our geographic focus of this article is Gilgit-Baltistan and Balochistan, provinces in Pakistan, that have experienced systemic injustice for decades.  This has caused massive disparities in access to quality healthcare that exponentially increases the risk for women during pregnancy. The complex context of geographical and socio-economic barriers in Gilgit-Baltistan and Balochistan further hinders progress in reducing maternal mortality. This highlights the need for targeted interventions to ensure that every woman receives adequate care during the critical stages of pregnancy, birth and after-birth.",
+          "Maternal mortality remains a global concern, with 287,000 maternal deaths globally in 2020. While this is a global issue, maternal mortality rate (MMR) is more prevalent in the marginalised communities due to lack of access to basic health facilities, high poverty rate, lack of basic awareness and socio-economic disadvantages. Although Pakistan’s situation is quite worse - with a maternal mortality rate of 186 deaths per 100,000 livebirths due to poor health facilities with substandard infrastructure and lack of basic awareness around the health issues. The country has a total number of 1201  public hospitals with poorly managed staff and only 731 Maternity & Child Health Centers. The situation is more concerning in the regions like Gilgit Baltistan (disputed territory governed by Pakistan) and Balochistan (conflict-ridden province of Pakistan) with more frightening numbers. Balochistan with a mere 12 Million population recorded 466 maternal deaths and the numbers in Gilgit Baltistan with even lesser population of 1.5 Million, maternal death numbers even go higher with around 261 recorded. Meanwhile Punjab with 110 Millions as per 2017 census, the MMR was 235.This is not a coincidence but it says a lot about how facilities are poor in these two regions as they have been deprived of basic facilities for over 70 years with lack of quality healthcare, access to educational resources and institutions, poor infrastructure and culturally instilled taboos. The state of health facilities is daunting in these regions with around 50% of people in Balochistan not even having access to health facilities, and 6 districts being without any presence of hospitals. Balochistan has also the highest percentage of home birth ratio with 74 percent and Dera Bugti district of the province with 97 percent.",
+          "While in Gilgit Baltistan the situation is even more worse with a 1:4100 ratio of doctor to population.  As per a report,  when the Basic Health Units in GB were assessed, they were not  able to provide preventive Maternal, Neonatal and Child Health (MNCH) services for a standard workweek of six days, each with an 8-hour workday because one or more components of preventive MNCH services package would be missing. Not only that, the taboos that are innate in the society further restricts women to express themselves in a way that helps in equating health facilities. These are not only factors that leads to marginalisation but also affect the women in Gilgit Baltistan and Balochistan leading to higher rate of MMR.",
+          "But the question is whether they are systematically marginalised or the other provinces like Punjab and Khyber Pakhtunkhwa are systematically privileged? The answer is most probably ‘yes’. As in regions like Gilgit Baltistan and Balochistan the focus has always been more on militarisation, keeping the people in disarray about their basic rights and making it unclear to form an informed practice and policy around other areas that affects individuals and population at large. While there has been a history of insurgency, false flag operations and provocations in Balochistan and Gilgit Baltistan leading to political unrest impacting lives of millions of people. These regions have poor infrastructure, quality of life, resource management and education quality that further adds to disproportionating standards of health care facilities and increasing maternal deaths, as all areas are interconnected.",
+          "These regions need to be freed from systemic cycles of inequity, and there is a need for addressing all the relevant disparities that lead to maternal mortality including the socio-economic and political factors. It is also imperative for the state to justify its actions and further improve the standard of life in the regions that’s in accordance with global quality of lifestyle and health standards. At the same time, increasing access to pre-natal care and MNCH services are vital in providing the women in these areas with better maternal health facilities. Need for improving infrastructure, health and education are key factors that would not only play a role in uplifting lives of the people in the GB and Balochistan but would also help the state in creating a more positive image in regions holding so many grievances.",
+          "Under Sihaat Mand Khaandaan (SMK) Project by UNFPA during 2020-2024, provided the community midwives with an opportunity to get mentorship and supervisory support with clinical attachment. This project has been transformative particularly in the GB region where midwives are often not well trained or equipped with technology. As the region lacks health centres, these interventions play a vital role. Aga Khan Development Network (AKDN) also ran a Maternal Care and Child Survival project which was about building the capacity of these midwives. A beneficiary of this project was Noor Khatoon who went on to become the best community midwife in Gilgit region while also supporting her family. These stories emphasise the need to design the interventions aligned with local systems. However, it’s also  important for more engagement from different individuals  and organisations to support the health infrastructure,  nutrition programmes and awareness campaigns.",
+          "In conclusion, addressing the marginalization and inequalities that weigh on women is a collective responsibility that requires concerted and determined action. Despite significant progress in many regions, disparities in access to skilled care and systemic and social barriers continue to undermine women's health, especially in conflict-ridden areas of Balochistan and Gilgit Baltistan. Only by restoring equitable access to health services and ensuring policies that uplift society as a whole, can we ensure that every woman has the opportunity to experience a safe and healthy pregnancy."
         ]
       }
     ]
   },
   {
-    slug: "understanding-risk-scores-in-cyber-intelligence",
-    title: "Understanding Risk Scores in Cyber Intelligence",
+    slug: "navigating-pakistan-s-digital-propaganda",
+    title: "Pakistan’s rise in digital propaganda: what’s next?",
     summary:
-      "Risk scores are useful only when the ingredients are visible. Here is how to make scoring understandable and reviewable.",
-    date: "2026-03-31",
-    displayDate: "Mar 31, 2026",
-    category: "Analysis",
-    author: "Research desk",
-    readTime: "5 min read",
-    image: "assets/framer-program-card.png",
-    content: [
-      {
-        heading: "A score is not the finding",
-        paragraphs: [
-          "Risk scores help teams compare cases, but they should never replace an analyst explanation. A number without context can hide uncertainty and encourage rushed decisions.",
-          "mehfooz treats scoring as a summary layer. The report still needs source notes, impact context, confidence levels, and recommended next steps."
-        ]
-      },
-      {
-        heading: "Make the ingredients visible",
-        paragraphs: [
-          "A practical scoring model might consider source reliability, potential impact, evidence quality, recency, and exposure. Each factor should be easy to review and update.",
-          "When a score changes, the reason should be visible. Did a source become corroborated? Did the impact decrease? Did the claim become stale?"
-        ]
-      },
-      {
-        heading: "Use scores to prioritize care",
-        paragraphs: [
-          "The purpose of scoring is triage. High scores may deserve faster review, leadership attention, or clearer public communication. Low scores may simply need monitoring.",
-          "Responsible teams use scores to allocate attention, not to create fear."
-        ]
-      }
-    ]
-  },
-  {
-    slug: "from-raw-signals-to-actionable-intelligence",
-    title: "From Raw Signals to Actionable Intelligence",
-    summary:
-      "How collection, enrichment, analysis, and reporting turn scattered public information into decisions people can actually use.",
-    date: "2026-03-14",
-    displayDate: "Mar 14, 2026",
-    category: "Workflow",
-    author: "Analysis desk",
+      "Pakistan has seen a massive emergence of fake news in recent years with the increasing use of social media, access to the internet, and access to smartphones.",
+    date: "2022-01-12",
+    displayDate: "Jan 12, 2022",
+    category: "Digital Media",
+    author: "mehfooz editorial",
     readTime: "6 min read",
-    image: "assets/framer-about-photo.jpg",
+    image: "assets/blog-digital-propaganda.svg",
     content: [
       {
-        heading: "Raw signals are messy",
+        heading: "Pakistan’s rise in digital propaganda: what’s next?",
         paragraphs: [
-          "Screenshots, links, posts, and community reports often arrive without structure. Some are useful, some are outdated, and some are misleading. The first task is to organize them without assuming they are true.",
-          "A simple intake model can capture the source, timestamp, topic, affected community, and initial concern."
-        ]
-      },
-      {
-        heading: "Enrichment creates perspective",
-        paragraphs: [
-          "Enrichment adds public context from official sources, archived pages, domain records, reputable media, or prior cases. This helps analysts compare a weak signal against stronger references.",
-          "The goal is not to prove a preferred story. The goal is to understand what the public evidence can and cannot support."
-        ]
-      },
-      {
-        heading: "Actionable means clear next steps",
-        paragraphs: [
-          "A useful intelligence product explains what changed, who is affected, how confident the team is, and what can be done now. It should be readable by non-specialists.",
-          "Action might mean publishing a correction, updating account security, contacting a platform, or simply continuing to monitor with a defined review date."
+          "Pakistan has seen a massive emergence of fake news in recent years with the increasing use of social media, access to the internet, and access to  smartphones. A study by  GSMA Intelligence says that in 2018, the mobile ecosystem in Pakistan generated $16.7 billion, which is an estimated 5.4 percent of GDP. According to DataReportal, there were 71.70 million social media users in Pakistan in January 2022. This led to increased accessibility of information through digital channels and decreased reliance on traditional media which tended to have more transparency and oversight mechanisms to ensure that published news was factual.",
+          "Back in 2018, I was interning at an organization where one of my main tasks was to evaluate different kinds of fake news on Twitter. It was mind-boggling to see how political rivals share misinformation to spread propaganda against each other. Interests groups have been using propaganda for decades but the emergence of globalization and the industrial revolution brought a new form of propaganda known as “digital propaganda”. This includes deceptive and pseudo-information that can be easily spread through different digital channels to manipulate public opinion.",
+          "Digital propaganda is harmful because it produces emotional responses, threats and attacks on political opponents, or spreads messages that create division among social groups in a community. There’s also the deployment of bots by different political factions to promote their own agenda, manipulating public opinion on different social media platforms. These bots are used for performing specific tasks at a faster rate than humans which includes spreading misinformation repetitively.",
+          "Pakistan has seen a massive emergence of fake news in recent years with the increasing use of social media, access to the internet, and access to  smartphones. A study by  GSMA Intelligence says that in 2018, the mobile ecosystem in Pakistan generated $16.7 billion, which is an estimated 5.4 percent of GDP. According to DataReportal, there were 71.70 million social media users in Pakistan in January 2022. This led to increased accessibility of information through digital channels and decreased reliance on traditional media which tended to have more transparency and oversight mechanisms to ensure that published news was factual.",
+          "A large proportion of the fake news we see online revolves around politics, the economy, military issues, gender, culture and religion. A Digital Rights Foundation survey report shows that 8% of Pakistani journalists who participated in the survey said that information is not verified in their newsrooms and that they have often accepted misleading information as valid.In December 2022, news quoting the then Federal Minister for Information and Broadcasting, Shibli Faraz, was spread of him asking investors to turn their black money into white money by initiating construction projects. A fake screenshot was also shared in 2018 claiming that Maryam Nawaz was  pregnant which was doctored to look like a Dawn newspaper article. There were also fake videos of the engagement of Bakhtawar Bhutto Zardari, daughter of Asif Zardari, and an audio clip circulatingon  social media in which former Chief of the Army Staff, General Aslam Beg, is heard saying he’s against the Pakistan Army – claims he later denied. These stories and many others have surfaced on different social media platforms. There remains a significant amount of fake news available online, which is not being adequately addressed and exposed.",
+          "The increasing propaganda can lead to significant consequences including destabilizing the state’s institutions, undermining democracy, and weakening the trust of the public in the democratic processes. There is a strong need for media literacy and setting up guidelines on whether the news is credible or not."
         ]
       }
     ]

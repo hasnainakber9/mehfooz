@@ -1,5 +1,5 @@
 const SYSTEM_PROMPT =
-  "You are mehfoozbot, a concise digital safety guide for communities in Gilgit Baltistan. Help with verification, privacy, phishing, misinformation, public-source analysis, and mehfooz programs. Stay defensive, lawful, and practical. Do not provide exploit steps, evasion, credential collection, or private surveillance guidance. If a user writes in Urdu, respond in Urdu.";
+  "You are mehfoozbot, a concise digital safety guide for communities in Gilgit Baltistan. Help with verification, privacy, phishing, misinformation, public-source analysis, and mehfooz programs. Stay defensive, lawful, and practical. Do not provide exploit steps, evasion, credential collection, private surveillance guidance, visible contact information, or invented organizations. Do not name statistics, local fact-checking groups, emails, phone numbers, addresses, or source claims unless the user provided them. If a user writes in Urdu, respond in Urdu.";
 
 const sessions = new Map();
 
@@ -43,6 +43,13 @@ export function offlineReply(message = "") {
   return "I can help with digital safety, verification, misinformation, privacy, and responsible public-source analysis. Share the question or situation you want to think through.";
 }
 
+function sanitizeReply(reply) {
+  return reply
+    .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, "the contact form")
+    .replace(/(?:\+?\d[\d\s().-]{7,}\d)/g, "the contact form")
+    .trim();
+}
+
 async function askRemote(history, message) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 12000);
@@ -55,7 +62,7 @@ async function askRemote(history, message) {
         model: "openai",
         messages: [{ role: "system", content: SYSTEM_PROMPT }, ...history, { role: "user", content: message }],
         max_tokens: 220,
-        temperature: 0.68
+        temperature: 0.35
       }),
       signal: controller.signal
     });
@@ -64,7 +71,7 @@ async function askRemote(history, message) {
     const data = await response.json();
     const reply = data?.choices?.[0]?.message?.content?.trim();
     if (!reply) throw new Error("empty provider response");
-    return reply;
+    return sanitizeReply(reply);
   } finally {
     clearTimeout(timeout);
   }
@@ -79,6 +86,14 @@ export async function createChatReply({ message, sessionId }) {
   const history = getHistory(sessionId);
   let reply = "";
   let provider = "offline";
+
+  if (/contact|reach|email|phone|address/.test(cleanMessage.toLowerCase())) {
+    reply = offlineReply(cleanMessage);
+    history.push({ role: "user", content: cleanMessage });
+    history.push({ role: "assistant", content: reply });
+    if (history.length > 20) history.splice(0, history.length - 20);
+    return { status: 200, body: { reply, provider } };
+  }
 
   try {
     reply = await askRemote(history, cleanMessage);

@@ -6,6 +6,7 @@ import {
   ethics,
   faqs,
   featured,
+  gbDistricts,
   metrics,
   nav,
   osintTechniques,
@@ -33,14 +34,20 @@ const pageDirs = [
 const assetFiles = [
   "assets/brand-mark.svg",
   "assets/og-card.svg",
+  "assets/blog-youth-peace.svg",
+  "assets/blog-maternal-care.svg",
+  "assets/blog-digital-propaganda.svg",
+  "assets/avatar-ha.svg",
+  "assets/avatar-zk.svg",
+  "assets/avatar-sa.svg"
+];
+
+const staleAssetFiles = [
   "assets/blog-osint-threat-intelligence.svg",
   "assets/blog-digital-footprint.svg",
   "assets/blog-ethical-workflow.svg",
   "assets/blog-risk-scores.svg",
-  "assets/blog-actionable-intelligence.svg",
-  "assets/avatar-ha.svg",
-  "assets/avatar-zk.svg",
-  "assets/avatar-sa.svg"
+  "assets/blog-actionable-intelligence.svg"
 ];
 
 function esc(value = "") {
@@ -259,11 +266,12 @@ function heroMedia(depth) {
     <span class="signal-node point-astore" aria-hidden="true"></span>
     <span class="signal-node point-khaplu" aria-hidden="true"></span>
 
-    <div class="map-location loc-ghizer"><strong>GHIZER</strong><span>Local Education Hub</span></div>
-    <div class="map-location loc-hunza"><strong>HUNZA</strong><span>Community Classroom</span></div>
-    <div class="map-location loc-skardu"><strong>SKARDU</strong><span>Youth Collective HQ</span></div>
-    <div class="map-location loc-astore"><strong>ASTORE</strong><span>Field Reporter Hub</span></div>
-    <div class="map-location loc-khaplu"><strong>KHAPLU</strong><span>Cultural Archive</span></div>
+    <div class="district-layer" aria-label="Gilgit-Baltistan district coverage">
+      <span>GB district layer</span>
+      <div>
+        ${gbDistricts.map((district, index) => `<i style="--chip-delay:${index * 60}ms">${esc(district)}</i>`).join("")}
+      </div>
+    </div>
 
     <svg class="action-connectors" viewBox="0 0 320 320" aria-hidden="true">
       <path d="M18 110C66 110 91 78 136 78H172"></path>
@@ -319,7 +327,7 @@ function imageStory(depth) {
 function impactLens(depth) {
   return `<div class="impact-lens">
     <figure class="impact-visual reveal" data-tilt-scene>
-      <img src="${asset("assets/framer-about-visual.png", depth)}" alt="Digital literacy workshop participants using laptops" loading="lazy">
+      <img src="${asset("assets/framer-workshop.jpg", depth)}" alt="Abstract Gilgit Baltistan digital signal artwork" loading="lazy">
       <figcaption>
         <span>operational reach</span>
         <strong>public literacy, analysis, and trust infrastructure</strong>
@@ -432,7 +440,7 @@ function analysisStudio(depth) {
         <p>Public-source signals are triaged, corroborated, scored, and translated into calm, actionable briefs.</p>
       </div>
       <figure>
-        <img src="${asset("assets/framer-about-photo.jpg", depth)}" alt="Small group working together in a training session" loading="lazy">
+        <img src="${asset("assets/framer-program-card.png", depth)}" alt="A digital learning program interface card" loading="lazy">
       </figure>
     </div>
     <div class="chart-stack">
@@ -968,30 +976,20 @@ function avatarSvg(initials, color) {
 
 async function writeAssetFiles() {
   const blogPatterns = {
-    "assets/blog-osint-threat-intelligence.svg": blogImage(
-      "OSINT and threat intelligence",
-      "#d8d1c4",
-      '<path d="M185 330c130-130 285-36 390 20s224 42 340-74" fill="none" stroke="#d8d1c4" stroke-width="10"/><circle cx="185" cy="330" r="18" fill="#d8d1c4"/><circle cx="575" cy="350" r="18" fill="#8d867a"/><circle cx="915" cy="276" r="18" fill="#4b4842"/>'
+    "assets/blog-youth-peace.svg": blogImage(
+      "Youth for a peaceful society",
+      "#c6db7b",
+      '<g fill="none" stroke="#c6db7b" stroke-width="8"><circle cx="270" cy="310" r="64"/><circle cx="500" cy="260" r="42"/><circle cx="730" cy="330" r="58"/><path d="M334 310C420 220 560 220 688 330M540 260c70-34 132-10 190 70"/></g><g fill="#edf4d2"><circle cx="270" cy="310" r="14"/><circle cx="500" cy="260" r="12"/><circle cx="730" cy="330" r="14"/></g>'
     ),
-    "assets/blog-digital-footprint.svg": blogImage(
-      "Digital footprint mapping",
-      "#a39b8f",
-      '<g fill="none" stroke="#a39b8f" stroke-width="8"><rect x="190" y="235" width="170" height="110" rx="18"/><rect x="515" y="205" width="190" height="140" rx="18"/><rect x="850" y="260" width="150" height="96" rx="18"/><path d="M360 292h155M705 276h145"/></g>'
+    "assets/blog-maternal-care.svg": blogImage(
+      "Unequal maternal care",
+      "#a5b66f",
+      '<g fill="none" stroke="#a5b66f" stroke-width="9"><path d="M230 365c70-135 205-135 275 0 70-135 205-135 275 0"/><path d="M305 392h410"/><circle cx="370" cy="280" r="42"/><circle cx="640" cy="280" r="42"/></g><path d="M220 470c190-52 420-52 620 0" fill="none" stroke="#edf4d2" stroke-width="8" opacity=".6"/>'
     ),
-    "assets/blog-ethical-workflow.svg": blogImage(
-      "Ethical investigation workflow",
-      "#77736a",
-      '<g fill="none" stroke="#77736a" stroke-width="8"><circle cx="250" cy="300" r="55"/><circle cx="500" cy="300" r="55"/><circle cx="750" cy="300" r="55"/><circle cx="1000" cy="300" r="55"/><path d="M305 300h140M555 300h140M805 300h140"/></g>'
-    ),
-    "assets/blog-risk-scores.svg": blogImage(
-      "Risk scores in cyber intelligence",
-      "#8d867a",
-      '<g fill="#8d867a"><rect x="200" y="360" width="90" height="110" rx="14"/><rect x="330" y="300" width="90" height="170" rx="14"/><rect x="460" y="250" width="90" height="220" rx="14"/><rect x="590" y="325" width="90" height="145" rx="14"/><rect x="720" y="210" width="90" height="260" rx="14"/></g><path d="M190 270c160-80 280-20 390-76 108-55 205-26 292 18" fill="none" stroke="#d8d1c4" stroke-width="9"/>'
-    ),
-    "assets/blog-actionable-intelligence.svg": blogImage(
-      "Raw signals to actionable intelligence",
-      "#4b4842",
-      '<g fill="none" stroke="#a39b8f" stroke-width="8"><path d="M210 310h200l95-80h210l115 120h170"/><circle cx="210" cy="310" r="16" fill="#a39b8f"/><circle cx="505" cy="230" r="16" fill="#d8d1c4"/><circle cx="830" cy="350" r="16" fill="#77736a"/></g>'
+    "assets/blog-digital-propaganda.svg": blogImage(
+      "Digital propaganda",
+      "#69764b",
+      '<g fill="none" stroke="#a5b66f" stroke-width="8"><path d="M220 340h190l92-84h206l120 112h160"/><path d="M255 250c124-90 268-40 362-92 92-50 194-24 272 22"/></g><g fill="#edf4d2"><circle cx="220" cy="340" r="16"/><circle cx="502" cy="256" r="16"/><circle cx="828" cy="368" r="16"/><circle cx="889" cy="180" r="13"/></g>'
     )
   };
 
@@ -1127,7 +1125,7 @@ async function cleanOldGenerated() {
     await rm(path.join(root, dir), { recursive: true, force: true });
   }
   await mkdir(path.join(root, "assets"), { recursive: true });
-  for (const file of assetFiles) {
+  for (const file of [...assetFiles, ...staleAssetFiles]) {
     await rm(path.join(root, file), { force: true });
   }
   for (const file of ["assets/avatar-rj.svg", "assets/avatar-cf.svg"]) {

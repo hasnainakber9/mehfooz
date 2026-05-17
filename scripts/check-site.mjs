@@ -17,7 +17,7 @@ async function exists(file) {
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
   for (const entry of entries) {
-    if (entry.name === ".git" || entry.name === "node_modules") continue;
+    if (entry.name === ".git" || entry.name === "node_modules" || entry.name === "artifacts") continue;
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       await walk(full);

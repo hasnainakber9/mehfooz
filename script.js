@@ -540,6 +540,8 @@
     label(ctx, "primary", cx - 24, cy + 24, theme.muted, 12, 700);
 
     const legendX = Math.min(width * 0.56, cx + radius + 42);
+    const valueX = width - 48;
+    const labelMax = Math.max(58, valueX - legendX - 36);
     const startY = Math.max(30, cy - data.length * 15);
     data.forEach((item, index) => {
       const y = startY + index * 30;
@@ -548,8 +550,12 @@
       ctx.roundRect?.(legendX, y - 6, 12, 12, 4);
       if (!ctx.roundRect) ctx.rect(legendX, y - 6, 12, 12);
       ctx.fill();
-      label(ctx, item.label, legendX + 20, y, theme.text, 12, 800);
-      label(ctx, `${item.value}%`, width - 48, y, theme.muted, 12, 800);
+      let legendLabel = item.label;
+      while (legendLabel.length > 4 && ctx.measureText(legendLabel).width > labelMax) {
+        legendLabel = `${legendLabel.slice(0, -4)}...`;
+      }
+      label(ctx, legendLabel, legendX + 20, y, theme.text, 12, 800);
+      label(ctx, `${item.value}%`, valueX, y, theme.muted, 12, 800);
     });
   }
 

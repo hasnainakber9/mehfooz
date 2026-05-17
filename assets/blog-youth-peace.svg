@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-label="Ethical investigation workflow illustration">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-label="Youth for a peaceful society illustration">
   <rect width="1200" height="720" fill="#080808"/>
   <rect x="64" y="64" width="1072" height="592" fill="#111111" stroke="#3a3a3a"/>
-  <circle cx="1000" cy="150" r="170" fill="#77736a" opacity=".22"/>
+  <circle cx="1000" cy="150" r="170" fill="#c6db7b" opacity=".22"/>
   <circle cx="230" cy="620" r="190" fill="#d8d1c4" opacity=".08"/>
   <g stroke="#334155" stroke-width="2" opacity=".55">
     <path d="M120 160 H1080"/><path d="M120 202 H1080"/><path d="M120 244 H1080"/><path d="M120 286 H1080"/><path d="M120 328 H1080"/><path d="M120 370 H1080"/><path d="M120 412 H1080"/><path d="M120 454 H1080"/><path d="M120 496 H1080"/><path d="M120 538 H1080"/>
     <path d="M180 120 V600"/><path d="M300 120 V600"/><path d="M420 120 V600"/><path d="M540 120 V600"/><path d="M660 120 V600"/><path d="M780 120 V600"/><path d="M900 120 V600"/><path d="M1020 120 V600"/>
   </g>
-  <g fill="none" stroke="#77736a" stroke-width="8"><circle cx="250" cy="300" r="55"/><circle cx="500" cy="300" r="55"/><circle cx="750" cy="300" r="55"/><circle cx="1000" cy="300" r="55"/><path d="M305 300h140M555 300h140M805 300h140"/></g>
+  <g fill="none" stroke="#c6db7b" stroke-width="8"><circle cx="270" cy="310" r="64"/><circle cx="500" cy="260" r="42"/><circle cx="730" cy="330" r="58"/><path d="M334 310C420 220 560 220 688 330M540 260c70-34 132-10 190 70"/></g><g fill="#edf4d2"><circle cx="270" cy="310" r="14"/><circle cx="500" cy="260" r="12"/><circle cx="730" cy="330" r="14"/></g>
   <text x="110" y="170" fill="#d8d1c4" font-family="Arial, sans-serif" font-size="28" font-weight="700">mehfooz research</text>
-  <text x="110" y="535" fill="#ffffff" font-family="Arial, sans-serif" font-size="54" font-weight="800">Ethical investigation workflow</text>
+  <text x="110" y="535" fill="#ffffff" font-family="Arial, sans-serif" font-size="54" font-weight="800">Youth for a peaceful society</text>
 </svg>
