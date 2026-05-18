@@ -9,7 +9,7 @@
   <path d="M43 69 64 22" stroke="#09265c" stroke-width="11" stroke-linecap="round"/>
   <path d="M61 67 76 34" stroke="#0f63d8" stroke-width="11" stroke-linecap="round"/>
 </g>
-  <text x="90" y="330" fill="#fff" font-family="Arial, sans-serif" font-size="74" font-weight="800">mehfooz</text>
-  <text x="92" y="405" fill="#d8d1c4" font-family="Arial, sans-serif" font-size="38">Responsible digital experiences, OSINT, and threat intelligence</text>
-  <text x="92" y="490" fill="#a39b8f" font-family="Arial, sans-serif" font-size="26">Ethical public-source analysis for safer communities</text>
+  <text x="90" y="330" fill="#fff" font-family="Gilroy, Manrope, Arial, sans-serif" font-size="74" font-weight="800">mehfooz</text>
+  <text x="92" y="405" fill="#d8d1c4" font-family="Gilroy, Manrope, Arial, sans-serif" font-size="38">Responsible digital experiences, OSINT, and threat intelligence</text>
+  <text x="92" y="490" fill="#a39b8f" font-family="Gilroy, Manrope, Arial, sans-serif" font-size="26">Ethical public-source analysis for safer communities</text>
 </svg>

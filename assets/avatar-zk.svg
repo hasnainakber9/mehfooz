@@ -2,5 +2,5 @@
   <rect width="240" height="240" rx="40" fill="#f8fbff"/>
   <circle cx="120" cy="98" r="48" fill="#09265c" opacity=".9"/>
   <path d="M48 218c13-49 41-74 72-74s59 25 72 74" fill="#09265c" opacity=".28"/>
-  <text x="120" y="116" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="40" font-weight="800">ZK</text>
+  <text x="120" y="116" text-anchor="middle" fill="#fff" font-family="Gilroy, Manrope, Arial, sans-serif" font-size="40" font-weight="800">ZK</text>
 </svg>

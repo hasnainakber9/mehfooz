@@ -65,6 +65,13 @@ function strip(value = "") {
   return String(value).replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
 }
 
+function excerpt(value = "", max = 132) {
+  const text = strip(value);
+  if (text.length <= max) return text;
+  const clipped = text.slice(0, max).replace(/\s+\S*$/, "").trim();
+  return `${clipped}...`;
+}
+
 function prefix(depth) {
   return "../".repeat(depth);
 }
@@ -332,7 +339,7 @@ function impactLens(depth) {
           (metric, index) => `<article class="metric-card reveal" data-magnetic style="--delay:${index}">
             <strong>${esc(metric.value)}</strong>
             <span>${esc(metric.label)}</span>
-            <p>${esc(metric.detail)}</p>
+            <p>${esc(excerpt(metric.detail, 96))}</p>
           </article>`
         )
         .join("")}
@@ -347,7 +354,7 @@ function metricGrid() {
         (metric) => `<article class="metric-card reveal">
           <strong>${esc(metric.value)}</strong>
           <span>${esc(metric.label)}</span>
-          <p>${esc(metric.detail)}</p>
+          <p>${esc(excerpt(metric.detail, 96))}</p>
         </article>`
       )
       .join("")}
@@ -362,7 +369,7 @@ function programCards(limit = programs.length) {
         (program) => `<article class="program-card reveal" id="${esc(program.id)}">
           <span>${esc(program.eyebrow)}</span>
           <h3>${esc(program.title)}</h3>
-          <p>${esc(program.summary)}</p>
+          <p>${esc(excerpt(program.summary, 118))}</p>
           <ul>
             ${program.outcomes.map((item) => `<li>${esc(item)}</li>`).join("")}
           </ul>
@@ -391,7 +398,7 @@ function programAtlas(depth, limit = programs.length) {
       <div>
         <span data-program-preview-kicker>${esc(selected.eyebrow)}</span>
         <h3 data-program-preview-title>${esc(selected.title)}</h3>
-        <p data-program-preview-text>${esc(selected.summary)}</p>
+        <p data-program-preview-text>${esc(excerpt(selected.summary, 122))}</p>
       </div>
     </aside>
     <div class="program-list">
@@ -399,10 +406,10 @@ function programAtlas(depth, limit = programs.length) {
         .slice(0, limit)
         .map((program, index) => {
           const image = imageMap[program.id] || "assets/hero-gb-community-signal.png";
-          return `<article class="program-card reveal${index === 0 ? " is-active" : ""}" id="${esc(program.id)}" data-program-card data-image="${asset(image, depth)}" data-kicker="${esc(program.eyebrow)}" data-title="${esc(program.title)}" data-text="${esc(program.summary)}">
+          return `<article class="program-card reveal${index === 0 ? " is-active" : ""}" id="${esc(program.id)}" data-program-card data-image="${asset(image, depth)}" data-kicker="${esc(program.eyebrow)}" data-title="${esc(program.title)}" data-text="${esc(excerpt(program.summary, 122))}">
             <span>${esc(program.eyebrow)}</span>
             <h3>${esc(program.title)}</h3>
-            <p>${esc(program.summary)}</p>
+            <p>${esc(excerpt(program.summary, 118))}</p>
             <ul>
               ${program.outcomes.map((item) => `<li>${esc(item)}</li>`).join("")}
             </ul>
@@ -459,7 +466,7 @@ function blogCards(depth, limit = blogPosts.length, options = {}) {
 ${imageMarkup}          <div class="blog-body">
             <div class="blog-meta"><span>${esc(post.category)}</span><span>${esc(post.displayDate)}</span><span>${esc(post.readTime)}</span></div>
             <h3><a href="${href(`blog/${post.slug}/`, depth)}">${esc(post.title)}</a></h3>
-            <p>${esc(post.summary)}</p>
+            <p>${esc(excerpt(post.summary, 118))}</p>
             <a class="text-link" href="${href(`blog/${post.slug}/`, depth)}">Read article</a>
           </div>
         </article>`;
@@ -557,7 +564,7 @@ function workflowMarkup() {
         (item) => `<li class="workflow-item reveal" data-flow-step>
           <span>${esc(item.step)}</span>
           <h3>${esc(item.title)}</h3>
-          <p>${esc(item.text)}</p>
+          <p>${esc(excerpt(item.text, 104))}</p>
         </li>`
       )
       .join("")}
@@ -587,7 +594,7 @@ function testimonialMarkup() {
     ${testimonials
       .map(
         (item) => `<figure class="testimonial-card reveal">
-          <blockquote>${esc(item.quote)}</blockquote>
+          <blockquote>${esc(excerpt(item.quote, 116))}</blockquote>
           <figcaption>
             <strong>${esc(item.name)}</strong>
             <span>${esc(item.role)}</span>
@@ -653,7 +660,7 @@ function teamCards(depth) {
           <img src="${asset(avatarMap[person.initials], depth)}" alt="" loading="lazy">
           <h3>${esc(person.name)}</h3>
           <span>${esc(person.role)}</span>
-          <p>${esc(person.bio)}</p>
+          <p>${esc(excerpt(person.bio, 112))}</p>
         </article>`
       )
       .join("")}
@@ -669,7 +676,7 @@ function renderServices(depth) {
           (solution) => `<article class="solution-card reveal">
             <div class="tag-row">${solution.tags.map((tag) => `<span>${esc(tag)}</span>`).join("")}</div>
             <h2>${esc(solution.title)}</h2>
-            <p>${esc(solution.summary)}</p>
+            <p>${esc(excerpt(solution.summary, 118))}</p>
             <h3>Deliverables</h3>
             <ul>${solution.deliverables.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
           </article>`
@@ -726,7 +733,7 @@ function renderOsint(depth) {
           .map(
             (technique) => `<article class="technique-card reveal">
               <h3>${esc(technique.title)}</h3>
-              <p>${esc(technique.summary)}</p>
+              <p>${esc(excerpt(technique.summary, 112))}</p>
             </article>`
           )
           .join("")}
@@ -958,9 +965,9 @@ function ogSvg() {
   <rect width="1200" height="630" fill="#080808"/>
   <rect x="64" y="64" width="1072" height="502" fill="none" stroke="#d8d1c4" opacity=".22"/>
   <g transform="translate(90 92) scale(1.25)">${logoSvg().replace(/<svg[^>]*>|<\/svg>/g, "")}</g>
-  <text x="90" y="330" fill="#fff" font-family="Arial, sans-serif" font-size="74" font-weight="800">mehfooz</text>
-  <text x="92" y="405" fill="#d8d1c4" font-family="Arial, sans-serif" font-size="38">Responsible digital experiences, OSINT, and threat intelligence</text>
-  <text x="92" y="490" fill="#a39b8f" font-family="Arial, sans-serif" font-size="26">Ethical public-source analysis for safer communities</text>
+  <text x="90" y="330" fill="#fff" font-family="Gilroy, Manrope, Arial, sans-serif" font-size="74" font-weight="800">mehfooz</text>
+  <text x="92" y="405" fill="#d8d1c4" font-family="Gilroy, Manrope, Arial, sans-serif" font-size="38">Responsible digital experiences, OSINT, and threat intelligence</text>
+  <text x="92" y="490" fill="#a39b8f" font-family="Gilroy, Manrope, Arial, sans-serif" font-size="26">Ethical public-source analysis for safer communities</text>
 </svg>`;
 }
 
@@ -975,8 +982,8 @@ function blogImage(title, accent, pattern) {
     ${Array.from({ length: 8 }, (_, index) => `<path d="M${180 + index * 120} 120 V600"/>`).join("")}
   </g>
   ${pattern}
-  <text x="110" y="170" fill="#d8d1c4" font-family="Arial, sans-serif" font-size="28" font-weight="700">mehfooz research</text>
-  <text x="110" y="535" fill="#ffffff" font-family="Arial, sans-serif" font-size="54" font-weight="800">${esc(title)}</text>
+  <text x="110" y="170" fill="#d8d1c4" font-family="Gilroy, Manrope, Arial, sans-serif" font-size="28" font-weight="700">mehfooz research</text>
+  <text x="110" y="535" fill="#ffffff" font-family="Gilroy, Manrope, Arial, sans-serif" font-size="54" font-weight="800">${esc(title)}</text>
 </svg>`;
 }
 
@@ -985,7 +992,7 @@ function avatarSvg(initials, color) {
   <rect width="240" height="240" rx="40" fill="#f8fbff"/>
   <circle cx="120" cy="98" r="48" fill="${color}" opacity=".9"/>
   <path d="M48 218c13-49 41-74 72-74s59 25 72 74" fill="${color}" opacity=".28"/>
-  <text x="120" y="116" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="40" font-weight="800">${esc(initials)}</text>
+  <text x="120" y="116" text-anchor="middle" fill="#fff" font-family="Gilroy, Manrope, Arial, sans-serif" font-size="40" font-weight="800">${esc(initials)}</text>
 </svg>`;
 }
 
