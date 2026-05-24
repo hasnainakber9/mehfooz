@@ -98,7 +98,6 @@ for (const required of [
   "threat-intelligence/index.html",
   "blog/index.html",
   "contact/index.html",
-  "team/index.html",
   "privacy/index.html",
   "404.html"
 ]) {

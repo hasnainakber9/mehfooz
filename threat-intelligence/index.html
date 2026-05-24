@@ -11,7 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="../assets/og-card.svg">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="../assets/framer-logo.png" type="image/png">
+  <link rel="icon" href="../assets/brand-mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../style.css">
   <script>window.mehfoozCharts = {"threatCategories":[{"label":"Misinformation","value":31,"color":"#dbeaff"},{"label":"Impersonation","value":18,"color":"#8fbaff"},{"label":"Phishing","value":19,"color":"#3d7dff"},{"label":"Harassment","value":16,"color":"#1f4ea8"},{"label":"Data exposure","value":16,"color":"#10234d"}],"riskTrend":[{"label":"W1","value":52},{"label":"W2","value":55},{"label":"W3","value":58},{"label":"W4","value":61},{"label":"W5","value":59},{"label":"W6","value":64},{"label":"W7","value":67},{"label":"W8","value":63}],"reliability":[{"label":"Official","value":30,"color":"#eef6ff"},{"label":"Corroborated media","value":23,"color":"#b9d8ff"},{"label":"Community reports","value":20,"color":"#74a7ff"},{"label":"Open web","value":15,"color":"#2855b8"},{"label":"Archived material","value":12,"color":"#111f46"}],"regionBreakdown":[{"label":"Gilgit","value":28},{"label":"Skardu","value":22},{"label":"Diamer","value":17},{"label":"Ghizer","value":16},{"label":"Hunza","value":14},{"label":"Astore","value":11},{"label":"Ghanche","value":10},{"label":"Nagar","value":8}],"caseStatus":[{"label":"Triage","value":24,"color":"#eef6ff"},{"label":"In analysis","value":28,"color":"#8fbaff"},{"label":"Ready for review","value":18,"color":"#3d7dff"},{"label":"Closed","value":30,"color":"#111f46"}],"workflowFunnel":[{"label":"Signals","value":92},{"label":"Scoped","value":74},{"label":"Enriched","value":58},{"label":"Corroborated","value":45},{"label":"Reported","value":31}],"severity":[{"label":"Low","value":34,"color":"#eef6ff"},{"label":"Medium","value":39,"color":"#8fbaff"},{"label":"High","value":20,"color":"#3d7dff"},{"label":"Critical","value":7,"color":"#111f46"}],"investigationTimeline":[{"label":"Signal detected","value":18},{"label":"Source review","value":36},{"label":"Cross-check","value":54},{"label":"Risk clarified","value":72},{"label":"Report issued","value":86}]};</script>
   <script src="../script.js" defer></script>
@@ -21,7 +21,7 @@
   <header class="site-header" data-header>
     <div class="container header-inner">
       <a class="brand" href="../" aria-label="mehfooz home">
-        <img src="../assets/framer-logo.png" alt="" width="46" height="46">
+        <img src="../assets/brand-mark.svg" alt="" width="44" height="44">
         <span><strong>mehfooz</strong></span>
       </a>
       <nav class="desktop-nav" aria-label="Main navigation">
@@ -65,56 +65,80 @@
       <h3>Threat category distribution</h3>
       <p>Issue types seen in a defensive analysis queue.</p>
     </div>
-    <canvas data-chart="threatCategories" aria-label="Threat category distribution chart"></canvas>
+    <div class="chart-visual" data-chart-visual>
+      <canvas data-chart="threatCategories" data-chart-title="Threat category distribution" aria-label="Threat category distribution chart" tabindex="0"></canvas>
+      <div class="chart-tooltip" data-chart-tooltip hidden></div>
+    </div>
   </article>
       <article class="chart-card reveal">
     <div class="chart-copy">
       <h3>Risk clarity trend</h3>
       <p>Composite clarity movement across a recent review cycle.</p>
     </div>
-    <canvas data-chart="riskTrend" aria-label="Risk clarity trend chart"></canvas>
+    <div class="chart-visual" data-chart-visual>
+      <canvas data-chart="riskTrend" data-chart-title="Risk clarity trend" aria-label="Risk clarity trend chart" tabindex="0"></canvas>
+      <div class="chart-tooltip" data-chart-tooltip hidden></div>
+    </div>
   </article>
       <article class="chart-card reveal">
     <div class="chart-copy">
       <h3>Investigation timeline</h3>
       <p>Progress from signal detection to report issue.</p>
     </div>
-    <canvas data-chart="investigationTimeline" aria-label="Investigation timeline chart"></canvas>
+    <div class="chart-visual" data-chart-visual>
+      <canvas data-chart="investigationTimeline" data-chart-title="Investigation timeline" aria-label="Investigation timeline chart" tabindex="0"></canvas>
+      <div class="chart-tooltip" data-chart-tooltip hidden></div>
+    </div>
   </article>
       <article class="chart-card reveal">
     <div class="chart-copy">
       <h3>Source reliability breakdown</h3>
       <p>How the source pool is weighted before conclusions are made.</p>
     </div>
-    <canvas data-chart="reliability" aria-label="Source reliability breakdown chart"></canvas>
+    <div class="chart-visual" data-chart-visual>
+      <canvas data-chart="reliability" data-chart-title="Source reliability breakdown" aria-label="Source reliability breakdown chart" tabindex="0"></canvas>
+      <div class="chart-tooltip" data-chart-tooltip hidden></div>
+    </div>
   </article>
       <article class="chart-card reveal">
     <div class="chart-copy">
       <h3>Regional signal breakdown</h3>
       <p>Region-level distribution for public safety planning.</p>
     </div>
-    <canvas data-chart="regionBreakdown" aria-label="Regional signal breakdown chart"></canvas>
+    <div class="chart-visual" data-chart-visual>
+      <canvas data-chart="regionBreakdown" data-chart-title="Regional signal breakdown" aria-label="Regional signal breakdown chart" tabindex="0"></canvas>
+      <div class="chart-tooltip" data-chart-tooltip hidden></div>
+    </div>
   </article>
       <article class="chart-card reveal">
     <div class="chart-copy">
       <h3>Case status overview</h3>
       <p>A review queue split by triage, analysis, review, and closed cases.</p>
     </div>
-    <canvas data-chart="caseStatus" aria-label="Case status overview chart"></canvas>
+    <div class="chart-visual" data-chart-visual>
+      <canvas data-chart="caseStatus" data-chart-title="Case status overview" aria-label="Case status overview chart" tabindex="0"></canvas>
+      <div class="chart-tooltip" data-chart-tooltip hidden></div>
+    </div>
   </article>
       <article class="chart-card reveal">
     <div class="chart-copy">
       <h3>OSINT workflow funnel</h3>
       <p>How raw signals narrow into corroborated reporting.</p>
     </div>
-    <canvas data-chart="workflowFunnel" aria-label="OSINT workflow funnel chart"></canvas>
+    <div class="chart-visual" data-chart-visual>
+      <canvas data-chart="workflowFunnel" data-chart-title="OSINT workflow funnel" aria-label="OSINT workflow funnel chart" tabindex="0"></canvas>
+      <div class="chart-tooltip" data-chart-tooltip hidden></div>
+    </div>
   </article>
       <article class="chart-card reveal">
     <div class="chart-copy">
       <h3>Alert severity distribution</h3>
       <p>Severity mix after analyst review and de-duplication.</p>
     </div>
-    <canvas data-chart="severity" aria-label="Alert severity distribution chart"></canvas>
+    <div class="chart-visual" data-chart-visual>
+      <canvas data-chart="severity" data-chart-title="Alert severity distribution" aria-label="Alert severity distribution chart" tabindex="0"></canvas>
+      <div class="chart-tooltip" data-chart-tooltip hidden></div>
+    </div>
   </article>
     </div>
   </section>
@@ -185,7 +209,6 @@
       <h2>Explore</h2>
       <div class="footer-links">
         <a href="../">Home</a><a href="../about/">About</a><a href="../services/">Services</a><a href="../threat-intelligence/">Threat Intelligence</a><a href="../blog/">Blog</a><a href="../contact/">Contact</a>
-        <a href="../team/">Team</a>
         <a href="../privacy/">Privacy</a>
         <a href="../image-credits/">Image credits</a>
       </div>

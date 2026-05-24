@@ -421,7 +421,7 @@
   function resizeCanvas(canvas) {
     const rect = canvas.getBoundingClientRect();
     const width = Math.max(300, Math.floor(rect.width));
-    const height = Math.max(190, Math.floor(rect.height || 220));
+    const height = Math.max(220, Math.floor(rect.height || 250));
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.floor(width * dpr);
     canvas.height = Math.floor(height * dpr);
@@ -434,11 +434,11 @@
     const dark = canvas.closest(".section-dark, .hero-dashboard, .cinematic-site");
     return {
       dark: Boolean(dark),
-      text: dark ? "#f7f4ee" : "#090909",
-      muted: dark ? "#bdb7ad" : "#706d66",
-      grid: dark ? "rgba(255,255,255,0.14)" : "rgba(9,9,9,0.12)",
-      line: dark ? "#f7f4ee" : "#111111",
-      fill: dark ? "rgba(255,255,255,0.1)" : "rgba(9,9,9,0.08)"
+      text: dark ? "#f5f9ff" : "#090909",
+      muted: dark ? "#9caecb" : "#706d66",
+      grid: dark ? "rgba(216,231,255,0.14)" : "rgba(9,9,9,0.12)",
+      line: dark ? "#dbeaff" : "#111111",
+      fill: dark ? "rgba(47,125,255,0.1)" : "rgba(9,9,9,0.08)"
     };
   }
 
@@ -446,19 +446,61 @@
     ctx.clearRect(0, 0, width, height);
   }
 
-  function label(ctx, text, x, y, color, size = 12, weight = 700) {
+  function label(ctx, text, x, y, color, size = 12, weight = 700, align = "left") {
     ctx.fillStyle = color;
-    ctx.font = `${weight} ${size}px "Helvetica Neue", Helvetica, Arial, sans-serif`;
+    ctx.font = `${weight} ${size}px "Gilroy", "Manrope", "Helvetica Neue", Helvetica, Arial, sans-serif`;
     ctx.textBaseline = "middle";
+    ctx.textAlign = align;
     ctx.fillText(text, x, y);
+    ctx.textAlign = "left";
+  }
+
+  function roundedRect(ctx, x, y, w, h, r = 10) {
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(x, y, w, h, r);
+    else ctx.rect(x, y, w, h);
+  }
+
+  function withAlpha(color, alpha = 1) {
+    if (!color || color.startsWith("rgba")) return color;
+    if (color.startsWith("#")) {
+      const hex = color.slice(1);
+      const bigint = parseInt(hex.length === 3 ? hex.split("").map((c) => c + c).join("") : hex, 16);
+      const r = (bigint >> 16) & 255;
+      const g = (bigint >> 8) & 255;
+      const b = bigint & 255;
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
+    return color;
+  }
+
+  function activeIndex(canvas) {
+    const pinned = Number(canvas.dataset.activeIndex);
+    const hovered = Number(canvas.dataset.hoverIndex);
+    return Number.isInteger(hovered) && hovered >= 0 ? hovered : Number.isInteger(pinned) && pinned >= 0 ? pinned : -1;
+  }
+
+  function itemColor(item, index) {
+    return item.color || ["#dbeaff", "#8fbaff", "#3d7dff", "#1f4ea8", "#10234d", "#6aa3ff", "#c6ddff"][index % 7];
+  }
+
+  function storeZones(canvas, zones) {
+    canvas._chartZones = zones;
+  }
+
+  function setChartSummary(canvas, item) {
+    if (!item) return;
+    canvas.setAttribute("aria-label", `${canvas.dataset.chartTitle || "Chart"}: ${item.label}, ${item.value}%`);
   }
 
   function drawLine(canvas, data) {
     const { ctx, width, height } = resizeCanvas(canvas);
     const theme = chartTheme(canvas);
+    const active = activeIndex(canvas);
+    const zones = [];
     clear(ctx, width, height);
 
-    const pad = { top: 24, right: 22, bottom: 38, left: 38 };
+    const pad = { top: 28, right: 28, bottom: 44, left: 42 };
     const values = data.map((item) => item.value);
     const min = Math.min(...values) - 8;
     const max = Math.max(...values) + 8;
@@ -478,6 +520,7 @@
     const points = data.map((item, index) => {
       const x = pad.left + (innerW / Math.max(1, data.length - 1)) * index;
       const y = pad.top + innerH - ((item.value - min) / (max - min)) * innerH;
+      zones.push({ index, item, kind: "point", x, y, r: 18 });
       return { x, y, ...item };
     });
 
@@ -502,42 +545,57 @@
     ctx.stroke();
 
     points.forEach((point, index) => {
+      const selected = active === index;
       ctx.beginPath();
-      ctx.arc(point.x, point.y, index === points.length - 1 ? 5 : 4, 0, Math.PI * 2);
-      ctx.fillStyle = index === points.length - 1 ? "#111111" : theme.line;
+      ctx.arc(point.x, point.y, selected ? 7 : 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = selected ? "#2f7dff" : theme.line;
       ctx.fill();
+      if (selected) {
+        ctx.strokeStyle = "rgba(219,234,255,0.55)";
+        ctx.lineWidth = 8;
+        ctx.stroke();
+      }
     });
 
-    const last = points[points.length - 1];
-    label(ctx, `${last.value}%`, Math.min(width - 64, last.x + 10), last.y - 14, theme.text, 14, 800);
+    const selected = points[active] || points[points.length - 1];
+    setChartSummary(canvas, selected);
+    label(ctx, `${selected.value}%`, Math.min(width - 64, selected.x + 10), selected.y - 14, theme.text, 14, 850);
     label(ctx, data[0].label, pad.left, height - 17, theme.muted, 11, 700);
     label(ctx, data[data.length - 1].label, width - pad.right - 54, height - 17, theme.muted, 11, 700);
+    storeZones(canvas, zones);
   }
 
   function drawDonut(canvas, data) {
     const { ctx, width, height } = resizeCanvas(canvas);
     const theme = chartTheme(canvas);
+    const active = activeIndex(canvas);
+    const zones = [];
     clear(ctx, width, height);
 
     const total = data.reduce((sum, item) => sum + item.value, 0);
-    const radius = Math.min(width * 0.26, height * 0.34, 88);
+    const radius = Math.min(width * 0.26, height * 0.34, 92);
     const cx = Math.min(width * 0.34, 170);
     const cy = height * 0.48;
     let angle = -Math.PI / 2;
 
-    data.forEach((item) => {
+    data.forEach((item, index) => {
       const slice = (item.value / total) * Math.PI * 2;
+      const selected = active === index;
+      ctx.globalAlpha = active >= 0 && !selected ? 0.32 : 1;
       ctx.beginPath();
       ctx.arc(cx, cy, radius, angle, angle + slice);
-      ctx.lineWidth = 22;
-      ctx.strokeStyle = item.color;
+      ctx.lineWidth = selected ? 27 : 22;
+      ctx.strokeStyle = itemColor(item, index);
       ctx.stroke();
+      zones.push({ index, item, kind: "arc", cx, cy, inner: radius - 18, outer: radius + 20, start: angle, end: angle + slice });
       angle += slice;
     });
+    ctx.globalAlpha = 1;
 
-    const primary = data.reduce((winner, item) => (item.value > winner.value ? item : winner), data[0]);
-    label(ctx, `${primary.value}%`, cx - 28, cy, theme.text, 20, 900);
-    label(ctx, "primary", cx - 24, cy + 24, theme.muted, 12, 700);
+    const primary = data[active] || data.reduce((winner, item) => (item.value > winner.value ? item : winner), data[0]);
+    setChartSummary(canvas, primary);
+    label(ctx, `${primary.value}%`, cx, cy, theme.text, 21, 900, "center");
+    label(ctx, primary.label, cx, cy + 25, theme.muted, 11, 700, "center");
 
     const legendX = Math.min(width * 0.56, cx + radius + 42);
     const valueX = width - 48;
@@ -545,84 +603,106 @@
     const startY = Math.max(30, cy - data.length * 15);
     data.forEach((item, index) => {
       const y = startY + index * 30;
-      ctx.fillStyle = item.color;
-      ctx.beginPath();
-      ctx.roundRect?.(legendX, y - 6, 12, 12, 4);
-      if (!ctx.roundRect) ctx.rect(legendX, y - 6, 12, 12);
+      const selected = active === index;
+      ctx.globalAlpha = active >= 0 && !selected ? 0.46 : 1;
+      ctx.fillStyle = itemColor(item, index);
+      roundedRect(ctx, legendX, y - 6, 12, 12, 4);
       ctx.fill();
       let legendLabel = item.label;
       while (legendLabel.length > 4 && ctx.measureText(legendLabel).width > labelMax) {
         legendLabel = `${legendLabel.slice(0, -4)}...`;
       }
-      label(ctx, legendLabel, legendX + 20, y, theme.text, 12, 800);
-      label(ctx, `${item.value}%`, valueX, y, theme.muted, 12, 800);
+      label(ctx, legendLabel, legendX + 20, y, theme.text, selected ? 13 : 12, 850);
+      label(ctx, `${item.value}%`, valueX, y, theme.muted, 12, 850);
     });
+    ctx.globalAlpha = 1;
+    storeZones(canvas, zones);
   }
 
   function drawBars(canvas, data) {
     const { ctx, width, height } = resizeCanvas(canvas);
     const theme = chartTheme(canvas);
+    const active = activeIndex(canvas);
+    const zones = [];
     clear(ctx, width, height);
 
     const max = Math.max(...data.map((item) => item.value));
     const pad = 24;
     const rowH = (height - pad * 2) / data.length;
-    const labelW = Math.min(110, width * 0.32);
+    const labelW = Math.min(120, width * 0.34);
     const barW = width - labelW - pad * 3;
 
     data.forEach((item, index) => {
       const y = pad + rowH * index + rowH * 0.25;
       const h = Math.max(12, rowH * 0.46);
-      label(ctx, item.label, pad, y + h / 2, theme.text, 12, 800);
+      const selected = active === index;
+      label(ctx, item.label, pad, y + h / 2, theme.text, selected ? 13 : 12, 850);
       ctx.fillStyle = theme.grid;
-      ctx.fillRect(labelW + pad, y, barW, h);
+      roundedRect(ctx, labelW + pad, y, barW, h, 8);
+      ctx.fill();
       const widthValue = (item.value / max) * barW;
       const gradient = ctx.createLinearGradient(labelW + pad, 0, labelW + pad + barW, 0);
-      gradient.addColorStop(0, "#111111");
-      gradient.addColorStop(0.65, "#706d66");
-      gradient.addColorStop(1, "#d8d1c4");
+      gradient.addColorStop(0, selected ? "#2f7dff" : "#10234d");
+      gradient.addColorStop(0.72, selected ? "#8fbaff" : "#2855b8");
+      gradient.addColorStop(1, "#dbeaff");
       ctx.fillStyle = gradient;
-      ctx.fillRect(labelW + pad, y, widthValue, h);
-      label(ctx, `${item.value}%`, labelW + pad + widthValue + 8, y + h / 2, theme.muted, 12, 800);
+      roundedRect(ctx, labelW + pad, y, widthValue, h, 8);
+      ctx.fill();
+      label(ctx, `${item.value}%`, Math.min(width - 38, labelW + pad + widthValue + 8), y + h / 2, theme.muted, 12, 850);
+      zones.push({ index, item, kind: "rect", x: labelW + pad, y: y - 6, w: barW, h: h + 12 });
     });
+    setChartSummary(canvas, data[active] || data[0]);
+    storeZones(canvas, zones);
   }
 
   function drawStatus(canvas, data) {
     const { ctx, width, height } = resizeCanvas(canvas);
     const theme = chartTheme(canvas);
+    const active = activeIndex(canvas);
+    const zones = [];
     clear(ctx, width, height);
 
     const total = data.reduce((sum, item) => sum + item.value, 0);
     const barX = 28;
-    const barY = height * 0.42;
+    const barY = height * 0.38;
     const barW = width - 56;
-    const barH = 34;
+    const barH = 36;
     let x = barX;
 
-    data.forEach((item) => {
+    label(ctx, "review balance", barX, barY - 24, theme.text, 18, 900);
+    data.forEach((item, index) => {
       const segment = (item.value / total) * barW;
-      ctx.fillStyle = item.color;
-      ctx.fillRect(x, barY, segment, barH);
+      const selected = active === index;
+      ctx.globalAlpha = active >= 0 && !selected ? 0.38 : 1;
+      ctx.fillStyle = itemColor(item, index);
+      roundedRect(ctx, x, barY, segment, barH, 10);
+      ctx.fill();
+      zones.push({ index, item, kind: "rect", x, y: barY, w: segment, h: barH });
       x += segment;
     });
-
-    label(ctx, "review balance", barX, barY - 20, theme.text, 18, 900);
+    ctx.globalAlpha = 1;
 
     const cols = width > 480 ? 2 : 1;
     data.forEach((item, index) => {
       const col = index % cols;
       const row = Math.floor(index / cols);
       const lx = barX + col * (barW / cols);
-      const ly = barY + 72 + row * 28;
-      ctx.fillStyle = item.color;
-      ctx.fillRect(lx, ly - 6, 12, 12);
-      label(ctx, `${item.label}: ${item.value}%`, lx + 20, ly, theme.text, 12, 800);
+      const ly = barY + 74 + row * 28;
+      const selected = active === index;
+      ctx.fillStyle = itemColor(item, index);
+      roundedRect(ctx, lx, ly - 6, 12, 12, 4);
+      ctx.fill();
+      label(ctx, `${item.label}: ${item.value}%`, lx + 20, ly, theme.text, selected ? 13 : 12, 850);
     });
+    setChartSummary(canvas, data[active] || data[0]);
+    storeZones(canvas, zones);
   }
 
   function drawFunnel(canvas, data) {
     const { ctx, width, height } = resizeCanvas(canvas);
     const theme = chartTheme(canvas);
+    const active = activeIndex(canvas);
+    const zones = [];
     clear(ctx, width, height);
 
     const max = Math.max(...data.map((item) => item.value));
@@ -633,25 +713,31 @@
       const w = Math.max(80, (item.value / max) * (width - 72));
       const x = (width - w) / 2;
       const y = 22 + index * (rowH + gap);
+      const selected = active === index;
+      ctx.globalAlpha = active >= 0 && !selected ? 0.42 : 1;
       const gradient = ctx.createLinearGradient(x, 0, x + w, 0);
-      gradient.addColorStop(0, "#111111");
-      gradient.addColorStop(1, index > 2 ? "#8d867a" : "#706d66");
+      gradient.addColorStop(0, selected ? "#2f7dff" : "#10234d");
+      gradient.addColorStop(1, index > 2 ? "#8fbaff" : "#dbeaff");
       ctx.fillStyle = gradient;
-      ctx.beginPath();
-      ctx.roundRect?.(x, y, w, rowH, 8);
-      if (!ctx.roundRect) ctx.rect(x, y, w, rowH);
+      roundedRect(ctx, x, y, w, rowH, 10);
       ctx.fill();
       label(ctx, item.label, x + 14, y + rowH / 2, "#fff", 12, 900);
-      label(ctx, `${item.value}%`, x + w - 54, y + rowH / 2, "#fff", 12, 900);
+      label(ctx, `${item.value}%`, x + w - 18, y + rowH / 2, "#fff", 12, 900, "right");
+      zones.push({ index, item, kind: "rect", x, y, w, h: rowH });
     });
+    ctx.globalAlpha = 1;
+    setChartSummary(canvas, data[active] || data[0]);
+    storeZones(canvas, zones);
   }
 
   function drawTimeline(canvas, data) {
     const { ctx, width, height } = resizeCanvas(canvas);
     const theme = chartTheme(canvas);
+    const active = activeIndex(canvas);
+    const zones = [];
     clear(ctx, width, height);
 
-    const padX = 40;
+    const padX = 42;
     const y = height * 0.44;
     ctx.strokeStyle = theme.grid;
     ctx.lineWidth = 5;
@@ -663,16 +749,20 @@
 
     data.forEach((item, index) => {
       const x = padX + (item.value / 100) * (width - padX * 2);
+      const selected = active === index;
       ctx.beginPath();
-      ctx.arc(x, y, 10, 0, Math.PI * 2);
-      ctx.fillStyle = index === data.length - 1 ? "#111111" : "#706d66";
+      ctx.arc(x, y, selected ? 13 : 10, 0, Math.PI * 2);
+      ctx.fillStyle = selected ? "#2f7dff" : "#8fbaff";
       ctx.fill();
-      ctx.strokeStyle = theme.dark ? "#0d1117" : "#fff";
+      ctx.strokeStyle = theme.dark ? "#07111f" : "#fff";
       ctx.lineWidth = 4;
       ctx.stroke();
       const textY = index % 2 ? y + 42 : y - 36;
-      label(ctx, item.label, Math.max(12, Math.min(width - 150, x - 54)), textY, theme.text, 11, 800);
+      label(ctx, item.label, Math.max(12, Math.min(width - 150, x - 54)), textY, theme.text, selected ? 12 : 11, 850);
+      zones.push({ index, item, kind: "point", x, y, r: 22 });
     });
+    setChartSummary(canvas, data[active] || data[0]);
+    storeZones(canvas, zones);
   }
 
   function drawChart(canvas) {
@@ -686,12 +776,148 @@
     else if (type === "caseStatus") drawStatus(canvas, data);
     else if (type === "workflowFunnel") drawFunnel(canvas, data);
     else if (type === "investigationTimeline") drawTimeline(canvas, data);
+    updateChartControls(canvas);
+  }
+
+  function hitTest(canvas, x, y) {
+    const zones = canvas._chartZones || [];
+    return zones.find((zone) => {
+      if (zone.kind === "rect") {
+        return x >= zone.x && x <= zone.x + zone.w && y >= zone.y && y <= zone.y + zone.h;
+      }
+      if (zone.kind === "point") {
+        return Math.hypot(x - zone.x, y - zone.y) <= zone.r;
+      }
+      if (zone.kind === "arc") {
+        const dx = x - zone.cx;
+        const dy = y - zone.cy;
+        const dist = Math.hypot(dx, dy);
+        let angle = Math.atan2(dy, dx);
+        if (angle < -Math.PI / 2) angle += Math.PI * 2;
+        const start = zone.start < -Math.PI / 2 ? zone.start + Math.PI * 2 : zone.start;
+        const end = zone.end < -Math.PI / 2 ? zone.end + Math.PI * 2 : zone.end;
+        return dist >= zone.inner && dist <= zone.outer && angle >= start && angle <= end;
+      }
+      return false;
+    });
+  }
+
+  function chartPointer(event, canvas) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top
+    };
+  }
+
+  function showChartTooltip(canvas, zone, x, y) {
+    const tooltip = canvas.closest("[data-chart-visual]")?.querySelector("[data-chart-tooltip]");
+    if (!tooltip || !zone) return;
+    const rect = canvas.getBoundingClientRect();
+    const cx = Math.max(70, Math.min(rect.width - 70, x));
+    const cy = Math.max(70, Math.min(rect.height - 16, y));
+    tooltip.innerHTML = `<strong>${zone.item.label}</strong><span>${zone.item.value}%</span>`;
+    tooltip.style.left = `${cx}px`;
+    tooltip.style.top = `${cy}px`;
+    tooltip.hidden = false;
+  }
+
+  function hideChartTooltip(canvas) {
+    const tooltip = canvas.closest("[data-chart-visual]")?.querySelector("[data-chart-tooltip]");
+    if (tooltip) tooltip.hidden = true;
+  }
+
+  function updateChartControls(canvas) {
+    const controls = canvas.closest(".chart-card")?.querySelectorAll(".chart-control") || [];
+    const active = activeIndex(canvas);
+    controls.forEach((button, index) => {
+      button.classList.toggle("is-active", index === active);
+      button.setAttribute("aria-pressed", String(index === active));
+    });
+  }
+
+  function setChartActive(canvas, index, pinned = false) {
+    if (index < 0) {
+      delete canvas.dataset.hoverIndex;
+      if (pinned) delete canvas.dataset.activeIndex;
+    } else if (pinned) {
+      canvas.dataset.activeIndex = String(index);
+      delete canvas.dataset.hoverIndex;
+    } else {
+      canvas.dataset.hoverIndex = String(index);
+    }
+    drawChart(canvas);
+  }
+
+  function enhanceChart(canvas) {
+    const data = chartData[canvas.dataset.chart];
+    if (!data || !data.length || canvas.dataset.enhancedChart) return;
+    canvas.dataset.enhancedChart = "true";
+
+    const card = canvas.closest(".chart-card");
+    const controls = document.createElement("div");
+    controls.className = "chart-controls";
+    controls.setAttribute("aria-label", `${canvas.dataset.chartTitle || "Chart"} data filters`);
+    data.forEach((item, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "chart-control";
+      button.style.setProperty("--chart-color", itemColor(item, index));
+      button.textContent = `${item.label} ${item.value}%`;
+      button.setAttribute("aria-pressed", "false");
+      button.addEventListener("mouseenter", () => setChartActive(canvas, index));
+      button.addEventListener("mouseleave", () => setChartActive(canvas, -1));
+      button.addEventListener("focus", () => setChartActive(canvas, index));
+      button.addEventListener("click", () => setChartActive(canvas, index, true));
+      controls.append(button);
+    });
+    card?.append(controls);
+
+    canvas.addEventListener("pointermove", (event) => {
+      const point = chartPointer(event, canvas);
+      const zone = hitTest(canvas, point.x, point.y);
+      if (zone) {
+        setChartActive(canvas, zone.index);
+        showChartTooltip(canvas, zone, point.x, point.y);
+      } else {
+        setChartActive(canvas, -1);
+        hideChartTooltip(canvas);
+      }
+    });
+    canvas.addEventListener("pointerleave", () => {
+      setChartActive(canvas, -1);
+      hideChartTooltip(canvas);
+    });
+    canvas.addEventListener("click", (event) => {
+      const point = chartPointer(event, canvas);
+      const zone = hitTest(canvas, point.x, point.y);
+      if (zone) setChartActive(canvas, zone.index, true);
+    });
+    canvas.addEventListener("keydown", (event) => {
+      if (!["ArrowLeft", "ArrowRight", "Escape", "Enter", " "].includes(event.key)) return;
+      event.preventDefault();
+      const current = activeIndex(canvas);
+      if (event.key === "Escape") {
+        setChartActive(canvas, -1, true);
+        hideChartTooltip(canvas);
+        return;
+      }
+      if (event.key === "Enter" || event.key === " ") {
+        setChartActive(canvas, Math.max(0, current), true);
+        return;
+      }
+      const next = event.key === "ArrowRight" ? (current + 1 + data.length) % data.length : (current - 1 + data.length) % data.length;
+      setChartActive(canvas, next, true);
+    });
   }
 
   function initCharts() {
     const canvases = qsa("canvas[data-chart]");
     if (!canvases.length) return;
-    canvases.forEach(drawChart);
+    canvases.forEach((canvas) => {
+      enhanceChart(canvas);
+      drawChart(canvas);
+    });
 
     if ("ResizeObserver" in window) {
       const observer = new ResizeObserver((entries) => {

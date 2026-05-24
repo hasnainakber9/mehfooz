@@ -40,6 +40,18 @@ export const imageCredits = [
     source: "https://commons.wikimedia.org/wiki/File:Peoples_of_Gilgit_Baltistan.jpg",
     license: "Wikimedia Commons"
   },
+  {
+    asset: "assets/blog-youth-peace-cover.jpg",
+    title: "Students of Gilgit AT UAF.jpg",
+    source: "https://commons.wikimedia.org/wiki/File:Students_of_Gilgit_AT_UAF.jpg",
+    license: "Wikimedia Commons"
+  },
+  {
+    asset: "assets/blog-maternal-care-cover.jpg",
+    title: "Mother in hijab standing and holding son near street",
+    source: "https://www.pexels.com/photo/mother-in-hijab-standing-and-holding-son-near-street-13690025/",
+    license: "Pexels"
+  },
 ];
 
 export const metrics = [
@@ -384,30 +396,6 @@ export const testimonials = [
   }
 ];
 
-export const team = [
-  {
-    name: "Syed Hasnain Akber",
-    role: "Founder",
-    initials: "HA",
-    bio:
-      "Hasnain is an Equitech Scholar with extensive experience in digital literacy initiatives and community development. His background combines technical expertise with a deep understanding of Gilgit Baltistan's unique cultural landscape."
-  },
-  {
-    name: "Zuhaib Khan",
-    role: "Project Manager",
-    initials: "ZK",
-    bio:
-      "Zuhaib brings advisory, strategy, and growth experience to the initiative, shaping sustainable program design for Gilgit Baltistan's digital landscape."
-  },
-  {
-    name: "Shujaat Ali",
-    role: "Policy Manager",
-    initials: "SA",
-    bio:
-      "Shujaat shapes policy-aware program delivery, responsible communication, and community trust practices for safer digital participation."
-  }
-];
-
 export const blogPosts = [
   {
     slug: "youth-for-a-peaceful-society",
@@ -419,7 +407,7 @@ export const blogPosts = [
     category: "Community",
     author: "mehfooz editorial",
     readTime: "5 min read",
-    image: "assets/open-gb-people.jpg",
+    image: "assets/blog-youth-peace-cover.jpg",
     content: [
       {
         heading: "Youth for a Peaceful Society",
@@ -443,7 +431,7 @@ export const blogPosts = [
     category: "Community",
     author: "mehfooz editorial",
     readTime: "8 min read",
-    image: "assets/open-rakaposhi-jutial.jpg",
+    image: "assets/blog-maternal-care-cover.jpg",
     content: [
       {
         heading: "An Analysis of How Marginalisation Exacerbates Maternal Mortality Rate: The Case of Balochistan and Gilgit Baltistan",

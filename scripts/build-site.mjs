@@ -14,7 +14,6 @@ import {
   programs,
   site,
   solutions,
-  team,
   testimonials,
   workflow
 } from "../src/content.mjs";
@@ -29,16 +28,12 @@ const pageDirs = [
   "blog",
   "contact",
   "image-credits",
-  "team",
   "privacy"
 ];
 
 const assetFiles = [
   "assets/brand-mark.svg",
-  "assets/og-card.svg",
-  "assets/avatar-ha.svg",
-  "assets/avatar-zk.svg",
-  "assets/avatar-sa.svg"
+  "assets/og-card.svg"
 ];
 
 const staleAssetFiles = [
@@ -114,7 +109,7 @@ function layout({ title, description, active, depth, body, pageClass = "" }) {
   <meta property="og:type" content="website">
   <meta property="og:image" content="${asset("assets/og-card.svg", depth)}">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="${asset("assets/framer-logo.png", depth)}" type="image/png">
+  <link rel="icon" href="${asset("assets/brand-mark.svg", depth)}" type="image/svg+xml">
   <link rel="stylesheet" href="${asset("style.css", depth)}">
   <script>window.mehfoozCharts = ${chartsJson};</script>
   <script src="${asset("script.js", depth)}" defer></script>
@@ -124,7 +119,7 @@ function layout({ title, description, active, depth, body, pageClass = "" }) {
   <header class="site-header" data-header>
     <div class="container header-inner">
       <a class="brand" href="${href("", depth)}" aria-label="${esc(site.name)} home">
-        <img src="${asset("assets/framer-logo.png", depth)}" alt="" width="46" height="46">
+        <img src="${asset("assets/brand-mark.svg", depth)}" alt="" width="44" height="44">
         <span><strong>mehfooz</strong></span>
       </a>
       <nav class="desktop-nav" aria-label="Main navigation">
@@ -198,7 +193,6 @@ function footer(depth) {
       <h2>Explore</h2>
       <div class="footer-links">
         ${nav.map((item) => `<a href="${href(item.href, depth)}">${esc(item.label)}</a>`).join("")}
-        <a href="${href("team/", depth)}">Team</a>
         <a href="${href("privacy/", depth)}">Privacy</a>
         <a href="${href("image-credits/", depth)}">Image credits</a>
       </div>
@@ -313,7 +307,7 @@ function partnerRail(depth) {
 function imageStory(depth) {
   return `<div class="image-story">
     <figure class="story-photo story-photo-large reveal">
-      <img src="${asset("assets/framer-community.jpg", depth)}" alt="Woman and child in a Gilgit Baltistan mountain setting" loading="lazy">
+      <img src="${asset("assets/blog-maternal-care-cover.jpg", depth)}" alt="Mother and child in a cinematic black and white public safety scene" loading="lazy">
     </figure>
     <div class="story-panel reveal">
       <span class="kicker">Community-first safety</span>
@@ -426,7 +420,10 @@ function chartCard(title, text, chart) {
       <h3>${esc(title)}</h3>
       <p>${esc(text)}</p>
     </div>
-    <canvas data-chart="${esc(chart)}" aria-label="${esc(title)} chart"></canvas>
+    <div class="chart-visual" data-chart-visual>
+      <canvas data-chart="${esc(chart)}" data-chart-title="${esc(title)}" aria-label="${esc(title)} chart" tabindex="0"></canvas>
+      <div class="chart-tooltip" data-chart-tooltip hidden></div>
+    </div>
   </article>`;
 }
 
@@ -626,45 +623,7 @@ function renderAbout(depth) {
       </div>
     </div>
   </section>
-  <section class="section">
-    <div class="container founder-grid">
-      <div class="founder-note reveal">
-        <span class="kicker">Meet our founder</span>
-        <h2>A simple yet powerful vision</h2>
-        <p>mehfooz was founded to help people in Gilgit Baltistan navigate the digital world safely and responsibly. The initiative is designed to be accessible, culturally relevant, and practical, with a focus on online safety, critical thinking, and responsible public participation.</p>
-        <p>Today, the work extends into ethical OSINT and threat intelligence because communities need more than awareness. They need ways to understand public signals, respond to misinformation, and communicate risk without creating more harm.</p>
-        <strong>Hasnain Akber</strong>
-      </div>
-      <div class="team-preview reveal">
-        <figure class="founder-portrait">
-          <img src="${asset("assets/framer-founder.jpg", depth)}" alt="Hasnain Akber, founder of mehfooz" loading="lazy">
-          <figcaption>Founder</figcaption>
-        </figure>
-        ${teamCards(depth)}
-      </div>
-    </div>
-  </section>
   ${cta(depth)}`;
-}
-
-function teamCards(depth) {
-  const avatarMap = {
-    HA: "assets/avatar-ha.svg",
-    ZK: "assets/avatar-zk.svg",
-    SA: "assets/avatar-sa.svg"
-  };
-  return `<div class="team-grid compact">
-    ${team
-      .map(
-        (person) => `<article class="team-card">
-          <img src="${asset(avatarMap[person.initials], depth)}" alt="" loading="lazy">
-          <h3>${esc(person.name)}</h3>
-          <span>${esc(person.role)}</span>
-          <p>${esc(excerpt(person.bio, 112))}</p>
-        </article>`
-      )
-      .join("")}
-  </div>`;
 }
 
 function renderServices(depth) {
@@ -828,7 +787,7 @@ function renderPost(post, depth) {
 }
 
 function renderContact(depth) {
-  return `${pageHero("Contact us", "Begin the conversation", "Tell us about your program, training need, public-source analysis question, or digital safety challenge.", depth, "assets/framer-community.jpg")}
+  return `${pageHero("Contact us", "Begin the conversation", "Tell us about your program, training need, public-source analysis question, or digital safety challenge.", depth, "assets/open-rakaposhi-jutial.jpg")}
   <section class="section">
     <div class="container contact-grid">
       <div>
@@ -871,14 +830,6 @@ function renderContact(depth) {
       </form>
     </div>
   </section>`;
-}
-
-function renderTeam(depth) {
-  return `${pageHero("Our team", "Meet the people behind the work", "A compact team page for the people shaping program, strategy, policy, and research direction.", depth, "assets/framer-founder.jpg")}
-  <section class="section">
-    <div class="container">${teamCards(depth)}</div>
-  </section>
-  ${cta(depth)}`;
 }
 
 function renderPrivacy(depth) {
@@ -987,22 +938,10 @@ function blogImage(title, accent, pattern) {
 </svg>`;
 }
 
-function avatarSvg(initials, color) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="${esc(initials)} avatar">
-  <rect width="240" height="240" rx="40" fill="#f8fbff"/>
-  <circle cx="120" cy="98" r="48" fill="${color}" opacity=".9"/>
-  <path d="M48 218c13-49 41-74 72-74s59 25 72 74" fill="${color}" opacity=".28"/>
-  <text x="120" y="116" text-anchor="middle" fill="#fff" font-family="Gilroy, Manrope, Arial, sans-serif" font-size="40" font-weight="800">${esc(initials)}</text>
-</svg>`;
-}
-
 async function writeAssetFiles() {
   await mkdir(path.join(root, "assets"), { recursive: true });
   await writeFile(path.join(root, "assets/brand-mark.svg"), logoSvg(), "utf8");
   await writeFile(path.join(root, "assets/og-card.svg"), ogSvg(), "utf8");
-  await writeFile(path.join(root, "assets/avatar-ha.svg"), avatarSvg("HA", "#111111"), "utf8");
-  await writeFile(path.join(root, "assets/avatar-zk.svg"), avatarSvg("ZK", "#09265c"), "utf8");
-  await writeFile(path.join(root, "assets/avatar-sa.svg"), avatarSvg("SA", "#0f63d8"), "utf8");
 }
 
 async function writePages() {
@@ -1023,7 +962,7 @@ async function writePages() {
       active: "about/",
       depth: 1,
       title: "About",
-      description: "Learn about mehfooz mission, vision, founder, and community digital safety work.",
+      description: "Learn about mehfooz mission, vision, and community digital safety work.",
       body: renderAbout(1)
     },
     {
@@ -1073,14 +1012,6 @@ async function writePages() {
       title: "Image Credits",
       description: "Image credits and source links for open-source visual references used by mehfooz.",
       body: renderImageCredits(1)
-    },
-    {
-      file: "team/index.html",
-      active: "team/",
-      depth: 1,
-      title: "Our Team",
-      description: "Meet the mehfooz team shaping program, strategy, policy, and research direction.",
-      body: renderTeam(1)
     },
     {
       file: "privacy/index.html",
@@ -1140,6 +1071,10 @@ async function cleanOldGenerated() {
   for (const file of ["assets/avatar-rj.svg", "assets/avatar-cf.svg"]) {
     await rm(path.join(root, file), { force: true });
   }
+  for (const file of ["assets/avatar-ha.svg", "assets/avatar-zk.svg", "assets/avatar-sa.svg"]) {
+    await rm(path.join(root, file), { force: true });
+  }
+  await rm(path.join(root, "team"), { recursive: true, force: true });
   for (const file of ["404.html"]) {
     await rm(path.join(root, file), { force: true });
   }
